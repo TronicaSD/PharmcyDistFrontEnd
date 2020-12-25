@@ -1,0 +1,45 @@
+.logincard{
+
+ 
+    width: auto;
+    margin: 3% 0;
+  
+}
+.main {
+    height: 100vh; overflow: hidden; background-color: #121219;
+}
+.imglogo{
+    display: block;
+    position: relative;
+    width: 100%;
+}
+
+.imgcard{
+    border: solid 1px#fff;
+    border-radius: 2%;
+    box-shadow: 1px 1px 4px 3px #fff;
+    width: 70%;
+    height: 40vh;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    margin-left: 15%;
+
+
+
+
+}
+label,h4,h5{color: #fff;}
+
+
+
+@media (max-width: 576px){
+  
+    .logincard{
+
+        width: 70%;
+        margin: 3% 15%;
+      
+    }
+
+}

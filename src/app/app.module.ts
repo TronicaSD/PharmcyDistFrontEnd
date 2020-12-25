@@ -1,21 +1,20 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {  NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NbThemeModule } from '@nebular/theme';
-import { AuthModule } from './authentication/auth.module';
-import { LoginComponent } from './authentication/login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NbThemeModule.forRoot({ name: 'dark' }),
+    ReactiveFormsModule
  
   ],
   providers: [],

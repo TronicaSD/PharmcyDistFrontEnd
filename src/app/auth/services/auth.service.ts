@@ -1,0 +1,133 @@
+import { Injectable, Input, Output } from "@angular/core";
+import { Router } from "@angular/router";
+import { HttpClient } from "@angular/common/http";
+
+import {
+  CanActivate,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+} from "@angular/router";
+import { NetworkService } from "../../core/network.service";
+import { environment } from "../../../environments/environment";
+import { Observable } from "rxjs";
+import { LoginModel } from "../login/models/login.model";
+import { CookieService } from "ngx-cookie-service";
+import { UserLoginModel } from "../login/models/userlogin.model";
+import jwtDecode from "jwt-decode";
+
+
+
+@Injectable()
+export class AuthService implements CanActivate {
+  constructor(
+    private _router: Router,
+    private http: HttpClient,
+    private network: NetworkService,
+    private _coockieService:CookieService ,
+
+  ) {}
+
+  login(user: LoginModel) {
+     this.http.post<UserLoginModel>(
+      environment.serverUrl + "account/login_ng",
+      user
+    ).subscribe(
+    {
+      next:(response:UserLoginModel)=>{  
+        if (response.status===true){
+
+        let result= jwtDecode<any>(response.token);
+        this._coockieService.set('token',response.token);
+        this._coockieService.set('companyName',response.companyName);
+        this._coockieService.set('companyLogo',response.companyLogo);
+        this._coockieService.set('role',result.role);
+        this._coockieService.set('userName',result.userName);
+      }
+       
+
+      
+    },error:(error)=>{
+console.log(error);
+
+    }}
+    );
+  }
+
+  changePassword(data: any) {
+    return this.http.put<any>(
+      environment.serverUrl + "Account/ChangePassword/",
+      data
+    );
+  }
+
+  logout() {
+    this._coockieService.deleteAll();
+    window.location.replace("login");
+  }
+  
+
+  logoutOnClose() {
+    let LoginUser = JSON.parse(localStorage.getItem("LoginUser"));
+    if (LoginUser !== null) {
+      this.http
+        .post<LoginModel>(environment.serverUrl + "account/logout", LoginUser)
+        .subscribe(
+          (success) => {
+            localStorage.clear();
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    }
+  }
+  canActivate(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean> | Promise<boolean> | boolean {
+    if (this.network.online) {
+      if (this.isAuthenticated()) {
+
+        if (next.data.role && next.url[0].path != "change-password") {
+          let userRole = localStorage.getItem("Role");
+          if (userRole == next.data.role) return true;
+        } else {
+          this._router.navigate(["login"]);
+        }
+      } else {
+        this.logout();
+      }
+    } else {
+      console.log("Network Disconnt");
+
+      // momken hena na5leeha yroute 3ala page feeha no connection
+    }
+  }
+  /**
+   * this is used to clear anything that needs to be removed
+   */
+  /**
+   * check for expiration and if token is still existing or not
+   * @return {boolean}
+   */
+  isAuthenticated(): boolean {
+    let res = this._coockieService.get("token") !== null && !this.isTokenExpired();
+
+    return res;
+  }
+
+  // simulate jwt token is valid
+  // https://github.com/theo4u/angular4-auth/blob/master/src/app/helpers/jwt-helper.ts
+  isTokenExpired(): boolean {
+    let token = jwtDecode <any>(this._coockieService.get('token'));
+     return token.exp ? false : true;
+
+  }
+  /**
+   * this is used to clear local storage and also the route to login
+   */
+
+  
+
+  }
+
