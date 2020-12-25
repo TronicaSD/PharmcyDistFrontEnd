@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GlobalServiceErrorHandler } from 'src/app/core/gobalerrorservicehandler';
 import { AuthService } from '../services/auth.service';
+import { PublicService } from '../../Service/Public.Service/public-service.service';
+
 
 @Component({
   selector: 'app-login',
@@ -9,13 +11,16 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  showPassword:boolean=false;
-  loginForm:FormGroup;
-  
-  constructor(private _formbuilder:FormBuilder ,private _loginService :AuthService) { 
-   this.loginForm= this._formbuilder.group({
-userName:['',Validators.required],
-password:['',[Validators.required,Validators.minLength(8)]],
+  showPassword: boolean = false;
+  loginForm: FormGroup;
+
+  constructor(private _formbuilder: FormBuilder
+    , private _loginService: AuthService
+    , private _PublicService: PublicService
+  ) {
+    this.loginForm = this._formbuilder.group({
+      userName: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(3)]],
 
     });
 
@@ -26,22 +31,22 @@ password:['',[Validators.required,Validators.minLength(8)]],
     return this.loginForm.controls[controlName].hasError(errorName);
   };
 
-login(){
+  login() {
+    this._loginService.login(this.loginForm.value);
 
-  this._loginService.login(this.loginForm.value);
-  
-}
+  }
+
   ngOnInit(): void {
 
   }
-   getInputType() {
+  getInputType() {
     if (this.showPassword) {
       return 'text';
     }
     return 'password';
   }
-  toggleShowPassword (){
-    this.showPassword=!this.showPassword;
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
   }
 
 }

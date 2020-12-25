@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
-import { NbButtonModule, NbCardModule, NbFormFieldModule, NbIconModule, NbInputModule, NbLayoutModule, NbThemeModule } 
-from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbFormFieldModule, NbIconModule, NbInputModule, NbLayoutModule, NbThemeModule }
+  from '@nebular/theme';
 
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -16,11 +16,11 @@ import { CookieService } from 'ngx-cookie-service';
 @NgModule({
   declarations: [LoginComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA], // <<<=== add this line
-  providers: [AuthService,CookieService ],
+  providers: [AuthService, CookieService],
   imports: [
     CommonModule,
     AuthRoutingModule,
-    NbThemeModule.forRoot({name:"default"}),
+    NbThemeModule.forRoot({ name: "default" }),
     NbButtonModule,
     NbLayoutModule,
     NbInputModule,
@@ -30,7 +30,6 @@ import { CookieService } from 'ngx-cookie-service';
     NbFormFieldModule,
     NbEvaIconsModule,
     HttpClientModule
-  
   ]
 })
 export class AuthModule { }

@@ -1,8 +1,8 @@
 export interface UserLoginModel {
-    status:boolean,
-    companyName:string,
-    companyLogo:string,
-    token:string
-    
-    }
+    Password: string,
+    UserName: string,
+    UserId: string,
+    token: string
+
+}
 

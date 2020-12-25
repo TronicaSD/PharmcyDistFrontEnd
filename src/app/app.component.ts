@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'ERP';
-  diraction:string='ltr';
+  title = 'PharmcyDistribuation';
+  diraction: string = 'ltr';
 }
