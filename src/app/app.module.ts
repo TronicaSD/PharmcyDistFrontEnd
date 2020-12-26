@@ -16,34 +16,24 @@ import {
 } from '@nebular/theme';
 
 /***Components */
-import { PublicService } from '../app/Service/Public.Service/public-service.service';
-import { HomeComponent } from './Components/home/home.component';
-import { SidebarRightComponent } from './Components/home/sidebar-right/sidebar-right.component';
-import { DrugsComponent } from './Components/drugs/drugs.component';
-import { MenuChildrenComponent } from './Components/home/menu-children/menu-children.component';
+
 import { AuthService } from './auth/services/auth.service';
+import { PublicService } from './Service/Public.Service/public-service.service';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent,
-    SidebarRightComponent,
-    DrugsComponent,
-    MenuChildrenComponent,
+    AppComponent
+
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule,
     HttpClientModule,
-    NbLayoutModule,
-    NbSidebarModule,
-    NbThemeModule.forRoot({ name: 'default' }), // this will enable the default theme, you can change this to `cosmic` to enable the dark theme  
-    NbMenuModule.forRoot(),
-    NbCardModule,
+
+
   ],
-  providers: [PublicService, NbSidebarService, AuthService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -11,7 +11,7 @@ export class MenuChildrenComponent {
   items: NbMenuItem[] = [
     {
       title: 'Home',
-      link: '/Home'
+      link: '/home'
     },
     {
       title: 'Basic Info',
@@ -19,7 +19,7 @@ export class MenuChildrenComponent {
       children: [
         {
           title: 'Drugs',
-          link: '/Drugs'
+          link: 'home/drugs'
         },
 
       ],
