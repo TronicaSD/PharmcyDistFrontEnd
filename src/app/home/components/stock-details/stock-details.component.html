@@ -1,38 +1,36 @@
-<button class="btn btn-info" style="float: right;" (click)="openAddModal(AddModal)">Create New Drug</button>
+<button class="btn btn-info" style="float: right;" (click)="openAddModal(AddModal)">Add New Drug To Stock</button>
 
 <table class="table">
   <thead>
     <tr>
       <th>ID</th>
-      <th>Name</th>
+      <th>Drug Name</th>
+      <th>Quantity</th>
       <th>Action</th>
-
-
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let drug of Drugs;let i =index">
+    <tr *ngFor="let St of StockDetails;let i =index">
       <td>{{i +1}}</td>
-      <td>{{drug.drugName}}</td>
+      <td>{{St.drugName}}</td>
+      <td>{{St.quantity}}</td>
       <td>
-        <button class="btn btn-warning" (click)="openEditModal(EditModal,drug.id)">Edit</button> |
-        <button class="btn btn-danger" (click)="openDeleteModal(DeleteModal,drug)">Delete</button>
+        <button class="btn btn-warning" (click)="openEditModal(EditModal,St.id)">Edit</button> |
+        <button class="btn btn-danger" (click)="openDeleteModal(DeleteModal,St)">Delete</button>
       </td>
-
-
     </tr>
 
   </tbody>
 
 </table>
+
 <ng-template #AddModal let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Add Drug</h4>
+    <h4 class="modal-title" id="modal-basic-title">Add Drugs To Stock</h4>
 
   </div>
   <div class="modal-body">
-    <form [formGroup]="AddForm" (submit)="Add()">
-
+    <form [formGroup]="AddForm">
       <div class="row">
         <div class=" col-md-6">
 
@@ -40,16 +38,32 @@
 
             <label>Drug Name</label>
 
+            <nb-select placeholder="Select Showcase" [(selected)]="selectedItem" lass="form-control"
+              formControlName="DrugId">
+              <nb-option value="0">Option empty</nb-option>
+              <nb-option *ngFor="let d of Drugs" [value]="d.id">{{d.drugName}}</nb-option>
+            </nb-select>
+            <span *ngIf="hasError('DrugId', 'required')" style="color: red">Drug is required</span>
+
+          </div>
+        </div>
+        <div class=" col-md-6">
+
+          <div class="form-group">
+
+            <label>Quantity</label>
+
             <nb-form-field>
-              <input class="form-control" formControlName="drugName" type="text" nbInput fullWidth>
-              <span *ngIf="hasError('drugName', 'required')" style="color: red">drugName is required</span>
+              <input class="form-control" formControlName="Quantity" type="text" nbInput fullWidth>
+              <span *ngIf="hasError('Quantity', 'required')" style="color: red">Quantity is required</span>
 
             </nb-form-field>
 
           </div>
         </div>
-
       </div>
+
+
     </form>
 
   </div>
@@ -66,13 +80,14 @@
   </div>
 </ng-template>
 
+
 <ng-template #EditModal let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Edit Drug</h4>
 
   </div>
   <div class="modal-body">
-    <form [formGroup]="EditForm" (submit)="updateDrug()">
+    <form [formGroup]="EditForm" (submit)="updateStockDetails()">
 
       <div class="row">
         <div class=" col-md-6">
@@ -81,9 +96,25 @@
 
             <label>Drug Name</label>
 
+            <nb-select placeholder="Select Showcase" [(selected)]="selectedItem" lass="form-control" disabled
+              formControlName="DrugId">
+              <nb-option value="0">Option empty</nb-option>
+              <nb-option *ngFor="let d of Drugs" [value]="d.id">{{d.drugName}}</nb-option>
+            </nb-select>
+            <span *ngIf="hasError('DrugId', 'required')" style="color: red">Drug is required</span>
+
+          </div>
+        </div>
+
+        <div class=" col-md-6">
+
+          <div class="form-group">
+
+            <label>Quantity</label>
+
             <nb-form-field>
-              <input class="form-control" formControlName="drugName" type="text" nbInput fullWidth>
-              <span *ngIf="hasError('drugName', 'required')" style="color: red">drugName is required</span>
+              <input class="form-control" formControlName="Quantity" type="text" nbInput fullWidth>
+              <span *ngIf="hasError('Quantity', 'required')" style="color: red">Quantity is required</span>
 
             </nb-form-field>
 
@@ -97,7 +128,7 @@
   <div class="row text-center  modal-footer">
     <div class="col-md-offset-3 col-md-3">
       <button type="button" class="btn btn-outline-success btn-md" [disabled]="EditForm.invalid" data-dismiss="modal"
-        (click)="updateDrug()">Save</button>
+        (click)="updateStockDetails()">Save</button>
     </div>
     <div class=" col-md-3">
       <button type="button" class="btn btn-danger btn-md" data-dismiss="modal"
@@ -105,6 +136,9 @@
     </div>
   </div>
 </ng-template>
+
+
+
 
 <ng-template #DeleteModal let-Dmodal>
   <div class="modal-header">
@@ -121,7 +155,7 @@
   <div class="row text-center  modal-footer">
     <div class="col-md-offset-3 col-md-3">
       <button type="button" class="btn btn-outline-success btn-md" data-dismiss="Dmodal"
-        (click)="DeleteDrug(DrugObject)">save</button>
+        (click)="DeleteStockDetails(StockDetailsObject)">save</button>
     </div>
     <div class=" col-md-3">
       <button type="button" class="btn btn-danger btn-md" data-dismiss="Dmodal"

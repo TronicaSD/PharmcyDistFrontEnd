@@ -1,33 +1,32 @@
-<button class="btn btn-info" style="float: right;" (click)="openAddModal(AddModal)">Create New Drug</button>
+<button class="btn btn-info" style="float: right;" (click)="openAddModal(AddModal)">Create New Pharmcy</button>
 
 <table class="table">
   <thead>
     <tr>
       <th>ID</th>
       <th>Name</th>
+      <th>Address</th>
       <th>Action</th>
-
-
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let drug of Drugs;let i =index">
+    <tr *ngFor="let ph of Pharmcies;let i =index">
       <td>{{i +1}}</td>
-      <td>{{drug.drugName}}</td>
+      <td>{{ph.pharmcyName}}</td>
+      <td>{{ph.address}}</td>
       <td>
-        <button class="btn btn-warning" (click)="openEditModal(EditModal,drug.id)">Edit</button> |
-        <button class="btn btn-danger" (click)="openDeleteModal(DeleteModal,drug)">Delete</button>
+        <button class="btn btn-warning" (click)="openEditModal(EditModal,ph.id)">Edit</button> |
+        <button class="btn btn-danger" (click)="openDeleteModal(DeleteModal,ph)">Delete</button>
       </td>
-
-
     </tr>
 
   </tbody>
 
 </table>
+
 <ng-template #AddModal let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Add Drug</h4>
+    <h4 class="modal-title" id="modal-basic-title">Add Pharmcy</h4>
 
   </div>
   <div class="modal-body">
@@ -38,11 +37,25 @@
 
           <div class="form-group">
 
-            <label>Drug Name</label>
+            <label>pharmcy Name</label>
 
             <nb-form-field>
-              <input class="form-control" formControlName="drugName" type="text" nbInput fullWidth>
-              <span *ngIf="hasError('drugName', 'required')" style="color: red">drugName is required</span>
+              <input class="form-control" formControlName="pharmcyName" type="text" nbInput fullWidth>
+              <span *ngIf="hasError('pharmcyName', 'required')" style="color: red">pharmcy Name is required</span>
+
+            </nb-form-field>
+
+          </div>
+        </div>
+        <div class=" col-md-6">
+
+          <div class="form-group">
+
+            <label>Address</label>
+
+            <nb-form-field>
+              <input class="form-control" formControlName="address" type="text" nbInput fullWidth>
+              <span *ngIf="hasError('address', 'required')" style="color: red">Address is required</span>
 
             </nb-form-field>
 
@@ -66,30 +79,44 @@
   </div>
 </ng-template>
 
+
 <ng-template #EditModal let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Edit Drug</h4>
+    <h4 class="modal-title" id="modal-basic-title">Edit Pharmcy</h4>
 
   </div>
   <div class="modal-body">
-    <form [formGroup]="EditForm" (submit)="updateDrug()">
+    <form [formGroup]="EditForm" (submit)="updatePharmcy()">
 
       <div class="row">
         <div class=" col-md-6">
 
           <div class="form-group">
 
-            <label>Drug Name</label>
+            <label>Pharmcy Name</label>
 
             <nb-form-field>
-              <input class="form-control" formControlName="drugName" type="text" nbInput fullWidth>
-              <span *ngIf="hasError('drugName', 'required')" style="color: red">drugName is required</span>
+              <input class="form-control" formControlName="pharmcyName" type="text" nbInput fullWidth>
+              <span *ngIf="hasError('pharmcyName', 'required')" style="color: red">PharmcyName is required</span>
 
             </nb-form-field>
 
           </div>
         </div>
+        <div class=" col-md-6">
 
+          <div class="form-group">
+
+            <label>Pharmcy Name</label>
+
+            <nb-form-field>
+              <input class="form-control" formControlName="address" type="text" nbInput fullWidth>
+              <span *ngIf="hasError('address', 'required')" style="color: red">address is required</span>
+
+            </nb-form-field>
+
+          </div>
+        </div>
       </div>
     </form>
   </div>
@@ -97,7 +124,7 @@
   <div class="row text-center  modal-footer">
     <div class="col-md-offset-3 col-md-3">
       <button type="button" class="btn btn-outline-success btn-md" [disabled]="EditForm.invalid" data-dismiss="modal"
-        (click)="updateDrug()">Save</button>
+        (click)="updatePharmcy()">Save</button>
     </div>
     <div class=" col-md-3">
       <button type="button" class="btn btn-danger btn-md" data-dismiss="modal"
@@ -121,7 +148,7 @@
   <div class="row text-center  modal-footer">
     <div class="col-md-offset-3 col-md-3">
       <button type="button" class="btn btn-outline-success btn-md" data-dismiss="Dmodal"
-        (click)="DeleteDrug(DrugObject)">save</button>
+        (click)="DeletePharmcy(PharmcyObject)">save</button>
     </div>
     <div class=" col-md-3">
       <button type="button" class="btn btn-danger btn-md" data-dismiss="Dmodal"

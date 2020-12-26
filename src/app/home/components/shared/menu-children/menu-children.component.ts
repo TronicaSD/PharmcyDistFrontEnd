@@ -21,7 +21,23 @@ export class MenuChildrenComponent {
           title: 'Drugs',
           link: 'home/drugs'
         },
+        {
+          title: 'Pharmcies',
+          link: 'home/pharmcies'
+        },
+        {
+          title: 'Stock Details',
+          link: 'home/stockDetails'
+        },
 
+        {
+          title: 'Samples',
+          link: 'home/Samples'
+        },
+        {
+          title: 'Invoice',
+          link: 'home/Invoice'
+        },
       ],
     }
 

@@ -2,51 +2,64 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PublicService } from 'src/app/Service/Public.Service/public-service.service';
-import { ToasterService } from 'src/app/Service/Toaster.Service/toaster.service';
-import { IDrug } from '../../interface/IDrug';
+import { IStockDetails } from '../../interface/IStockDetails';
 
 @Component({
-  selector: 'app-drugs',
-  templateUrl: './drugs.component.html',
-  styleUrls: ['./drugs.component.css']
+  selector: 'app-stock-details',
+  templateUrl: './stock-details.component.html',
+  styleUrls: ['./stock-details.component.css']
 })
-export class DrugsComponent implements OnInit {
-  Drugs: any;
+export class StockDetailsComponent implements OnInit {
+  selectedItem = '0';
+  StockDetails: any;
   closeResult: string;
   AddForm: FormGroup;
   EditForm: FormGroup;
-  DrugObject: IDrug = {
+  StockDetailsObject: IStockDetails = {
     drugName: "",
-    id: 0
+    id: 0,
+    drugId: 0,
+    quantity: 0
+
   };
-  UpdateDrugObject: IDrug =
+  UpdateStockDetailsObject: IStockDetails =
     {
       drugName: "",
-      id: 0
+      id: 0,
+      drugId: 0,
+      quantity: 0
     };
+  Drugs: any;
   constructor(private _PublicService: PublicService
     , private modalService: NgbModal
     , private _formbuilder: FormBuilder
   ) {
 
     this.AddForm = this._formbuilder.group({
-      drugName: ['', Validators.required],
+      DrugId: ['', Validators.required],
+      Quantity: ['', Validators.required],
+
 
     });
 
     this.EditForm = this._formbuilder.group({
-      drugName: ['', Validators.required],
+      DrugId: ['', Validators.required],
+      Quantity: ['', Validators.required],
 
     });
   }
 
   ngOnInit(): void {
+    this.getAllStockDetails();
     this.getAllDrugs();
   }
   ClearData() {
-    this.DrugObject = {
+    this.StockDetailsObject = {
+      drugName: "",
       id: 0,
-      drugName: ''
+      drugId: 0,
+      quantity: 0
+
     }
   }
   getAllDrugs() {
@@ -57,15 +70,23 @@ export class DrugsComponent implements OnInit {
 
     });
   }
+  getAllStockDetails() {
+    debugger;
+    this._PublicService.getAll("StockDetails", 'ViewGetAll').subscribe(res => {
+      this.StockDetails = res;
+      debugger;
+
+    });
+  }
   public hasError = (controlName: string, errorName: string) => {
     return this.AddForm.controls[controlName].hasError(errorName);
   };
   //add
   Add() {
     debugger;
-    this._PublicService.Add('Drug', 'AddData', this.AddForm.value).subscribe((Response) => {
+    this._PublicService.Add('StockDetails', 'AddData', this.AddForm.value).subscribe((Response) => {
       this.modalService.dismissAll();
-      this.getAllDrugs();
+      this.getAllStockDetails();
       // this._ToasterService.FireMessagePopUp(1);
     }, (error) => {
       // this._ToasterService.FireMessagePopUp(2);
@@ -83,10 +104,12 @@ export class DrugsComponent implements OnInit {
   //
   openEditModal(content: any, Id: any) {
     debugger;
-    const result: IDrug = this.Drugs.find(obj => obj.id === Id);
-    this.DrugObject = result;
+    const result: IStockDetails = this.StockDetails.find(obj => obj.id === Id);
+    this.StockDetailsObject = result;
     debugger;
-    this.EditForm.controls['drugName'].setValue(this.DrugObject.drugName);
+    this.EditForm.controls['DrugId'].setValue(this.StockDetailsObject.drugId);
+    this.EditForm.controls['Quantity'].setValue(this.StockDetailsObject.quantity);
+
     debugger;
 
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
@@ -95,18 +118,20 @@ export class DrugsComponent implements OnInit {
     });
   }
   //Edit Modal
-  updateDrug() {
-    debugger;
-    this.UpdateDrugObject = {
-      drugName: this.EditForm.value.drugName,
-      id: this.DrugObject.id
+  updateStockDetails() {
+    this.UpdateStockDetailsObject = {
+      drugId: this.EditForm.value.DrugId,
+      id: this.StockDetailsObject.id,
+      quantity: this.EditForm.value.Quantity,
+      drugName: ""
+
     }
     debugger;
-    this._PublicService.Update('Drug', 'UpdateData', this.UpdateDrugObject).subscribe((Response) => {
-      this.Drugs = Response;
+    this._PublicService.Update('StockDetails', 'UpdateData', this.UpdateStockDetailsObject).subscribe((Response) => {
+      this.StockDetails = Response;
       this.modalService.dismissAll();
       // this._ToasterService.FireMessagePopUp(1);
-      this.getAllDrugs();
+      this.getAllStockDetails();
     }, (error) => {
       // this._ToasterService.FireMessagePopUp(2);
     });
@@ -116,12 +141,12 @@ export class DrugsComponent implements OnInit {
 
 
   //Delete Modal
-  DeleteDrug(Object: any) {
+  DeleteStockDetails(Object: any) {
     debugger;
-    this._PublicService.Delete("Drug", 'DeleteData', Object.id).subscribe((Response) => {
+    this._PublicService.Delete("StockDetails", 'DeleteData', Object.id).subscribe((Response) => {
       this.modalService.dismissAll();
       // this._ToasterService.FireMessagePopUp(1);
-      this.getAllDrugs();
+      this.getAllStockDetails();
     }, (error) => {
       // this._ToasterService.FireMessagePopUp(2);
     });
@@ -130,8 +155,8 @@ export class DrugsComponent implements OnInit {
   openDeleteModal(content: any, Object: any) {
 
     debugger;
-    const result: IDrug = this.Drugs.find((obj: any) => obj.id === Object.id);
-    this.DrugObject = result;
+    const result: IStockDetails = this.StockDetails.find((obj: any) => obj.id === Object.id);
+    this.StockDetailsObject = result;
     debugger;
 
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
@@ -142,4 +167,4 @@ export class DrugsComponent implements OnInit {
 
 
 
-} 
+}

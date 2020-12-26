@@ -3,26 +3,29 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PublicService } from 'src/app/Service/Public.Service/public-service.service';
 import { ToasterService } from 'src/app/Service/Toaster.Service/toaster.service';
-import { IDrug } from '../../interface/IDrug';
-
+import { IPharmcy } from '../../interface/IPharmcy';
 @Component({
-  selector: 'app-drugs',
-  templateUrl: './drugs.component.html',
-  styleUrls: ['./drugs.component.css']
+  selector: 'app-pharmcy',
+  templateUrl: './pharmcy.component.html',
+  styleUrls: ['./pharmcy.component.css']
 })
-export class DrugsComponent implements OnInit {
-  Drugs: any;
+export class PharmcyComponent implements OnInit {
+
+  Pharmcies: any;
   closeResult: string;
   AddForm: FormGroup;
   EditForm: FormGroup;
-  DrugObject: IDrug = {
-    drugName: "",
-    id: 0
+  PharmcyObject: IPharmcy = {
+    pharmcyName: "",
+    id: 0,
+    address: ""
+
   };
-  UpdateDrugObject: IDrug =
+  UpdatePharmcyObject: IPharmcy =
     {
-      drugName: "",
-      id: 0
+      pharmcyName: "",
+      id: 0,
+      address: ""
     };
   constructor(private _PublicService: PublicService
     , private modalService: NgbModal
@@ -30,29 +33,34 @@ export class DrugsComponent implements OnInit {
   ) {
 
     this.AddForm = this._formbuilder.group({
-      drugName: ['', Validators.required],
+      pharmcyName: ['', Validators.required],
+      address: ['', Validators.required],
+
 
     });
 
     this.EditForm = this._formbuilder.group({
-      drugName: ['', Validators.required],
+      pharmcyName: ['', Validators.required],
+      address: ['', Validators.required],
 
     });
   }
 
   ngOnInit(): void {
-    this.getAllDrugs();
+    this.getAllPharmcies();
   }
   ClearData() {
-    this.DrugObject = {
+    this.PharmcyObject = {
       id: 0,
-      drugName: ''
+      pharmcyName: '',
+      address: ""
+
     }
   }
-  getAllDrugs() {
+  getAllPharmcies() {
     debugger;
-    this._PublicService.getAll("Drug", 'ViewGetAll').subscribe(res => {
-      this.Drugs = res;
+    this._PublicService.getAll("Pharmcy", 'ViewGetAll').subscribe(res => {
+      this.Pharmcies = res;
       debugger;
 
     });
@@ -63,9 +71,9 @@ export class DrugsComponent implements OnInit {
   //add
   Add() {
     debugger;
-    this._PublicService.Add('Drug', 'AddData', this.AddForm.value).subscribe((Response) => {
+    this._PublicService.Add('Pharmcy', 'AddData', this.AddForm.value).subscribe((Response) => {
       this.modalService.dismissAll();
-      this.getAllDrugs();
+      this.getAllPharmcies();
       // this._ToasterService.FireMessagePopUp(1);
     }, (error) => {
       // this._ToasterService.FireMessagePopUp(2);
@@ -83,10 +91,12 @@ export class DrugsComponent implements OnInit {
   //
   openEditModal(content: any, Id: any) {
     debugger;
-    const result: IDrug = this.Drugs.find(obj => obj.id === Id);
-    this.DrugObject = result;
+    const result: IPharmcy = this.Pharmcies.find(obj => obj.id === Id);
+    this.PharmcyObject = result;
     debugger;
-    this.EditForm.controls['drugName'].setValue(this.DrugObject.drugName);
+    this.EditForm.controls['pharmcyName'].setValue(this.PharmcyObject.pharmcyName);
+    this.EditForm.controls['address'].setValue(this.PharmcyObject.address);
+
     debugger;
 
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
@@ -95,18 +105,20 @@ export class DrugsComponent implements OnInit {
     });
   }
   //Edit Modal
-  updateDrug() {
+  updatePharmcy() {
     debugger;
-    this.UpdateDrugObject = {
-      drugName: this.EditForm.value.drugName,
-      id: this.DrugObject.id
+    this.UpdatePharmcyObject = {
+      pharmcyName: this.EditForm.value.pharmcyName,
+      id: this.PharmcyObject.id,
+      address: this.EditForm.value.address
+
     }
     debugger;
-    this._PublicService.Update('Drug', 'UpdateData', this.UpdateDrugObject).subscribe((Response) => {
-      this.Drugs = Response;
+    this._PublicService.Update('Pharmcy', 'UpdateData', this.UpdatePharmcyObject).subscribe((Response) => {
+      this.Pharmcies = Response;
       this.modalService.dismissAll();
       // this._ToasterService.FireMessagePopUp(1);
-      this.getAllDrugs();
+      this.getAllPharmcies();
     }, (error) => {
       // this._ToasterService.FireMessagePopUp(2);
     });
@@ -116,12 +128,12 @@ export class DrugsComponent implements OnInit {
 
 
   //Delete Modal
-  DeleteDrug(Object: any) {
+  DeletePharmcy(Object: any) {
     debugger;
-    this._PublicService.Delete("Drug", 'DeleteData', Object.id).subscribe((Response) => {
+    this._PublicService.Delete("Pharmcy", 'DeleteData', Object.id).subscribe((Response) => {
       this.modalService.dismissAll();
       // this._ToasterService.FireMessagePopUp(1);
-      this.getAllDrugs();
+      this.getAllPharmcies();
     }, (error) => {
       // this._ToasterService.FireMessagePopUp(2);
     });
@@ -130,8 +142,8 @@ export class DrugsComponent implements OnInit {
   openDeleteModal(content: any, Object: any) {
 
     debugger;
-    const result: IDrug = this.Drugs.find((obj: any) => obj.id === Object.id);
-    this.DrugObject = result;
+    const result: IPharmcy = this.Pharmcies.find((obj: any) => obj.id === Object.id);
+    this.PharmcyObject = result;
     debugger;
 
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
@@ -142,4 +154,4 @@ export class DrugsComponent implements OnInit {
 
 
 
-} 
+}
