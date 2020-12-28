@@ -1,6 +1,6 @@
-<button class="btn btn-info" style="float: right;" (click)="openAddModal(AddModal)">Add New Drug To Stock</button>
+<button nbButton  status="primary" style="float: right;" (click)="openAddModal(AddModal)">Add New Drug To Stock</button>
 
-<table class="table">
+<table class="table table-res">
   <thead>
     <tr>
       <th>ID</th>
@@ -15,8 +15,8 @@
       <td>{{St.drugName}}</td>
       <td>{{St.quantity}}</td>
       <td>
-        <button class="btn btn-warning" (click)="openEditModal(EditModal,St.id)">Edit</button> |
-        <button class="btn btn-danger" (click)="openDeleteModal(DeleteModal,St)">Delete</button>
+        <button  nbButton status="warning"(click)="openEditModal(EditModal,St.id)">Edit</button> |
+        <button  nbButton status="danger" (click)="openDeleteModal(DeleteModal,St)">Delete</button>
       </td>
     </tr>
 
@@ -25,11 +25,14 @@
 </table>
 
 <ng-template #AddModal let-modal>
-  <div class="modal-header">
+  <nb-card>
+
+  <nb-card-header>
     <h4 class="modal-title" id="modal-basic-title">Add Drugs To Stock</h4>
 
-  </div>
-  <div class="modal-body">
+  </nb-card-header>
+
+  <nb-card-body>
     <form [formGroup]="AddForm">
       <div class="row">
         <div class=" col-md-6">
@@ -66,27 +69,27 @@
 
     </form>
 
-  </div>
+  </nb-card-body>
 
-  <div class="row text-center  modal-footer">
-    <div class="col-md-offset-3 col-md-3">
-      <button type="button" class="btn btn-outline-success btn-md" [disabled]="AddForm.invalid" data-dismiss="modal"
+  <nb-card-footer>
+
+      <button type="button" nbButton status="success" [disabled]="AddForm.invalid" data-dismiss="modal"
         (click)="Add()">Save</button>
-    </div>
-    <div class=" col-md-3">
-      <button type="button" class="btn btn-danger btn-md" data-dismiss="modal"
+ 
+      <button type="button" nbButton status="danger" data-dismiss="modal"
         (click)="modal.dismiss('Cross click')">Cancel</button>
-    </div>
-  </div>
+ 
+  </nb-card-footer>
+</nb-card>
 </ng-template>
 
 
-<ng-template #EditModal let-modal>
-  <div class="modal-header">
+<ng-template #EditModal let-modal><nb-card>
+  <nb-card-header>
     <h4 class="modal-title" id="modal-basic-title">Edit Drug</h4>
 
-  </div>
-  <div class="modal-body">
+  </nb-card-header>
+  <nb-card-body>
     <form [formGroup]="EditForm" (submit)="updateStockDetails()">
 
       <div class="row">
@@ -123,43 +126,50 @@
 
       </div>
     </form>
-  </div>
+  </nb-card-body>
 
-  <div class="row text-center  modal-footer">
-    <div class="col-md-offset-3 col-md-3">
-      <button type="button" class="btn btn-outline-success btn-md" [disabled]="EditForm.invalid" data-dismiss="modal"
+  <nb-card-footer>
+  
+      <button type="button" nbButton status="success" [disabled]="EditForm.invalid" data-dismiss="modal"
         (click)="updateStockDetails()">Save</button>
-    </div>
-    <div class=" col-md-3">
-      <button type="button" class="btn btn-danger btn-md" data-dismiss="modal"
+
+
+      <button type="button" nbButton status="danger" data-dismiss="modal"
         (click)="modal.dismiss('Cross click')">Cancel</button>
-    </div>
-  </div>
+ 
+  </nb-card-footer>
+</nb-card>
 </ng-template>
 
 
 
 
 <ng-template #DeleteModal let-Dmodal>
-  <div class="modal-header">
+  <nb-card>
+  <nb-card-header>
     <h4 class="modal-title" id="modal-basic-title">Delete</h4>
 
-  </div>
-  <div class="modal-body">
+  </nb-card-header>
+  <nb-card-body>
     <div class="row">
-      AreYouSureYouWantToDeleteThisItem
-    </div>
+      <div class="col-md-8">
+        <p class="text-danger">
+         confirm to delete this item ?
+        </p>
+      </div>
+       </div>
 
-  </div>
+  </nb-card-body>
 
-  <div class="row text-center  modal-footer">
-    <div class="col-md-offset-3 col-md-3">
-      <button type="button" class="btn btn-outline-success btn-md" data-dismiss="Dmodal"
+  <nb-card-footer>
+ 
+      <button type="button" nbButton status="success" data-dismiss="Dmodal"
         (click)="DeleteStockDetails(StockDetailsObject)">save</button>
-    </div>
-    <div class=" col-md-3">
-      <button type="button" class="btn btn-danger btn-md" data-dismiss="Dmodal"
+ 
+   
+      <button type="button" nbButton status="danger" data-dismiss="Dmodal"
         (click)="Dmodal.dismiss('Cross click')">Cancel</button>
-    </div>
-  </div>
+   
+  </nb-card-footer>
+</nb-card>
 </ng-template>

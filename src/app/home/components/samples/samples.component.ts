@@ -112,7 +112,7 @@ export class SamplesComponent implements OnInit {
 
   openAddModal(content: any) {
 
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+    this.modalService.open(content, { size:'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });
@@ -125,7 +125,7 @@ export class SamplesComponent implements OnInit {
     this.EditForm.controls['qunantity'].setValue(this.SampleObject.qunantity);
     this.EditForm.controls['DoctorName'].setValue(this.SampleObject.doctorName);
     debugger;
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+    this.modalService.open(content, { size:'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });
@@ -175,7 +175,7 @@ export class SamplesComponent implements OnInit {
     this.SampleObject = result;
     debugger;
 
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+    this.modalService.open(content, { size:'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });

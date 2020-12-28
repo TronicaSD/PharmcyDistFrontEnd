@@ -133,7 +133,7 @@ export class InvoiceComponent implements OnInit {
 
   openAddModal(content: any) {
 
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+    this.modalService.open(content, { size:'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });
@@ -149,7 +149,7 @@ export class InvoiceComponent implements OnInit {
 
     debugger;
 
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+    this.modalService.open(content, { size:'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });
@@ -196,7 +196,7 @@ export class InvoiceComponent implements OnInit {
     this.InvoiceObject = result;
     debugger;
 
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+    this.modalService.open(content, { size:'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });

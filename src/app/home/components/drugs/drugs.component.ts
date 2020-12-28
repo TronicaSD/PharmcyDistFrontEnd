@@ -30,12 +30,12 @@ export class DrugsComponent implements OnInit {
   ) {
 
     this.AddForm = this._formbuilder.group({
-      drugName: ['', Validators.required],
+      drugName: [null, Validators.required],
 
     });
 
     this.EditForm = this._formbuilder.group({
-      drugName: ['', Validators.required],
+      drugName: [null, Validators.required],
 
     });
   }
@@ -50,22 +50,31 @@ export class DrugsComponent implements OnInit {
     }
   }
   getAllDrugs() {
-    debugger;
+    
     this._PublicService.getAll("Drug", 'ViewGetAll').subscribe(res => {
       this.Drugs = res;
-      debugger;
+      
 
     });
   }
   public hasError = (controlName: string, errorName: string) => {
+  
     return this.AddForm.controls[controlName].hasError(errorName);
   };
+
+  public hasEditError = (controlName: string, errorName: string) => {
+  
+    return this.EditForm.controls[controlName].hasError(errorName);
+  };
+  
+
   //add
   Add() {
-    debugger;
+    
     this._PublicService.Add('Drug', 'AddData', this.AddForm.value).subscribe((Response) => {
       this.modalService.dismissAll();
       this.getAllDrugs();
+      this.AddForm.reset();
       // this._ToasterService.FireMessagePopUp(1);
     }, (error) => {
       // this._ToasterService.FireMessagePopUp(2);
@@ -75,33 +84,38 @@ export class DrugsComponent implements OnInit {
 
   openAddModal(content: any) {
 
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+    this.modalService.open(content,
+       {
+             size: "lg",
+            centered: false,
+            backdrop: true,
+            keyboard: false,
+            backdropClass: "modal-backdrop"
+      
+      }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });
   }
   //
   openEditModal(content: any, Id: any) {
-    debugger;
     const result: IDrug = this.Drugs.find(obj => obj.id === Id);
     this.DrugObject = result;
-    debugger;
     this.EditForm.controls['drugName'].setValue(this.DrugObject.drugName);
-    debugger;
 
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+    this.modalService.open(content, { size:'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });
   }
   //Edit Modal
   updateDrug() {
-    debugger;
+    
     this.UpdateDrugObject = {
       drugName: this.EditForm.value.drugName,
       id: this.DrugObject.id
     }
-    debugger;
+    
     this._PublicService.Update('Drug', 'UpdateData', this.UpdateDrugObject).subscribe((Response) => {
       this.Drugs = Response;
       this.modalService.dismissAll();
@@ -117,7 +131,7 @@ export class DrugsComponent implements OnInit {
 
   //Delete Modal
   DeleteDrug(Object: any) {
-    debugger;
+    
     this._PublicService.Delete("Drug", 'DeleteData', Object.id).subscribe((Response) => {
       this.modalService.dismissAll();
       // this._ToasterService.FireMessagePopUp(1);
@@ -129,12 +143,12 @@ export class DrugsComponent implements OnInit {
   }
   openDeleteModal(content: any, Object: any) {
 
-    debugger;
+    
     const result: IDrug = this.Drugs.find((obj: any) => obj.id === Object.id);
     this.DrugObject = result;
-    debugger;
+    
 
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+    this.modalService.open(content, { size:'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });
