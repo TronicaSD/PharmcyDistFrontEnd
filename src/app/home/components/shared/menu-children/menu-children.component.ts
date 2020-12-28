@@ -9,34 +9,33 @@ import { NbMenuItem } from '@nebular/theme';
 export class MenuChildrenComponent {
 
   items: NbMenuItem[] = [
+ 
     {
-      title: 'Home',
-      link: '/home'
-    },
-    {
-      title: 'Basic Info',
-      expanded: false,
+      title: 'Config',
+      link: '/home',
+
+      expanded: true,
       children: [
         {
           title: 'Drugs',
-          link: 'home/drugs'
+          link: 'drugs'
         },
         {
           title: 'Pharmcies',
-          link: 'home/pharmcies'
+          link: 'pharmcies'
         },
         {
           title: 'Stock Details',
-          link: 'home/stockDetails'
+          link: 'stockDetails'
         },
 
         {
           title: 'Samples',
-          link: 'home/Samples'
+          link: 'Samples'
         },
         {
           title: 'Invoice',
-          link: 'home/Invoice'
+          link: 'Invoice'
         },
       ],
     }

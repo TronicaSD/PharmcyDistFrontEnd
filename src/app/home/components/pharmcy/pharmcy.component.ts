@@ -58,10 +58,8 @@ export class PharmcyComponent implements OnInit {
     }
   }
   getAllPharmcies() {
-    debugger;
     this._PublicService.getAll("Pharmcy", 'ViewGetAll').subscribe(res => {
       this.Pharmcies = res;
-      debugger;
 
     });
   }
@@ -86,14 +84,13 @@ export class PharmcyComponent implements OnInit {
 
   openAddModal(content: any) {
 
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+    this.modalService.open(content, { size:'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });
   }
   //
   openEditModal(content: any, Id: any) {
-    debugger;
     const result: IPharmcy = this.Pharmcies.find(obj => obj.id === Id);
     this.PharmcyObject = result;
     debugger;
@@ -102,7 +99,7 @@ export class PharmcyComponent implements OnInit {
 
     debugger;
 
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+    this.modalService.open(content, { size:'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });
@@ -149,7 +146,7 @@ export class PharmcyComponent implements OnInit {
     this.PharmcyObject = result;
     debugger;
 
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+    this.modalService.open(content, { size:'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });

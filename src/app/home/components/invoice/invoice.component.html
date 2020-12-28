@@ -1,4 +1,4 @@
-<button class="btn btn-info" style="float: right;" (click)="openAddModal(AddModal)">Add New Invoice</button>
+<button nbButton  status="primary" style="float: right;" (click)="openAddModal(AddModal)">Add New Invoice</button>
 
 <table class="table">
   <thead>
@@ -24,8 +24,8 @@
       <td>{{iv.totalPrice}}</td>
 
       <td>
-        <!-- <button class="btn btn-warning" (click)="openEditModal(EditModal,iv.id)">Edit</button> | -->
-        <button class="btn btn-danger" (click)="openDeleteModal(DeleteModal,iv)">Delete</button>
+        <!-- <button  nbButton status="warning"(click)="openEditModal(EditModal,iv.id)">Edit</button> | -->
+        <button  nbButton status="danger" (click)="openDeleteModal(DeleteModal,iv)">Delete</button>
       </td>
     </tr>
 
@@ -35,11 +35,12 @@
 
 
 <ng-template #AddModal let-modal>
-  <div class="modal-header">
+  <nb-card>
+  <nb-card-header>
     <h4 class="modal-title" id="modal-basic-title">Add Drugs To Stock</h4>
 
-  </div>
-  <div class="modal-body">
+  </nb-card-header>
+  <nb-card-body>
     <form [formGroup]="AddForm">
 
       <div class="row">
@@ -141,41 +142,46 @@
       </table>
     </form>
 
-  </div>
+  </nb-card-body>
 
-  <div class="row text-center  modal-footer">
-    <div class="col-md-offset-3 col-md-3">
-      <button type="button" class="btn btn-outline-success btn-md" [disabled]="AddForm.invalid" data-dismiss="modal"
+  <nb-card-footer>
+   
+      <button type="button" nbButton status="success" [disabled]="AddForm.invalid" data-dismiss="modal"
         (click)="Add()">Save</button>
-    </div>
-    <div class=" col-md-3">
-      <button type="button" class="btn btn-danger btn-md" data-dismiss="modal"
+
+      <button type="button" nbButton status="danger" data-dismiss="modal"
         (click)="modal.dismiss('Cross click')">Cancel</button>
-    </div>
-  </div>
+
+  </nb-card-footer>
+</nb-card>
 </ng-template>
 
 
 <ng-template #DeleteModal let-Dmodal>
-  <div class="modal-header">
+  <nb-card>
+  <nb-card-header>
     <h4 class="modal-title" id="modal-basic-title">Delete</h4>
 
-  </div>
-  <div class="modal-body">
+  </nb-card-header>
+  <nb-card-body>
     <div class="row">
-      AreYouSureYouWantToDeleteThisItem
+   <div class="col-md-8">
+     <p class="text-danger">
+      confirm to delete this item ?
+     </p>
+   </div>
     </div>
 
-  </div>
+  </nb-card-body>
 
-  <div class="row text-center  modal-footer">
-    <div class="col-md-offset-3 col-md-3">
-      <button type="button" class="btn btn-outline-success btn-md" data-dismiss="Dmodal"
+  <nb-card-footer>
+ 
+      <button type="button" nbButton status="success" data-dismiss="Dmodal"
         (click)="DeleteInvoice(InvoiceObject)">save</button>
-    </div>
-    <div class=" col-md-3">
-      <button type="button" class="btn btn-danger btn-md" data-dismiss="Dmodal"
+
+      <button type="button" nbButton status="danger" data-dismiss="Dmodal"
         (click)="Dmodal.dismiss('Cross click')">Cancel</button>
-    </div>
-  </div>
+
+  </nb-card-footer>
+</nb-card>
 </ng-template>

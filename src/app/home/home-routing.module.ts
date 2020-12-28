@@ -9,20 +9,21 @@ import { InvoiceComponent } from './components/invoice/invoice.component';
 import { HomeComponent } from './home.component';
 
 const routes: Routes = [
-
-  {
+ 
+   {
     path: '', component: HomeComponent,
     children: [
-      { path: 'home/drugs', component: DrugsComponent },
-      { path: 'home/pharmcies', component: PharmcyComponent },
-      { path: 'home/stockDetails', component: StockDetailsComponent },
-      { path: 'home/Samples', component: SamplesComponent },
-      { path: 'home/Invoice', component: InvoiceComponent },
-      { path: '', redirectTo: '' },
-      { path: '**', redirectTo: '' },
+      { path: 'drugs', component: DrugsComponent },
+      { path: 'pharmcies', component: PharmcyComponent },
+      { path: 'stockDetails', component: StockDetailsComponent },
+      { path: 'Samples', component: SamplesComponent },
+      { path: 'Invoice', component: InvoiceComponent },
+    
     ]
 
-  }
+  },
+  { path: '', redirectTo: '' },
+  { path: '**', redirectTo: '' },
 
 
 
