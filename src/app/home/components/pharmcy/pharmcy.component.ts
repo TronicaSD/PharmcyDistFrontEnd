@@ -68,6 +68,9 @@ export class PharmcyComponent implements OnInit {
   public hasError = (controlName: string, errorName: string) => {
     return this.AddForm.controls[controlName].hasError(errorName);
   };
+  public hasErrorEdit = (controlName: string, errorName: string) => {
+    return this.EditForm.controls[controlName].hasError(errorName);
+  };
   //add
   Add() {
     debugger;

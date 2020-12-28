@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PublicService } from 'src/app/Service/Public.Service/public-service.service';
 import { IInvoice } from '../../interface/IInvoice';
@@ -24,30 +24,50 @@ export class InvoiceComponent implements OnInit {
   EditForm: FormGroup;
   InvoiceObject: IInvoice = {
     id: 0,
-    InvoiceNumber: 0,
-    PharmcyId: 0,
-    PharmcyName: '',
-    InvoiceType: 0,
-    InvoiceTypeText: '',
-    InvoiceDate: new Date(),
-    TotalPrice: 0,
-    DisCount: 0,
+    invoiceNumber: 0,
+    pharmcyId: 0,
+    pharmcyName: '',
+    invoiceType: 0,
+    invoiceTypeText: '',
+    invoiceDate: new Date(),
+    totalPrice: 0,
+    disCount: 0,
+
+    invoiceDetails: [{
+      drugId: 0,
+      drugName: "",
+      invoiceId: 0,
+      price: 0,
+      qunantity: 0,
+      total: 0,
+      id: 0
+    }]
 
   };
   UpdateInvoiceObject: IInvoice =
     {
       id: 0,
-      InvoiceNumber: 0,
-      PharmcyId: 0,
-      PharmcyName: '',
-      InvoiceType: 0,
-      InvoiceTypeText: '',
-      InvoiceDate: new Date(),
-      TotalPrice: 0,
-      DisCount: 0,
+      invoiceNumber: 0,
+      pharmcyId: 0,
+      pharmcyName: '',
+      invoiceType: 0,
+      invoiceTypeText: '',
+      invoiceDate: new Date(),
+      totalPrice: 0,
+      disCount: 0,
+      invoiceDetails: [{
+        drugId: 0,
+        drugName: "",
+        invoiceId: 0,
+        price: 0,
+        qunantity: 0,
+        total: 0,
+        id: 0
+      }]
     };
   Drugs: any;
   Pharmcies: Object;
+  StockDetails: Object;
   constructor(private _PublicService: PublicService
     , private modalService: NgbModal
     , private _formbuilder: FormBuilder
@@ -61,7 +81,9 @@ export class InvoiceComponent implements OnInit {
       PharmcyName: ['', Validators.required],
       TotalPrice: ['', Validators.required],
       DisCount: ['', Validators.required],
-
+      invoiceDetails: this._formbuilder.array([
+        new FormControl()
+      ])
 
     });
 
@@ -74,20 +96,29 @@ export class InvoiceComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllInvoice();
-    this.getAllDrugs();
+    this.getAllStockDetails();
     this.getAllPharmcies();
   }
   ClearData() {
     this.InvoiceObject = {
       id: 0,
-      InvoiceNumber: 0,
-      PharmcyId: 0,
-      PharmcyName: '',
-      InvoiceType: 0,
-      InvoiceTypeText: '',
-      InvoiceDate: new Date(),
-      TotalPrice: 0,
-      DisCount: 0,
+      invoiceNumber: 0,
+      pharmcyId: 0,
+      pharmcyName: '',
+      invoiceType: 0,
+      invoiceTypeText: '',
+      invoiceDate: new Date(),
+      totalPrice: 0,
+      disCount: 0,
+      invoiceDetails: [{
+        drugId: 0,
+        drugName: "",
+        invoiceId: 0,
+        price: 0,
+        qunantity: 0,
+        total: 0,
+        id: 0
+      }]
 
     }
   }
@@ -99,10 +130,10 @@ export class InvoiceComponent implements OnInit {
 
     });
   }
-  getAllDrugs() {
+  getAllStockDetails() {
     debugger;
-    this._PublicService.getAll("Drug", 'ViewGetAll').subscribe(res => {
-      this.Drugs = res;
+    this._PublicService.getAll("StockDetails", 'ViewGetAll').subscribe(res => {
+      this.StockDetails = res;
       debugger;
 
     });

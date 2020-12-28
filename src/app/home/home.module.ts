@@ -6,7 +6,7 @@ import { HomeComponent } from './home.component';
 import { DrugsComponent } from './components/drugs/drugs.component'
 import { SidebarRightComponent } from './components/shared/sidebar-right/sidebar-right.component';
 import { MenuChildrenComponent } from './components/shared/menu-children/menu-children.component';
-import { NbCardModule, NbDatepickerModule, NbFormFieldModule, NbInputModule, NbLayoutModule, NbMenuModule, NbSelectModule, NbSidebarModule, NbSidebarService, NbThemeModule } from '@nebular/theme';
+import { NbCardModule, NbDatepickerModule, NbFormFieldModule, NbIconModule, NbInputModule, NbLayoutModule, NbMenuModule, NbSelectModule, NbSidebarModule, NbSidebarService, NbThemeModule } from '@nebular/theme';
 import { PublicService } from '../Service/Public.Service/public-service.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -19,6 +19,7 @@ import { PharmcyComponent } from './components/pharmcy/pharmcy.component';
 import { StockDetailsComponent } from './components/stock-details/stock-details.component';
 import { SamplesComponent } from './components/samples/samples.component';
 import { InvoiceComponent } from './components/invoice/invoice.component';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,8 @@ import { InvoiceComponent } from './components/invoice/invoice.component';
     NbInputModule,
     NbSelectModule,
     NbDatepickerModule.forRoot(),
+    NbEvaIconsModule,
+    NbIconModule,
 
   ],
   providers: [PublicService, NbSidebarService, ToasterService, AuthService]

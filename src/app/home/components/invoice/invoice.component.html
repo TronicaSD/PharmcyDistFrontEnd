@@ -112,6 +112,33 @@
         </div>
       </div>
 
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Drug Name </th>
+            <th>Action </th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let iv of InvoiceObject.invoiceDetails;let i =index">
+            <td>
+              <nb-select placeholder="Select Showcase" [(selected)]="selectedItem" lass="form-control">
+                <nb-option value="0">Option empty</nb-option>
+                <nb-option *ngFor="let d of StockDetails" [value]="d.drugId">{{d.drugName}}</nb-option>
+              </nb-select>
+
+            </td>
+
+
+            <td>
+              <nb-icon icon="star"></nb-icon>
+            </td>
+          </tr>
+
+        </tbody>
+
+      </table>
     </form>
 
   </div>
