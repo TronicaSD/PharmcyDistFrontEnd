@@ -9,12 +9,12 @@ import { NbMenuItem } from '@nebular/theme';
 export class MenuChildrenComponent {
 
   items: NbMenuItem[] = [
- 
+
     {
-      title: 'Config',
+      title: 'Basic information',
       link: '/home',
 
-      expanded: true,
+      expanded: false,
       children: [
         {
           title: 'Drugs',
@@ -28,7 +28,26 @@ export class MenuChildrenComponent {
           title: 'Stock Details',
           link: 'stockDetails'
         },
+      ],
+    },
+    {
+      title: 'Stock',
+      link: '/home',
 
+      expanded: false,
+      children: [
+        {
+          title: 'Stock Details',
+          link: 'stockDetails'
+        }
+      ],
+    },
+    {
+      title: 'Operations',
+      link: '/home',
+
+      expanded: false,
+      children: [
         {
           title: 'Samples',
           link: 'Samples'
@@ -38,7 +57,7 @@ export class MenuChildrenComponent {
           link: 'Invoice'
         },
       ],
-    }
+    },
 
   ];
 }
