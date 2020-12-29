@@ -1,36 +1,38 @@
-@import '~nebular-icons/css/nebular-icons.css'; 
-.container{
-margin: 1%;
-padding: 2%;
+@import '~nebular-icons/css/nebular-icons.css';
+@import '~ngx-toastr/toastr';
+
+.container {
+  margin: 1%;
+  padding: 2%;
 
 }
 
-.table-res{
-    background-color: "#fff";
+.table-res {
+  background-color: "#fff";
 }
 
-.table-res thead{
-    background-color: #0f0f0f;
+.table-res thead {
+  background-color: #0f0f0f;
 
 }
-.table-res tr th , tr td {
-    color: #fff;
-    border-bottom: thin #fff 1px;
 
-    
+.table-res tr th,
+tr td {
+  color: #fff;
+  border-bottom: thin #fff 1px;
+
+
 }
 
-.modal-content{
- background-color: transparent !important;
+.modal-content {
+  background-color: transparent !important;
 }
 
-nb-card-footer{
-    text-align: end;
-}
-nb-card-footer button{
-
-    margin-right: 1%;
+nb-card-footer {
+  text-align: end;
 }
 
+nb-card-footer button {
 
-
+  margin-right: 1%;
+}

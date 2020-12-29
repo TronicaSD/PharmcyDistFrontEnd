@@ -1,12 +1,11 @@
-
 <div class="container">
   <div class="row">
     <div class="offset-9 col-md-3">
 
-    <button  nbButton  status="primary" (click)="openAddModal(AddModal)">Add New Drug</button>
+      <button nbButton status="primary" (click)="openAddModal(AddModal)">Add New Drug</button>
+    </div>
   </div>
-</div>
-<br>
+  <br>
 
 
   <table class="table table-res">
@@ -15,8 +14,8 @@
         <th>Id</th>
         <th>Name</th>
         <th>Action</th>
-  
-  
+
+
       </tr>
     </thead>
     <tbody>
@@ -24,127 +23,127 @@
         <td>{{i +1}}</td>
         <td>{{drug.drugName}}</td>
         <td>
-          <button  nbButton status="danger"(click)="openEditModal(EditModal,drug.id)">Edit</button> |
-          <button  nbButton status="warning" (click)="openDeleteModal(DeleteModal,drug)">Delete</button>
+          <nb-icon icon="edit" (click)="openEditModal(EditModal,drug.id)"></nb-icon> |
+          <nb-icon icon="trash" (click)="openDeleteModal(DeleteModal,drug)"></nb-icon>
         </td>
-  
-  
+
+
       </tr>
-  
+
     </tbody>
-  
+
   </table>
 
 
-  <ng-template #AddModal let-modal > 
+  <ng-template #AddModal let-modal>
 
     <nb-card>
-    <nb-card-header>
-      <h4 class="modal-title" id="modal-basic-title">Add Drug</h4>
-  
-    </nb-card-header>
-    <nb-card-body>
-      <form [formGroup]="AddForm" (submit)="Add()">
-  
-        <div class="row">
-          <div class=" col-md-6">
-  
-            <div class="form-group">
-  
-              <label> Name</label>
-  
-              <nb-form-field>
-                <input class="form-control" formControlName="drugName" type="text" nbInput fullWidth>
-                <span *ngIf="hasError('drugName', 'required')" style="color: red">Name is required</span>
-  
-              </nb-form-field>
-  
+      <nb-card-header>
+        <h4 class="modal-title" id="modal-basic-title">Add Drug</h4>
+
+      </nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="AddForm" (submit)="Add()">
+
+          <div class="row">
+            <div class=" col-md-6">
+
+              <div class="form-group">
+
+                <label> Name</label>
+
+                <nb-form-field>
+                  <input class="form-control" formControlName="drugName" type="text" nbInput fullWidth>
+                  <span *ngIf="hasError('drugName', 'required')" style="color: red">Name is required</span>
+
+                </nb-form-field>
+
+              </div>
             </div>
+
           </div>
-  
-        </div>
-      </form>
-  
-    </nb-card-body>
-  <nb-card-footer>
-        <button type="button" class="cancel"  [disabled]="AddForm.invalid" nbButton status="success" data-dismiss="modal"
+        </form>
+
+      </nb-card-body>
+      <nb-card-footer>
+        <button type="button" class="cancel" [disabled]="AddForm.invalid" nbButton status="success" data-dismiss="modal"
           (click)="Add()">Save</button>
 
-          <button type="button" nbButton  status="danger" data-dismiss="modal"
+        <button type="button" nbButton status="danger" data-dismiss="modal"
           (click)="modal.dismiss('Cross click')">Cancel</button>
-  
-  </nb-card-footer>
-  
 
-  </nb-card>
-</ng-template>
-  
+      </nb-card-footer>
+
+
+    </nb-card>
+  </ng-template>
+
   <ng-template #EditModal let-modal>
     <nb-card>
-    <nb-card-header>
-      <h4 class="modal-title" id="modal-basic-title">Edit Drug</h4>
-  
-    </nb-card-header>
-    <nb-card-body>
-      <form [formGroup]="EditForm" (submit)="updateDrug()">
-  
-        <div class="row">
-          <div class=" col-md-6">
-  
-            <div class="form-group">
-  
-              <label> Name</label>
-  
-              <nb-form-field>
-                <input class="form-control" formControlName="drugName" type="text" nbInput fullWidth>
-                <span *ngIf="hasEditError('drugName', 'required')" style="color: red">Name is required</span>
-  
-              </nb-form-field>
-  
+      <nb-card-header>
+        <h4 class="modal-title" id="modal-basic-title">Edit Drug</h4>
+
+      </nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="EditForm" (submit)="updateDrug()">
+
+          <div class="row">
+            <div class=" col-md-6">
+
+              <div class="form-group">
+
+                <label> Name</label>
+
+                <nb-form-field>
+                  <input class="form-control" formControlName="drugName" type="text" nbInput fullWidth>
+                  <span *ngIf="hasEditError('drugName', 'required')" style="color: red">Name is required</span>
+
+                </nb-form-field>
+
+              </div>
             </div>
+
           </div>
-  
-        </div>
-      </form>
-    </nb-card-body>
-  
-    <nb-card-footer>
-     
-        <button nbButton  type="button" nbButton status="success" [disabled]="EditForm.invalid" data-dismiss="modal"
+        </form>
+      </nb-card-body>
+
+      <nb-card-footer>
+
+        <button nbButton type="button" nbButton status="success" [disabled]="EditForm.invalid" data-dismiss="modal"
           (click)="updateDrug()">Save</button>
-          <button  nbButton type="button" nbButton status="danger" data-dismiss="modal"
+        <button nbButton type="button" nbButton status="danger" data-dismiss="modal"
           (click)="modal.dismiss('Cross click')">Cancel</button>
 
-    
-    </nb-card-footer>
-  </nb-card>
-</ng-template>
-  
+
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
+
   <ng-template #DeleteModal let-Dmodal>
     <nb-card>
-    <nb-card-header>
-      <h4 class="modal-title" id="modal-basic-title">Delete</h4>
-  
-    </nb-card-header>
-    <nb-card-body>
-      <div class="row col-md-8  col-offset-4">
-       
-       <p class="text-danger"> Confirm to delete item ?</p>
-      </div>
-  
-    </nb-card-body>
-  
-    <nb-card-footer>
-    
-        <button nbButton  type="button" nbButton status="success" data-dismiss="Dmodal"
+      <nb-card-header>
+        <h4 class="modal-title" id="modal-basic-title">Delete</h4>
+
+      </nb-card-header>
+      <nb-card-body>
+        <div class="row col-md-8  col-offset-4">
+
+          <p class="text-danger"> Confirm to delete item ?</p>
+        </div>
+
+      </nb-card-body>
+
+      <nb-card-footer>
+
+        <button nbButton type="button" nbButton status="success" data-dismiss="Dmodal"
           (click)="DeleteDrug(DrugObject)">Confirm</button>
-          <button  nbButton type="button" nbButton status="danger" data-dismiss="Dmodal"
+        <button nbButton type="button" nbButton status="danger" data-dismiss="Dmodal"
           (click)="Dmodal.dismiss('Cross click')">Cancel</button>
-      
-   
-    </nb-card-footer>
-  
-  </nb-card>
-</ng-template>
-  
+
+
+      </nb-card-footer>
+
+    </nb-card>
+  </ng-template>
+
 </div>

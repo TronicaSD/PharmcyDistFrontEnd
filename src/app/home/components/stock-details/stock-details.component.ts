@@ -81,6 +81,9 @@ export class StockDetailsComponent implements OnInit {
   public hasError = (controlName: string, errorName: string) => {
     return this.AddForm.controls[controlName].hasError(errorName);
   };
+  public hasEditError = (controlName: string, errorName: string) => {
+    return this.EditForm.controls[controlName].hasError(errorName);
+  };
   //add
   Add() {
     debugger;
@@ -91,12 +94,12 @@ export class StockDetailsComponent implements OnInit {
     }, (error) => {
       // this._ToasterService.FireMessagePopUp(2);
     });
-    this.ClearData();
+    this.AddForm.reset();
   }
 
   openAddModal(content: any) {
 
-    this.modalService.open(content, { size:'lg' }).result.then((result) => {
+    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });
@@ -112,7 +115,7 @@ export class StockDetailsComponent implements OnInit {
 
     debugger;
 
-    this.modalService.open(content, { size:'lg' }).result.then((result) => {
+    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });
@@ -135,7 +138,7 @@ export class StockDetailsComponent implements OnInit {
     }, (error) => {
       // this._ToasterService.FireMessagePopUp(2);
     });
-    this.ClearData();
+    this.EditForm.reset();
 
   }
 
@@ -159,7 +162,7 @@ export class StockDetailsComponent implements OnInit {
     this.StockDetailsObject = result;
     debugger;
 
-    this.modalService.open(content, { size:'lg' }).result.then((result) => {
+    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });

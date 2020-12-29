@@ -66,7 +66,7 @@ export class PharmcyComponent implements OnInit {
   public hasError = (controlName: string, errorName: string) => {
     return this.AddForm.controls[controlName].hasError(errorName);
   };
-  public hasErrorEdit = (controlName: string, errorName: string) => {
+  public hasEditError = (controlName: string, errorName: string) => {
     return this.EditForm.controls[controlName].hasError(errorName);
   };
   //add
@@ -79,12 +79,12 @@ export class PharmcyComponent implements OnInit {
     }, (error) => {
       // this._ToasterService.FireMessagePopUp(2);
     });
-    this.ClearData();
+    this.AddForm.reset();
   }
 
   openAddModal(content: any) {
 
-    this.modalService.open(content, { size:'lg' }).result.then((result) => {
+    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });
@@ -99,7 +99,7 @@ export class PharmcyComponent implements OnInit {
 
     debugger;
 
-    this.modalService.open(content, { size:'lg' }).result.then((result) => {
+    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });
@@ -122,7 +122,7 @@ export class PharmcyComponent implements OnInit {
     }, (error) => {
       // this._ToasterService.FireMessagePopUp(2);
     });
-    this.ClearData();
+    this.EditForm.reset();
 
   }
 
@@ -146,7 +146,7 @@ export class PharmcyComponent implements OnInit {
     this.PharmcyObject = result;
     debugger;
 
-    this.modalService.open(content, { size:'lg' }).result.then((result) => {
+    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });

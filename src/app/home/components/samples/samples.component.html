@@ -1,4 +1,4 @@
-<button nbButton  status="primary" style="float: right;" (click)="openAddModal(AddModal)">Add New Drug</button>
+<button nbButton status="primary" style="float: right;" (click)="openAddModal(AddModal)">Add New Drug</button>
 
 <table class="table table-res">
   <thead>
@@ -17,8 +17,8 @@
       <td>{{Sm.drugName}}</td>
       <td>{{Sm.qunantity}}</td>
       <td>
-        <button  nbButton status="warning"(click)="openEditModal(EditModal,Sm.id)">Edit</button> |
-        <button  nbButton status="danger" (click)="openDeleteModal(DeleteModal,Sm)">Delete</button>
+        <nb-icon icon="edit" (click)="openEditModal(EditModal,Sm.id)"></nb-icon> |
+        <nb-icon icon="trash" (click)="openDeleteModal(DeleteModal,Sm)"></nb-icon>
       </td>
     </tr>
 
@@ -28,171 +28,172 @@
 
 
 <ng-template #AddModal let-modal>
-<nb-card>
-  <nb-card-header>
-    <h4 class="modal-title" id="modal-basic-title">Add Drugs To Stock</h4>
+  <nb-card>
+    <nb-card-header>
+      <h4 class="modal-title" id="modal-basic-title">Add Drugs To Stock</h4>
 
-  </nb-card-header>
-  <nb-card-body>
-    <form [formGroup]="AddForm">
-      <div class="row">
-        <div class=" col-md-6">
+    </nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="AddForm">
+        <div class="row">
+          <div class=" col-md-6">
 
-          <div class="form-group">
+            <div class="form-group">
 
-            <label>Doctor Name</label>
+              <label>Doctor Name</label>
 
-            <nb-form-field>
-              <input class="form-control" formControlName="DoctorName" type="text" nbInput fullWidth>
-              <span *ngIf="hasError('DoctorName', 'required')" style="color: red">Doctor Name is required</span>
+              <nb-form-field>
+                <input class="form-control" formControlName="DoctorName" type="text" nbInput fullWidth>
+                <span *ngIf="hasError('DoctorName', 'required')" style="color: red">Doctor Name is required</span>
 
-            </nb-form-field>
+              </nb-form-field>
 
+            </div>
+          </div>
+          <div class=" col-md-6">
+
+            <div class="form-group">
+
+              <label>Drug Name</label>
+
+              <nb-select placeholder="Select Showcase" [(selected)]="selectedItem" lass="form-control"
+                formControlName="DrugId">
+                <nb-option value="0">Option empty</nb-option>
+                <nb-option *ngFor="let d of StockDetails" [value]="d.drugId">{{d.drugName}}</nb-option>
+              </nb-select>
+              <span *ngIf="hasError('DrugId', 'required')" style="color: red">Drug is required</span>
+
+            </div>
+          </div>
+          <div class=" col-md-6">
+
+            <div class="form-group">
+
+              <label>Quantity</label>
+
+              <nb-form-field>
+                <input class="form-control" formControlName="qunantity" type="text" nbInput fullWidth>
+                <span *ngIf="hasError('qunantity', 'required')" style="color: red">Quantity is required</span>
+
+              </nb-form-field>
+
+            </div>
           </div>
         </div>
-        <div class=" col-md-6">
-
-          <div class="form-group">
-
-            <label>Drug Name</label>
-
-            <nb-select placeholder="Select Showcase" [(selected)]="selectedItem" lass="form-control"
-              formControlName="DrugId">
-              <nb-option value="0">Option empty</nb-option>
-              <nb-option *ngFor="let d of StockDetails" [value]="d.drugId">{{d.drugName}}</nb-option>
-            </nb-select>
-            <span *ngIf="hasError('DrugId', 'required')" style="color: red">Drug is required</span>
-
-          </div>
-        </div>
-        <div class=" col-md-6">
-
-          <div class="form-group">
-
-            <label>Quantity</label>
-
-            <nb-form-field>
-              <input class="form-control" formControlName="qunantity" type="text" nbInput fullWidth>
-              <span *ngIf="hasError('qunantity', 'required')" style="color: red">Quantity is required</span>
-
-            </nb-form-field>
-
-          </div>
-        </div>
-      </div>
 
 
-    </form>
+      </form>
 
-  </nb-card-body>
+    </nb-card-body>
 
-  <nb-card-footer>
- 
+    <nb-card-footer>
+
       <button type="button" nbButton status="success" [disabled]="AddForm.invalid" data-dismiss="modal"
         (click)="Add()">Save</button>
-   
+
       <button type="button" nbButton status="danger" data-dismiss="modal"
         (click)="modal.dismiss('Cross click')">Cancel</button>
-    
-  </nb-card-footer>
-</nb-card>
+
+    </nb-card-footer>
+  </nb-card>
 </ng-template>
 
 <ng-template #EditModal let-modal>
   <nb-card>
-  <nb-card-header>
-    <h4 class="modal-title" id="modal-basic-title">Edit Drug</h4>
+    <nb-card-header>
+      <h4 class="modal-title" id="modal-basic-title">Edit Drug</h4>
 
-  </nb-card-header>
-  <nb-card-body>
-    <form [formGroup]="EditForm" (submit)="UpdateSampleObject()">
+    </nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="EditForm" (submit)="UpdateSampleObject()">
 
-      <div class="row">
-        <div class=" col-md-6">
+        <div class="row">
+          <div class=" col-md-6">
 
-          <div class="form-group">
+            <div class="form-group">
 
-            <label>Doctor Name</label>
+              <label>Doctor Name</label>
 
-            <nb-form-field>
-              <input class="form-control" formControlName="DoctorName" type="text" nbInput fullWidth>
-              <span *ngIf="hasError('DoctorName', 'required')" style="color: red">Doctor Name is required</span>
+              <nb-form-field>
+                <input class="form-control" formControlName="DoctorName" type="text" nbInput fullWidth>
+                <span *ngIf="hasEditError('DoctorName', 'required')" style="color: red">Doctor Name is required</span>
 
-            </nb-form-field>
+              </nb-form-field>
 
+            </div>
+          </div>
+          <div class=" col-md-6">
+
+            <div class="form-group">
+
+              <label>Drug Name</label>
+
+              <nb-select placeholder="Select Showcase" [(selected)]="selectedItem" lass="form-control"
+                formControlName="DrugId">
+                <nb-option value="0">Option empty</nb-option>
+                <nb-option *ngFor="let d of Drugs" [value]="d.id">{{d.drugName}}</nb-option>
+              </nb-select>
+              <span *ngIf="hasEditError('DrugId', 'required')" style="color: red">Drug is required</span>
+
+            </div>
+          </div>
+          <div class=" col-md-6">
+
+            <div class="form-group">
+
+              <label>Quantity</label>
+
+              <nb-form-field>
+                <input class="form-control" formControlName="qunantity" type="text" nbInput fullWidth>
+                <span *ngIf="hasEditError('qunantity', 'required')" style="color: red">Quantity is required</span>
+
+              </nb-form-field>
+
+            </div>
           </div>
         </div>
-        <div class=" col-md-6">
+      </form>
+    </nb-card-body>
 
-          <div class="form-group">
-
-            <label>Drug Name</label>
-
-            <nb-select placeholder="Select Showcase" [(selected)]="selectedItem" lass="form-control"
-              formControlName="DrugId">
-              <nb-option value="0">Option empty</nb-option>
-              <nb-option *ngFor="let d of Drugs" [value]="d.id">{{d.drugName}}</nb-option>
-            </nb-select>
-            <span *ngIf="hasError('DrugId', 'required')" style="color: red">Drug is required</span>
-
-          </div>
-        </div>
-        <div class=" col-md-6">
-
-          <div class="form-group">
-
-            <label>Quantity</label>
-
-            <nb-form-field>
-              <input class="form-control" formControlName="qunantity" type="text" nbInput fullWidth>
-              <span *ngIf="hasError('qunantity', 'required')" style="color: red">Quantity is required</span>
-
-            </nb-form-field>
-
-          </div>
-        </div>
-      </div>
-    </form>
-  </nb-card-body>
-
-  <nb-card-footer>
+    <nb-card-footer>
       <button type="button" nbButton status="success" [disabled]="EditForm.invalid" data-dismiss="modal"
         (click)="updateSample()">Save</button>
 
       <button type="button" nbButton status="danger" data-dismiss="modal"
         (click)="modal.dismiss('Cross click')">Cancel</button>
- 
-  </nb-card-footer>
-</nb-card>
+
+    </nb-card-footer>
+  </nb-card>
 </ng-template>
 
 
 
 
-<ng-template #DeleteModal let-Dmodal><nb-card>
-  <nb-card-header>
-    <h4 class="modal-title" id="modal-basic-title">Delete</h4>
+<ng-template #DeleteModal let-Dmodal>
+  <nb-card>
+    <nb-card-header>
+      <h4 class="modal-title" id="modal-basic-title">Delete</h4>
 
-  </nb-card-header>
-  <nb-card-body>
-    <div class="row">
-      <div class="col-md-8">
-        <p class="text-danger">
-         confirm to delete this item ?
-        </p>
+    </nb-card-header>
+    <nb-card-body>
+      <div class="row">
+        <div class="col-md-8">
+          <p class="text-danger">
+            confirm to delete this item ?
+          </p>
+        </div>
       </div>
-       </div>
 
-  </nb-card-body>
+    </nb-card-body>
 
-  <nb-card-fotter>
+    <nb-card-fotter>
 
       <button type="button" nbButton status="success" data-dismiss="Dmodal"
         (click)="DeleteSample(SampleObject)">save</button>
- 
+
       <button type="button" nbButton status="danger" data-dismiss="Dmodal"
         (click)="Dmodal.dismiss('Cross click')">Cancel</button>
-    
-  </nb-card-fotter>
-</nb-card>
+
+    </nb-card-fotter>
+  </nb-card>
 </ng-template>

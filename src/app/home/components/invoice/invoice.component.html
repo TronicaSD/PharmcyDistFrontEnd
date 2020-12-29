@@ -1,4 +1,4 @@
-<button nbButton  status="primary" style="float: right;" (click)="openAddModal(AddModal)">Add New Invoice</button>
+<button nbButton status="primary" style="float: right;" (click)="openAddModal(AddModal)">Add New Invoice</button>
 
 <table class="table">
   <thead>
@@ -19,13 +19,13 @@
       <td>{{iv.invoiceNumber}}</td>
       <td>{{iv.pharmcyName}}</td>
       <td>{{iv.invoiceTypeText}}</td>
-      <td>{{iv.invoiceDate }}</td>
-      <td>{{iv.disCount}}</td>
-      <td>{{iv.totalPrice}}</td>
+      <td>{{iv.invoiceDate  | momentFormat:'L' }}</td>
+      <td>{{iv.disCount}} %</td>
+      <td>{{iv.totalPrice | currency}}</td>
 
       <td>
-        <!-- <button  nbButton status="warning"(click)="openEditModal(EditModal,iv.id)">Edit</button> | -->
-        <button  nbButton status="danger" (click)="openDeleteModal(DeleteModal,iv)">Delete</button>
+        <nb-icon icon="edit" (click)="openEditModal(EditModal,iv.id)"></nb-icon> |
+        <nb-icon icon="trash" (click)="openDeleteModal(DeleteModal,iv)"></nb-icon>
       </td>
     </tr>
 
@@ -36,152 +36,315 @@
 
 <ng-template #AddModal let-modal>
   <nb-card>
-  <nb-card-header>
-    <h4 class="modal-title" id="modal-basic-title">Add Drugs To Stock</h4>
+    <nb-card-header>
+      <h4 class="modal-title" id="modal-basic-title">Add Drugs To Stock</h4>
 
-  </nb-card-header>
-  <nb-card-body>
-    <form [formGroup]="AddForm">
+    </nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="AddForm">
 
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
 
-            <label>Date</label>
-            <input nbInput placeholder="Pick Date" [nbDatepicker]="dateTimePicker" formControlName="InvoiceDate">
-            <nb-datepicker #dateTimePicker></nb-datepicker>
-            <span *ngIf="hasError('InvoiceDate', 'required')" style="color: red">Date is required</span>
+              <label>Date</label>
+              <input nbInput placeholder="Pick Date" [nbDatepicker]="dateTimePicker" formControlName="InvoiceDate">
+              <nb-datepicker #dateTimePicker></nb-datepicker>
+              <span *ngIf="hasError('InvoiceDate', 'required')" style="color: red">Date is required</span>
 
+            </div>
           </div>
-        </div>
-        <div class=" col-md-6">
+          <div class=" col-md-6">
 
+            <div class="form-group">
+
+              <label>Invoice Number</label>
+
+              <nb-form-field>
+                <input class="form-control" formControlName="InvoiceNumber" type="text" nbInput fullWidth>
+                <span *ngIf="hasError('InvoiceNumber', 'required')" style="color: red">Invoice Number is
+                  required</span>
+
+              </nb-form-field>
+
+            </div>
+          </div>
+          <div class=" col-md-6">
+
+            <div class="form-group">
+
+              <label>Pharmcy Name</label>
+
+              <nb-select placeholder="Select Showcase" [(selected)]="selectedPharmcyItem" lass="form-control"
+                formControlName="PharmcyId">
+                <nb-option value="">Option empty</nb-option>
+                <nb-option *ngFor="let p of Pharmcies" [value]="p.id">{{p.pharmcyName}}</nb-option>
+              </nb-select>
+              <span *ngIf="hasError('PharmcyId', 'required')" style="color: red">Pharmcy is required</span>
+
+            </div>
+          </div>
           <div class="form-group">
 
-            <label>Invoice Number</label>
+            <label> Discount</label>
 
             <nb-form-field>
-              <input class="form-control" formControlName="InvoiceNumber" type="text" nbInput fullWidth>
-              <span *ngIf="hasError('InvoiceNumber', 'required')" style="color: red">Invoice Number is
-                required</span>
-
+              <input class="form-control" formControlName="DisCount" type="text" nbInput fullWidth>
             </nb-form-field>
 
           </div>
-        </div>
-        <div class=" col-md-6">
 
-          <div class="form-group">
+          <div class=" col-md-6">
 
-            <label>Pharmcy Name</label>
+            <div class="form-group">
 
-            <nb-select placeholder="Select Showcase" [(selected)]="selectedPharmcyItem" lass="form-control"
-              formControlName="PharmcyId">
-              <nb-option value="0">Option empty</nb-option>
-              <nb-option *ngFor="let p of Pharmcies" [value]="p.id">{{p.pharmcyName}}</nb-option>
-            </nb-select>
-            <span *ngIf="hasError('PharmcyId', 'required')" style="color: red">Pharmcy is required</span>
+              <label>Invoice Type</label>
 
-          </div>
-        </div>
-        <div class="form-group">
-
-          <label> Discount</label>
-
-          <nb-form-field>
-            <input class="form-control" formControlName="DisCount" type="text" nbInput fullWidth>
-            <span *ngIf="hasError('DisCount', 'required')" style="color: red">Invoice Number is
-              required</span>
-
-          </nb-form-field>
-
-        </div>
-
-        <div class=" col-md-6">
-
-          <div class="form-group">
-
-            <label>Invoice Type</label>
-
-            <nb-select placeholder="Select Showcase" [(selected)]="selectedInvoiceTypeItem" lass="form-control"
-              formControlName="InvoiceType">
-              <nb-option value="0">Option empty</nb-option>
-              <nb-option *ngFor="let it of InvoiceType" [value]="it.Value">{{it.Text}}</nb-option>
-            </nb-select>
-
-          </div>
-        </div>
-      </div>
-
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Drug Name </th>
-            <th>Action </th>
-
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let iv of InvoiceObject.invoiceDetails;let i =index">
-            <td>
-              <nb-select placeholder="Select Showcase" [(selected)]="selectedItem" lass="form-control">
-                <nb-option value="0">Option empty</nb-option>
-                <nb-option *ngFor="let d of StockDetails" [value]="d.drugId">{{d.drugName}}</nb-option>
+              <nb-select placeholder="Select Showcase" [(selected)]="selectedInvoiceTypeItem" lass="form-control"
+                formControlName="InvoiceType">
+                <nb-option value="">Option empty</nb-option>
+                <nb-option *ngFor="let it of InvoiceType" [value]="it.Value">{{it.Text}}</nb-option>
               </nb-select>
 
-            </td>
+            </div>
+          </div>
+        </div>
 
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Drug Name </th>
+              <th>Quantity </th>
+              <th>Price </th>
+              <th>Total </th>
+              <th>Action </th>
 
-            <td>
-              <nb-icon icon="star"></nb-icon>
-            </td>
-          </tr>
+            </tr>
+          </thead>
+          <tbody formArrayName="invoiceDetails">
+            <tr *ngFor="let iv of AddinvoiceDetails.controls;let i =index" [formGroupName]="i">
 
-        </tbody>
+              <td>
+                {{i}}
+              </td>
+              <td>
+                <nb-select placeholder="Select Showcase" class="form-control" formControlName="drugId">
+                  <nb-option value="">Option empty</nb-option>
+                  <nb-option *ngFor="let d of StockDetails" [value]="d.drugId">{{d.drugName}}</nb-option>
+                </nb-select>
 
-      </table>
-    </form>
+              </td>
+              <td>
+                <nb-form-field>
+                  <input class="form-control" formControlName="qunantity" type="text" nbInput fullWidth
+                    (change)="CalculateTotal()" (input)="calculateDrugPrice(i)">
+                </nb-form-field>
+              </td>
+              <td>
+                <nb-form-field>
+                  <input class="form-control" formControlName="price" type="text" nbInput fullWidth
+                    (change)="CalculateTotal()" (input)="calculateDrugPrice(i)">
+                </nb-form-field>
+              </td>
+              <td>
+                <input class="form-control" disabled formControlName="total" type="text" fullWidth>
+              </td>
 
-  </nb-card-body>
+              <td>
+                <nb-icon *ngIf="i ==0" icon="plus" (click)=" addInvloiceDetailsList()"></nb-icon>
+                <nb-icon *ngIf="i !=0" icon="trash" (click)="removeInvoiceDetails(i)"></nb-icon>
 
-  <nb-card-footer>
-   
-      <button type="button" nbButton status="success" [disabled]="AddForm.invalid" data-dismiss="modal"
+              </td>
+
+            </tr>
+          </tbody>
+
+        </table>
+      </form>
+
+    </nb-card-body>
+
+    <nb-card-footer>
+
+      <button type="button" nbButton status="success" data-dismiss="modal" [disabled]="AddForm.invalid"
         (click)="Add()">Save</button>
 
       <button type="button" nbButton status="danger" data-dismiss="modal"
         (click)="modal.dismiss('Cross click')">Cancel</button>
 
-  </nb-card-footer>
-</nb-card>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+<ng-template #EditModal let-modal>
+  <nb-card>
+    <nb-card-header>
+      <h4 class="modal-title" id="modal-basic-title">Add Drugs To Stock</h4>
+
+    </nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="EditForm">
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+
+              <label>Date</label>
+              <input nbInput placeholder="Pick Date" [nbDatepicker]="dateTimePicker" formControlName="InvoiceDate">
+              <nb-datepicker #dateTimePicker></nb-datepicker>
+              <span *ngIf="hasEditError('InvoiceDate', 'required')" style="color: red">Date is required</span>
+
+            </div>
+          </div>
+          <div class=" col-md-6">
+
+            <div class="form-group">
+
+              <label>Invoice Number</label>
+
+              <nb-form-field>
+                <input class="form-control" formControlName="InvoiceNumber" type="text" nbInput fullWidth>
+                <span *ngIf="hasEditError('InvoiceNumber', 'required')" style="color: red">Invoice Number is
+                  required</span>
+
+              </nb-form-field>
+
+            </div>
+          </div>
+          <div class=" col-md-6">
+
+            <div class="form-group">
+
+              <label>Pharmcy Name</label>
+
+              <nb-select placeholder="Select Showcase" [(selected)]="selectedPharmcyItem" lass="form-control"
+                formControlName="PharmcyId">
+                <nb-option value="">Option empty</nb-option>
+                <nb-option *ngFor="let p of Pharmcies" [value]="p.id">{{p.pharmcyName}}</nb-option>
+              </nb-select>
+              <span *ngIf="hasEditError('PharmcyId', 'required')" style="color: red">Pharmcy is required</span>
+
+            </div>
+          </div>
+          <div class="form-group">
+
+            <label> Discount</label>
+
+            <nb-form-field>
+              <input class="form-control" formControlName="DisCount" type="text" nbInput fullWidth>
+            </nb-form-field>
+
+          </div>
+
+          <div class=" col-md-6">
+
+            <div class="form-group">
+
+              <label>Invoice Type</label>
+
+              <nb-select placeholder="Select Showcase" [(selected)]="selectedInvoiceTypeItem" lass="form-control"
+                formControlName="InvoiceType">
+                <nb-option value="">Option empty</nb-option>
+                <nb-option *ngFor="let it of InvoiceType" [value]="it.Value">{{it.Text}}</nb-option>
+              </nb-select>
+
+            </div>
+          </div>
+        </div>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Drug Name </th>
+              <th>Quantity </th>
+              <th>Price </th>
+              <th>Total </th>
+              <th>Action </th>
+
+            </tr>
+          </thead>
+          <tbody formArrayName="invoiceDetails">
+            <tr *ngFor="let iv of EditInvoiceDetails.controls;let in =index" [formGroupName]="in">
+              <td>
+                {{in}}
+              </td>
+              <td>
+                <nb-select placeholder="Select Showcase" class="form-control" formControlName="drugId">
+                  <nb-option value="">Option empty</nb-option>
+                  <nb-option *ngFor="let d of StockDetails" [value]="d.drugId">{{d.drugName}}</nb-option>
+                </nb-select>
+
+              </td>
+              <td>
+                <nb-form-field>
+                  <input class="form-control" formControlName="qunantity" type="text" nbInput fullWidth
+                    (change)="CalculateEditTotal()" (input)="calculateEditDrugPrice(in)">
+                </nb-form-field>
+              </td>
+              <td>
+                <nb-form-field>
+                  <input class="form-control" formControlName="price" type="text" nbInput fullWidth
+                    (change)="CalculateEditTotal()" (input)="calculateEditDrugPrice(in)">
+                </nb-form-field>
+              </td>
+              <td>
+                <input class="form-control" disabled formControlName="total" type="text" fullWidth>
+              </td>
+
+              <td>
+                <nb-icon *ngIf="in ==0" icon="plus" (click)=" EditInvloiceDetailsList()"></nb-icon>
+                <nb-icon *ngIf="in !=0" icon="trash" (click)="removeInvoiceDetailsEdit(in)"></nb-icon>
+
+              </td>
+
+            </tr>
+          </tbody>
+
+        </table>
+      </form>
+
+    </nb-card-body>
+
+    <nb-card-footer>
+
+      <button type="button" nbButton status="success" data-dismiss="modal" [disabled]="EditForm.invalid"
+        (click)="updateInvoice()">Save</button>
+
+      <button type="button" nbButton status="danger" data-dismiss="modal" (change)="modal.dismiss('Cross click')"
+        (click)="ClearForm()">Cancel</button>
+
+    </nb-card-footer>
+  </nb-card>
 </ng-template>
 
 
 <ng-template #DeleteModal let-Dmodal>
   <nb-card>
-  <nb-card-header>
-    <h4 class="modal-title" id="modal-basic-title">Delete</h4>
+    <nb-card-header>
+      <h4 class="modal-title" id="modal-basic-title">Delete</h4>
 
-  </nb-card-header>
-  <nb-card-body>
-    <div class="row">
-   <div class="col-md-8">
-     <p class="text-danger">
-      confirm to delete this item ?
-     </p>
-   </div>
-    </div>
+    </nb-card-header>
+    <nb-card-body>
+      <div class="row">
+        <div class="col-md-8">
+          <p class="text-danger">
+            confirm to delete this item ?
+          </p>
+        </div>
+      </div>
 
-  </nb-card-body>
+    </nb-card-body>
 
-  <nb-card-footer>
- 
+    <nb-card-footer>
+
       <button type="button" nbButton status="success" data-dismiss="Dmodal"
         (click)="DeleteInvoice(InvoiceObject)">save</button>
 
       <button type="button" nbButton status="danger" data-dismiss="Dmodal"
         (click)="Dmodal.dismiss('Cross click')">Cancel</button>
 
-  </nb-card-footer>
-</nb-card>
+    </nb-card-footer>
+  </nb-card>
 </ng-template>

@@ -31,6 +31,7 @@
               "node_modules/@nebular/theme/styles/prebuilt/corporate.css",
               "node_modules/@nebular/theme/styles/prebuilt/cosmic.css",
               "node_modules/nebular-icons/css/nebular-icons.css",
+              "node_modules/ngx-toastr/toastr.css",
               "src/styles.css"
 
 

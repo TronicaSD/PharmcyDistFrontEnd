@@ -2,167 +2,168 @@
   <div class="row">
     <div class="offset-9 col-md-3">
 
-    <button  nbButton  status="primary" (click)="openAddModal(AddModal)">Add Pharmacy</button>
-  </div>
-</div>
-<br>
-<table class="table table-res">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Address</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let ph of Pharmcies;let i =index">
-      <td>{{i +1}}</td>
-      <td>{{ph.pharmcyName}}</td>
-      <td>{{ph.address}}</td>
-      <td>
-        <button  nbButton status="warning"(click)="openEditModal(EditModal,ph.id)">Edit</button> |
-        <button  nbButton status="danger" (click)="openDeleteModal(DeleteModal,ph)">Delete</button>
-      </td>
-    </tr>
-
-  </tbody>
-
-</table>
-
-<ng-template #AddModal let-modal>
-  <nb-card>
-  <nb-card-header>
-    <h4 class="modal-title" id="modal-basic-title">Add Pharmcy</h4>
-
-  </nb-card-header>
-  <nb-card-body>
-    <form [formGroup]="AddForm" (submit)="Add()">
-
-      <div class="row">
-        <div class=" col-md-6">
-
-          <div class="form-group">
-
-            <label>pharmcy Name</label>
-
-            <nb-form-field>
-              <input class="form-control" formControlName="pharmcyName" type="text" nbInput fullWidth>
-              <span *ngIf="hasError('pharmcyName', 'required')" style="color: red">pharmcy Name is required</span>
-
-            </nb-form-field>
-
-          </div>
-        </div>
-        <div class=" col-md-6">
-
-          <div class="form-group">
-
-            <label>pharmcy Address</label>
-
-            <nb-form-field>
-              <input class="form-control" formControlName="address" type="text" nbInput fullWidth>
-              <span *ngIf="hasError('address', 'required')" style="color: red">Address is required</span>
-
-            </nb-form-field>
-
-          </div>
-        </div>
-
-      </div>
-    </form>
-
-  </nb-card-body>
-
-  <nb-card-footer>
- 
-      <button type="button" nbButton status="success" [disabled]="AddForm.invalid" data-dismiss="modal"
-        (click)="Add()">Save</button>
- 
-      <button type="button" nbButton status="danger" data-dismiss="modal"
-        (click)="modal.dismiss('Cross click')">Cancel</button>
- 
-  </nb-card-footer>
-</nb-card>
-</ng-template>
-
-
-<ng-template #EditModal let-modal>
-  <nb-card>
-  <nb-card-header>
-    <h4 class="modal-title" id="modal-basic-title">Edit Pharmcy</h4>
-
-  </nb-card-header>
-  <nb-card-body>
-    <form [formGroup]="EditForm" (submit)="updatePharmcy()">
-
-      <div class="row">
-        <div class=" col-md-6">
-
-          <div class="form-group">
-
-            <label>Pharmcy Name</label>
-
-            <nb-form-field>
-              <input class="form-control" formControlName="pharmcyName" type="text" nbInput fullWidth>
-              <span *ngIf="hasErrorEdit('pharmcyName', 'required')" style="color: red">PharmcyName is required</span>
-
-            </nb-form-field>
-
-          </div>
-        </div>
-        <div class=" col-md-6">
-
-          <div class="form-group">
-
-            <label>Pharmcy Address</label>
-
-            <nb-form-field>
-              <input class="form-control" formControlName="address" type="text" nbInput fullWidth>
-              <span *ngIf="hasErrorEdit('address', 'required')" style="color: red">address is required</span>
-
-            </nb-form-field>
-
-          </div>
-        </div>
-      </div>
-    </form>
-  </nb-card-body>
-
-  <nb-card-footer>
-   
-      <button type="button" nbButton status="success" [disabled]="EditForm.invalid" data-dismiss="modal"
-        (click)="updatePharmcy()">Save</button>
-  
-      <button type="button" nbButton status="danger" data-dismiss="modal"
-        (click)="modal.dismiss('Cross click')">Cancel</button>
-   
-  </nb-card-footer>
-</nb-card>
-</ng-template>
-
-<ng-template #DeleteModal let-Dmodal>
-  <nb-card>
-  <nb-card-header>
-    <h4 class="modal-title" id="modal-basic-title">Delete</h4>
-
-  </nb-card-header>
-  <nb-card-body>
-    <div class="row">
-      AreYouSureYouWantToDeleteThisItem
+      <button nbButton status="primary" (click)="openAddModal(AddModal)">Add Pharmacy</button>
     </div>
+  </div>
+  <br>
+  <table class="table table-res">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ph of Pharmcies;let i =index">
+        <td>{{i +1}}</td>
+        <td>{{ph.pharmcyName}}</td>
+        <td>{{ph.address}}</td>
+        <td>
+          <nb-icon icon="edit" (click)="openEditModal(EditModal,ph.id)"></nb-icon> |
+          <nb-icon icon="trash" (click)="openDeleteModal(DeleteModal,ph)"></nb-icon>
+        </td>
+      </tr>
 
-  </nb-card-body>
+    </tbody>
 
-  <nb-card-footer>
+  </table>
 
-      <button type="button" nbButton status="success" data-dismiss="Dmodal"
-        (click)="DeletePharmcy(PharmcyObject)">save</button>
- 
-      <button type="button" nbButton status="danger" data-dismiss="Dmodal"
-        (click)="Dmodal.dismiss('Cross click')">Cancel</button>
-   
-  </nb-card-footer>
-</nb-card>
-</ng-template>
+  <ng-template #AddModal let-modal>
+    <nb-card>
+      <nb-card-header>
+        <h4 class="modal-title" id="modal-basic-title">Add Pharmcy</h4>
+
+      </nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="AddForm" (submit)="Add()">
+
+          <div class="row">
+            <div class=" col-md-6">
+
+              <div class="form-group">
+
+                <label>pharmcy Name</label>
+
+                <nb-form-field>
+                  <input class="form-control" formControlName="pharmcyName" type="text" nbInput fullWidth>
+                  <span *ngIf="hasError('pharmcyName', 'required')" style="color: red">pharmcy Name is required</span>
+
+                </nb-form-field>
+
+              </div>
+            </div>
+            <div class=" col-md-6">
+
+              <div class="form-group">
+
+                <label>pharmcy Address</label>
+
+                <nb-form-field>
+                  <input class="form-control" formControlName="address" type="text" nbInput fullWidth>
+                  <span *ngIf="hasError('address', 'required')" style="color: red">Address is required</span>
+
+                </nb-form-field>
+
+              </div>
+            </div>
+
+          </div>
+        </form>
+
+      </nb-card-body>
+
+      <nb-card-footer>
+
+        <button type="button" nbButton status="success" [disabled]="AddForm.invalid" data-dismiss="modal"
+          (click)="Add()">Save</button>
+
+        <button type="button" nbButton status="danger" data-dismiss="modal"
+          (click)="modal.dismiss('Cross click')">Cancel</button>
+
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
+
+
+  <ng-template #EditModal let-modal>
+    <nb-card>
+      <nb-card-header>
+        <h4 class="modal-title" id="modal-basic-title">Edit Pharmcy</h4>
+
+      </nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="EditForm" (submit)="updatePharmcy()">
+
+          <div class="row">
+            <div class=" col-md-6">
+
+              <div class="form-group">
+
+                <label>Pharmcy Name</label>
+
+                <nb-form-field>
+                  <input class="form-control" formControlName="pharmcyName" type="text" nbInput fullWidth>
+                  <span *ngIf="hasEditError('pharmcyName', 'required')" style="color: red">PharmcyName is
+                    required</span>
+
+                </nb-form-field>
+
+              </div>
+            </div>
+            <div class=" col-md-6">
+
+              <div class="form-group">
+
+                <label>Pharmcy Address</label>
+
+                <nb-form-field>
+                  <input class="form-control" formControlName="address" type="text" nbInput fullWidth>
+                  <span *ngIf="hasEditError('address', 'required')" style="color: red">address is required</span>
+
+                </nb-form-field>
+
+              </div>
+            </div>
+          </div>
+        </form>
+      </nb-card-body>
+
+      <nb-card-footer>
+
+        <button type="button" nbButton status="success" [disabled]="EditForm.invalid" data-dismiss="modal"
+          (click)="updatePharmcy()">Save</button>
+
+        <button type="button" nbButton status="danger" data-dismiss="modal"
+          (click)="modal.dismiss('Cross click')">Cancel</button>
+
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
+
+  <ng-template #DeleteModal let-Dmodal>
+    <nb-card>
+      <nb-card-header>
+        <h4 class="modal-title" id="modal-basic-title">Delete</h4>
+
+      </nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          AreYouSureYouWantToDeleteThisItem
+        </div>
+
+      </nb-card-body>
+
+      <nb-card-footer>
+
+        <button type="button" nbButton status="success" data-dismiss="Dmodal"
+          (click)="DeletePharmcy(PharmcyObject)">save</button>
+
+        <button type="button" nbButton status="danger" data-dismiss="Dmodal"
+          (click)="Dmodal.dismiss('Cross click')">Cancel</button>
+
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
 </div>
