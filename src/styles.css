@@ -1,4 +1,5 @@
 @import '~nebular-icons/css/nebular-icons.css'; 
+@import url('../node_modules/bootstrap/dist/css/bootstrap.min.css');
 .container{
 margin: 1%;
 padding: 2%;

@@ -105,7 +105,7 @@
 
             <nb-form-field>
               <input class="form-control" formControlName="pharmcyName" type="text" nbInput fullWidth>
-              <span *ngIf="hasError('pharmcyName', 'required')" style="color: red">PharmcyName is required</span>
+              <span *ngIf="hasErrorEdit('pharmcyName', 'required')" style="color: red">PharmcyName is required</span>
 
             </nb-form-field>
 
@@ -115,11 +115,11 @@
 
           <div class="form-group">
 
-            <label>Pharmcy Name</label>
+            <label>Address</label>
 
             <nb-form-field>
               <input class="form-control" formControlName="address" type="text" nbInput fullWidth>
-              <span *ngIf="hasError('address', 'required')" style="color: red">address is required</span>
+              <span *ngIf="hasErrorEdit('address', 'required')" style="color: red">address is required</span>
 
             </nb-form-field>
 

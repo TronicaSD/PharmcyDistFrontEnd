@@ -65,10 +65,16 @@ export class PharmcyComponent implements OnInit {
   }
   public hasError = (controlName: string, errorName: string) => {
     return this.AddForm.controls[controlName].hasError(errorName);
+  }; 
+  
+  public hasErrorEdit = (controlName: string, errorName: string) => {
+    return this.EditForm.controls[controlName].hasError(errorName);
   };
+
+  
   //add
   Add() {
-    debugger;
+    
     this._PublicService.Add('Pharmcy', 'AddData', this.AddForm.value).subscribe((Response) => {
       this.modalService.dismissAll();
       this.getAllPharmcies();
@@ -90,11 +96,11 @@ export class PharmcyComponent implements OnInit {
   openEditModal(content: any, Id: any) {
     const result: IPharmcy = this.Pharmcies.find(obj => obj.id === Id);
     this.PharmcyObject = result;
-    debugger;
+    
     this.EditForm.controls['pharmcyName'].setValue(this.PharmcyObject.pharmcyName);
     this.EditForm.controls['address'].setValue(this.PharmcyObject.address);
 
-    debugger;
+ 
 
     this.modalService.open(content, { size:'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -103,14 +109,14 @@ export class PharmcyComponent implements OnInit {
   }
   //Edit Modal
   updatePharmcy() {
-    debugger;
+    
     this.UpdatePharmcyObject = {
       pharmcyName: this.EditForm.value.pharmcyName,
       id: this.PharmcyObject.id,
       address: this.EditForm.value.address
 
     }
-    debugger;
+    
     this._PublicService.Update('Pharmcy', 'UpdateData', this.UpdatePharmcyObject).subscribe((Response) => {
       this.Pharmcies = Response;
       this.modalService.dismissAll();
@@ -126,7 +132,7 @@ export class PharmcyComponent implements OnInit {
 
   //Delete Modal
   DeletePharmcy(Object: any) {
-    debugger;
+    
     this._PublicService.Delete("Pharmcy", 'DeleteData', Object.id).subscribe((Response) => {
       this.modalService.dismissAll();
       // this._ToasterService.FireMessagePopUp(1);
@@ -138,10 +144,10 @@ export class PharmcyComponent implements OnInit {
   }
   openDeleteModal(content: any, Object: any) {
 
-    debugger;
+    
     const result: IPharmcy = this.Pharmcies.find((obj: any) => obj.id === Object.id);
     this.PharmcyObject = result;
-    debugger;
+    
 
     this.modalService.open(content, { size:'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;

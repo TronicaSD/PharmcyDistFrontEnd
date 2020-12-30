@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PublicService } from 'src/app/Service/Public.Service/public-service.service';
 import { IStockDetails } from '../../interface/IStockDetails';
@@ -10,18 +11,12 @@ import { IStockDetails } from '../../interface/IStockDetails';
   styleUrls: ['./stock-details.component.css']
 })
 export class StockDetailsComponent implements OnInit {
-  selectedItem = '0';
+  selectedItem = 1;
   StockDetails: any;
   closeResult: string;
   AddForm: FormGroup;
   EditForm: FormGroup;
-  StockDetailsObject: IStockDetails = {
-    drugName: "",
-    id: 0,
-    drugId: 0,
-    quantity: 0
-
-  };
+ 
   UpdateStockDetailsObject: IStockDetails =
     {
       drugName: "",
@@ -31,7 +26,7 @@ export class StockDetailsComponent implements OnInit {
     };
   Drugs: any;
   constructor(private _PublicService: PublicService
-    , private modalService: NgbModal
+    , private modalService: NbDialogService
     , private _formbuilder: FormBuilder
   ) {
 
@@ -54,27 +49,17 @@ export class StockDetailsComponent implements OnInit {
     this.getAllDrugs();
   }
   ClearData() {
-    this.StockDetailsObject = {
-      drugName: "",
-      id: 0,
-      drugId: 0,
-      quantity: 0
-
-    }
+   this.AddForm.reset();
+   this.EditForm.reset();
   }
   getAllDrugs() {
-    debugger;
     this._PublicService.getAll("Drug", 'ViewGetAll').subscribe(res => {
       this.Drugs = res;
-      debugger;
-
     });
   }
   getAllStockDetails() {
-    debugger;
     this._PublicService.getAll("StockDetails", 'ViewGetAll').subscribe(res => {
       this.StockDetails = res;
-      debugger;
 
     });
   }
@@ -83,10 +68,10 @@ export class StockDetailsComponent implements OnInit {
   };
   //add
   Add() {
-    debugger;
+   
     this._PublicService.Add('StockDetails', 'AddData', this.AddForm.value).subscribe((Response) => {
-      this.modalService.dismissAll();
       this.getAllStockDetails();
+      
       // this._ToasterService.FireMessagePopUp(1);
     }, (error) => {
       // this._ToasterService.FireMessagePopUp(2);
@@ -96,40 +81,32 @@ export class StockDetailsComponent implements OnInit {
 
   openAddModal(content: any) {
 
-    this.modalService.open(content, { size:'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-    });
+    this.modalService.open(content, {}
+
+    );
   }
+
+ 
   //
-  openEditModal(content: any, Id: any) {
-    debugger;
-    const result: IStockDetails = this.StockDetails.find(obj => obj.id === Id);
-    this.StockDetailsObject = result;
-    debugger;
-    this.EditForm.controls['DrugId'].setValue(this.StockDetailsObject.drugId);
-    this.EditForm.controls['Quantity'].setValue(this.StockDetailsObject.quantity);
+  openEditModal(content: any, row: IStockDetails) {
+   
 
-    debugger;
+   
+    this.EditForm.controls['DrugId'].setValue(row.drugId);
+    this.EditForm.controls['Quantity'].setValue(row.quantity);
 
-    this.modalService.open(content, { size:'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-    });
+   
+
+    this.modalService.open(content,{} );
+    
   }
   //Edit Modal
   updateStockDetails() {
-    this.UpdateStockDetailsObject = {
-      drugId: this.EditForm.value.DrugId,
-      id: this.StockDetailsObject.id,
-      quantity: this.EditForm.value.Quantity,
-      drugName: ""
-
-    }
-    debugger;
-    this._PublicService.Update('StockDetails', 'UpdateData', this.UpdateStockDetailsObject).subscribe((Response) => {
+  
+   
+    this._PublicService.Update('StockDetails', 'UpdateData', this.EditForm.value).subscribe((Response) => {
       this.StockDetails = Response;
-      this.modalService.dismissAll();
+    
       // this._ToasterService.FireMessagePopUp(1);
       this.getAllStockDetails();
     }, (error) => {
@@ -141,10 +118,10 @@ export class StockDetailsComponent implements OnInit {
 
 
   //Delete Modal
-  DeleteStockDetails(Object: any) {
-    debugger;
-    this._PublicService.Delete("StockDetails", 'DeleteData', Object.id).subscribe((Response) => {
-      this.modalService.dismissAll();
+  DeleteStockDetails(id: number) {
+   
+    this._PublicService.Delete("StockDetails", 'DeleteData',id).subscribe((Response) => {
+    
       // this._ToasterService.FireMessagePopUp(1);
       this.getAllStockDetails();
     }, (error) => {
@@ -152,16 +129,18 @@ export class StockDetailsComponent implements OnInit {
     });
 
   }
-  openDeleteModal(content: any, Object: any) {
 
-    debugger;
-    const result: IStockDetails = this.StockDetails.find((obj: any) => obj.id === Object.id);
-    this.StockDetailsObject = result;
-    debugger;
 
-    this.modalService.open(content, { size:'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
+  openDeleteModal(content: any, id: number) {
+
+   
+    this.modalService.open(content, {
+   }).onClose.subscribe(res=>{
+      if(res){
+        this.DeleteStockDetails(id);
+      }
+
+
     });
   }
 
