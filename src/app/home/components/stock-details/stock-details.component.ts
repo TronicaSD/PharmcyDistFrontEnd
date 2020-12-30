@@ -66,6 +66,9 @@ export class StockDetailsComponent implements OnInit {
   public hasError = (controlName: string, errorName: string) => {
     return this.AddForm.controls[controlName].hasError(errorName);
   };
+  public hasEditError = (controlName: string, errorName: string) => {
+    return this.EditForm.controls[controlName].hasError(errorName);
+  };
   //add
   Add() {
    
@@ -76,7 +79,7 @@ export class StockDetailsComponent implements OnInit {
     }, (error) => {
       // this._ToasterService.FireMessagePopUp(2);
     });
-    this.ClearData();
+    this.AddForm.reset();
   }
 
   openAddModal(content: any) {
@@ -112,7 +115,7 @@ export class StockDetailsComponent implements OnInit {
     }, (error) => {
       // this._ToasterService.FireMessagePopUp(2);
     });
-    this.ClearData();
+    this.EditForm.reset();
 
   }
 

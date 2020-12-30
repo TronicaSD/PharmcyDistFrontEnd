@@ -1,13 +1,15 @@
+import { IInvoiceDetails } from "./IInvoiceDetails";
+
 export interface IInvoice {
     id?: number;
-    InvoiceNumber: number;
-    PharmcyId: number;
-    PharmcyName: string;
-    InvoiceType: number;
-    InvoiceTypeText: string;
-    InvoiceDate: Date;
-    TotalPrice: number;
-    DisCount?: number;
-
+    invoiceNumber: number;
+    pharmcyId: number;
+    pharmcyName: string;
+    invoiceType: number;
+    invoiceTypeText: string;
+    invoiceDate: Date;
+    totalPrice: number;
+    disCount?: number;
+    invoiceDetails: IInvoiceDetails[]
 
 } 

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PublicService } from 'src/app/Service/Public.Service/public-service.service';
 import { IInvoice } from '../../interface/IInvoice';
+import * as moment from "moment";
 
 @Component({
   selector: 'app-invoice',
@@ -24,30 +25,54 @@ export class InvoiceComponent implements OnInit {
   EditForm: FormGroup;
   InvoiceObject: IInvoice = {
     id: 0,
-    InvoiceNumber: 0,
-    PharmcyId: 0,
-    PharmcyName: '',
-    InvoiceType: 0,
-    InvoiceTypeText: '',
-    InvoiceDate: new Date(),
-    TotalPrice: 0,
-    DisCount: 0,
+    invoiceNumber: 0,
+    pharmcyId: 0,
+    pharmcyName: '',
+    invoiceType: 0,
+    invoiceTypeText: '',
+    invoiceDate: new Date(),
+    totalPrice: 0,
+    disCount: 0,
+
+    invoiceDetails: [{
+      drugId: 0,
+      drugName: "",
+      invoiceId: 0,
+      price: 0,
+      qunantity: 0,
+      total: 0,
+      id: 0
+    }]
 
   };
   UpdateInvoiceObject: IInvoice =
     {
       id: 0,
-      InvoiceNumber: 0,
-      PharmcyId: 0,
-      PharmcyName: '',
-      InvoiceType: 0,
-      InvoiceTypeText: '',
-      InvoiceDate: new Date(),
-      TotalPrice: 0,
-      DisCount: 0,
+      invoiceNumber: 0,
+      pharmcyId: 0,
+      pharmcyName: '',
+      invoiceType: 0,
+      invoiceTypeText: '',
+      invoiceDate: new Date(),
+      totalPrice: 0,
+      disCount: 0,
+      invoiceDetails: [{
+        drugId: 0,
+        drugName: "",
+        invoiceId: 0,
+        price: 0,
+        qunantity: 0,
+        total: 0,
+        id: 0
+      }]
     };
   Drugs: any;
   Pharmcies: Object;
+  StockDetails: Object;
+  Total: number;
+  SubTotal: number;
+  qunantity: any;
+  price: any;
   constructor(private _PublicService: PublicService
     , private modalService: NgbModal
     , private _formbuilder: FormBuilder
@@ -58,113 +83,192 @@ export class InvoiceComponent implements OnInit {
       InvoiceNumber: ['', Validators.required],
       InvoiceType: ['', Validators.required],
       PharmcyId: ['', Validators.required],
-      PharmcyName: ['', Validators.required],
-      TotalPrice: ['', Validators.required],
-      DisCount: ['', Validators.required],
-
+      TotalPrice: [''],
+      DisCount: [''],
+      invoiceDetails: this._formbuilder.array([])
 
     });
 
     this.EditForm = this._formbuilder.group({
-      DrugId: ['', Validators.required],
-      Quantity: ['', Validators.required],
-
+      Id: [''],
+      InvoiceDate: ['', Validators.required],
+      InvoiceNumber: ['', Validators.required],
+      InvoiceType: ['', Validators.required],
+      PharmcyId: ['', Validators.required],
+      TotalPrice: [''],
+      DisCount: [''],
+      invoiceDetails: this._formbuilder.array([])
     });
   }
 
   ngOnInit(): void {
     this.getAllInvoice();
-    this.getAllDrugs();
+    this.getAllStockDetails();
     this.getAllPharmcies();
-  }
-  ClearData() {
-    this.InvoiceObject = {
-      id: 0,
-      InvoiceNumber: 0,
-      PharmcyId: 0,
-      PharmcyName: '',
-      InvoiceType: 0,
-      InvoiceTypeText: '',
-      InvoiceDate: new Date(),
-      TotalPrice: 0,
-      DisCount: 0,
+    this.EditInvloiceDetailsList();
 
-    }
   }
+
   getAllPharmcies() {
-    debugger;
+
     this._PublicService.getAll("Pharmcy", 'ViewGetAll').subscribe(res => {
       this.Pharmcies = res;
-      debugger;
+
 
     });
   }
-  getAllDrugs() {
-    debugger;
-    this._PublicService.getAll("Drug", 'ViewGetAll').subscribe(res => {
-      this.Drugs = res;
-      debugger;
+  getAllStockDetails() {
+
+    this._PublicService.getAll("StockDetails", 'ViewGetAll').subscribe(res => {
+      this.StockDetails = res;
+
 
     });
   }
   getAllInvoice() {
-    debugger;
+
     this._PublicService.getAll("Invoice", 'ViewGetAll').subscribe(res => {
       this.Invoices = res;
-      debugger;
+
 
     });
   }
   public hasError = (controlName: string, errorName: string) => {
     return this.AddForm.controls[controlName].hasError(errorName);
   };
+  public hasEditError = (controlName: string, errorName: string) => {
+    return this.EditForm.controls[controlName].hasError(errorName);
+  };
+
+
+
   //add
+  CalculateTotal() {
+    this.Total = this.AddinvoiceDetails.value.reduce((sum, item) => sum += (item.qunantity || 0) * (item.price || 0), 0)
+    this.AddForm.controls['TotalPrice'].setValue(this.Total);
+  }
+  calculateDrugPrice() {
+    this.AddinvoiceDetails.controls.forEach(x => {
+      let price = parseInt(x.get('price').value)
+      let quantity = parseInt(x.get('qunantity').value)
+      this.price = price * quantity;
+      x.get('total').patchValue(this.price)
+    });
+  }
+  newInoiceDetails(): FormGroup {
+    var newInoiceDetails = this._formbuilder.group({
+      drugId: 0,
+      drugName: "",
+      invoiceId: 0,
+      price: 0,
+      qunantity: 0,
+      total: 0,
+      id: 0
+    });
+    return newInoiceDetails;
+
+  }
+
+  AddinvoiceDetails: FormArray;
+  get invoiceDetails(): FormArray {
+    this.AddinvoiceDetails = this.AddForm.get("invoiceDetails") as FormArray;
+    return this.AddinvoiceDetails;
+  }
+  addInvloiceDetailsList() {
+    this.invoiceDetails.push(this.newInoiceDetails());
+  }
+  removeInvoiceDetails(i: number) {
+    this.invoiceDetails.removeAt(i);
+  }
+
   Add() {
+    var date = moment(date);
+    this.AddForm.controls['InvoiceDate'].setValue(date);
+
     debugger;
     this._PublicService.Add('Invoice', 'AddData', this.AddForm.value).subscribe((Response) => {
-      this.modalService.dismissAll();
       this.getAllInvoice();
+      this.modalService.dismissAll();
       // this._ToasterService.FireMessagePopUp(1);
     }, (error) => {
       // this._ToasterService.FireMessagePopUp(2);
     });
-    this.ClearData();
+    this.AddForm.reset();
+
   }
 
   openAddModal(content: any) {
-
-    this.modalService.open(content, { size:'lg' }).result.then((result) => {
+    this.addInvloiceDetailsList();
+    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });
   }
   //
+
+  //Edit Modal
+  CalculateEditTotal() {
+    this.Total = this.EditInvoiceDetails.value.reduce((sum, item) => sum += (item.qunantity || 0) * (item.price || 0), 0)
+    this.EditForm.controls['TotalPrice'].setValue(this.Total);
+  }
+  calculateEditDrugPrice() {
+    this.EditInvoiceDetails.controls.forEach(x => {
+      let price = parseInt(x.get('price').value)
+      let quantity = parseInt(x.get('qunantity').value)
+      this.price = price * quantity;
+      x.get('total').patchValue(this.price)
+    });
+  }
+  EditInvoiceDetails: FormArray;
+  get invoiceDetailsEdit(): FormArray {
+    this.EditInvoiceDetails = this.EditForm.get("invoiceDetails") as FormArray;
+    return this.EditInvoiceDetails;
+  }
+  EditInvloiceDetailsList() {
+    this.invoiceDetailsEdit.push(this.newInoiceDetails());
+  }
+  removeInvoiceDetailsEdit(i: number) {
+    this.invoiceDetailsEdit.removeAt(i);
+  }
   openEditModal(content: any, Id: any) {
-    debugger;
+
     const result: IInvoice = this.Invoices.find(obj => obj.id === Id);
     this.InvoiceObject = result;
     debugger;
-    // this.EditForm.controls['DrugId'].setValue(this.InvoiceObject.drugId);
-    // this.EditForm.controls['Quantity'].setValue(this.InvoiceObject.quantity);
-
+    this.EditForm.controls['Id'].setValue(this.InvoiceObject.id);
+    this.EditForm.controls['InvoiceDate'].setValue(this.InvoiceObject.invoiceDate);
+    this.EditForm.controls['InvoiceNumber'].setValue(this.InvoiceObject.invoiceNumber);
+    this.EditForm.controls['InvoiceType'].setValue(this.InvoiceObject.invoiceType);
+    this.EditForm.controls['PharmcyId'].setValue(this.InvoiceObject.pharmcyId);
+    this.EditForm.controls['TotalPrice'].setValue(this.InvoiceObject.totalPrice);
+    this.EditForm.controls['DisCount'].setValue(this.InvoiceObject.disCount);
+    debugger;
+    this.invoiceDetailsEdit.removeAt(0);
+    this.InvoiceObject.invoiceDetails.forEach(x => {
+      debugger;
+      var newEdirInoiceDetails = this._formbuilder.group({
+        drugId: x.drugId,
+        drugName: "",
+        invoiceId: x.invoiceId,
+        price: x.price,
+        qunantity: x.qunantity,
+        total: x.total,
+        id: x.id,
+      });
+      this.invoiceDetailsEdit.push(newEdirInoiceDetails)
+    });
     debugger;
 
-    this.modalService.open(content, { size:'lg' }).result.then((result) => {
+
+
+    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });
   }
-  //Edit Modal
   updateInvoice() {
-    // this.UpdateInvoiceObject = {
-    // drugId: this.EditForm.value.DrugId,
-    // id: this.InvoiceObject.id,
-    // quantity: this.EditForm.value.Quantity,
-    // drugName: ""
-
-    //    }
     debugger;
-    this._PublicService.Update('Invoice', 'UpdateData', this.UpdateInvoiceObject).subscribe((Response) => {
+    this._PublicService.Update('Invoice', 'UpdateData', this.EditForm.value).subscribe((Response) => {
       this.Invoices = Response;
       this.modalService.dismissAll();
       // this._ToasterService.FireMessagePopUp(1);
@@ -172,14 +276,14 @@ export class InvoiceComponent implements OnInit {
     }, (error) => {
       // this._ToasterService.FireMessagePopUp(2);
     });
-    this.ClearData();
+    this.EditForm.reset();
 
   }
 
 
   //Delete Modal
   DeleteInvoice(Object: any) {
-    debugger;
+
     this._PublicService.Delete("Invoice", 'DeleteData', Object.id).subscribe((Response) => {
       this.modalService.dismissAll();
       // this._ToasterService.FireMessagePopUp(1);
@@ -191,17 +295,60 @@ export class InvoiceComponent implements OnInit {
   }
   openDeleteModal(content: any, Object: any) {
 
-    debugger;
+
     const result: IInvoice = this.Invoices.find((obj: any) => obj.id === Object.id);
     this.InvoiceObject = result;
-    debugger;
 
-    this.modalService.open(content, { size:'lg' }).result.then((result) => {
+
+    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });
   }
 
+  ClearForm() {
+    debugger;
 
+    this.AddForm.reset();
+    this.EditForm.reset();
+    const Editcontrol = <FormArray>this.EditForm.controls['invoiceDetails'];
+    debugger;
+
+    for (let i = Editcontrol.length - 1; i >= 0; i--) {
+      debugger;
+
+      Editcontrol.removeAt(i)
+    }
+
+    const Addcontrol = <FormArray>this.AddForm.controls['invoiceDetails'];
+    for (let i = Addcontrol.length - 1; i >= 0; i--) {
+      Addcontrol.removeAt(i)
+    }
+    debugger;
+    this.InvoiceObject = {
+      id: 0,
+      invoiceNumber: 0,
+      pharmcyId: 0,
+      pharmcyName: '',
+      invoiceType: 0,
+      invoiceTypeText: '',
+      invoiceDate: new Date(),
+      totalPrice: 0,
+      disCount: 0,
+
+      invoiceDetails: [{
+        drugId: 0,
+        drugName: "",
+        invoiceId: 0,
+        price: 0,
+        qunantity: 0,
+        total: 0,
+        id: 0
+      }]
+
+    };
+    this.modalService.dismissAll();
+
+  }
 
 }

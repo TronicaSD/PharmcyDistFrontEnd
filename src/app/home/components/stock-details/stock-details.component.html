@@ -37,17 +37,17 @@
 <ng-template #AddModal   let-data let-addmodalref="dialogRef">
   <nb-card>
 
-  <nb-card-header>
-    <h4 class="modal-title" id="modal-basic-title">Add Drugs To Stock</h4>
+    <nb-card-header>
+      <h4 class="modal-title" id="modal-basic-title">Add Drugs To Stock</h4>
 
-  </nb-card-header>
+    </nb-card-header>
 
   <nb-card-body class="modal-body">
     <form [formGroup]="AddForm">
       <div class="row">
         <div class="col-md-6">
 
-          <div class="form-group">
+            <div class="form-group">
 
             <label>Drug Name</label><br>
 
@@ -57,30 +57,30 @@
             </nb-select>
             <span *ngIf="hasError('DrugId', 'required')" style="color: red;display: block;">Drug is required</span>
 
+            </div>
           </div>
-        </div>
-        <div class=" col-md-6">
+          <div class=" col-md-6">
 
-          <div class="form-group">
+            <div class="form-group">
 
-            <label>Quantity</label>
+              <label>Quantity</label>
 
             <nb-form-field>
               <input class="form-control"  numbersOnly formControlName="Quantity" type="text" nbInput fullWidth>
               <span *ngIf="hasError('Quantity', 'required')" style="color: red">Quantity is required</span>
 
-            </nb-form-field>
+              </nb-form-field>
 
+            </div>
           </div>
         </div>
-      </div>
 
 
-    </form>
+      </form>
 
-  </nb-card-body>
+    </nb-card-body>
 
-  <nb-card-footer>
+    <nb-card-footer>
 
       <button type="button" nbButton status="success" [disabled]="AddForm.invalid" 
         (click)="Add();addmodalref.close()">Save</button>
@@ -97,48 +97,48 @@
   <nb-card-header>
     <h4 class="modal-title" id="modal-basic-title">Edit Drug</h4>
 
-  </nb-card-header>
-  <nb-card-body>
-    <form [formGroup]="EditForm" (submit)="updateStockDetails()">
+    </nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="EditForm" (submit)="updateStockDetails()">
 
-      <div class="row">
-        <div class=" col-md-6">
+        <div class="row">
+          <div class=" col-md-6">
 
-          <div class="form-group">
+            <div class="form-group">
 
-            <label>Drug Name</label>
+              <label>Drug Name </label>
 
-            <nb-select placeholder="Select Showcase" [(selected)]="selectedItem" lass="form-control" disabled
-              formControlName="DrugId">
-              <nb-option value="0">Option empty</nb-option>
-              <nb-option *ngFor="let d of Drugs" [value]="d.id">{{d.drugName}}</nb-option>
-            </nb-select>
-            <span *ngIf="hasError('DrugId', 'required')" style="color: red">Drug is required</span>
+              <nb-select placeholder="Select Showcase" [(selected)]="selectedItem" class="form-control" disabled
+                formControlName="DrugId">
+                <nb-option value="0">Option empty</nb-option>
+                <nb-option *ngFor="let d of Drugs" [value]="d.id">{{d.drugName}}</nb-option>
+              </nb-select>
+              <span *ngIf="hasEditError('DrugId', 'required')" style="color: red">Drug is required</span>
 
+            </div>
           </div>
-        </div>
 
-        <div class=" col-md-6">
+          <div class=" col-md-6">
 
-          <div class="form-group">
+            <div class="form-group">
 
-            <label>Quantity</label>
+              <label>Quantity</label>
 
-            <nb-form-field>
-              <input class="form-control" formControlName="Quantity" type="text" nbInput fullWidth>
-              <span *ngIf="hasError('Quantity', 'required')" style="color: red">Quantity is required</span>
+              <nb-form-field>
+                <input class="form-control" formControlName="Quantity" type="text" nbInput fullWidth>
+                <span *ngIf="hasEditError('Quantity', 'required')" style="color: red">Quantity is required</span>
 
-            </nb-form-field>
+              </nb-form-field>
 
+            </div>
           </div>
+
         </div>
+      </form>
+    </nb-card-body>
 
-      </div>
-    </form>
-  </nb-card-body>
+    <nb-card-footer>
 
-  <nb-card-footer>
-  
       <button type="button" nbButton status="success" [disabled]="EditForm.invalid" data-dismiss="modal"
         (click)="updateStockDetails();editmodalref.close()">Save</button>
 
@@ -168,9 +168,10 @@
 
         </p>
       </div>
-       </div>
 
-  </nb-card-body>
+    </nb-card-body>
+
+    <nb-card-footer>
 
   <nb-card-footer>
  

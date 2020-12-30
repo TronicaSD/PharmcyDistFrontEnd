@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SkipSelf } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PublicService } from 'src/app/Service/Public.Service/public-service.service';
@@ -43,6 +43,8 @@ export class DrugsComponent implements OnInit {
   ngOnInit(): void {
     this.getAllDrugs();
   }
+
+
   ClearData() {
     this.DrugObject = {
       id: 0,
@@ -50,27 +52,27 @@ export class DrugsComponent implements OnInit {
     }
   }
   getAllDrugs() {
-    
+
     this._PublicService.getAll("Drug", 'ViewGetAll').subscribe(res => {
       this.Drugs = res;
-      
+
 
     });
   }
   public hasError = (controlName: string, errorName: string) => {
-  
+
     return this.AddForm.controls[controlName].hasError(errorName);
   };
 
   public hasEditError = (controlName: string, errorName: string) => {
-  
+
     return this.EditForm.controls[controlName].hasError(errorName);
   };
-  
+
 
   //add
   Add() {
-    
+
     this._PublicService.Add('Drug', 'AddData', this.AddForm.value).subscribe((Response) => {
       this.modalService.dismissAll();
       this.getAllDrugs();
@@ -79,23 +81,23 @@ export class DrugsComponent implements OnInit {
     }, (error) => {
       // this._ToasterService.FireMessagePopUp(2);
     });
-    this.ClearData();
+    this.AddForm.reset();
   }
 
   openAddModal(content: any) {
 
     this.modalService.open(content,
-       {
-             size: "lg",
-            centered: false,
-            backdrop: true,
-            keyboard: false,
-            backdropClass: "modal-backdrop"
-      
+      {
+        size: "lg",
+        centered: false,
+        backdrop: true,
+        keyboard: false,
+        backdropClass: "modal-backdrop"
+
       }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-    });
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+      });
   }
   //
   openEditModal(content: any, Id: any) {
@@ -103,19 +105,19 @@ export class DrugsComponent implements OnInit {
     this.DrugObject = result;
     this.EditForm.controls['drugName'].setValue(this.DrugObject.drugName);
 
-    this.modalService.open(content, { size:'lg' }).result.then((result) => {
+    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });
   }
   //Edit Modal
   updateDrug() {
-    
+
     this.UpdateDrugObject = {
       drugName: this.EditForm.value.drugName,
       id: this.DrugObject.id
     }
-    
+
     this._PublicService.Update('Drug', 'UpdateData', this.UpdateDrugObject).subscribe((Response) => {
       this.Drugs = Response;
       this.modalService.dismissAll();
@@ -124,14 +126,14 @@ export class DrugsComponent implements OnInit {
     }, (error) => {
       // this._ToasterService.FireMessagePopUp(2);
     });
-    this.ClearData();
+    this.EditForm.reset();
 
   }
 
 
   //Delete Modal
   DeleteDrug(Object: any) {
-    
+
     this._PublicService.Delete("Drug", 'DeleteData', Object.id).subscribe((Response) => {
       this.modalService.dismissAll();
       // this._ToasterService.FireMessagePopUp(1);
@@ -143,12 +145,12 @@ export class DrugsComponent implements OnInit {
   }
   openDeleteModal(content: any, Object: any) {
 
-    
+
     const result: IDrug = this.Drugs.find((obj: any) => obj.id === Object.id);
     this.DrugObject = result;
-    
 
-    this.modalService.open(content, { size:'lg' }).result.then((result) => {
+
+    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });

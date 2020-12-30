@@ -97,6 +97,9 @@ export class SamplesComponent implements OnInit {
   public hasError = (controlName: string, errorName: string) => {
     return this.AddForm.controls[controlName].hasError(errorName);
   };
+  public hasEditError = (controlName: string, errorName: string) => {
+    return this.EditForm.controls[controlName].hasError(errorName);
+  };
   //add
   Add() {
     debugger;
@@ -107,12 +110,12 @@ export class SamplesComponent implements OnInit {
     }, (error) => {
       // this._ToasterService.FireMessagePopUp(2);
     });
-    this.ClearData();
+    this.AddForm.reset();
   }
 
   openAddModal(content: any) {
 
-    this.modalService.open(content, { size:'lg' }).result.then((result) => {
+    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });
@@ -125,7 +128,7 @@ export class SamplesComponent implements OnInit {
     this.EditForm.controls['qunantity'].setValue(this.SampleObject.qunantity);
     this.EditForm.controls['DoctorName'].setValue(this.SampleObject.doctorName);
     debugger;
-    this.modalService.open(content, { size:'lg' }).result.then((result) => {
+    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });
@@ -151,7 +154,7 @@ export class SamplesComponent implements OnInit {
     }, (error) => {
       // this._ToasterService.FireMessagePopUp(2);
     });
-    this.ClearData();
+    this.EditForm.reset();
 
   }
 
@@ -175,7 +178,7 @@ export class SamplesComponent implements OnInit {
     this.SampleObject = result;
     debugger;
 
-    this.modalService.open(content, { size:'lg' }).result.then((result) => {
+    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });

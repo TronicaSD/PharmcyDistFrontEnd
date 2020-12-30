@@ -6,7 +6,9 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ToasterService {
 
-  constructor(private toastr: ToastrService) { }
+  constructor(private toastr: ToastrService) {
+    debugger;
+  }
 
   FireMessagePopUp(Type: number) {
     switch (Type) {

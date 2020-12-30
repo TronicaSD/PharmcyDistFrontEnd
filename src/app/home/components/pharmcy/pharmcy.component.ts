@@ -82,12 +82,12 @@ export class PharmcyComponent implements OnInit {
     }, (error) => {
       // this._ToasterService.FireMessagePopUp(2);
     });
-    this.ClearData();
+    this.AddForm.reset();
   }
 
   openAddModal(content: any) {
 
-    this.modalService.open(content, { size:'lg' }).result.then((result) => {
+    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });
@@ -102,7 +102,7 @@ export class PharmcyComponent implements OnInit {
 
  
 
-    this.modalService.open(content, { size:'lg' }).result.then((result) => {
+    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });
@@ -125,7 +125,7 @@ export class PharmcyComponent implements OnInit {
     }, (error) => {
       // this._ToasterService.FireMessagePopUp(2);
     });
-    this.ClearData();
+    this.EditForm.reset();
 
   }
 
@@ -149,7 +149,7 @@ export class PharmcyComponent implements OnInit {
     this.PharmcyObject = result;
     
 
-    this.modalService.open(content, { size:'lg' }).result.then((result) => {
+    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
     });
