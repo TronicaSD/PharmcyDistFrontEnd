@@ -17,24 +17,28 @@ import { StockDetailsComponent } from './components/stock-details/stock-details.
 import { SamplesComponent } from './components/samples/samples.component';
 import { InvoiceComponent } from './components/invoice/invoice.component';
 import { NumbersOnlyDirective } from '../shared/directives/number-only.directive';
-import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [
     HomeComponent,
     MenuChildrenComponent,
     NumbersOnlyDirective,
-  
+    PharmcyComponent,
+    StockDetailsComponent,
+    SamplesComponent,
+    InvoiceComponent,
     MomentFormatPipe
     
   ],
   imports: [
+    CommonModule,
+    NbThemeModule.forRoot({ name: 'dark' }), // this will enable the default theme, you can change this to `cosmic` to enable the dark theme  
+
     HomeRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
     NbLayoutModule,
     NbSidebarModule,
-    NbThemeModule.forRoot({ name: 'dark' }), // this will enable the default theme, you can change this to `cosmic` to enable the dark theme  
     NbMenuModule.forRoot(),
     NbCardModule,
     NgbModule,
@@ -42,18 +46,14 @@ import { BrowserModule } from '@angular/platform-browser';
     NbInputModule,
     NbSelectModule,
     NbButtonModule,
-    NbIconModule,
     NbDatepickerModule.forRoot(),
     NbDialogModule.forChild({closeOnBackdropClick:false,autoFocus:true,closeOnEsc:true})
     
 
 
   ],
-  exports: [
-    MomentFormatPipe,
-
-  ],
-  providers: [{ provide: PublicService }, { provide: NbSidebarService },{ provide: AuthService }]
+ 
+  providers: [PublicService, NbSidebarService,AuthService]
 })
 export class HomeModule {
 }

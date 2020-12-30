@@ -31,7 +31,9 @@ import { PublicService } from './Service/Public.Service/public-service.service';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NbThemeModule.forRoot({ name: 'cosmic' }), // this will enable the default theme, you can change this to `cosmic` to enable the dark theme  
+
 
 
   ],
