@@ -13,13 +13,15 @@ import {
   NbSidebarService,
   NbLayoutModule,
   NbMenuModule,
-  NbCardModule
+  NbCardModule,
+  NbToastrModule
 } from '@nebular/theme';
 
 /***Components */
 
 import { AuthService } from './auth/services/auth.service';
 import { PublicService } from './Service/Public.Service/public-service.service';
+import { ToasterService } from './Service/Toaster.Service/toaster.service';
 
 @NgModule({
   declarations: [
@@ -32,10 +34,11 @@ import { PublicService } from './Service/Public.Service/public-service.service';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule
+    , NbToastrModule.forRoot(),
 
 
   ],
-  providers: [],
+  providers: [ToasterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

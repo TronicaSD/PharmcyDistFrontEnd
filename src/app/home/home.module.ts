@@ -6,7 +6,7 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { DrugsComponent } from './components/drugs/drugs.component'
 import { MenuChildrenComponent } from './components/shared/menu-children/menu-children.component';
-import { NbButtonModule, NbCardModule, NbDatepickerModule, NbFormFieldModule, NbIconModule, NbInputModule, NbLayoutModule, NbMenuModule, NbSelectModule, NbSidebarModule, NbSidebarService, NbThemeModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbDatepickerModule, NbDialogModule, NbFormFieldModule, NbIconModule, NbInputModule, NbLayoutModule, NbMenuModule, NbSelectModule, NbSidebarModule, NbSidebarService, NbThemeModule, NbToastrModule } from '@nebular/theme';
 import { PublicService } from '../Service/Public.Service/public-service.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -19,6 +19,7 @@ import { StockDetailsComponent } from './components/stock-details/stock-details.
 import { SamplesComponent } from './components/samples/samples.component';
 import { InvoiceComponent } from './components/invoice/invoice.component';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
+import { config } from 'process';
 
 class ToastrServiceThatThrows {
   constructor() { throw new Error('I should not be instantiated') }
@@ -53,18 +54,17 @@ class ToastrServiceThatThrows {
     NbDatepickerModule.forRoot(),
     NbEvaIconsModule,
     NbIconModule,
-    ToastrModule.forRoot({
-      timeOut: 3000,
-      positionClass: 'toast-bottom-right',
-      preventDuplicates: true,
-    }),
+    NbToastrModule.forRoot(),
+    NbDialogModule.forRoot()
+
 
   ],
   exports: [
     MomentFormatPipe,
 
   ],
-  providers: [{ provide: PublicService }, { provide: NbSidebarService }, { provide: ToastrService, useClass: ToastrServiceThatThrows }, { provide: AuthService }]
+  providers: [{ provide: PublicService }, { provide: NbSidebarService }
+    , { provide: AuthService }]
 })
 export class HomeModule {
 }

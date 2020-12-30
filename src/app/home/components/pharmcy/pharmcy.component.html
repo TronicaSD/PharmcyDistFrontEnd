@@ -2,7 +2,7 @@
   <div class="row">
     <div class="offset-9 col-md-3">
 
-      <button nbButton status="primary" (click)="openAddModal(AddModal)">Add Pharmacy</button>
+      <button nbButton status="primary" (click)="openAddModal(Adddialog)">Add Pharmacy</button>
     </div>
   </div>
   <br>
@@ -21,8 +21,8 @@
         <td>{{ph.pharmcyName}}</td>
         <td>{{ph.address}}</td>
         <td>
-          <nb-icon icon="edit" (click)="openEditModal(EditModal,ph.id)"></nb-icon> |
-          <nb-icon icon="trash" (click)="openDeleteModal(DeleteModal,ph)"></nb-icon>
+          <nb-icon icon="edit" (click)="openEditModal(Editdialog,ph.id)"></nb-icon> |
+          <nb-icon icon="trash" (click)="openDeleteModal(Deletedialog,ph)"></nb-icon>
         </td>
       </tr>
 
@@ -30,7 +30,7 @@
 
   </table>
 
-  <ng-template #AddModal let-modal>
+  <ng-template #Adddialog class="model-full" let-data let-ref="dialogRef">
     <nb-card>
       <nb-card-header>
         <h4 class="modal-title" id="modal-basic-title">Add Pharmcy</h4>
@@ -87,7 +87,7 @@
   </ng-template>
 
 
-  <ng-template #EditModal let-modal>
+  <ng-template #Editdialog class="model-full" let-data let-ref="dialogRef">
     <nb-card>
       <nb-card-header>
         <h4 class="modal-title" id="modal-basic-title">Edit Pharmcy</h4>
@@ -142,7 +142,7 @@
     </nb-card>
   </ng-template>
 
-  <ng-template #DeleteModal let-Dmodal>
+  <ng-template #Deletedialog let-data let-ref="dialogRef">
     <nb-card>
       <nb-card-header>
         <h4 class="modal-title" id="modal-basic-title">Delete</h4>
@@ -157,11 +157,9 @@
 
       <nb-card-footer>
 
-        <button type="button" nbButton status="success" data-dismiss="Dmodal"
-          (click)="DeletePharmcy(PharmcyObject)">save</button>
+        <button type="button" nbButton status="success" (click)="DeletePharmcy(PharmcyObject)">save</button>
 
-        <button type="button" nbButton status="danger" data-dismiss="Dmodal"
-          (click)="Dmodal.dismiss('Cross click')">Cancel</button>
+        <button nbButton status="danger" (click)="ref.close()">Close </button>
 
       </nb-card-footer>
     </nb-card>

@@ -1,4 +1,4 @@
-<button nbButton status="primary" style="float: right;" (click)="openAddModal(AddModal)">Add New Drug</button>
+<button nbButton status="primary" style="float: right;" (click)="openAddModal(Adddialog)">Add New Drug</button>
 
 <table class="table table-res">
   <thead>
@@ -17,8 +17,8 @@
       <td>{{Sm.drugName}}</td>
       <td>{{Sm.qunantity}}</td>
       <td>
-        <nb-icon icon="edit" (click)="openEditModal(EditModal,Sm.id)"></nb-icon> |
-        <nb-icon icon="trash" (click)="openDeleteModal(DeleteModal,Sm)"></nb-icon>
+        <nb-icon icon="edit" (click)="openEditModal(Editdialog,Sm.id)"></nb-icon> |
+        <nb-icon icon="trash" (click)="openDeleteModal(Deletedialog,Sm)"></nb-icon>
       </td>
     </tr>
 
@@ -27,7 +27,7 @@
 </table>
 
 
-<ng-template #AddModal let-modal>
+<ng-template #Adddialog class="model-full" let-data let-ref="dialogRef">
   <nb-card>
     <nb-card-header>
       <h4 class="modal-title" id="modal-basic-title">Add Drugs To Stock</h4>
@@ -88,17 +88,15 @@
 
     <nb-card-footer>
 
-      <button type="button" nbButton status="success" [disabled]="AddForm.invalid" data-dismiss="modal"
-        (click)="Add()">Save</button>
+      <button type="button" nbButton status="success" [disabled]="AddForm.invalid" (click)="Add()">Save</button>
+      <button nbButton status="danger" (click)="ref.close()">Close </button>
 
-      <button type="button" nbButton status="danger" data-dismiss="modal"
-        (click)="modal.dismiss('Cross click')">Cancel</button>
 
     </nb-card-footer>
   </nb-card>
 </ng-template>
 
-<ng-template #EditModal let-modal>
+<ng-template #Editdialog class="model-full" let-data let-ref="dialogRef">
   <nb-card>
     <nb-card-header>
       <h4 class="modal-title" id="modal-basic-title">Edit Drug</h4>
@@ -156,20 +154,16 @@
     </nb-card-body>
 
     <nb-card-footer>
-      <button type="button" nbButton status="success" [disabled]="EditForm.invalid" data-dismiss="modal"
+      <button type="button" nbButton status="success" [disabled]="EditForm.invalid"
         (click)="updateSample()">Save</button>
+      <button nbButton status="danger" (click)="ref.close()">Close </button>
 
-      <button type="button" nbButton status="danger" data-dismiss="modal"
-        (click)="modal.dismiss('Cross click')">Cancel</button>
 
     </nb-card-footer>
   </nb-card>
 </ng-template>
 
-
-
-
-<ng-template #DeleteModal let-Dmodal>
+<ng-template #Deletedialog class="model-full" let-data let-ref="dialogRef">
   <nb-card>
     <nb-card-header>
       <h4 class="modal-title" id="modal-basic-title">Delete</h4>
@@ -190,9 +184,8 @@
 
       <button type="button" nbButton status="success" data-dismiss="Dmodal"
         (click)="DeleteSample(SampleObject)">save</button>
+      <button nbButton status="danger" (click)="ref.close()">Close </button>
 
-      <button type="button" nbButton status="danger" data-dismiss="Dmodal"
-        (click)="Dmodal.dismiss('Cross click')">Cancel</button>
 
     </nb-card-fotter>
   </nb-card>

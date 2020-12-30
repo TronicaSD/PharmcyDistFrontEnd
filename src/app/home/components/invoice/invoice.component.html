@@ -1,4 +1,4 @@
-<button nbButton status="primary" style="float: right;" (click)="openAddModal(AddModal)">Add New Invoice</button>
+<button nbButton status="primary" style="float: right;" (click)="openAddModal(Adddialog)">Add New Invoice</button>
 
 <table class="table">
   <thead>
@@ -24,8 +24,8 @@
       <td>{{iv.totalPrice | currency}}</td>
 
       <td>
-        <nb-icon icon="edit" (click)="openEditModal(EditModal,iv.id)"></nb-icon> |
-        <nb-icon icon="trash" (click)="openDeleteModal(DeleteModal,iv)"></nb-icon>
+        <nb-icon icon="edit" (click)="openEditModal(Editdialog,iv.id)"></nb-icon> |
+        <nb-icon icon="trash" (click)="openDeleteModal(DeleteDeletedialogModal,iv)"></nb-icon>
       </td>
     </tr>
 
@@ -34,7 +34,7 @@
 </table>
 
 
-<ng-template #AddModal let-modal>
+<ng-template #Adddialog class="model-full" let-data let-ref="dialogRef">
   <nb-card>
     <nb-card-header>
       <h4 class="modal-title" id="modal-basic-title">Add Drugs To Stock</h4>
@@ -167,17 +167,17 @@
 
     <nb-card-footer>
 
-      <button type="button" nbButton status="success" data-dismiss="modal" [disabled]="AddForm.invalid"
-        (click)="Add()">Save</button>
+      <button type="button" nbButton status="success" [disabled]="AddForm.invalid" (click)="Add()">Save</button>
 
-      <button type="button" nbButton status="danger" data-dismiss="modal"
-        (click)="modal.dismiss('Cross click')">Cancel</button>
+      <button nbButton status="danger" (change)="ref.close()" (click)="ClearForm()">Close </button>
+
 
     </nb-card-footer>
   </nb-card>
 </ng-template>
 
-<ng-template #EditModal let-modal>
+
+<ng-template #Editdialog class="model-full" let-data let-ref="dialogRef">
   <nb-card>
     <nb-card-header>
       <h4 class="modal-title" id="modal-basic-title">Add Drugs To Stock</h4>
@@ -309,18 +309,17 @@
 
     <nb-card-footer>
 
-      <button type="button" nbButton status="success" data-dismiss="modal" [disabled]="EditForm.invalid"
+      <button type="button" nbButton status="success" [disabled]="EditForm.invalid"
         (click)="updateInvoice()">Save</button>
+      <button nbButton status="danger" (change)="ref.close()" (click)="ClearForm()">Close </button>
 
-      <button type="button" nbButton status="danger" data-dismiss="modal" (change)="modal.dismiss('Cross click')"
-        (click)="ClearForm()">Cancel</button>
 
     </nb-card-footer>
   </nb-card>
 </ng-template>
 
 
-<ng-template #DeleteModal let-Dmodal>
+<ng-template #Deletedialog class="model-full" let-data let-ref="dialogRef">
   <nb-card>
     <nb-card-header>
       <h4 class="modal-title" id="modal-basic-title">Delete</h4>
@@ -339,11 +338,9 @@
 
     <nb-card-footer>
 
-      <button type="button" nbButton status="success" data-dismiss="Dmodal"
-        (click)="DeleteInvoice(InvoiceObject)">save</button>
+      <button type="button" nbButton status="success" (click)="DeleteInvoice(InvoiceObject)">save</button>
 
-      <button type="button" nbButton status="danger" data-dismiss="Dmodal"
-        (click)="Dmodal.dismiss('Cross click')">Cancel</button>
+      <button nbButton status="danger" (click)="ref.close()">Close </button>
 
     </nb-card-footer>
   </nb-card>

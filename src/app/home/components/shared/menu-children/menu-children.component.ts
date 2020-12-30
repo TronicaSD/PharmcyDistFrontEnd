@@ -23,11 +23,7 @@ export class MenuChildrenComponent {
         {
           title: 'Pharmcies',
           link: 'pharmcies'
-        },
-        {
-          title: 'Stock Details',
-          link: 'stockDetails'
-        },
+        }
       ],
     },
     {

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NbDialogService } from '@nebular/theme';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PublicService } from 'src/app/Service/Public.Service/public-service.service';
 import { ISample } from '../../interface/ISample';
@@ -35,7 +36,7 @@ export class SamplesComponent implements OnInit {
   Drugs: any;
   StockDetails: Object;
   constructor(private _PublicService: PublicService
-    , private modalService: NgbModal
+    , private dialogService: NbDialogService
     , private _formbuilder: FormBuilder
   ) {
 
@@ -100,11 +101,14 @@ export class SamplesComponent implements OnInit {
   public hasEditError = (controlName: string, errorName: string) => {
     return this.EditForm.controls[controlName].hasError(errorName);
   };
-  //add
+  ////////////////////add
+  openAddModal(dialog: TemplateRef<any>) {
+    this.dialogService.open(dialog, { backdropClass: "model-full" });
+
+  }
   Add() {
     debugger;
     this._PublicService.Add('Sample', 'AddData', this.AddForm.value).subscribe((Response) => {
-      this.modalService.dismissAll();
       this.getAllSample();
       // this._ToasterService.FireMessagePopUp(1);
     }, (error) => {
@@ -113,24 +117,19 @@ export class SamplesComponent implements OnInit {
     this.AddForm.reset();
   }
 
-  openAddModal(content: any) {
 
-    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-    });
-  }
   //
-  openEditModal(content: any, Id: any) {
+  openEditModal(dialog: TemplateRef<any>, Id: any) {
     const result: ISample = this.Samples.find(obj => obj.id === Id);
     this.SampleObject = result;
     this.EditForm.controls['DrugId'].setValue(this.SampleObject.drugId);
     this.EditForm.controls['qunantity'].setValue(this.SampleObject.qunantity);
     this.EditForm.controls['DoctorName'].setValue(this.SampleObject.doctorName);
     debugger;
-    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
+    this.dialogService.open(dialog, {
+      context: {
+        title: "dd",
+      }, dialogClass: 'model-full'
     });
   }
   //Edit Modal
@@ -148,7 +147,6 @@ export class SamplesComponent implements OnInit {
     debugger;
     this._PublicService.Update('Sample', 'UpdateData', this.UpdateSampleObject).subscribe((Response) => {
       this.Samples = Response;
-      this.modalService.dismissAll();
       // this._ToasterService.FireMessagePopUp(1);
       this.getAllSample();
     }, (error) => {
@@ -159,11 +157,19 @@ export class SamplesComponent implements OnInit {
   }
 
 
-  //Delete Modal
+  ///////////////////////Delete Modal
+  openDeleteModal(dialog: TemplateRef<any>, Object: any) {
+    const result: ISample = this.Samples.find((obj: any) => obj.id === Object.id);
+    this.SampleObject = result;
+    this.dialogService.open(dialog, {
+      context: {
+        title: "dd",
+      }, dialogClass: 'model-full'
+    });
+  }
   DeleteSample(Object: any) {
     debugger;
     this._PublicService.Delete("Sample", 'DeleteData', Object.id).subscribe((Response) => {
-      this.modalService.dismissAll();
       // this._ToasterService.FireMessagePopUp(1);
       this.getAllSample();
     }, (error) => {
@@ -171,18 +177,7 @@ export class SamplesComponent implements OnInit {
     });
 
   }
-  openDeleteModal(content: any, Object: any) {
 
-    debugger;
-    const result: ISample = this.Samples.find((obj: any) => obj.id === Object.id);
-    this.SampleObject = result;
-    debugger;
-
-    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-    });
-  }
 
 
 

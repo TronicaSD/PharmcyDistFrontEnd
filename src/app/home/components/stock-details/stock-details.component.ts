@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NbDialogService } from '@nebular/theme';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PublicService } from 'src/app/Service/Public.Service/public-service.service';
 import { IStockDetails } from '../../interface/IStockDetails';
@@ -33,6 +34,8 @@ export class StockDetailsComponent implements OnInit {
   constructor(private _PublicService: PublicService
     , private modalService: NgbModal
     , private _formbuilder: FormBuilder
+    , private dialogService: NbDialogService
+    ,
   ) {
 
     this.AddForm = this._formbuilder.group({
@@ -97,15 +100,12 @@ export class StockDetailsComponent implements OnInit {
     this.AddForm.reset();
   }
 
-  openAddModal(content: any) {
+  openAddModal(dialog: TemplateRef<any>,) {
+    this.dialogService.open(dialog, { backdropClass: "model-full" });
 
-    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-    });
   }
   //
-  openEditModal(content: any, Id: any) {
+  openEditModal(dialog: TemplateRef<any>, Id: any) {
     debugger;
     const result: IStockDetails = this.StockDetails.find(obj => obj.id === Id);
     this.StockDetailsObject = result;
@@ -115,9 +115,10 @@ export class StockDetailsComponent implements OnInit {
 
     debugger;
 
-    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
+    this.dialogService.open(dialog, {
+      context: {
+        title: "dd",
+      }, dialogClass: 'model-full'
     });
   }
   //Edit Modal
@@ -155,16 +156,15 @@ export class StockDetailsComponent implements OnInit {
     });
 
   }
-  openDeleteModal(content: any, Object: any) {
+  openDeleteModal(dialog: TemplateRef<any>, Object: any) {
 
     debugger;
     const result: IStockDetails = this.StockDetails.find((obj: any) => obj.id === Object.id);
     this.StockDetailsObject = result;
-    debugger;
-
-    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
+    this.dialogService.open(dialog, {
+      context: {
+        title: "dd",
+      }, dialogClass: 'model-full'
     });
   }
 

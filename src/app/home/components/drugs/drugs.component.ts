@@ -1,5 +1,6 @@
-import { Component, OnInit, SkipSelf } from '@angular/core';
+import { Component, OnInit, SkipSelf, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PublicService } from 'src/app/Service/Public.Service/public-service.service';
 import { ToasterService } from 'src/app/Service/Toaster.Service/toaster.service';
@@ -27,6 +28,8 @@ export class DrugsComponent implements OnInit {
   constructor(private _PublicService: PublicService
     , private modalService: NgbModal
     , private _formbuilder: FormBuilder
+    , private dialogService: NbDialogService
+    , private _ToasterService: NbToastrService
   ) {
 
     this.AddForm = this._formbuilder.group({
@@ -70,47 +73,41 @@ export class DrugsComponent implements OnInit {
   };
 
 
-  //add
+  ////////////////add/////////////
+  openAddDialog(dialog: TemplateRef<any>) {
+    this.dialogService.open(dialog, { backdropClass: "model-full" });
+  }
   Add() {
 
     this._PublicService.Add('Drug', 'AddData', this.AddForm.value).subscribe((Response) => {
-      this.modalService.dismissAll();
       this.getAllDrugs();
-      this.AddForm.reset();
-      // this._ToasterService.FireMessagePopUp(1);
+
+      this._ToasterService.show(
+        'Success To Update',
+        'Successful Message',
+      );;
     }, (error) => {
       // this._ToasterService.FireMessagePopUp(2);
     });
     this.AddForm.reset();
   }
 
-  openAddModal(content: any) {
 
-    this.modalService.open(content,
-      {
-        size: "lg",
-        centered: false,
-        backdrop: true,
-        keyboard: false,
-        backdropClass: "modal-backdrop"
 
-      }).result.then((result) => {
-        this.closeResult = `Closed with: ${result}`;
-      }, (reason) => {
-      });
-  }
-  //
-  openEditModal(content: any, Id: any) {
+  /////////////Edit///////////
+
+  //Edit Modal
+  openEditDialog(dialog: TemplateRef<any>, Id: any) {
     const result: IDrug = this.Drugs.find(obj => obj.id === Id);
     this.DrugObject = result;
     this.EditForm.controls['drugName'].setValue(this.DrugObject.drugName);
 
-    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
+    this.dialogService.open(dialog, {
+      context: {
+        title: "dd",
+      }, dialogClass: 'model-full'
     });
   }
-  //Edit Modal
   updateDrug() {
 
     this.UpdateDrugObject = {
@@ -143,19 +140,18 @@ export class DrugsComponent implements OnInit {
     });
 
   }
-  openDeleteModal(content: any, Object: any) {
 
+
+
+  openDeletedialog(dialog: TemplateRef<any>, Object: any) {
 
     const result: IDrug = this.Drugs.find((obj: any) => obj.id === Object.id);
     this.DrugObject = result;
 
-
-    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
+    this.dialogService.open(dialog, {
+      context: {
+        title: "dd",
+      }, dialogClass: 'model-full'
     });
   }
-
-
-
 } 

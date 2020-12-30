@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PublicService } from 'src/app/Service/Public.Service/public-service.service';
 import { IInvoice } from '../../interface/IInvoice';
 import * as moment from "moment";
+import { NbDialogService } from '@nebular/theme';
 
 @Component({
   selector: 'app-invoice',
@@ -74,7 +75,7 @@ export class InvoiceComponent implements OnInit {
   qunantity: any;
   price: any;
   constructor(private _PublicService: PublicService
-    , private modalService: NgbModal
+    , private dialogService: NbDialogService
     , private _formbuilder: FormBuilder
   ) {
 
@@ -183,12 +184,11 @@ export class InvoiceComponent implements OnInit {
 
   Add() {
     var date = moment(date);
-    this.AddForm.controls['InvoiceDate'].setValue(date);
+    //this.AddForm.controls['InvoiceDate'].setValue(date);
 
     debugger;
     this._PublicService.Add('Invoice', 'AddData', this.AddForm.value).subscribe((Response) => {
       this.getAllInvoice();
-      this.modalService.dismissAll();
       // this._ToasterService.FireMessagePopUp(1);
     }, (error) => {
       // this._ToasterService.FireMessagePopUp(2);
@@ -197,11 +197,12 @@ export class InvoiceComponent implements OnInit {
 
   }
 
-  openAddModal(content: any) {
+  openAddModal(dialog: TemplateRef<any>) {
     this.addInvloiceDetailsList();
-    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
+    this.dialogService.open(dialog, {
+      context: {
+        title: "dd",
+      }, dialogClass: 'model-full'
     });
   }
   //
@@ -230,7 +231,7 @@ export class InvoiceComponent implements OnInit {
   removeInvoiceDetailsEdit(i: number) {
     this.invoiceDetailsEdit.removeAt(i);
   }
-  openEditModal(content: any, Id: any) {
+  openEditModal(dialog: TemplateRef<any>, Id: any) {
 
     const result: IInvoice = this.Invoices.find(obj => obj.id === Id);
     this.InvoiceObject = result;
@@ -257,20 +258,16 @@ export class InvoiceComponent implements OnInit {
       });
       this.invoiceDetailsEdit.push(newEdirInoiceDetails)
     });
-    debugger;
-
-
-
-    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
+    this.dialogService.open(dialog, {
+      context: {
+        title: "dd",
+      }, dialogClass: 'model-full'
     });
   }
   updateInvoice() {
     debugger;
     this._PublicService.Update('Invoice', 'UpdateData', this.EditForm.value).subscribe((Response) => {
       this.Invoices = Response;
-      this.modalService.dismissAll();
       // this._ToasterService.FireMessagePopUp(1);
       this.getAllInvoice();
     }, (error) => {
@@ -285,7 +282,6 @@ export class InvoiceComponent implements OnInit {
   DeleteInvoice(Object: any) {
 
     this._PublicService.Delete("Invoice", 'DeleteData', Object.id).subscribe((Response) => {
-      this.modalService.dismissAll();
       // this._ToasterService.FireMessagePopUp(1);
       this.getAllInvoice();
     }, (error) => {
@@ -293,16 +289,16 @@ export class InvoiceComponent implements OnInit {
     });
 
   }
-  openDeleteModal(content: any, Object: any) {
+  openDeleteModal(dialog: TemplateRef<any>, Object: any) {
 
 
     const result: IInvoice = this.Invoices.find((obj: any) => obj.id === Object.id);
     this.InvoiceObject = result;
 
-
-    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
+    this.dialogService.open(dialog, {
+      context: {
+        title: "dd",
+      }, dialogClass: 'model-full'
     });
   }
 
@@ -347,7 +343,6 @@ export class InvoiceComponent implements OnInit {
       }]
 
     };
-    this.modalService.dismissAll();
 
   }
 

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NbDialogService } from '@nebular/theme';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PublicService } from 'src/app/Service/Public.Service/public-service.service';
 import { ToasterService } from 'src/app/Service/Toaster.Service/toaster.service';
@@ -28,8 +29,9 @@ export class PharmcyComponent implements OnInit {
       address: ""
     };
   constructor(private _PublicService: PublicService
-    , private modalService: NgbModal
     , private _formbuilder: FormBuilder
+    , private dialogService: NbDialogService
+
   ) {
 
     this.AddForm = this._formbuilder.group({
@@ -73,7 +75,6 @@ export class PharmcyComponent implements OnInit {
   Add() {
     debugger;
     this._PublicService.Add('Pharmcy', 'AddData', this.AddForm.value).subscribe((Response) => {
-      this.modalService.dismissAll();
       this.getAllPharmcies();
       // this._ToasterService.FireMessagePopUp(1);
     }, (error) => {
@@ -82,26 +83,23 @@ export class PharmcyComponent implements OnInit {
     this.AddForm.reset();
   }
 
-  openAddModal(content: any) {
+  openAddModal(dialog: TemplateRef<any>) {
 
-    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-    });
+    this.dialogService.open(dialog, { backdropClass: "model-full" });
+
   }
   //
-  openEditModal(content: any, Id: any) {
+  openEditModal(dialog: TemplateRef<any>, Id: any) {
     const result: IPharmcy = this.Pharmcies.find(obj => obj.id === Id);
     this.PharmcyObject = result;
     debugger;
     this.EditForm.controls['pharmcyName'].setValue(this.PharmcyObject.pharmcyName);
     this.EditForm.controls['address'].setValue(this.PharmcyObject.address);
 
-    debugger;
-
-    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
+    this.dialogService.open(dialog, {
+      context: {
+        title: "dd",
+      }, dialogClass: 'model-full'
     });
   }
   //Edit Modal
@@ -116,7 +114,6 @@ export class PharmcyComponent implements OnInit {
     debugger;
     this._PublicService.Update('Pharmcy', 'UpdateData', this.UpdatePharmcyObject).subscribe((Response) => {
       this.Pharmcies = Response;
-      this.modalService.dismissAll();
       // this._ToasterService.FireMessagePopUp(1);
       this.getAllPharmcies();
     }, (error) => {
@@ -131,7 +128,6 @@ export class PharmcyComponent implements OnInit {
   DeletePharmcy(Object: any) {
     debugger;
     this._PublicService.Delete("Pharmcy", 'DeleteData', Object.id).subscribe((Response) => {
-      this.modalService.dismissAll();
       // this._ToasterService.FireMessagePopUp(1);
       this.getAllPharmcies();
     }, (error) => {
@@ -139,16 +135,16 @@ export class PharmcyComponent implements OnInit {
     });
 
   }
-  openDeleteModal(content: any, Object: any) {
 
-    debugger;
+  openDeleteModal(dialog: TemplateRef<any>, Object: any) {
+
     const result: IPharmcy = this.Pharmcies.find((obj: any) => obj.id === Object.id);
     this.PharmcyObject = result;
-    debugger;
 
-    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
+    this.dialogService.open(dialog, {
+      context: {
+        title: "dd",
+      }, dialogClass: 'model-full'
     });
   }
 
