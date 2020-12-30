@@ -17,22 +17,18 @@ import { StockDetailsComponent } from './components/stock-details/stock-details.
 import { SamplesComponent } from './components/samples/samples.component';
 import { InvoiceComponent } from './components/invoice/invoice.component';
 import { NumbersOnlyDirective } from '../shared/directives/number-only.directive';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [
     HomeComponent,
-    DrugsComponent,
     MenuChildrenComponent,
-    PharmcyComponent,
-    StockDetailsComponent,
-    SamplesComponent,
-    InvoiceComponent,
-    NumbersOnlyDirective
-    
+    NumbersOnlyDirective,
   
+    MomentFormatPipe
+    
   ],
   imports: [
-    CommonModule,
     HomeRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
@@ -46,6 +42,7 @@ import { NumbersOnlyDirective } from '../shared/directives/number-only.directive
     NbInputModule,
     NbSelectModule,
     NbButtonModule,
+    NbIconModule,
     NbDatepickerModule.forRoot(),
     NbDialogModule.forChild({closeOnBackdropClick:false,autoFocus:true,closeOnEsc:true})
     

@@ -5,7 +5,9 @@
       <button nbButton status="primary" (click)="openAddModal(AddModal)">Add Pharmacy</button>
     </div>
   </div>
-  <br>
+  <br> 
+
+  
   <table class="table table-res">
     <thead>
       <tr>
@@ -28,7 +30,7 @@
 
     </tbody>
 
-  </table>
+  </table> 
 
   <ng-template #AddModal let-modal>
     <nb-card>
@@ -84,7 +86,7 @@
 
       </nb-card-footer>
     </nb-card>
-  </ng-template>
+  </ng-template> 
 
 
   <ng-template #EditModal let-modal>
@@ -93,16 +95,13 @@
         <h4 class="modal-title" id="modal-basic-title">Edit Pharmcy</h4>
 
       </nb-card-header>
+
       <nb-card-body>
         <form [formGroup]="EditForm" (submit)="updatePharmcy()">
-
           <div class="row">
             <div class=" col-md-6">
 
-            <nb-form-field>
-              <input class="form-control" formControlName="pharmcyName" type="text" nbInput fullWidth>
-              <span *ngIf="hasErrorEdit('pharmcyName', 'required')" style="color: red">PharmcyName is required</span>
-
+      
                 <label>Pharmcy Name</label>
 
                 <nb-form-field>
@@ -113,7 +112,7 @@
                 </nb-form-field>
 
               </div>
-            </div>
+         
             <div class=" col-md-6">
 
               <div class="form-group">
@@ -130,7 +129,8 @@
             </div>
           </div>
         </form>
-      </nb-card-body>
+
+    </nb-card-body>
 
       <nb-card-footer>
 
@@ -142,7 +142,7 @@
 
       </nb-card-footer>
     </nb-card>
-  </ng-template>
+   </ng-template>
 
   <ng-template #DeleteModal let-Dmodal>
     <nb-card>
@@ -168,4 +168,6 @@
       </nb-card-footer>
     </nb-card>
   </ng-template>
+
+  
 </div>
