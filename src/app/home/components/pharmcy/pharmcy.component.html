@@ -5,9 +5,9 @@
       <button nbButton status="primary" (click)="openAddModal(Adddialog)">Add Pharmacy</button>
     </div>
   </div>
-  <br> 
+  <br>
 
-  
+
   <table class="table table-res">
     <thead>
       <tr>
@@ -30,7 +30,7 @@
 
     </tbody>
 
-  </table> 
+  </table>
 
   <ng-template #Adddialog class="model-full" let-data let-ref="dialogRef">
     <nb-card>
@@ -78,15 +78,15 @@
 
       <nb-card-footer>
 
-        <button type="button" nbButton status="success" [disabled]="AddForm.invalid" data-dismiss="modal"
-          (click)="Add()">Save</button>
+        <button type="button" nbButton status="success" [disabled]="AddForm.invalid"
+          (click)="Add();ref.close()">Save</button>
 
-        <button type="button" nbButton status="danger" data-dismiss="modal"
-          (click)="modal.dismiss('Cross click')">Cancel</button>
+        <button nbButton (click)="ref.close()" status="danger">Close </button>
+
 
       </nb-card-footer>
     </nb-card>
-  </ng-template> 
+  </ng-template>
 
 
   <ng-template #Editdialog class="model-full" let-data let-ref="dialogRef">
@@ -101,27 +101,27 @@
           <div class="row">
             <div class=" col-md-6">
 
-      
-                <label>Pharmcy Name</label>
 
-                <nb-form-field>
-                  <input class="form-control" formControlName="pharmcyName" type="text" nbInput fullWidth>
-                  <span *ngIf="hasEditError('pharmcyName', 'required')" style="color: red">PharmcyName is
-                    required</span>
+              <label>Pharmcy Name</label>
 
-                </nb-form-field>
+              <nb-form-field>
+                <input class="form-control" formControlName="pharmcyName" type="text" nbInput fullWidth>
+                <span *ngIf="hasEditError('pharmcyName', 'required')" style="color: red">PharmcyName is
+                  required</span>
 
-              </div>
-         
+              </nb-form-field>
+
+            </div>
+
             <div class=" col-md-6">
 
               <div class="form-group">
 
-            <label>Address</label>
+                <label>Address</label>
 
-            <nb-form-field>
-              <input class="form-control" formControlName="address" type="text" nbInput fullWidth>
-              <span *ngIf="hasErrorEdit('address', 'required')" style="color: red">address is required</span>
+                <nb-form-field>
+                  <input class="form-control" formControlName="address" type="text" nbInput fullWidth>
+                  <span *ngIf="hasErrorEdit('address', 'required')" style="color: red">address is required</span>
 
                 </nb-form-field>
 
@@ -130,19 +130,19 @@
           </div>
         </form>
 
-    </nb-card-body>
+      </nb-card-body>
 
       <nb-card-footer>
 
-        <button type="button" nbButton status="success" [disabled]="EditForm.invalid" data-dismiss="modal"
-          (click)="updatePharmcy()">Save</button>
+        <button type="button" nbButton status="success" [disabled]="EditForm.invalid"
+          (click)="updatePharmcy();ref.close()">Save</button>
 
-        <button type="button" nbButton status="danger" data-dismiss="modal"
-          (click)="modal.dismiss('Cross click')">Cancel</button>
+        <button nbButton (click)="ref.close()" status="danger">Close </button>
+
 
       </nb-card-footer>
     </nb-card>
-   </ng-template>
+  </ng-template>
 
   <ng-template #Deletedialog let-data let-ref="dialogRef">
     <nb-card>
@@ -152,14 +152,14 @@
       </nb-card-header>
       <nb-card-body>
         <div class="row">
-          AreYouSureYouWantToDeleteThisItem
+
         </div>
 
       </nb-card-body>
 
       <nb-card-footer>
 
-        <button type="button" nbButton status="success" (click)="DeletePharmcy(PharmcyObject)">save</button>
+        <button type="button" nbButton status="success" (click)="DeletePharmcy(PharmcyObject);ref.close()">save</button>
 
         <button nbButton status="danger" (click)="ref.close()">Close </button>
 
@@ -167,5 +167,5 @@
     </nb-card>
   </ng-template>
 
-  
+
 </div>
