@@ -23,8 +23,8 @@
         <td>{{i +1}}</td>
         <td>{{drug.drugName}}</td>
         <td>
-          <nb-icon icon="edit" (click)="openEditDialog(Editdialog,drug.id)"></nb-icon> |
-          <nb-icon icon="trash" (click)="openDeletedialog(Deletedialog,drug)"></nb-icon>
+          <nb-icon status="warning" icon="edit" (click)="openEditDialog(Editdialog,drug.id)"></nb-icon> |
+          <nb-icon status="danger" icon="trash" (click)="openDeletedialog(Deletedialog,drug)"></nb-icon>
         </td>
 
 
@@ -42,19 +42,19 @@
       <form [formGroup]="AddForm" (submit)="Add()">
 
         <div class="row">
-          <div class=" col-md-6">
+          <div class=" col-md-12">
 
-            <div class="form-group">
 
-              <label> Name</label>
 
-              <nb-form-field>
-                <input class="form-control" formControlName="drugName" type="text" nbInput fullWidth>
-                <span *ngIf="hasError('drugName', 'required')" style="color: red">Name is required</span>
+            <label> Name</label>
 
-              </nb-form-field>
+            <nb-form-field>
+              <input class="form-control" formControlName="drugName" type="text" nbInput fullWidth>
+              <span *ngIf="hasError('drugName', 'required')" style="color: red">Name is required</span>
 
-            </div>
+            </nb-form-field>
+
+
           </div>
 
         </div>
@@ -62,7 +62,7 @@
     </nb-card-body>
     <nb-card-footer>
       <button type="button" class="cancel" [disabled]="AddForm.invalid" nbButton status="success"
-        (click)="Add()">Save</button>
+        (click)="Add();ref.close()">Save</button>
       <button nbButton (click)="ref.close()" status="danger">Close </button>
     </nb-card-footer>
   </nb-card>
@@ -70,7 +70,7 @@
 
 <ng-template #Editdialog class="model-full" let-data let-ref="dialogRef">
   <nb-card>
-    <nb-card-header>Add Drug</nb-card-header>
+    <nb-card-header>Edit Drug</nb-card-header>
     <nb-card-body>
       <form [formGroup]="EditForm" (submit)="updateDrug()">
 
@@ -95,7 +95,7 @@
     </nb-card-body>
     <nb-card-footer>
       <button nbButton type="button" nbButton status="success" [disabled]="EditForm.invalid" data-dismiss="modal"
-        (click)="updateDrug()">Save</button>
+        (click)="updateDrug();ref.close()">Save</button>
       <button nbButton status="danger" (click)="ref.close()">Close </button>
     </nb-card-footer>
   </nb-card>
@@ -105,7 +105,7 @@
 
 <ng-template #Deletedialog class="model-full" let-data let-ref="dialogRef">
   <nb-card>
-    <nb-card-header>Add Drug</nb-card-header>
+    <nb-card-header>Delete Drug</nb-card-header>
     <nb-card-body>
       <div class="row col-md-8  col-offset-4">
 
@@ -113,17 +113,9 @@
       </div>
     </nb-card-body>
     <nb-card-footer>
-      <button nbButton type="button" nbButton status="success" data-dismiss="Dmodal"
-        (click)="DeleteDrug(DrugObject)">Confirm</button>
+      <button nbButton type="button" nbButton status="success"
+        (click)="DeleteDrug(DrugObject);ref.close()">Confirm</button>
       <button nbButton status="danger" (click)="ref.close()">Close </button>
     </nb-card-footer>
   </nb-card>
 </ng-template>
-
-<style>
-  .model-full {
-    width: 100% !important;
-    height: 100% !important;
-  }
-
-</style>

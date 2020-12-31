@@ -15,7 +15,7 @@ import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [LoginComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA], // <<<=== add this line
+
   providers: [AuthService, CookieService],
   imports: [
     CommonModule,

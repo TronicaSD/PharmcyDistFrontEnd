@@ -35,6 +35,8 @@ import { ToasterService } from './Service/Toaster.Service/toaster.service';
     HttpClientModule,
     BrowserAnimationsModule
     , NbToastrModule.forRoot(),
+    NbThemeModule.forRoot({ name: 'dark' }), // this will enable the default theme, you can change this to `cosmic` to enable the dark theme  
+
 
 
   ],

@@ -12,38 +12,35 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../auth/services/auth.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrModule, ToastrService } from 'ngx-toastr';
-import { ToasterService } from '../Service/Toaster.Service/toaster.service';
 import { PharmcyComponent } from './components/pharmcy/pharmcy.component';
 import { StockDetailsComponent } from './components/stock-details/stock-details.component';
 import { SamplesComponent } from './components/samples/samples.component';
 import { InvoiceComponent } from './components/invoice/invoice.component';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { config } from 'process';
-
-class ToastrServiceThatThrows {
-  constructor() { throw new Error('I should not be instantiated') }
-}
+import { NumbersOnlyDirective } from '../shared/directives/number-only.directive';
 
 @NgModule({
   declarations: [
     HomeComponent,
     DrugsComponent,
     MenuChildrenComponent,
+    NumbersOnlyDirective,
     PharmcyComponent,
     StockDetailsComponent,
     SamplesComponent,
     InvoiceComponent,
     MomentFormatPipe
+
   ],
   imports: [
     CommonModule,
+    NbThemeModule.forRoot({ name: 'dark' }), // this will enable the default theme, you can change this to `cosmic` to enable the dark theme  
+
     HomeRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
     NbLayoutModule,
     NbSidebarModule,
-    NbThemeModule.forRoot({ name: 'dark' }), // this will enable the default theme, you can change this to `cosmic` to enable the dark theme  
     NbMenuModule.forRoot(),
     NbCardModule,
     NgbModule,
@@ -55,12 +52,9 @@ class ToastrServiceThatThrows {
     NbEvaIconsModule,
     NbIconModule,
     NbToastrModule.forRoot(),
-    NbDialogModule.forRoot()
+    NbDialogModule.forChild({ closeOnBackdropClick: false, autoFocus: true, closeOnEsc: true })
 
 
-  ],
-  exports: [
-    MomentFormatPipe,
 
   ],
   providers: [{ provide: PublicService }, { provide: NbSidebarService }

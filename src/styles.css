@@ -1,5 +1,6 @@
-@import '~nebular-icons/css/nebular-icons.css';
-@import '~ngx-toastr/toastr';
+@import '~nebular-icons/css/nebular-icons.css'; 
+
+
 
 .container {
   margin: 1%;

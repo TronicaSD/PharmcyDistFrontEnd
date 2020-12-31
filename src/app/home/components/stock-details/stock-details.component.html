@@ -1,173 +1,184 @@
-<button nbButton status="primary" style="float: right;" (click)="openAddModal(Adddialog)">Add New Drug To Stock</button>
+<div class="container">
+  <div class="row">
+    <div class="offset-9 col-md-3">
 
-<table class="table table-res">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Drug Name</th>
-      <th>Quantity</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let St of StockDetails;let i =index">
-      <td>{{i +1}}</td>
-      <td>{{St.drugName}}</td>
-      <td>{{St.quantity}}</td>
-      <td>
-        <nb-icon icon="edit" (click)="openEditModal(Editdialog,St.id)"></nb-icon> |
-        <nb-icon icon="trash" (click)="openDeleteModal(Deletedialog,St)"></nb-icon>
-      </td>
-    </tr>
+      <button nbButton status="primary" style="float: right;" (click)="openAddModal(Adddialog)">Add New Drug To
+        Stock</button>
 
-  </tbody>
+    </div>
+  </div>
+  <br>
 
-</table>
 
-<ng-template #Adddialog class="model-full" let-data let-ref="dialogRef">
-  <nb-card>
+  <table class="table table-res">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Drug Name</th>
+        <th>Quantity</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let St of StockDetails;let i =index">
+        <td>{{i +1}}</td>
+        <td>{{St.drugName}}</td>
+        <td>{{St.quantity}}</td>
+        <td>
+          <nb-icon icon="edit" (click)="openEditModal(Editdialog,St.id)"></nb-icon> |
+          <nb-icon icon="trash" (click)="openDeleteModal(Deletedialog,St)"></nb-icon>
+        </td>
+      </tr>
 
-    <nb-card-header>
-      <h4 class="modal-title" id="modal-basic-title">Add Drugs To Stock</h4>
+    </tbody>
 
-    </nb-card-header>
+  </table>
 
-    <nb-card-body>
-      <form [formGroup]="AddForm">
+  <ng-template #Adddialog class="model-full" let-data let-ref="dialogRef">
+    <nb-card>
+
+      <nb-card-header>
+        <h4 class="modal-title" id="modal-basic-title">Add Drugs To Stock</h4>
+
+      </nb-card-header>
+
+      <nb-card-body class="modal-body">
+        <form [formGroup]="AddForm">
+          <div class="row">
+            <div class="col-md-6">
+
+              <div class="form-group">
+
+                <label>Drug Name</label><br>
+
+                <nb-select placeholder="Select a drug" formControlName="DrugId">
+                  <nb-option *ngFor="let d of Drugs" [value]="d.id">{{d.drugName}}</nb-option>
+
+                </nb-select>
+                <span *ngIf="hasError('DrugId', 'required')" style="color: red;display: block;">Drug is required</span>
+
+              </div>
+            </div>
+            <div class=" col-md-6">
+
+              <div class="form-group">
+
+                <label>Quantity</label>
+
+                <nb-form-field>
+                  <input class="form-control" numbersOnly formControlName="Quantity" type="text" nbInput fullWidth>
+                  <span *ngIf="hasError('Quantity', 'required')" style="color: red">Quantity is required</span>
+
+                </nb-form-field>
+
+              </div>
+            </div>
+          </div>
+
+
+        </form>
+
+      </nb-card-body>
+
+      <nb-card-footer>
+
+        <button type="button" nbButton status="success" [disabled]="AddForm.invalid" data-dismiss="modal"
+          (click)="Add()">Save</button>
+
+        <button nbButton status="danger" (click)="ref.close()">Close </button>
+
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
+
+
+  <ng-template #Editdialog class="model-full" let-data let-ref="dialogRef">
+    <nb-card>
+      <nb-card-header>
+        <h4 class="modal-title" id="modal-basic-title">Edit Drug</h4>
+
+      </nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="EditForm" (submit)="updateStockDetails()">
+
+          <div class="row">
+            <div class=" col-md-6">
+
+              <div class="form-group">
+
+                <label>Drug Name </label>
+
+                <nb-select placeholder="Select Showcase" [(selected)]="selectedItem" class="form-control" disabled
+                  formControlName="DrugId">
+                  <nb-option value="0">Option empty</nb-option>
+                  <nb-option *ngFor="let d of Drugs" [value]="d.id">{{d.drugName}}</nb-option>
+                </nb-select>
+                <span *ngIf="hasEditError('DrugId', 'required')" style="color: red">Drug is required</span>
+
+              </div>
+            </div>
+
+            <div class=" col-md-6">
+
+              <div class="form-group">
+
+                <label>Quantity</label>
+
+                <nb-form-field>
+                  <input class="form-control" formControlName="Quantity" type="text" nbInput fullWidth>
+                  <span *ngIf="hasEditError('Quantity', 'required')" style="color: red">Quantity is required</span>
+
+                </nb-form-field>
+
+              </div>
+            </div>
+
+          </div>
+        </form>
+      </nb-card-body>
+
+      <nb-card-footer>
+
+        <button type="button" nbButton status="success" [disabled]="EditForm.invalid" data-dismiss="modal"
+          (click)="updateStockDetails();editmodalref.close()">Save</button>
+
+        <button nbButton status="danger" (click)="ref.close()">Close </button>
+
+
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
+
+
+
+
+  <ng-template #Deletedialog class="model-full" let-data let-deletemodalref="dialogRef">
+    <nb-card>
+      <nb-card-header>
+        <h4 class="modal-title" id="modal-basic-title">Delete</h4>
+
+      </nb-card-header>
+      <nb-card-body>
         <div class="row">
-          <div class=" col-md-6">
+          <div class="col-md-12">
+            <p class="text-danger" style="font-size: x-large;">
+              confirm to delete this item ?
 
-            <div class="form-group">
 
-              <label>Drug Name</label>
-
-              <nb-select placeholder="Select Showcase" [(selected)]="selectedItem" lass="form-control"
-                formControlName="DrugId">
-                <nb-option value="0">Option empty</nb-option>
-                <nb-option *ngFor="let d of Drugs" [value]="d.id">{{d.drugName}}</nb-option>
-              </nb-select>
-              <span *ngIf="hasError('DrugId', 'required')" style="color: red">Drug is required</span>
-
-            </div>
-          </div>
-          <div class=" col-md-6">
-
-            <div class="form-group">
-
-              <label>Quantity</label>
-
-              <nb-form-field>
-                <input class="form-control" formControlName="Quantity" type="text" nbInput fullWidth>
-                <span *ngIf="hasError('Quantity', 'required')" style="color: red">Quantity is required</span>
-
-              </nb-form-field>
-
-            </div>
+            </p>
           </div>
         </div>
+      </nb-card-body>
+
+      <nb-card-footer>
+
+        <button type="button" nbButton status="success" (click)="deletemodalref.close(true)">save</button>
 
 
-      </form>
+        <button type="button" nbButton status="danger" (click)="deletemodalref.close(false)">Cancel</button>
 
-    </nb-card-body>
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
 
-    <nb-card-footer>
-
-      <button type="button" nbButton status="success" [disabled]="AddForm.invalid" data-dismiss="modal"
-        (click)="Add()">Save</button>
-
-      <button nbButton status="danger" (click)="ref.close()">Close </button>
-
-    </nb-card-footer>
-  </nb-card>
-</ng-template>
-
-
-<ng-template #Editdialog class="model-full" let-data let-ref="dialogRef">
-  <nb-card>
-    <nb-card-header>
-      <h4 class="modal-title" id="modal-basic-title">Edit Drug</h4>
-
-    </nb-card-header>
-    <nb-card-body>
-      <form [formGroup]="EditForm" (submit)="updateStockDetails()">
-
-        <div class="row">
-          <div class=" col-md-6">
-
-            <div class="form-group">
-
-              <label>Drug Name </label>
-
-              <nb-select placeholder="Select Showcase" [(selected)]="selectedItem" class="form-control" disabled
-                formControlName="DrugId">
-                <nb-option value="0">Option empty</nb-option>
-                <nb-option *ngFor="let d of Drugs" [value]="d.id">{{d.drugName}}</nb-option>
-              </nb-select>
-              <span *ngIf="hasEditError('DrugId', 'required')" style="color: red">Drug is required</span>
-
-            </div>
-          </div>
-
-          <div class=" col-md-6">
-
-            <div class="form-group">
-
-              <label>Quantity</label>
-
-              <nb-form-field>
-                <input class="form-control" formControlName="Quantity" type="text" nbInput fullWidth>
-                <span *ngIf="hasEditError('Quantity', 'required')" style="color: red">Quantity is required</span>
-
-              </nb-form-field>
-
-            </div>
-          </div>
-
-        </div>
-      </form>
-    </nb-card-body>
-
-    <nb-card-footer>
-
-      <button type="button" nbButton status="success" [disabled]="EditForm.invalid" data-dismiss="modal"
-        (click)="updateStockDetails()">Save</button>
-
-      <button nbButton status="danger" (click)="ref.close()">Close </button>
-
-
-    </nb-card-footer>
-  </nb-card>
-</ng-template>
-
-
-
-
-<ng-template #Deletedialog class="model-full" let-data let-ref="dialogRef">
-  <nb-card>
-    <nb-card-header>
-      <h4 class="modal-title" id="modal-basic-title">Delete</h4>
-
-    </nb-card-header>
-    <nb-card-body>
-      <div class="row">
-        <div class="col-md-8">
-          <p class="text-danger">
-            confirm to delete this item ?
-          </p>
-        </div>
-      </div>
-
-    </nb-card-body>
-
-    <nb-card-footer>
-
-      <button type="button" nbButton status="success" data-dismiss="Dmodal"
-        (click)="DeleteStockDetails(StockDetailsObject)">save</button>
-
-      <button nbButton status="danger" (click)="ref.close()">Close </button>
-
-
-    </nb-card-footer>
-  </nb-card>
-</ng-template>
+</div>

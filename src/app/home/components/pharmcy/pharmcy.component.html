@@ -5,7 +5,9 @@
       <button nbButton status="primary" (click)="openAddModal(Adddialog)">Add Pharmacy</button>
     </div>
   </div>
-  <br>
+  <br> 
+
+  
   <table class="table table-res">
     <thead>
       <tr>
@@ -28,7 +30,7 @@
 
     </tbody>
 
-  </table>
+  </table> 
 
   <ng-template #Adddialog class="model-full" let-data let-ref="dialogRef">
     <nb-card>
@@ -84,7 +86,7 @@
 
       </nb-card-footer>
     </nb-card>
-  </ng-template>
+  </ng-template> 
 
 
   <ng-template #Editdialog class="model-full" let-data let-ref="dialogRef">
@@ -93,14 +95,13 @@
         <h4 class="modal-title" id="modal-basic-title">Edit Pharmcy</h4>
 
       </nb-card-header>
+
       <nb-card-body>
         <form [formGroup]="EditForm" (submit)="updatePharmcy()">
-
           <div class="row">
             <div class=" col-md-6">
 
-              <div class="form-group">
-
+      
                 <label>Pharmcy Name</label>
 
                 <nb-form-field>
@@ -111,16 +112,16 @@
                 </nb-form-field>
 
               </div>
-            </div>
+         
             <div class=" col-md-6">
 
               <div class="form-group">
 
-                <label>Pharmcy Address</label>
+            <label>Address</label>
 
-                <nb-form-field>
-                  <input class="form-control" formControlName="address" type="text" nbInput fullWidth>
-                  <span *ngIf="hasEditError('address', 'required')" style="color: red">address is required</span>
+            <nb-form-field>
+              <input class="form-control" formControlName="address" type="text" nbInput fullWidth>
+              <span *ngIf="hasErrorEdit('address', 'required')" style="color: red">address is required</span>
 
                 </nb-form-field>
 
@@ -128,7 +129,8 @@
             </div>
           </div>
         </form>
-      </nb-card-body>
+
+    </nb-card-body>
 
       <nb-card-footer>
 
@@ -140,7 +142,7 @@
 
       </nb-card-footer>
     </nb-card>
-  </ng-template>
+   </ng-template>
 
   <ng-template #Deletedialog let-data let-ref="dialogRef">
     <nb-card>
@@ -164,4 +166,6 @@
       </nb-card-footer>
     </nb-card>
   </ng-template>
+
+  
 </div>
