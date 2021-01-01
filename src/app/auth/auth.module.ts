@@ -11,12 +11,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import { CookieService } from 'ngx-cookie-service';
+import { PublicService } from '../core/publicService.Service';
 
 
 @NgModule({
   declarations: [LoginComponent],
 
-  providers: [AuthService, CookieService],
+  providers: [AuthService, CookieService,PublicService],
   imports: [
     CommonModule,
     AuthRoutingModule,

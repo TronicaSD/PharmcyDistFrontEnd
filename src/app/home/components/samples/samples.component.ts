@@ -1,8 +1,8 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NbDialogService } from '@nebular/theme';
+import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PublicService } from 'src/app/Service/Public.Service/public-service.service';
+import { PublicService } from 'src/app/core/publicService.Service';
 import { ISample } from '../../interface/ISample';
 
 @Component({
@@ -17,27 +17,13 @@ export class SamplesComponent implements OnInit {
   closeResult: string;
   AddForm: FormGroup;
   EditForm: FormGroup;
-  SampleObject: ISample = {
-    drugName: "",
-    id: 0,
-    drugId: 0,
-    qunantity: 0,
-    doctorName: ""
-
-  };
-  UpdateSampleObject: ISample =
-    {
-      drugName: "",
-      id: 0,
-      drugId: 0,
-      qunantity: 0,
-      doctorName: ""
-    };
+ 
   Drugs: any;
   StockDetails: Object;
   constructor(private _PublicService: PublicService
     , private dialogService: NbDialogService
-    , private _formbuilder: FormBuilder
+    , private _formbuilder: FormBuilder,
+    private _ToasterService:NbToastrService
   ) {
 
     this.AddForm = this._formbuilder.group({
@@ -63,35 +49,24 @@ export class SamplesComponent implements OnInit {
     this.getAllStockDetails();
   }
   ClearData() {
-    this.SampleObject = {
-      drugName: "",
-      id: 0,
-      drugId: 0,
-      qunantity: 0,
-      doctorName: ""
-    }
+    this.AddForm.reset();
+
   }
   getAllDrugs() {
-    debugger;
-    this._PublicService.getAll("Drug", 'ViewGetAll').subscribe(res => {
+    this._PublicService.get("Drug/ViewGetAll").subscribe(res => {
       this.Drugs = res;
-      debugger;
 
     });
   }
   getAllStockDetails() {
-    debugger;
-    this._PublicService.getAll("StockDetails", 'ViewGetAll').subscribe(res => {
+    this._PublicService.get("StockDetails/ViewGetAll").subscribe(res => {
       this.StockDetails = res;
-      debugger;
 
     });
   }
   getAllSample() {
-    debugger;
-    this._PublicService.getAll("Sample", 'ViewGetAll').subscribe(res => {
+    this._PublicService.get("Sample/ViewGetAll").subscribe(res => {
       this.Samples = res;
-      debugger;
 
     });
   }
@@ -108,49 +83,38 @@ export class SamplesComponent implements OnInit {
   }
   Add() {
     debugger;
-    this._PublicService.Add('Sample', 'AddData', this.AddForm.value).subscribe((Response) => {
+    this._PublicService.post('Sample/AddData', this.AddForm.value).subscribe((Response) => {
       this.getAllSample();
-      // this._ToasterService.FireMessagePopUp(1);
+       this._ToasterService.success("Sample added successfully");
     }, (error) => {
-      // this._ToasterService.FireMessagePopUp(2);
+      this._ToasterService.danger("Sample failed to add");
+
     });
     this.AddForm.reset();
   }
 
 
   //
-  openEditModal(dialog: TemplateRef<any>, Id: any) {
-    const result: ISample = this.Samples.find(obj => obj.id === Id);
-    this.SampleObject = result;
-    this.EditForm.controls['DrugId'].setValue(this.SampleObject.drugId);
-    this.EditForm.controls['qunantity'].setValue(this.SampleObject.qunantity);
-    this.EditForm.controls['DoctorName'].setValue(this.SampleObject.doctorName);
-    debugger;
+  openEditModal(dialog: TemplateRef<any>, obj: any) {
+ 
+    this.EditForm.controls['DrugId'].setValue(obj.drugId);
+    this.EditForm.controls['qunantity'].setValue(obj.qunantity);
+    this.EditForm.controls['DoctorName'].setValue(obj.doctorName);
     this.dialogService.open(dialog, {
-      context: {
-        title: "dd",
-      }, dialogClass: 'model-full'
+    
     });
   }
   //Edit Modal
   updateSample() {
-    debugger;
 
-    this.UpdateSampleObject = {
-      drugId: this.EditForm.value.DrugId,
-      id: this.SampleObject.id,
-      qunantity: this.EditForm.value.qunantity,
-      doctorName: this.EditForm.value.DoctorName,
-      drugName: "",
-    }
-
-    debugger;
-    this._PublicService.Update('Sample', 'UpdateData', this.UpdateSampleObject).subscribe((Response) => {
+    this._PublicService.put('Sample/UpdateData', this.EditForm.value).subscribe((Response) => {
       this.Samples = Response;
-      // this._ToasterService.FireMessagePopUp(1);
+       this._ToasterService.success("Sample updated Successfully");
       this.getAllSample();
     }, (error) => {
-      // this._ToasterService.FireMessagePopUp(2);
+      this._ToasterService.danger("Failed to update");
+
+
     });
     this.EditForm.reset();
 
@@ -158,22 +122,18 @@ export class SamplesComponent implements OnInit {
 
 
   ///////////////////////Delete Modal
-  openDeleteModal(dialog: TemplateRef<any>, Object: any) {
-    const result: ISample = this.Samples.find((obj: any) => obj.id === Object.id);
-    this.SampleObject = result;
+  openDeleteModal(dialog: TemplateRef<any>, id: any) {
+
     this.dialogService.open(dialog, {
-      context: {
-        title: "dd",
-      }, dialogClass: 'model-full'
+  
     });
   }
-  DeleteSample(Object: any) {
-    debugger;
-    this._PublicService.Delete("Sample", 'DeleteData', Object.id).subscribe((Response) => {
-      // this._ToasterService.FireMessagePopUp(1);
+  DeleteSample(id: number) {
+    this._PublicService.delete("SampleDeleteData", id).subscribe((Response) => {
+      this._ToasterService.success("sample Delted successfully");
       this.getAllSample();
     }, (error) => {
-      // this._ToasterService.FireMessagePopUp(2);
+       this._ToasterService.danger("Failed to delete");
     });
 
   }

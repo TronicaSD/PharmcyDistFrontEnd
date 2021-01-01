@@ -1,10 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NbDialogService } from '@nebular/theme';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PublicService } from 'src/app/Service/Public.Service/public-service.service';
-import { ToasterService } from 'src/app/Service/Toaster.Service/toaster.service';
-import { IPharmcy } from '../../interface/IPharmcy';
+import { NbDialogService, NbToastrService } from '@nebular/theme';
+import { PublicService } from 'src/app/core/publicService.Service';
 @Component({
   selector: 'app-pharmcy',
   templateUrl: './pharmcy.component.html',
@@ -20,6 +17,7 @@ export class PharmcyComponent implements OnInit {
   constructor(private _PublicService: PublicService
     , private _formbuilder: FormBuilder
     , private dialogService: NbDialogService
+    , private _ToasterService: NbToastrService
 
   ) {
 
@@ -42,7 +40,7 @@ export class PharmcyComponent implements OnInit {
   }
 
   getAllPharmcies() {
-    this._PublicService.getAll("Pharmcy", 'ViewGetAll').subscribe(res => {
+    this._PublicService.get("Pharmcy/ViewGetAll", ).subscribe(res => {
       this.Pharmcies = res;
 
     });
@@ -59,11 +57,11 @@ export class PharmcyComponent implements OnInit {
   //add
   Add() {
 
-    this._PublicService.Add('Pharmcy', 'AddData', this.AddForm.value).subscribe((Response) => {
+    this._PublicService.post('Pharmcy/AddData', this.AddForm.value).subscribe((Response) => {
       this.getAllPharmcies();
-      // this._ToasterService.FireMessagePopUp(1);
+       this._ToasterService.success(" Pharmcy added successfully");
     }, (error) => {
-      // this._ToasterService.FireMessagePopUp(2);
+      this._ToasterService.danger("Failed to add");
     });
     this.AddForm.reset();
   }
@@ -87,12 +85,14 @@ export class PharmcyComponent implements OnInit {
   updatePharmcy() {
 
 
-    this._PublicService.Update('Pharmcy', 'UpdateData', this.EditForm.value).subscribe((Response) => {
+    this._PublicService.put('Pharmcy/UpdateData', this.EditForm.value).subscribe((Response) => {
       this.Pharmcies = Response;
-      // this._ToasterService.FireMessagePopUp(1);
+      this._ToasterService.success(" Pharmcy Updated Successfully");
+
       this.getAllPharmcies();
     }, (error) => {
-      // this._ToasterService.FireMessagePopUp(2);
+      this._ToasterService.danger(" Failed To Updated ");
+
     });
     this.EditForm.reset();
 
@@ -102,11 +102,13 @@ export class PharmcyComponent implements OnInit {
   //Delete Modal
   DeletePharmcy(Object: any) {
 
-    this._PublicService.Delete("Pharmcy", 'DeleteData', Object.id).subscribe((Response) => {
-      // this._ToasterService.FireMessagePopUp(1);
+    this._PublicService.delete("Pharmcy/DeleteData", Object.id).subscribe((Response) => {
+      this._ToasterService.success(" Pharmcy Delted Successfully");
+
       this.getAllPharmcies();
     }, (error) => {
-      // this._ToasterService.FireMessagePopUp(2);
+      this._ToasterService.danger(" Failed To Delte ");
+
     });
 
   }

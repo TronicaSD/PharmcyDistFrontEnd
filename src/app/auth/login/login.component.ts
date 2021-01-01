@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GlobalServiceErrorHandler } from 'src/app/core/gobalerrorservicehandler';
+import { PublicService } from 'src/app/core/publicService.Service';
 import { AuthService } from '../services/auth.service';
-import { PublicService } from '../../Service/Public.Service/public-service.service';
 
 
 @Component({
@@ -16,7 +16,6 @@ export class LoginComponent implements OnInit {
 
   constructor(private _formbuilder: FormBuilder
     , private _loginService: AuthService
-    , private _PublicService: PublicService
   ) {
     this.loginForm = this._formbuilder.group({
       userName: ['', Validators.required],

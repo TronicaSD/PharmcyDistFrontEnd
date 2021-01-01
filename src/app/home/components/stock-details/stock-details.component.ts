@@ -2,7 +2,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PublicService } from 'src/app/Service/Public.Service/public-service.service';
+import { PublicService } from 'src/app/core/publicService.Service';
 import { IStockDetails } from '../../interface/IStockDetails';
 
 @Component({
@@ -55,12 +55,12 @@ export class StockDetailsComponent implements OnInit {
     this.EditForm.reset();
   }
   getAllDrugs() {
-    this._PublicService.getAll("Drug", 'ViewGetAll').subscribe(res => {
+    this._PublicService.get("Drug/ViewGetAll").subscribe(res => {
       this.Drugs = res;
     });
   }
   getAllStockDetails() {
-    this._PublicService.getAll("StockDetails", 'ViewGetAll').subscribe(res => {
+    this._PublicService.get("StockDetails/ViewGetAll").subscribe(res => {
       this.StockDetails = res;
 
     });
@@ -74,7 +74,7 @@ export class StockDetailsComponent implements OnInit {
   //add
   Add() {
 
-    this._PublicService.Add('StockDetails', 'AddData', this.AddForm.value).subscribe((Response) => {
+    this._PublicService.post('StockDetails/AddData', this.AddForm.value).subscribe((Response) => {
       this.getAllStockDetails();
 
       // this._ToasterService.FireMessagePopUp(1);
@@ -107,7 +107,7 @@ export class StockDetailsComponent implements OnInit {
   updateStockDetails() {
 
 
-    this._PublicService.Update('StockDetails', 'UpdateData', this.EditForm.value).subscribe((Response) => {
+    this._PublicService.put('StockDetails/UpdateData', this.EditForm.value).subscribe((Response) => {
       this.StockDetails = Response;
 
       // this._ToasterService.FireMessagePopUp(1);
@@ -123,7 +123,7 @@ export class StockDetailsComponent implements OnInit {
   //Delete Modal
   DeleteStockDetails(id: number) {
 
-    this._PublicService.Delete("StockDetails", 'DeleteData', id).subscribe((Response) => {
+    this._PublicService.delete("StockDetailsDeleteData", id).subscribe((Response) => {
 
       // this._ToasterService.FireMessagePopUp(1);
       this.getAllStockDetails();

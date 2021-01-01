@@ -37,3 +37,20 @@ nb-card-footer button {
 
   margin-right: 1%;
 }
+
+.defaultdialogue{
+display: block !important;
+width: 600px;
+
+}
+
+.md-modal{
+  display: block !important;
+  width: 700px;
+  
+  }
+  .lg-modal{
+    display: block !important;
+    width: 1000px;
+    
+    }

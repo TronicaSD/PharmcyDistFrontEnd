@@ -1,11 +1,10 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PublicService } from 'src/app/Service/Public.Service/public-service.service';
 
 import { IInvoice } from '../../interface/IInvoice';
 import * as moment from "moment";
 import { NbDialogService } from '@nebular/theme';
+import { PublicService } from 'src/app/core/publicService.Service';
 
 @Component({
   selector: 'app-invoice',
@@ -113,7 +112,7 @@ export class InvoiceComponent implements OnInit {
 
   getAllPharmcies() {
 
-    this._PublicService.getAll("Pharmcy", 'ViewGetAll').subscribe(res => {
+    this._PublicService.get("Pharmcy/ViewGetAll").subscribe(res => {
       this.Pharmcies = res;
 
 
@@ -121,7 +120,7 @@ export class InvoiceComponent implements OnInit {
   }
   getAllStockDetails() {
 
-    this._PublicService.getAll("StockDetails", 'ViewGetAll').subscribe(res => {
+    this._PublicService.get("StockDetails/ViewGetAll").subscribe(res => {
       this.StockDetails = res;
 
 
@@ -129,7 +128,7 @@ export class InvoiceComponent implements OnInit {
   }
   getAllInvoice() {
 
-    this._PublicService.getAll("Invoice", 'ViewGetAll').subscribe(res => {
+    this._PublicService.get("Invoice /ViewGetAll").subscribe(res => {
       this.Invoices = res;
 
 
@@ -188,7 +187,7 @@ export class InvoiceComponent implements OnInit {
     //this.AddForm.controls['InvoiceDate'].setValue(date);
 
     debugger;
-    this._PublicService.Add('Invoice', 'AddData', this.AddForm.value).subscribe((Response) => {
+    this._PublicService.post('Invoice/AddData', this.AddForm.value).subscribe((Response) => {
       this.getAllInvoice();
       // this._ToasterService.FireMessagePopUp(1);
     }, (error) => {
@@ -267,7 +266,7 @@ export class InvoiceComponent implements OnInit {
   }
   updateInvoice() {
     debugger;
-    this._PublicService.Update('Invoice', 'UpdateData', this.EditForm.value).subscribe((Response) => {
+    this._PublicService.put('Invoice/UpdateData',  this.EditForm.value).subscribe((Response) => {
       this.Invoices = Response;
       // this._ToasterService.FireMessagePopUp(1);
       this.getAllInvoice();
@@ -282,7 +281,7 @@ export class InvoiceComponent implements OnInit {
   //Delete Modal
   DeleteInvoice(Object: any) {
 
-    this._PublicService.Delete("Invoice", 'DeleteData', Object.id).subscribe((Response) => {
+    this._PublicService.delete("Invoice/DeleteData",  Object.id).subscribe((Response) => {
       // this._ToasterService.FireMessagePopUp(1);
       this.getAllInvoice();
     }, (error) => {

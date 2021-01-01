@@ -14,7 +14,7 @@ import { LoginModel } from "../login/models/login.model";
 import { CookieService } from "ngx-cookie-service";
 import { UserLoginModel } from "../login/models/userlogin.model";
 import jwtDecode from "jwt-decode";
-import { PublicService } from "src/app/Service/Public.Service/public-service.service";
+import { PublicService } from "src/app/core/publicService.Service";
 
 
 
@@ -26,14 +26,13 @@ export class AuthService implements CanActivate {
     private http: HttpClient,
     private network: NetworkService,
     private _coockieService: CookieService,
-    private _publicService: PublicService,
 
 
   ) { }
 
   login(user: LoginModel) {
-    this._publicService.Add(
-      "Account", "Login",
+    this.http.post( environment.baseUrl+
+      "Account/Login",
       user
     ).subscribe(
       {
@@ -61,14 +60,13 @@ export class AuthService implements CanActivate {
   }
 
   private tokenAvailable(): boolean {
-    console.log(localStorage.getItem('token'));
     return !!localStorage.getItem('token');
   }
 
 
   changePassword(data: any) {
     return this.http.put<any>(
-      environment.serverUrl + "Account/ChangePassword/",
+      environment.baseUrl + "Account/ChangePassword/",
       data
     );
   }
@@ -83,7 +81,7 @@ export class AuthService implements CanActivate {
     let LoginUser = JSON.parse(localStorage.getItem("LoginUser"));
     if (LoginUser !== null) {
       this.http
-        .post<LoginModel>(environment.serverUrl + "account/logout", LoginUser)
+        .post<LoginModel>(environment.baseUrl + "account/logout", LoginUser)
         .subscribe(
           (success) => {
             localStorage.clear();
@@ -140,6 +138,28 @@ export class AuthService implements CanActivate {
    * this is used to clear local storage and also the route to login
    */
 
+
+   getUserClaims(){
+
+    if (this.isAuthenticated) {
+      return jwtDecode<any>(this._coockieService.get('token'));
+    }
+
+    return undefined;
+   }
+
+  
+
+   
+  getToken(){
+    if (this.isAuthenticated) {
+      return this._coockieService.get('token');
+    }
+
+    return undefined;
+
+  
+ }
 
 
 }

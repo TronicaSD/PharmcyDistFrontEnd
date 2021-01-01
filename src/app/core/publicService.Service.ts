@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { OnInit } from "@angular/core";
+import { CookieService } from 'ngx-cookie-service';
 
 import { Injectable } from "@angular/core";
 import {
@@ -7,96 +7,89 @@ import {
   HttpErrorResponse,
   HttpHeaders
 } from "@angular/common/http";
-import { environment } from "../../environments/environment";
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/catch";
+
+
+import { environment } from "src/environments/environment";
+import { AuthService } from "../auth/services/auth.service";
 
 @Injectable()
-export class publicService {
-  constructor(private http: HttpClient) {}
+export class PublicService {
+  constructor(private http: HttpClient ,  private _authService: AuthService ) {}
 
-  errorHandler(error: HttpErrorResponse) {
-    return Observable.throw(error.message || "Server  Error");
-  }
-  getAll(apiController: string, action?: string): Observable<any[]> {
-    if(action){
-      return this.http.get<any[]>(environment.serverUrl + apiController+ "/" + action ,{headers: new HttpHeaders({ Authorization: "Bearer " + localStorage.getItem("Token") })});
-    }
-    else{
-      return this.http.get<any[]>(environment.serverUrl + apiController,{headers: new HttpHeaders({ Authorization: "Bearer " + localStorage.getItem("Token") })});
-    }
+
+  getToken(){
+      return this._authService.getToken();
+    
+   }
+
+  getOne(url: string): Observable<any> {
+ 
+       return this.http.get<any[]>(environment.baseUrl + url,
+       {headers: new HttpHeaders({ Authorization: "Bearer " + this.getToken() })});
+     
+   }
+  get(url: string): Observable<any[]> {
+
+      return this.http.get<any[]>(environment.baseUrl + url,
+      {headers: new HttpHeaders({ Authorization: "Bearer " + this.getToken() })});
+    
   }
 
   
+ 
 
-  getByAction(apiController: string, action: string): Observable<any[]> {
-    return this.http.get<any[]>(
-      environment.serverUrl + apiController + "/" + action, {headers: new HttpHeaders({ Authorization: "Bearer " + localStorage.getItem("Token") })}
-    );
-  }
+  getByID( url: string,id: any): Observable<any> {
 
-  getAllbyDates(
-    apiController: string,
-    newFromDate,
-    newToDate
-  ): Observable<any[]> {
-    return this.http.get<any[]>( environment.serverUrl +apiController +"?" +"from= " +newFromDate +"&to= " +newToDate,
-     {headers: new HttpHeaders({ Authorization: "Bearer " + localStorage.getItem("Token") })}
-    );
-  }
-
-  getByID(id: any, apiController: string, action?: string): Observable<any> {
-    if (action) {
       return this.http.get<any>(
-        environment.serverUrl + apiController + "/" + action + "/" + id,{headers: new HttpHeaders({ Authorization: "Bearer " + localStorage.getItem("Token") })});
-    } else {
-      return this.http.get<any>(
-        environment.serverUrl + apiController + "/" + id,{headers: new HttpHeaders({ Authorization: "Bearer " + localStorage.getItem("Token") })});
-    }
+        environment.baseUrl +  url +  id,
+        {headers: new HttpHeaders({ Authorization: "Bearer " + this.getToken() })});
+    
   }
   // add
-  post(data: any, apiController: string, action?: string): Observable<any> {
-    if (action) {
-      return this.http.post<any>(environment.serverUrl + apiController + "/" + action,data
-      ,{headers: new HttpHeaders({ Authorization: "Bearer " + localStorage.getItem("Token") })});
-    } else {
-      return this.http.post<any>(environment.serverUrl + apiController, data, 
-        {headers: new HttpHeaders({ Authorization: "Bearer " + localStorage.getItem("Token") })});
-    }
+  post( url: string,data: any): Observable<any> {
+ 
+   
+      return this.http.post<any>(environment.baseUrl +  url, data, 
+        {headers: new HttpHeaders({ Authorization: "Bearer " + this.getToken() })});
+    
   }
-  //edit
-  put(data: any, apiController: string, action?: string): Observable<any> {
-    if (action) {
-      return this.http.put<any>(
-        environment.serverUrl + apiController + "/" + action,data,{headers: new HttpHeaders({ Authorization: "Bearer " + localStorage.getItem("Token") })});
-    } else {
-      return this.http.put<any>(environment.serverUrl + apiController, data,{headers: new HttpHeaders({ Authorization: "Bearer " + localStorage.getItem("Token") })});
-    }
-  }
-  delete(id: any, apiController: string): Observable<any> {
-    return this.http.delete<any>(environment.serverUrl + apiController + "/" + id,{headers: new HttpHeaders({ Authorization: "Bearer " + localStorage.getItem("Token") })});
+ // add
+ put( url: string,data: any): Observable<any> {
+ 
+   
+  return this.http.put<any>(environment.baseUrl +  url, data, 
+    {headers: new HttpHeaders({ Authorization: "Bearer " + this.getToken() })});
+
+}
+
+  delete( url: string ,id: any): Observable<any> {
+    return this.http.delete<any>(environment.baseUrl +  url +"?id="+  id,
+    {headers: new HttpHeaders({ Authorization: "Bearer " + this.getToken() })});
   }
 
-  deleteTwoParams(fileId: any, channelId:any ,apiController: string): Observable<any> {
 
-    return this.http.delete<any>(environment.serverUrl + apiController  +"?" +"fileId= " +fileId +"&channelId= " +channelId,{headers: new HttpHeaders({ Authorization: "Bearer " + localStorage.getItem("Token") })});
+    // add
+    uploadFile( url: string,data: any): Observable<any> {
+ 
+   
+      return this.http.post(environment.baseUrl +  url, data, 
+        {headers: new HttpHeaders({ Authorization: "Bearer " + this.getToken() })
+        ,reportProgress: true, observe: 'events'
+      
+      });
+    
   }
-
-  uploadFile(data: any, apiController: string,action: string): Observable<any> {
-    return this.http.post<any>(
-      environment.serverUrl + apiController + "/" + action,
-      data,{headers: new HttpHeaders({ Authorization: "Bearer " + localStorage.getItem("Token") })});
-  }
-
-  downloadFile(fileName: string,apiController: string,action: string,fileType: string): Observable<any> {
-    return this.http.get<any>(environment.serverUrl + apiController + "/" + action + "/" + fileName,
+ 
+  downloadFile(Url: string,fileName: string): Observable<any> {
+    return this.http.get<any>(environment.baseUrl + Url +"/?filename="+fileName,
+      
         {
           responseType: "blob" as "json",
-          headers: { Authorization: "Bearer " + localStorage.getItem("Token") }
-        })
-      .map(res => {
-        var blob = new Blob([res], { type: fileType });
-        return blob;
-      });
-  }
-}
+          headers: { Authorization: "Bearer " + localStorage.getItem("Token") },
+
+        });
+      }
+
+    }
+
+

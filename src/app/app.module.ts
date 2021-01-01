@@ -20,8 +20,6 @@ import {
 /***Components */
 
 import { AuthService } from './auth/services/auth.service';
-import { PublicService } from './Service/Public.Service/public-service.service';
-import { ToasterService } from './Service/Toaster.Service/toaster.service';
 
 @NgModule({
   declarations: [
@@ -40,7 +38,7 @@ import { ToasterService } from './Service/Toaster.Service/toaster.service';
 
 
   ],
-  providers: [ToasterService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
