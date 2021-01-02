@@ -7,30 +7,18 @@
   </div>
   <br>
 
+  <nb-card>
+    <nb-card-header>
+      Pharmcy Table
+    </nb-card-header>
 
-  <table class="table table-res">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Address</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let ph of Pharmcies;let i =index">
-        <td>{{i +1}}</td>
-        <td>{{ph.pharmcyName}}</td>
-        <td>{{ph.address}}</td>
-        <td>
-          <nb-icon icon="edit" (click)="openEditModal(Editdialog,ph.id)"></nb-icon> |
-          <nb-icon icon="trash" (click)="openDeleteModal(Deletedialog,ph)"></nb-icon>
-        </td>
-      </tr>
+    <nb-card-body>
+      <ng2-smart-table [settings]="settings" [source]="source"
+        (custom)="onCustomAction(Deletedialog,Editdialog,$event)">
+      </ng2-smart-table>
+    </nb-card-body>
+  </nb-card>
 
-    </tbody>
-
-  </table>
 
   <ng-template #Adddialog class="model-full" let-data let-ref="dialogRef">
     <nb-card>
@@ -152,14 +140,20 @@
       </nb-card-header>
       <nb-card-body>
         <div class="row">
+          <div class="col-md-12">
+            <p class="text-danger" style="font-size: x-large;">
+              confirm to delete this item ?
 
+
+            </p>
+          </div>
         </div>
 
       </nb-card-body>
 
       <nb-card-footer>
 
-        <button type="button" nbButton status="success" (click)="DeletePharmcy(PharmcyObject);ref.close()">save</button>
+        <button type="button" nbButton status="success" (click)="ref.close(true);ref.close()">save</button>
 
         <button nbButton status="danger" (click)="ref.close()">Close </button>
 

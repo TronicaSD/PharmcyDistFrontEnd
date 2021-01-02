@@ -3,8 +3,9 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 
 import { IInvoice } from '../../interface/IInvoice';
 import * as moment from "moment";
-import { NbDialogService } from '@nebular/theme';
+import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { PublicService } from 'src/app/core/publicService.Service';
+import { LocalDataSource } from 'ng2-smart-table';
 
 @Component({
   selector: 'app-invoice',
@@ -12,8 +13,8 @@ import { PublicService } from 'src/app/core/publicService.Service';
   styleUrls: ['./invoice.component.css']
 })
 export class InvoiceComponent implements OnInit {
-  selectedInvoiceTypeItem = '0';
-  selectedPharmcyItem = '0';
+  selectedInvoiceTypeItem = '';
+  selectedPharmcyItem = '';
   Invoices: any;
   InvoiceType: any = [
     { Value: 1, Text: "Postponed" },
@@ -46,27 +47,6 @@ export class InvoiceComponent implements OnInit {
     }]
 
   };
-  UpdateInvoiceObject: IInvoice =
-    {
-      id: 0,
-      invoiceNumber: 0,
-      pharmcyId: 0,
-      pharmcyName: '',
-      invoiceType: 0,
-      invoiceTypeText: '',
-      invoiceDate: new Date(),
-      totalPrice: 0,
-      disCount: 0,
-      invoiceDetails: [{
-        drugId: 0,
-        drugName: "",
-        invoiceId: 0,
-        price: 0,
-        qunantity: 0,
-        total: 0,
-        id: 0
-      }]
-    };
   Drugs: any;
   Pharmcies: Object;
   StockDetails: Object;
@@ -74,9 +54,66 @@ export class InvoiceComponent implements OnInit {
   SubTotal: number;
   qunantity: any;
   price: any;
+  newDate: string;
+  settings = {
+    hideSubHeader: true,
+    actions: {
+      custom: [
+
+        {
+          name: 'editAction',
+          title: 'edit'
+        },
+        {
+          name: 'deleteAction',
+          title: 'delete'
+        }
+      ],
+      add: false,
+      edit: false,
+      delete: false
+    },
+
+    columns: {
+      id: {
+        title: 'ID',
+        type: 'number',
+      },
+      invoiceNumber: {
+        title: 'invoice Number',
+        type: 'string',
+      },
+
+      pharmcyName: {
+        title: 'pharmcy Name',
+        type: 'string',
+      },
+      invoiceTypeText: {
+        title: 'invoice Type',
+        type: 'string',
+      },
+      invoiceDate: {
+        title: 'invoice Date',
+        type: 'string',
+      },
+      disCount: {
+        title: 'disCount',
+        type: 'string',
+      },
+      totalPrice: {
+        title: 'total Price',
+        type: 'string',
+      },
+
+    }
+  };
+  source: LocalDataSource = new LocalDataSource();
+
   constructor(private _PublicService: PublicService
     , private dialogService: NbDialogService
     , private _formbuilder: FormBuilder
+    , private _ToasterService: NbToastrService
+
   ) {
 
     this.AddForm = this._formbuilder.group({
@@ -127,10 +164,9 @@ export class InvoiceComponent implements OnInit {
     });
   }
   getAllInvoice() {
-
-    this._PublicService.get("Invoice /ViewGetAll").subscribe(res => {
+    this._PublicService.get("Invoice/ViewGetAll").subscribe(res => {
       this.Invoices = res;
-
+      this.source.load(this.Invoices);
 
     });
   }
@@ -143,7 +179,7 @@ export class InvoiceComponent implements OnInit {
 
 
 
-  //add
+  /////////////add////////////////////
   CalculateTotal() {
     this.Total = this.AddinvoiceDetails.value.reduce((sum, item) => sum += (item.qunantity || 0) * (item.price || 0), 0)
     this.AddForm.controls['TotalPrice'].setValue(this.Total);
@@ -183,31 +219,23 @@ export class InvoiceComponent implements OnInit {
   }
 
   Add() {
-    var date = moment(date);
-    //this.AddForm.controls['InvoiceDate'].setValue(date);
-
-    debugger;
     this._PublicService.post('Invoice/AddData', this.AddForm.value).subscribe((Response) => {
       this.getAllInvoice();
-      // this._ToasterService.FireMessagePopUp(1);
+      this._ToasterService.success("Invoice added successfully", "Success");
     }, (error) => {
-      // this._ToasterService.FireMessagePopUp(2);
+      this._ToasterService.danger("The quantity is less than that in stock", "Failed");
     });
-    this.AddForm.reset();
-
+    this.ClearForm();
   }
 
   openAddModal(dialog: TemplateRef<any>) {
     this.addInvloiceDetailsList();
     this.dialogService.open(dialog, {
-      context: {
-        title: "dd",
-      }, dialogClass: 'model-full'
+      dialogClass: 'lg-modal'
     });
   }
-  //
 
-  //Edit Modal
+  ////////////////Edit Modal
   CalculateEditTotal() {
     this.Total = this.EditInvoiceDetails.value.reduce((sum, item) => sum += (item.qunantity || 0) * (item.price || 0), 0)
     this.EditForm.controls['TotalPrice'].setValue(this.Total);
@@ -231,22 +259,16 @@ export class InvoiceComponent implements OnInit {
   removeInvoiceDetailsEdit(i: number) {
     this.invoiceDetailsEdit.removeAt(i);
   }
-  openEditModal(dialog: TemplateRef<any>, Id: any) {
-
-    const result: IInvoice = this.Invoices.find(obj => obj.id === Id);
-    this.InvoiceObject = result;
-    debugger;
-    this.EditForm.controls['Id'].setValue(this.InvoiceObject.id);
-    this.EditForm.controls['InvoiceDate'].setValue(this.InvoiceObject.invoiceDate);
-    this.EditForm.controls['InvoiceNumber'].setValue(this.InvoiceObject.invoiceNumber);
-    this.EditForm.controls['InvoiceType'].setValue(this.InvoiceObject.invoiceType);
-    this.EditForm.controls['PharmcyId'].setValue(this.InvoiceObject.pharmcyId);
-    this.EditForm.controls['TotalPrice'].setValue(this.InvoiceObject.totalPrice);
-    this.EditForm.controls['DisCount'].setValue(this.InvoiceObject.disCount);
-    debugger;
+  openEditModal(dialog: TemplateRef<any>, row: any) {
+    this.EditForm.controls['Id'].setValue(row.id);
+    this.EditForm.controls['InvoiceDate'].setValue(row.invoiceDate);
+    this.EditForm.controls['InvoiceNumber'].setValue(row.invoiceNumber);
+    this.EditForm.controls['InvoiceType'].setValue(row.invoiceType);
+    this.EditForm.controls['PharmcyId'].setValue(row.pharmcyId);
+    this.EditForm.controls['TotalPrice'].setValue(row.totalPrice);
+    this.EditForm.controls['DisCount'].setValue(row.disCount);
     this.invoiceDetailsEdit.removeAt(0);
-    this.InvoiceObject.invoiceDetails.forEach(x => {
-      debugger;
+    row.invoiceDetails.forEach(x => {
       var newEdirInoiceDetails = this._formbuilder.group({
         drugId: x.drugId,
         drugName: "",
@@ -259,19 +281,18 @@ export class InvoiceComponent implements OnInit {
       this.invoiceDetailsEdit.push(newEdirInoiceDetails)
     });
     this.dialogService.open(dialog, {
-      context: {
-        title: "dd",
-      }, dialogClass: 'model-full'
+      dialogClass: 'lg-modal'
     });
   }
   updateInvoice() {
-    debugger;
-    this._PublicService.put('Invoice/UpdateData',  this.EditForm.value).subscribe((Response) => {
-      this.Invoices = Response;
-      // this._ToasterService.FireMessagePopUp(1);
+    this._PublicService.put('Invoice/UpdateData', this.EditForm.value).subscribe((Response) => {
+      this._ToasterService.success("Invoice Updated successfully", "Success");
       this.getAllInvoice();
+      debugger;
+
     }, (error) => {
-      // this._ToasterService.FireMessagePopUp(2);
+      debugger;
+      this._ToasterService.danger("The quantity is less than that in stock", "Failed");
     });
     this.EditForm.reset();
 
@@ -279,40 +300,35 @@ export class InvoiceComponent implements OnInit {
 
 
   //Delete Modal
-  DeleteInvoice(Object: any) {
-
-    this._PublicService.delete("Invoice/DeleteData",  Object.id).subscribe((Response) => {
-      // this._ToasterService.FireMessagePopUp(1);
+  DeleteInvoice(id: any) {
+    this._PublicService.delete("Invoice/DeleteData", id).subscribe((Response) => {
       this.getAllInvoice();
+      this._ToasterService.success("Invoice Deleted successfully", "Success");
     }, (error) => {
-      // this._ToasterService.FireMessagePopUp(2);
+      this._ToasterService.danger("Failed To Delete ", "Failed");
     });
 
   }
-  openDeleteModal(dialog: TemplateRef<any>, Object: any) {
-
-
-    const result: IInvoice = this.Invoices.find((obj: any) => obj.id === Object.id);
-    this.InvoiceObject = result;
-
+  openDeleteModal(dialog: TemplateRef<any>, id: any) {
     this.dialogService.open(dialog, {
-      context: {
-        title: "dd",
-      }, dialogClass: 'model-full'
+      dialogClass: 'defaultdialogue'
+    }).onClose.subscribe(res => {
+      debugger;
+      if (res) {
+
+        this.DeleteInvoice(id);
+      }
+
+
     });
   }
 
   ClearForm() {
-    debugger;
 
     this.AddForm.reset();
     this.EditForm.reset();
     const Editcontrol = <FormArray>this.EditForm.controls['invoiceDetails'];
-    debugger;
-
     for (let i = Editcontrol.length - 1; i >= 0; i--) {
-      debugger;
-
       Editcontrol.removeAt(i)
     }
 
@@ -320,30 +336,19 @@ export class InvoiceComponent implements OnInit {
     for (let i = Addcontrol.length - 1; i >= 0; i--) {
       Addcontrol.removeAt(i)
     }
+
+  }
+  onCustomAction(Deletedialog: TemplateRef<any>, Editdialog: TemplateRef<any>, event) {
     debugger;
-    this.InvoiceObject = {
-      id: 0,
-      invoiceNumber: 0,
-      pharmcyId: 0,
-      pharmcyName: '',
-      invoiceType: 0,
-      invoiceTypeText: '',
-      invoiceDate: new Date(),
-      totalPrice: 0,
-      disCount: 0,
+    switch (event.action) {
+      case 'deleteAction':
+        this.openDeleteModal(Deletedialog, event.data.id)
+        break;
+      case 'editAction':
+        this.openEditModal(Editdialog, event.data)
+        break;
 
-      invoiceDetails: [{
-        drugId: 0,
-        drugName: "",
-        invoiceId: 0,
-        price: 0,
-        qunantity: 0,
-        total: 0,
-        id: 0
-      }]
-
-    };
-
+    }
   }
 
 }

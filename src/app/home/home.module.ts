@@ -18,6 +18,8 @@ import { InvoiceComponent } from './components/invoice/invoice.component';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NumbersOnlyDirective } from '../shared/directives/number-only.directive';
 import { PublicService } from '../core/publicService.Service';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { AuthGuard } from '../auth/services/auth.guard';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,6 @@ import { PublicService } from '../core/publicService.Service';
   imports: [
     CommonModule,
     NbThemeModule.forRoot({ name: 'dark' }), // this will enable the default theme, you can change this to `cosmic` to enable the dark theme  
-
     HomeRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
@@ -52,13 +53,11 @@ import { PublicService } from '../core/publicService.Service';
     NbEvaIconsModule,
     NbIconModule,
     NbToastrModule.forRoot(),
-    NbDialogModule.forChild({ closeOnBackdropClick: false, autoFocus: true, closeOnEsc: true ,dialogClass:"defaultdialogue"})
-
-
-
+    NbDialogModule.forChild({ closeOnBackdropClick: false, autoFocus: true, closeOnEsc: true, dialogClass: "defaultdialogue" }),
+    Ng2SmartTableModule
   ],
   providers: [{ provide: PublicService }, { provide: NbSidebarService }
-    , { provide: AuthService }]
+    , { provide: AuthService }, { provide: AuthGuard }]
 })
 export class HomeModule {
 }

@@ -1,50 +1,30 @@
 <div class="container">
   <div class="row">
     <div class="offset-9 col-md-3">
-      <button nbButton status="primary" style="float: right;" (click)="openAddModal(Adddialog)">Create</button>
+      <button nbButton status="primary" style="float: right;" (click)="openAddModal(Adddialog)">Add New Invoice</button>
 
 
     </div>
   </div>
   <br>
-  <table class="table table-res">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Invoice Number</th>
-        <th>Pharmcy Name</th>
-        <th>Invoice Type</th>
-        <th>Invoice Date</th>
-        <th>Discount</th>
-        <th>Total Price</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let iv of Invoices;let i =index">
-        <td>{{i +1}}</td>
-        <td>{{iv.invoiceNumber}}</td>
-        <td>{{iv.pharmcyName}}</td>
-        <td>{{iv.invoiceTypeText}}</td>
-        <td>{{iv.invoiceDate  | momentFormat:'L' }}</td>
-        <td>{{iv.disCount}} %</td>
-        <td>{{iv.totalPrice | currency}}</td>
+  <nb-card>
+    <nb-card-header>
+      Invoice Table
+    </nb-card-header>
 
-        <td>
-          <nb-icon icon="edit" (click)="openEditModal(Editdialog,iv.id)"></nb-icon> |
-          <nb-icon icon="trash" (click)="openDeleteModal(DeleteDeletedialogModal,iv)"></nb-icon>
-        </td>
-      </tr>
+    <nb-card-body>
+      <ng2-smart-table [settings]="settings" [source]="source"
+        (custom)="onCustomAction(Deletedialog,Editdialog,$event)">
+      </ng2-smart-table>
+    </nb-card-body>
+  </nb-card>
 
-    </tbody>
-
-  </table>
 
 
   <ng-template #Adddialog class="model-full" let-data let-ref="dialogRef">
     <nb-card>
       <nb-card-header>
-        <h4 class="modal-title" id="modal-basic-title">Add Drugs To Stock</h4>
+        <h4 class="modal-title" id="modal-basic-title">Add Invoice</h4>
 
       </nb-card-header>
       <nb-card-body>
@@ -84,7 +64,7 @@
 
                 <nb-select placeholder="Select Showcase" [(selected)]="selectedPharmcyItem" lass="form-control"
                   formControlName="PharmcyId">
-                  <nb-option value="">Option empty</nb-option>
+                  <nb-option disabled value="">Option empty</nb-option>
                   <nb-option *ngFor="let p of Pharmcies" [value]="p.id">{{p.pharmcyName}}</nb-option>
                 </nb-select>
                 <span *ngIf="hasError('PharmcyId', 'required')" style="color: red">Pharmcy is required</span>
@@ -96,7 +76,7 @@
               <label> Discount</label>
 
               <nb-form-field>
-                <input class="form-control" formControlName="DisCount" type="text" nbInput fullWidth>
+                <input class="form-control" numbersOnly formControlName="DisCount" type="text" nbInput fullWidth>
               </nb-form-field>
 
             </div>
@@ -109,7 +89,7 @@
 
                 <nb-select placeholder="Select Showcase" [(selected)]="selectedInvoiceTypeItem" lass="form-control"
                   formControlName="InvoiceType">
-                  <nb-option value="">Option empty</nb-option>
+                  <nb-option disabled value="">Option empty</nb-option>
                   <nb-option *ngFor="let it of InvoiceType" [value]="it.Value">{{it.Text}}</nb-option>
                 </nb-select>
 
@@ -137,20 +117,20 @@
                 </td>
                 <td>
                   <nb-select placeholder="Select Showcase" class="form-control" formControlName="drugId">
-                    <nb-option value="">Option empty</nb-option>
+                    <nb-option disabled value="">Option empty</nb-option>
                     <nb-option *ngFor="let d of StockDetails" [value]="d.drugId">{{d.drugName}}</nb-option>
                   </nb-select>
 
                 </td>
                 <td>
                   <nb-form-field>
-                    <input class="form-control" formControlName="qunantity" type="text" nbInput fullWidth
+                    <input class="form-control" numbersOnly formControlName="qunantity" type="text" nbInput fullWidth
                       (change)="CalculateTotal()" (input)="calculateDrugPrice(i)">
                   </nb-form-field>
                 </td>
                 <td>
                   <nb-form-field>
-                    <input class="form-control" formControlName="price" type="text" nbInput fullWidth
+                    <input class="form-control" numbersOnly formControlName="price" type="text" nbInput fullWidth
                       (change)="CalculateTotal()" (input)="calculateDrugPrice(i)">
                   </nb-form-field>
                 </td>
@@ -174,9 +154,10 @@
 
       <nb-card-footer>
 
-        <button type="button" nbButton status="success" [disabled]="AddForm.invalid" (click)="Add()">Save</button>
+        <button type="button" nbButton status="success" [disabled]="AddForm.invalid"
+          (click)="Add();ref.close()">Save</button>
 
-        <button nbButton status="danger" (change)="ref.close()" (click)="ClearForm()">Close </button>
+        <button nbButton status="danger" (click)="ClearForm();ref.close()">Close </button>
 
 
       </nb-card-footer>
@@ -187,7 +168,7 @@
   <ng-template #Editdialog class="model-full" let-data let-ref="dialogRef">
     <nb-card>
       <nb-card-header>
-        <h4 class="modal-title" id="modal-basic-title">Add Drugs To Stock</h4>
+        <h4 class="modal-title" id="modal-basic-title">Edit Invoice</h4>
 
       </nb-card-header>
       <nb-card-body>
@@ -227,7 +208,7 @@
 
                 <nb-select placeholder="Select Showcase" [(selected)]="selectedPharmcyItem" lass="form-control"
                   formControlName="PharmcyId">
-                  <nb-option value="">Option empty</nb-option>
+                  <nb-option disabled value="">Option empty</nb-option>
                   <nb-option *ngFor="let p of Pharmcies" [value]="p.id">{{p.pharmcyName}}</nb-option>
                 </nb-select>
                 <span *ngIf="hasEditError('PharmcyId', 'required')" style="color: red">Pharmcy is required</span>
@@ -239,7 +220,7 @@
               <label> Discount</label>
 
               <nb-form-field>
-                <input class="form-control" formControlName="DisCount" type="text" nbInput fullWidth>
+                <input class="form-control" numbersOnly formControlName="DisCount" type="text" nbInput fullWidth>
               </nb-form-field>
 
             </div>
@@ -252,7 +233,7 @@
 
                 <nb-select placeholder="Select Showcase" [(selected)]="selectedInvoiceTypeItem" lass="form-control"
                   formControlName="InvoiceType">
-                  <nb-option value="">Option empty</nb-option>
+                  <nb-option disabled value="">Option empty</nb-option>
                   <nb-option *ngFor="let it of InvoiceType" [value]="it.Value">{{it.Text}}</nb-option>
                 </nb-select>
 
@@ -279,20 +260,20 @@
                 </td>
                 <td>
                   <nb-select placeholder="Select Showcase" class="form-control" formControlName="drugId">
-                    <nb-option value="">Option empty</nb-option>
+                    <nb-option disabled value="">Option empty</nb-option>
                     <nb-option *ngFor="let d of StockDetails" [value]="d.drugId">{{d.drugName}}</nb-option>
                   </nb-select>
 
                 </td>
                 <td>
                   <nb-form-field>
-                    <input class="form-control" formControlName="qunantity" type="text" nbInput fullWidth
+                    <input class="form-control" numbersOnly formControlName="qunantity" type="text" nbInput fullWidth
                       (change)="CalculateEditTotal()" (input)="calculateEditDrugPrice(in)">
                   </nb-form-field>
                 </td>
                 <td>
                   <nb-form-field>
-                    <input class="form-control" formControlName="price" type="text" nbInput fullWidth
+                    <input class="form-control" numbersOnly formControlName="price" type="text" nbInput fullWidth
                       (change)="CalculateEditTotal()" (input)="calculateEditDrugPrice(in)">
                   </nb-form-field>
                 </td>
@@ -317,8 +298,8 @@
       <nb-card-footer>
 
         <button type="button" nbButton status="success" [disabled]="EditForm.invalid"
-          (click)="updateInvoice()">Save</button>
-        <button nbButton status="danger" (change)="ref.close()" (click)="ClearForm()">Close </button>
+          (click)="updateInvoice();ref.close()">Save</button>
+        <button nbButton status="danger" (click)="ClearForm();ref.close()">Close </button>
 
 
       </nb-card-footer>
@@ -345,7 +326,7 @@
 
       <nb-card-footer>
 
-        <button type="button" nbButton status="success" (click)="DeleteInvoice(InvoiceObject)">save</button>
+        <button type="button" nbButton status="success" (click)="ref.close(true);ref.close()">save</button>
 
         <button nbButton status="danger" (click)="ref.close()">Close </button>
 

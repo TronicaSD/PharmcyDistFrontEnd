@@ -31,7 +31,7 @@ export class AuthService implements CanActivate {
   ) { }
 
   login(user: LoginModel) {
-    this.http.post( environment.baseUrl+
+    this.http.post(environment.baseUrl +
       "Account/Login",
       user
     ).subscribe(
@@ -43,6 +43,9 @@ export class AuthService implements CanActivate {
           this._coockieService.set('userName', result.unique_name);
           this._coockieService.set('userId', result.UserId);
           this._coockieService.set('Password', result.Password);
+          this._coockieService.set('role', result.role);
+          debugger;
+
           this._router.navigate(['/home']);
           debugger;
 
@@ -139,27 +142,33 @@ export class AuthService implements CanActivate {
    */
 
 
-   getUserClaims(){
+  getUserClaims() {
 
     if (this.isAuthenticated) {
       return jwtDecode<any>(this._coockieService.get('token'));
     }
 
     return undefined;
-   }
+  }
 
-  
-
-   
-  getToken(){
+  getUserRole() {
     if (this.isAuthenticated) {
-      return this._coockieService.get('token');
+      return this._coockieService.get('role');
     }
 
     return undefined;
+  }
 
-  
- }
+
+
+
+
+  getToken() {
+    return this._coockieService.get('token');
+
+
+
+  }
 
 
 }

@@ -2,9 +2,8 @@ import { Component, OnInit, SkipSelf, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { LocalDataSource } from 'ng2-smart-table';
 import { PublicService } from 'src/app/core/publicService.Service';
-
-import { IDrug } from '../../interface/IDrug';
 
 @Component({
   selector: 'app-drugs',
@@ -16,15 +15,42 @@ export class DrugsComponent implements OnInit {
   closeResult: string;
   AddForm: FormGroup;
   EditForm: FormGroup;
-  DrugObject: IDrug = {
-    drugName: "",
-    id: 0
+  settings = {
+    hideSubHeader: true,
+    actions: {
+      custom: [
+
+        {
+          name: 'editAction',
+          title: 'edit'
+        },
+        {
+          name: 'deleteAction',
+          title: 'delete'
+        }
+      ],
+      add: false,
+      edit: false,
+      delete: false
+    },
+
+    columns: {
+      id: {
+        title: 'ID',
+        type: 'number',
+        filter: true
+
+      },
+      drugName: {
+        title: 'Drug Name',
+        type: 'string',
+        filter: true
+      },
+
+    }
   };
-  UpdateDrugObject: IDrug =
-    {
-      drugName: "",
-      id: 0
-    };
+  source: LocalDataSource = new LocalDataSource();
+
   constructor(private _PublicService: PublicService
     , private modalService: NgbModal
     , private _formbuilder: FormBuilder
@@ -39,26 +65,22 @@ export class DrugsComponent implements OnInit {
 
     this.EditForm = this._formbuilder.group({
       drugName: [null, Validators.required],
-
+      id: [null],
     });
-  }
-
-  ngOnInit(): void {
     this.getAllDrugs();
   }
 
+  ngOnInit(): void {
 
-  ClearData() {
-    this.DrugObject = {
-      id: 0,
-      drugName: ''
-    }
   }
+
   getAllDrugs() {
 
     this._PublicService.get("Drug/ViewGetAll").subscribe(res => {
       this.Drugs = res;
-
+      debugger;
+      this.source.load(this.Drugs);
+      debugger;
 
     });
   }
@@ -75,17 +97,20 @@ export class DrugsComponent implements OnInit {
 
   ////////////////add/////////////
   openAddDialog(dialog: TemplateRef<any>) {
-    this.dialogService.open(dialog, { dialogClass:"defaultdialogue"
-  });
+    this.dialogService.open(dialog, {
+      dialogClass: "defaultdialogue"
+    });
   }
   Add() {
 
-    this._PublicService.post('Drug/AddData',this.AddForm.value).subscribe((Response) => {
+    this._PublicService.post('Drug/AddData', this.AddForm.value).subscribe((Response) => {
       this.getAllDrugs();
 
-      this._ToasterService.success("Drug Added successfully","Success");
+      this._ToasterService.success("Drug Added successfully", "Success");
 
     }, (error) => {
+      this._ToasterService.danger("Failed To add ", "Failed");
+
     });
     this.AddForm.reset();
   }
@@ -95,30 +120,24 @@ export class DrugsComponent implements OnInit {
   /////////////Edit///////////
 
   //Edit Modal
-  openEditDialog(dialog: TemplateRef<any>, Id: any) {
-    const result: IDrug = this.Drugs.find(obj => obj.id === Id);
-    this.DrugObject = result;
-    this.EditForm.controls['drugName'].setValue(this.DrugObject.drugName);
+  openEditDialog(dialog: TemplateRef<any>, row: any) {
+
+    this.EditForm.controls['drugName'].setValue(row.drugName);
+    this.EditForm.controls['id'].setValue(row.id);
 
     this.dialogService.open(dialog, {
-      dialogClass:"defaultdialogue"
-    
+      dialogClass: "defaultdialogue"
+
     });
   }
   updateDrug() {
-
-    this.UpdateDrugObject = {
-      drugName: this.EditForm.value.drugName,
-      id: this.DrugObject.id
-    }
-
-    this._PublicService.put('Drug/UpdateData', this.UpdateDrugObject).subscribe((Response) => {
+    this._PublicService.put('Drug/UpdateData', this.EditForm.value).subscribe((Response) => {
       this.Drugs = Response;
       this.modalService.dismissAll();
-      this._ToasterService.success("Drug Updated successfully","Success");
+      this._ToasterService.success("Drug Updated successfully", "Success");
       this.getAllDrugs();
     }, (error) => {
-      this._ToasterService.danger(" Failed To  Update ","failed");
+      this._ToasterService.danger(" Failed To  Update ", "failed");
 
     });
     this.EditForm.reset();
@@ -126,16 +145,17 @@ export class DrugsComponent implements OnInit {
   }
 
 
-  //Delete Modal
-  DeleteDrug(Object: any) {
 
-    this._PublicService.delete("Drug/DeleteData", Object.id).subscribe((Response) => {
+  //Delete Modal
+  DeleteDrug(id: any) {
+
+    this._PublicService.delete("Drug/DeleteData", id).subscribe((Response) => {
       this.modalService.dismissAll();
-      this._ToasterService.success("Drug Deleted successfully","Success");
+      this._ToasterService.success("Drug Deleted successfully", "Success");
 
       this.getAllDrugs();
     }, (error) => {
-      this._ToasterService.danger("Failed To Delete ","Failed");
+      this._ToasterService.danger("Failed To Delete ", "Failed");
 
     });
 
@@ -143,15 +163,32 @@ export class DrugsComponent implements OnInit {
 
 
 
-  openDeletedialog(dialog: TemplateRef<any>, Object: any) {
-
-    const result: IDrug = this.Drugs.find((obj: any) => obj.id === Object.id);
-    this.DrugObject = result;
-
+  openDeletedialog(dialog: TemplateRef<any>, id: any) {
+    debugger;
     this.dialogService.open(dialog, {
-      dialogClass:"defaultdialogue"
+      dialogClass: "defaultdialogue"
+    }).onClose.subscribe(res => {
+      debugger;
+      if (res) {
+        debugger;
+        this.DeleteDrug(id);
+      }
 
-    
+
     });
   }
-} 
+
+  onCustomAction(Deletedialog: TemplateRef<any>, Editdialog: TemplateRef<any>, event) {
+    debugger;
+    switch (event.action) {
+      case 'deleteAction':
+        this.openDeletedialog(Deletedialog, event.data.id)
+        break;
+      case 'editAction':
+        this.openEditDialog(Editdialog, event.data)
+        break;
+
+    }
+  }
+
+}

@@ -10,29 +10,18 @@
   <br>
 
 
-  <table class="table table-res">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Drug Name</th>
-        <th>Quantity</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let St of StockDetails;let i =index">
-        <td>{{i +1}}</td>
-        <td>{{St.drugName}}</td>
-        <td>{{St.quantity}}</td>
-        <td>
-          <nb-icon icon="edit" (click)="openEditModal(Editdialog,St.id)"></nb-icon> |
-          <nb-icon icon="trash" (click)="openDeleteModal(Deletedialog,St)"></nb-icon>
-        </td>
-      </tr>
 
-    </tbody>
+  <nb-card>
+    <nb-card-header>
+      Stock Details Table
+    </nb-card-header>
 
-  </table>
+    <nb-card-body>
+      <ng2-smart-table [settings]="settings" [source]="source"
+        (custom)="onCustomAction(Deletedialog,Editdialog,$event)">
+      </ng2-smart-table>
+    </nb-card-body>
+  </nb-card>
 
   <ng-template #Adddialog class="model-full" let-data let-ref="dialogRef">
     <nb-card>
@@ -83,7 +72,7 @@
       <nb-card-footer>
 
         <button type="button" nbButton status="success" [disabled]="AddForm.invalid" data-dismiss="modal"
-          (click)="Add()">Save</button>
+          (click)="Add();ref.close()">Save</button>
 
         <button nbButton status="danger" (click)="ref.close()">Close </button>
 
@@ -95,7 +84,7 @@
   <ng-template #Editdialog class="model-full" let-data let-ref="dialogRef">
     <nb-card>
       <nb-card-header>
-        <h4 class="modal-title" id="modal-basic-title">Edit Drug</h4>
+        <h4 class="modal-title" id="modal-basic-title">Edit Drug In Stock</h4>
 
       </nb-card-header>
       <nb-card-body>
@@ -125,7 +114,7 @@
                 <label>Quantity</label>
 
                 <nb-form-field>
-                  <input class="form-control" formControlName="Quantity" type="text" nbInput fullWidth>
+                  <input class="form-control" numbersOnly formControlName="Quantity" type="text" nbInput fullWidth>
                   <span *ngIf="hasEditError('Quantity', 'required')" style="color: red">Quantity is required</span>
 
                 </nb-form-field>
@@ -140,7 +129,7 @@
       <nb-card-footer>
 
         <button type="button" nbButton status="success" [disabled]="EditForm.invalid" data-dismiss="modal"
-          (click)="updateStockDetails();editmodalref.close()">Save</button>
+          (click)="updateStockDetails();ref.close()">Save</button>
 
         <button nbButton status="danger" (click)="ref.close()">Close </button>
 

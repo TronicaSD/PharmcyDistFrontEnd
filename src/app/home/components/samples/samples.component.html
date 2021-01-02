@@ -2,42 +2,28 @@
   <div class="row">
     <div class="offset-9 col-md-3">
 
-      <button nbButton status="primary" style="float: right;" (click)="openAddModal(Adddialog)">Add New Drug</button>
+      <button nbButton status="primary" style="float: right;" (click)="openAddModal(Adddialog)">Add New Sample</button>
 
     </div>
   </div>
-  <br>
-  <table class="table table-res">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Doctor Name</th>
-        <th>Drug Name</th>
-        <th>Quantity</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let Sm of Samples;let i =index">
-        <td>{{i +1}}</td>
-        <td>{{Sm.doctorName}}</td>
-        <td>{{Sm.drugName}}</td>
-        <td>{{Sm.qunantity}}</td>
-        <td>
-          <nb-icon icon="edit" (click)="openEditModal(Editdialog,Sm)"></nb-icon> |
-          <nb-icon icon="trash" (click)="openDeleteModal(Deletedialog,Sm.id)"></nb-icon>
-        </td>
-      </tr>
 
-    </tbody>
+  <nb-card>
+    <nb-card-header>
+      Samples Table
+    </nb-card-header>
 
-  </table>
+    <nb-card-body>
+      <ng2-smart-table [settings]="settings" [source]="source"
+        (custom)="onCustomAction(Deletedialog,Editdialog,$event)">
+      </ng2-smart-table>
+    </nb-card-body>
+  </nb-card>
 
 
   <ng-template #Adddialog class="model-full" let-data let-ref="dialogRef">
     <nb-card>
       <nb-card-header>
-        <h4 class="modal-title" id="modal-basic-title">Add Drugs To Stock</h4>
+        <h4 class="modal-title" id="modal-basic-title">Add Sample</h4>
 
       </nb-card-header>
       <nb-card-body>
@@ -79,7 +65,7 @@
                 <label>Quantity</label>
 
                 <nb-form-field>
-                  <input class="form-control" formControlName="qunantity" type="text" nbInput fullWidth>
+                  <input class="form-control" formControlName="qunantity" type="text" numbersOnly nbInput fullWidth>
                   <span *ngIf="hasError('qunantity', 'required')" style="color: red">Quantity is required</span>
 
                 </nb-form-field>
@@ -95,7 +81,8 @@
 
       <nb-card-footer>
 
-        <button type="button" nbButton status="success" [disabled]="AddForm.invalid" (click)="Add()">Save</button>
+        <button type="button" nbButton status="success" [disabled]="AddForm.invalid"
+          (click)="Add();ref.close()">Save</button>
         <button nbButton status="danger" (click)="ref.close()">Close </button>
 
 
@@ -106,7 +93,7 @@
   <ng-template #Editdialog class="model-full" let-data let-ref="dialogRef">
     <nb-card>
       <nb-card-header>
-        <h4 class="modal-title" id="modal-basic-title">Edit Drug</h4>
+        <h4 class="modal-title" id="modal-basic-title">Edit Sample</h4>
 
       </nb-card-header>
       <nb-card-body>
@@ -149,7 +136,7 @@
                 <label>Quantity</label>
 
                 <nb-form-field>
-                  <input class="form-control" formControlName="qunantity" type="text" nbInput fullWidth>
+                  <input class="form-control" formControlName="qunantity" type="text" numbersOnly nbInput fullWidth>
                   <span *ngIf="hasEditError('qunantity', 'required')" style="color: red">Quantity is required</span>
 
                 </nb-form-field>
@@ -162,7 +149,7 @@
 
       <nb-card-footer>
         <button type="button" nbButton status="success" [disabled]="EditForm.invalid"
-          (click)="updateSample()">Save</button>
+          (click)="updateSample();ref.close()">Save</button>
         <button nbButton status="danger" (click)="ref.close()">Close </button>
 
 
@@ -190,8 +177,8 @@
       <nb-card-fotter>
 
         <button type="button" nbButton status="success" data-dismiss="Dmodal"
-          (click)="DeleteSample(SampleObject)">save</button>
-        <button nbButton status="danger" (click)="ref.close()">Close </button>
+          (click)="ref.close(true);ref.close()">save</button>
+        <button nbButton status="danger" (click)="ref.close(false)">Close </button>
 
 
       </nb-card-fotter>

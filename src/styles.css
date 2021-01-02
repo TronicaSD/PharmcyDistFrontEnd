@@ -1,4 +1,4 @@
-@import '~nebular-icons/css/nebular-icons.css'; 
+@import '~nebular-icons/css/nebular-icons.css';
 
 
 
@@ -38,19 +38,24 @@ nb-card-footer button {
   margin-right: 1%;
 }
 
-.defaultdialogue{
-display: block !important;
-width: 600px;
+.defaultdialogue {
+  display: block !important;
+  width: 600px;
 
 }
 
-.md-modal{
+.md-modal {
   display: block !important;
   width: 700px;
-  
-  }
-  .lg-modal{
-    display: block !important;
-    width: 1000px;
-    
-    }
+
+}
+
+.lg-modal {
+  display: block !important;
+  width: 1000px;
+
+}
+
+.ng2-smart-actions {
+  width: 14%;
+}
