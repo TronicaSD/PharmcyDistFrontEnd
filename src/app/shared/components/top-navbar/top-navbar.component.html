@@ -1,0 +1,16 @@
+
+<nb-layout-header>
+  <div class="row">
+    <div class="col-md-1">
+      <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
+        <nb-icon icon="menu-2-outline"></nb-icon>
+      </a>
+    </div>
+<div class="col-md-3">
+<nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
+  <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
+</nb-select>
+
+</div>
+  </div>
+</nb-layout-header>

@@ -3,13 +3,11 @@ import { NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme'
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-top-navbar',
+  templateUrl: './top-navbar.component.html',
+  styleUrls: ['./top-navbar.component.css']
 })
-export class HomeComponent implements OnInit {
-
-  userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
+export class TopNavbarComponent implements OnInit {
   private destroy$: Subject<void> = new Subject<void>();
   themes = [
     {
