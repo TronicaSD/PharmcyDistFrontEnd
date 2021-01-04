@@ -62,16 +62,17 @@ export class PharmcyComponent implements OnInit {
 
     this.AddForm = this._formbuilder.group({
       pharmcyName: ['', Validators.required],
-      address: ['', Validators.required],
+      streetName: ['', Validators.required],
+
       city_Id: ['', Validators.required],
-      governerate_Id: ['', Validators.required],
+      governerate_Id: [1, Validators.required],
 
 
     });
 
     this.EditForm = this._formbuilder.group({
       pharmcyName: ['', Validators.required],
-      address: ['', Validators.required],
+      streetName: ['', Validators.required],
       id: ['',Validators.required],
       city_Id: ['', Validators.required],
       governerate_Id: ['', Validators.required],
@@ -85,8 +86,8 @@ export class PharmcyComponent implements OnInit {
   }
   getAllGovernorates() {
     this._PublicService.get("GS_Governorate/ViewGetAll").subscribe(res => {
-      debugger
       this.allGovernorates = res;
+      this.changeCities(1);
     });
   }
 
@@ -129,7 +130,7 @@ export class PharmcyComponent implements OnInit {
   openAddModal(dialog: TemplateRef<any>) {
 
     this.dialogService.open(dialog, {
-      dialogClass: "defaultdialogue"
+      dialogClass: "md-modal"
 
     });
 

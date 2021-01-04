@@ -2,7 +2,9 @@
   <div class="row">
     <div class="offset-9 col-md-3">
 
-      <button nbButton status="primary" (click)="openAddModal(Adddialog)">Add Pharmacy</button>
+      <button nbButton status="primary" (click)="openAddModal(Adddialog)">
+        <i class="fa fa-plus "></i>
+      </button>
     </div>
   </div>
   <br>
@@ -43,10 +45,10 @@
             </div>
             <div class=" col-md-6">
                 <nb-form-field>
-                <label>pharmcy Address</label>
+                <label>Street Name </label>
 
-                  <input class="form-control" formControlName="address" type="text" nbInput fullWidth>
-                  <span *ngIf="hasError('address', 'required')" style="color: red">Address is required</span>
+                  <input class="form-control" formControlName="streetName" type="text" nbInput fullWidth>
+                  <span *ngIf="hasError('streetName', 'required')" style="color: red">street Name is required</span>
 
                 </nb-form-field>
 
@@ -132,11 +134,11 @@
 
               <div class="form-group">
 
-                <label>Address</label>
+                <label>Street Name</label>
 
                 <nb-form-field>
-                  <input class="form-control" formControlName="address" type="text" nbInput fullWidth>
-                  <span *ngIf="hasErrorEdit('address', 'required')" style="color: red">address is required</span>
+                  <input class="form-control" formControlName="streetName" type="text" nbInput fullWidth>
+                  <span *ngIf="hasErrorEdit('streetName', 'required')" style="color: red">streetName is required</span>
 
                 </nb-form-field>
 
