@@ -44,8 +44,8 @@ export class PharmcyComponent implements OnInit {
         type: 'string',
       },
 
-      address: {
-        title: 'address',
+      streetName: {
+        title: 'Street Name',
         type: 'string',
       },
 
@@ -64,8 +64,8 @@ export class PharmcyComponent implements OnInit {
       pharmcyName: ['', Validators.required],
       streetName: ['', Validators.required],
 
-      city_Id: ['', Validators.required],
-      governerate_Id: [1, Validators.required],
+      cityId: ['', Validators.required],
+      governerateId: [1, Validators.required],
 
 
     });
@@ -74,8 +74,8 @@ export class PharmcyComponent implements OnInit {
       pharmcyName: ['', Validators.required],
       streetName: ['', Validators.required],
       id: ['',Validators.required],
-      city_Id: ['', Validators.required],
-      governerate_Id: ['', Validators.required],
+      cityId: ['', Validators.required],
+      governerateId: ['', Validators.required],
     });
   }
  
@@ -139,11 +139,11 @@ export class PharmcyComponent implements OnInit {
   openEditModal(dialog: TemplateRef<any>, row: any) {
 
     this.EditForm.controls['pharmcyName'].setValue(row.pharmcyName);
-    this.EditForm.controls['address'].setValue(row.address);
+    this.EditForm.controls['streetName'].setValue(row.streetName);
     this.EditForm.controls['id'].setValue(row.id);
     this.EditForm.controls['cityId'].setValue(row.cityId);
     this.EditForm.controls['governerateId'].setValue(row.governerateId);
-
+debugger;
     this.dialogService.open(dialog, {
       dialogClass: "defaultdialogue"
 
