@@ -15,6 +15,7 @@ import { LocalDataSource } from 'ng2-smart-table';
 export class InvoiceComponent implements OnInit {
   selectedInvoiceTypeItem = '';
   selectedPharmcyItem = '';
+  selectedItem = '';
   Invoices: any;
   InvoiceType: any = [
     { Value: 1, Text: "Postponed" },
@@ -108,6 +109,11 @@ export class InvoiceComponent implements OnInit {
     }
   };
   source: LocalDataSource = new LocalDataSource();
+  Governorate: any;
+  Countries: any[];
+  Cities: any;
+  selected: any;
+  selectedGoc: any;
 
   constructor(private _PublicService: PublicService
     , private dialogService: NbDialogService
@@ -122,7 +128,12 @@ export class InvoiceComponent implements OnInit {
       InvoiceType: ['', Validators.required],
       PharmcyId: ['', Validators.required],
       TotalPrice: [''],
-      DisCount: [''],
+      DisCount: ['', [
+        Validators.min(10),
+        Validators.max(30)]],
+      Country_Id: ['', Validators.required],
+      City_Id: ['', Validators.required],
+      Governerate_Id: ['', Validators.required],
       invoiceDetails: this._formbuilder.array([])
 
     });
@@ -134,7 +145,13 @@ export class InvoiceComponent implements OnInit {
       InvoiceType: ['', Validators.required],
       PharmcyId: ['', Validators.required],
       TotalPrice: [''],
-      DisCount: [''],
+      DisCount: ['', [
+        Validators.min(10),
+        Validators.max(30)]
+      ],
+      Country_Id: ['', Validators.required],
+      City_Id: ['', Validators.required],
+      Governerate_Id: ['', Validators.required],
       invoiceDetails: this._formbuilder.array([])
     });
   }
@@ -144,15 +161,38 @@ export class InvoiceComponent implements OnInit {
     this.getAllStockDetails();
     this.getAllPharmcies();
     this.EditInvloiceDetailsList();
-
+    this.getAllCountries();
   }
 
   getAllPharmcies() {
-
     this._PublicService.get("Pharmcy/ViewGetAll").subscribe(res => {
       this.Pharmcies = res;
+    });
+  }
+  getAllCountries() {
 
-
+    this._PublicService.get("GS_Country/ViewGetAll").subscribe(res => {
+      this.Countries = res;
+    });
+  }
+  changeGovernments(selectedItem: number) {
+    this.selected = this.AddForm.get("Country_Id")
+    this.getAllGovernments(selectedItem);
+  }
+  getAllGovernments(CountryId: number) {
+    debugger;
+    this._PublicService.getByID("GS_Governorate/ViewGetAllByCountry?id=", CountryId).subscribe(res => {
+      this.Governorate = res;
+    });
+  }
+  changeCities(selectedItem: number) {
+    this.selectedGoc = this.AddForm.get("Governerate_Id")
+    this.getAllCities(selectedItem);
+  }
+  getAllCities(GovernId: number) {
+    debugger;
+    this._PublicService.getByID("GS_City/ViewGetAllByGovern?id=", GovernId).subscribe(res => {
+      this.Cities = res;
     });
   }
   getAllStockDetails() {
@@ -219,6 +259,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   Add() {
+    debugger;
     this._PublicService.post('Invoice/AddData', this.AddForm.value).subscribe((Response) => {
       this.getAllInvoice();
       this._ToasterService.success("Invoice added successfully", "Success");
@@ -267,6 +308,13 @@ export class InvoiceComponent implements OnInit {
     this.EditForm.controls['PharmcyId'].setValue(row.pharmcyId);
     this.EditForm.controls['TotalPrice'].setValue(row.totalPrice);
     this.EditForm.controls['DisCount'].setValue(row.disCount);
+    this.EditForm.controls['Country_Id'].setValue(row.country_Id);
+    this.EditForm.controls['City_Id'].setValue(row.city_Id);
+    this.EditForm.controls['Governerate_Id'].setValue(row.governerate_Id);
+    this.changeCities(row.governerate_Id);
+    this.changeGovernments(row.country_Id);
+
+    debugger;
     this.invoiceDetailsEdit.removeAt(0);
     row.invoiceDetails.forEach(x => {
       var newEdirInoiceDetails = this._formbuilder.group({
