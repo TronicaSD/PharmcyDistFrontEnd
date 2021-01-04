@@ -32,11 +32,10 @@
 
             <label> Name</label>
 
-            <nb-form-field>
               <input class="form-control" formControlName="drugName" type="text" nbInput fullWidth>
               <span *ngIf="hasError('drugName', 'required')" style="color: red">Name is required</span>
 
-            </nb-form-field>
+     
 
 
           </div>
@@ -65,11 +64,11 @@
 
               <label> Name</label>
 
-              <nb-form-field>
+         
                 <input class="form-control" formControlName="drugName" type="text" nbInput fullWidth>
                 <span *ngIf="hasEditError('drugName', 'required')" style="color: red">Name is required</span>
 
-              </nb-form-field>
+            
 
             </div>
           </div>
