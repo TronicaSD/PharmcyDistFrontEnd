@@ -76,10 +76,7 @@ export class InvoiceComponent implements OnInit {
     },
 
     columns: {
-      id: {
-        title: 'ID',
-        type: 'number',
-      },
+
       invoiceNumber: {
         title: 'invoice Number',
         type: 'string',
@@ -111,6 +108,9 @@ export class InvoiceComponent implements OnInit {
   public source: LocalDataSource = new LocalDataSource();
 
   selected: any;
+  TotalDiscount: any;
+  TotalDiscountEdit: any;
+  TotalEdit: any;
 
   constructor(private _PublicService: PublicService
     , private dialogService: NbDialogService
@@ -120,17 +120,15 @@ export class InvoiceComponent implements OnInit {
   ) {
 
     this.AddForm = this._formbuilder.group({
-      InvoiceDate: ['', Validators.required],
+      InvoiceDate: [new Date(), Validators.required],
       InvoiceNumber: ['', Validators.required],
       InvoiceType: [1, Validators.required],
       PharmcyId: ['', Validators.required],
       TotalPrice: [''],
       DisCount: ['', [
-        Validators.min(12),Validators.maxLength(2),
+        Validators.min(12), Validators.maxLength(2),
         Validators.max(30)]],
-      Country_Id: ['', Validators.required],
-      City_Id: ['', Validators.required],
-      Governerate_Id: ['', Validators.required],
+
       invoiceDetails: this._formbuilder.array([])
 
     });
@@ -143,7 +141,7 @@ export class InvoiceComponent implements OnInit {
       PharmcyId: ['', Validators.required],
       TotalPrice: [''],
       DisCount: ['', [
-        Validators.min(10),
+        Validators.min(12),
         Validators.max(30)]
       ],
 
@@ -194,24 +192,36 @@ export class InvoiceComponent implements OnInit {
   CalculateTotal() {
     this.Total = this.AddinvoiceDetails.value.reduce((sum, item) => sum += (item.qunantity || 0) * (item.price || 0), 0)
     this.AddForm.controls['TotalPrice'].setValue(this.Total);
+    if ((parseInt(this.AddForm.get('DisCount').value)) >= 12 && (parseInt(this.AddForm.get('DisCount').value)) <= 30) {
+      this.TotalDiscount = (parseInt(this.AddForm.get('TotalPrice').value) - ((parseInt(this.AddForm.get('TotalPrice').value)) * (parseInt(this.AddForm.get('DisCount').value))) / 100);
+    } else {
+      this.TotalDiscount = null;
+    }
+
+
   }
   calculateDrugPrice() {
     this.AddinvoiceDetails.controls.forEach(x => {
       let price = parseInt(x.get('price').value)
-      let quantity = parseInt(x.get('qunantity').value)
-      this.price = price * quantity;
-      x.get('total').patchValue(this.price)
+      let quantity = parseInt(x.get('qunantity').value);
+      debugger;
+
+      if ((price !== NaN) && (quantity !== NaN)) {
+        debugger;
+        this.price = price * quantity;
+        x.get('total').patchValue(this.price)
+      }
     });
   }
   newInoiceDetails(): FormGroup {
 
     var newInoiceDetails = this._formbuilder.group({
-      drugId: 0,
+      drugId: null,
       drugName: "",
       invoiceId: 0,
-      price: 0,
-      qunantity: 0,
-      total: 0,
+      price: null,
+      qunantity: null,
+      total: null,
       id: 0
     });
     return newInoiceDetails;
@@ -232,7 +242,6 @@ export class InvoiceComponent implements OnInit {
   }
 
   Add() {
-    debugger;
     this._PublicService.post('Invoice/AddData', this.AddForm.value).subscribe((Response) => {
       this.getAllInvoice();
       this._ToasterService.success("Invoice added successfully", "Success");
@@ -251,8 +260,17 @@ export class InvoiceComponent implements OnInit {
 
   ////////////////Edit Modal
   CalculateEditTotal() {
-    this.Total = this.EditInvoiceDetails.value.reduce((sum, item) => sum += (item.qunantity || 0) * (item.price || 0), 0)
-    this.EditForm.controls['TotalPrice'].setValue(this.Total);
+    this.TotalEdit = this.EditInvoiceDetails.value.reduce((sum, item) => sum += (item.qunantity || 0) * (item.price || 0), 0)
+    this.EditForm.controls['TotalPrice'].setValue(this.TotalEdit);
+    debugger;
+    if ((parseInt(this.EditForm.get('DisCount').value)) >= 12 && (parseInt(this.EditForm.get('DisCount').value)) <= 30) {
+      this.TotalDiscountEdit
+        = (parseInt(this.EditForm.get('TotalPrice').value) - ((parseInt(this.EditForm.get('TotalPrice').value)) * (parseInt(this.EditForm.get('DisCount').value))) / 100);
+    } else {
+      this.TotalDiscountEdit = null;
+    }
+
+
   }
   calculateEditDrugPrice() {
     this.EditInvoiceDetails.controls.forEach(x => {
@@ -281,10 +299,9 @@ export class InvoiceComponent implements OnInit {
     this.EditForm.controls['PharmcyId'].setValue(row.pharmcyId);
     this.EditForm.controls['TotalPrice'].setValue(row.totalPrice);
     this.EditForm.controls['DisCount'].setValue(row.disCount);
-    this.EditForm.controls['Country_Id'].setValue(row.country_Id);
-    this.EditForm.controls['City_Id'].setValue(row.city_Id);
-    this.EditForm.controls['Governerate_Id'].setValue(row.governerate_Id);
-
+    this.TotalDiscountEdit
+      = (parseInt(this.EditForm.get('TotalPrice').value) - ((parseInt(this.EditForm.get('TotalPrice').value)) * (parseInt(this.EditForm.get('DisCount').value))) / 100);
+    this.TotalEdit = this.EditForm.controls['TotalPrice'].setValue(row.totalPrice);
     this.invoiceDetailsEdit.removeAt(0);
     row.invoiceDetails.forEach(x => {
       var newEdirInoiceDetails = this._formbuilder.group({
