@@ -41,10 +41,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
 
 
-   
-  
-    
+
+
+
   ],
+
   bootstrap: [AppComponent],
 })
 export class AppModule {

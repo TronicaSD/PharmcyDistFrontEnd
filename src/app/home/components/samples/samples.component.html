@@ -2,7 +2,8 @@
   <div class="row">
     <div class="offset-9 col-md-3">
 
-      <button nbButton status="primary" style="float: right;" (click)="openAddModal(Adddialog)"> <i class="fa fa-plus "></i></button>
+      <button nbButton status="primary" style="float: right;" (click)="openAddModal(Adddialog)"> <i
+          class="fa fa-plus "></i></button>
 
     </div>
   </div>
@@ -35,11 +36,11 @@
 
                 <label>Doctor Name</label>
 
-                
-                  <input class="form-control" formControlName="DoctorName" type="text" nbInput fullWidth>
-                  <span *ngIf="hasError('DoctorName', 'required')" style="color: red">Doctor Name is required</span>
 
-                
+                <input class="form-control" formControlName="DoctorName" type="text" nbInput fullWidth>
+                <span *ngIf="hasError('DoctorName', 'required')" style="color: red">Doctor Name is required</span>
+
+
 
               </div>
             </div>
@@ -49,7 +50,7 @@
 
                 <label>Drug Name</label>
 
-                <nb-select placeholder="Select Showcase" [(selected)]="selectedItem" lass="form-control"
+                <nb-select placeholder="Select Showcase" [(selected)]="selectedItem" class="form-control"
                   formControlName="DrugId">
                   <nb-option value="0">Option empty</nb-option>
                   <nb-option *ngFor="let d of StockDetails" [value]="d.drugId">{{d.drugName}}</nb-option>
@@ -106,11 +107,11 @@
 
                 <label>Doctor Name</label>
 
-                
-                  <input class="form-control" formControlName="DoctorName" type="text" nbInput fullWidth>
-                  <span *ngIf="hasEditError('DoctorName', 'required')" style="color: red">Doctor Name is required</span>
 
-                
+                <input class="form-control" formControlName="DoctorName" type="text" nbInput fullWidth>
+                <span *ngIf="hasEditError('DoctorName', 'required')" style="color: red">Doctor Name is required</span>
+
+
 
               </div>
             </div>
@@ -120,7 +121,7 @@
 
                 <label>Drug Name</label>
 
-                <nb-select placeholder="Select Showcase" [(selected)]="selectedItem" lass="form-control"
+                <nb-select placeholder="Select Showcase" [(selected)]="selectedItem" class="form-control"
                   formControlName="DrugId">
                   <nb-option value="0">Option empty</nb-option>
                   <nb-option *ngFor="let d of Drugs" [value]="d.id">{{d.drugName}}</nb-option>
@@ -139,7 +140,7 @@
                   <input class="form-control" formControlName="qunantity" type="text" numbersOnly nbInput fullWidth>
                   <span *ngIf="hasEditError('qunantity', 'required')" style="color: red">Quantity is required</span>
                 </nb-form-field>
-                
+
 
               </div>
             </div>

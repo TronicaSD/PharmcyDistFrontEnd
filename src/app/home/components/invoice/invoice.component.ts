@@ -67,7 +67,7 @@ export class InvoiceComponent implements OnInit {
         },
         {
           name: 'deleteAction',
-           title:'<i class="fa fa-trash text-danger"></i>'
+          title: '<i class="fa fa-trash text-danger"></i>'
         }
       ],
       add: false,
@@ -109,7 +109,7 @@ export class InvoiceComponent implements OnInit {
     }
   };
   public source: LocalDataSource = new LocalDataSource();
- 
+
   selected: any;
 
   constructor(private _PublicService: PublicService
@@ -146,7 +146,7 @@ export class InvoiceComponent implements OnInit {
         Validators.min(10),
         Validators.max(30)]
       ],
-  
+
       invoiceDetails: this._formbuilder.array([])
     });
   }
@@ -164,7 +164,7 @@ export class InvoiceComponent implements OnInit {
     });
   }
 
- 
+
 
   getAllStockDetails() {
 
@@ -204,6 +204,8 @@ export class InvoiceComponent implements OnInit {
     });
   }
   newInoiceDetails(): FormGroup {
+    debugger;
+
     var newInoiceDetails = this._formbuilder.group({
       drugId: 0,
       drugName: "",
@@ -223,6 +225,7 @@ export class InvoiceComponent implements OnInit {
     return this.AddinvoiceDetails;
   }
   addInvloiceDetailsList() {
+    debugger;
     this.invoiceDetails.push(this.newInoiceDetails());
   }
   removeInvoiceDetails(i: number) {
@@ -282,7 +285,7 @@ export class InvoiceComponent implements OnInit {
     this.EditForm.controls['Country_Id'].setValue(row.country_Id);
     this.EditForm.controls['City_Id'].setValue(row.city_Id);
     this.EditForm.controls['Governerate_Id'].setValue(row.governerate_Id);
- 
+
     this.invoiceDetailsEdit.removeAt(0);
     row.invoiceDetails.forEach(x => {
       var newEdirInoiceDetails = this._formbuilder.group({

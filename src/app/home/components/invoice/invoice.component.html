@@ -2,7 +2,7 @@
   <div class="row">
     <div class="offset-9 col-md-3">
       <button nbButton status="primary" style="float: right;" (click)="openAddModal(Adddialog)">
-         <i class="fa fa-plus "></i></button>
+        <i class="fa fa-plus "></i></button>
 
 
     </div>
@@ -10,19 +10,19 @@
   <br>
 
 
- <div>
-  <nb-card>
-    <nb-card-header>
-      Invoice Table
-    </nb-card-header>
+  <div>
+    <nb-card>
+      <nb-card-header>
+        Invoice Table
+      </nb-card-header>
 
-    <nb-card-body>
-      <ng2-smart-table [settings]="settings" [source]="source"
-        (custom)="onCustomAction(Deletedialog,Editdialog,$event)">
-      </ng2-smart-table>
-    </nb-card-body>
-  </nb-card>
- </div>
+      <nb-card-body>
+        <ng2-smart-table [settings]="settings" [source]="source"
+          (custom)="onCustomAction(Deletedialog,Editdialog,$event)">
+        </ng2-smart-table>
+      </nb-card-body>
+    </nb-card>
+  </div>
 
 
 
@@ -40,7 +40,8 @@
               <div class="form-group">
 
                 <label>Date</label>
-                <input nbInput placeholder="Pick Date" [nbDatepicker]="dateTimePicker" formControlName="InvoiceDate">
+                <input nbInput placeholder="Pick Date" [nbDatepicker]="dateTimePicker" class="form-control"
+                  formControlName="InvoiceDate">
                 <nb-datepicker #dateTimePicker></nb-datepicker>
                 <span *ngIf="hasError('InvoiceDate', 'required')" style="color: red">Date is required</span>
 
@@ -52,12 +53,13 @@
 
                 <label>Invoice Number</label>
 
-                
-                  <input class="form-control" formControlName="InvoiceNumber" type="text" nbInput fullWidth>
-                  <span *ngIf="hasError('InvoiceNumber', 'required')" style="color: red">Invoice Number is
-                    required</span>
 
-                
+                <input class="form-control" formControlName="InvoiceNumber" class="form-control" type="text" nbInput
+                  fullWidth>
+                <span *ngIf="hasError('InvoiceNumber', 'required')" style="color: red">Invoice Number is
+                  required</span>
+
+
 
               </div>
             </div>
@@ -67,7 +69,7 @@
 
                 <label>Pharmcy Name</label>
 
-                <nb-select placeholder="Select Showcase" [(selected)]="selectedPharmcyItem" lass="form-control"
+                <nb-select placeholder="Select Showcase" [(selected)]="selectedPharmcyItem" class="form-control"
                   formControlName="PharmcyId">
                   <nb-option disabled value="">Option empty</nb-option>
                   <nb-option *ngFor="let p of Pharmcies" [value]="p.id">{{p.pharmcyName}}</nb-option>
@@ -79,14 +81,14 @@
             <div class="form-group">
 
 
-              <nb-form-field>
+
               <label> Discount</label>
 
-                <input class="form-control" numbersOnly formControlName="DisCount" type="text" nbInput fullWidth>
-                <span *ngIf="hasError('DisCount', 'min')" style="color: red">minimum number is 10</span>
-                <span *ngIf="hasError('DisCount', 'max')" style="color: red">maximum number is 30 </span>
-              </nb-form-field>
-      
+              <input class="form-control" numbersOnly formControlName="DisCount" type="text" nbInput fullWidth>
+              <span *ngIf="hasError('DisCount', 'min')" style="color: red">minimum number is 10</span>
+              <span *ngIf="hasError('DisCount', 'max')" style="color: red">maximum number is 30 </span>
+
+
             </div>
             <div class=" col-md-6">
 
@@ -94,7 +96,7 @@
 
                 <label>Invoice Type</label>
 
-                <nb-select placeholder="Select Showcase" [(selected)]="selectedInvoiceTypeItem" lass="form-control"
+                <nb-select placeholder="Select Showcase" [(selected)]="selectedInvoiceTypeItem" class="form-control"
                   formControlName="InvoiceType">
                   <nb-option disabled value="">Option empty</nb-option>
                   <nb-option *ngFor="let it of InvoiceType" [value]="it.Value">{{it.Text}}</nb-option>
@@ -102,7 +104,7 @@
 
               </div>
             </div>
-      
+
           </div>
 
           <table class="table">
@@ -131,18 +133,18 @@
 
                 </td>
                 <td>
-                  <nb-form-field>
-                    <input class="form-control" numbersOnly formControlName="qunantity" type="text" nbInput fullWidth
-                      (change)="CalculateTotal()" (input)="calculateDrugPrice(i)">
-                  </nb-form-field>
-                  
+
+                  <input class="form-control" numbersOnly formControlName="qunantity" type="text" nbInput fullWidth
+                    (change)="CalculateTotal()" (input)="calculateDrugPrice(i)">
+
+
                 </td>
                 <td>
-                  <nb-form-field>
-                    <input class="form-control" numbersOnly formControlName="price" type="text" nbInput fullWidth
-                      (change)="CalculateTotal()" (input)="calculateDrugPrice(i)">
-                    </nb-form-field>
-                  
+
+                  <input class="form-control" numbersOnly formControlName="price" type="text" nbInput fullWidth
+                    (change)="CalculateTotal()" (input)="calculateDrugPrice(i)">
+
+
                 </td>
                 <td>
                   <input class="form-control" disabled formControlName="total" type="text" fullWidth>
@@ -201,12 +203,12 @@
 
                 <label>Invoice Number</label>
 
-                
-                  <input class="form-control" formControlName="InvoiceNumber" type="text" nbInput fullWidth>
-                  <span *ngIf="hasEditError('InvoiceNumber', 'required')" style="color: red">Invoice Number is
-                    required</span>
 
-                
+                <input class="form-control" formControlName="InvoiceNumber" type="text" nbInput fullWidth>
+                <span *ngIf="hasEditError('InvoiceNumber', 'required')" style="color: red">Invoice Number is
+                  required</span>
+
+
 
               </div>
             </div>
@@ -216,7 +218,7 @@
 
                 <label>Pharmcy Name</label>
 
-                <nb-select placeholder="Select Showcase" [(selected)]="selectedPharmcyItem" lass="form-control"
+                <nb-select placeholder="Select Showcase" [(selected)]="selectedPharmcyItem" class="form-control"
                   formControlName="PharmcyId">
                   <nb-option disabled value="">Option empty</nb-option>
                   <nb-option *ngFor="let p of Pharmcies" [value]="p.id">{{p.pharmcyName}}</nb-option>
@@ -229,9 +231,9 @@
 
               <label> Discount</label>
 
-              <nb-form-field>
-                <input class="form-control" numbersOnly formControlName="DisCount" type="text" nbInput fullWidth>
-              </nb-form-field>
+
+              <input class="form-control" numbersOnly formControlName="DisCount" type="text" nbInput fullWidth>
+
               <span *ngIf="hasEditError('DisCount', 'min')" style="color: red">minimum number is 10</span>
               <span *ngIf="hasEditError('DisCount', 'max')" style="color: red">maximum number is 30 </span>
             </div>
@@ -242,7 +244,7 @@
 
                 <label>Invoice Type</label>
 
-                <nb-select placeholder="Select Showcase" [(selected)]="selectedInvoiceTypeItem" lass="form-control"
+                <nb-select placeholder="Select Showcase" [(selected)]="selectedInvoiceTypeItem" class="form-control"
                   formControlName="InvoiceType">
                   <nb-option disabled value="">Option empty</nb-option>
                   <nb-option *ngFor="let it of InvoiceType" [value]="it.Value">{{it.Text}}</nb-option>
@@ -324,17 +326,17 @@
 
                 </td>
                 <td>
-                  <nb-form-field>
-                    <input class="form-control" numbersOnly formControlName="qunantity" type="text" nbInput fullWidth
-                      (change)="CalculateEditTotal()" (input)="calculateEditDrugPrice(in)">
-                    </nb-form-field>
+
+                  <input class="form-control" numbersOnly formControlName="qunantity" type="text" nbInput fullWidth
+                    (change)="CalculateEditTotal()" (input)="calculateEditDrugPrice(in)">
+
                 </td>
                 <td>
-                  <nb-form-field>
-                    <input class="form-control" numbersOnly formControlName="price" type="text" nbInput fullWidth
-                      (change)="CalculateEditTotal()" (input)="calculateEditDrugPrice(in)">
-                    </nb-form-field>
-                  
+
+                  <input class="form-control" numbersOnly formControlName="price" type="text" nbInput fullWidth
+                    (change)="CalculateEditTotal()" (input)="calculateEditDrugPrice(in)">
+
+
                 </td>
                 <td>
                   <input class="form-control" disabled formControlName="total" type="text" fullWidth>
