@@ -17,9 +17,9 @@ export class InvoiceComponent implements OnInit {
   selectedPharmcyItem = '';
   selectedItem = '';
   Invoices: any;
-  InvoiceType: any = [
-    { Value: 1, Text: "Postponed" },
-    { Value: 2, Text: "forefront" },
+  invoiceTypeList: any = [
+    { Value: 1, Text: "اجل" },
+    { Value: 2, Text: "مدفوعه" },
 
   ];
 
@@ -122,11 +122,11 @@ export class InvoiceComponent implements OnInit {
     this.AddForm = this._formbuilder.group({
       InvoiceDate: ['', Validators.required],
       InvoiceNumber: ['', Validators.required],
-      InvoiceType: ['', Validators.required],
+      InvoiceType: [1, Validators.required],
       PharmcyId: ['', Validators.required],
       TotalPrice: [''],
       DisCount: ['', [
-        Validators.min(10),
+        Validators.min(12),Validators.maxLength(2),
         Validators.max(30)]],
       Country_Id: ['', Validators.required],
       City_Id: ['', Validators.required],
@@ -204,7 +204,6 @@ export class InvoiceComponent implements OnInit {
     });
   }
   newInoiceDetails(): FormGroup {
-    debugger;
 
     var newInoiceDetails = this._formbuilder.group({
       drugId: 0,

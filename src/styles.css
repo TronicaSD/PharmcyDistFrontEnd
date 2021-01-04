@@ -64,3 +64,5 @@ nb-card-footer button {
 margin-top: 15%;
 
 }
+
+label,span{display: block;}

@@ -1,19 +1,20 @@
 <div class="container">
-  <div class="row">
-    <div class="offset-9 col-md-3">
-      <button nbButton status="primary" style="float: right;" (click)="openAddModal(Adddialog)">
-        <i class="fa fa-plus "></i></button>
 
-
-    </div>
-  </div>
-  <br>
 
 
   <div>
     <nb-card>
       <nb-card-header>
-        Invoice Table
+    
+        <div class="row">
+          <div class="col-md-3">
+               Invoices
+          </div>
+          <div class="offset-8 col-md-1">
+      
+            <button nbButton status="primary" (click)="openAddModal(Adddialog)"> <i class="fa fa-plus "></i></button>
+          </div>
+        </div>
       </nb-card-header>
 
       <nb-card-body>
@@ -36,7 +37,36 @@
         <form [formGroup]="AddForm">
 
           <div class="row">
-            <div class="col-md-6">
+            <div class=" col-md-4">
+
+              <div class="form-group">
+                <label>Pharmcy Name</label>
+
+                <nb-select placeholder="Select pharamcy"  
+                  formControlName="PharmcyId">
+                  <nb-option *ngFor="let p of Pharmcies" [value]="p.id">{{p.pharmcyName}}</nb-option>
+                </nb-select>
+                <span *ngIf="hasError('PharmcyId', 'required')" style="color: red">Pharmcy is required</span>
+
+              </div>
+            </div>
+   
+            <div class=" col-md-4">
+
+              <div class="form-group">
+
+                <label>Invoice Type</label>
+
+                <nb-select placeholder="Select Invoice Type" 
+                  formControlName="InvoiceType">
+                  <nb-option *ngFor="let it of invoiceTypeList" [value]="it.Value">{{it.Text}}</nb-option>
+                </nb-select>
+
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
               <div class="form-group">
 
                 <label>Date</label>
@@ -47,63 +77,23 @@
 
               </div>
             </div>
-            <div class=" col-md-6">
+            <div class=" col-md-4">
 
               <div class="form-group">
 
-                <label>Invoice Number</label>
+           
+                <label> Discount</label>
 
-
-                <input class="form-control" formControlName="InvoiceNumber" class="form-control" type="text" nbInput
-                  fullWidth>
-                <span *ngIf="hasError('InvoiceNumber', 'required')" style="color: red">Invoice Number is
-                  required</span>
-
+                <input class="form-control" numbersOnly  placeholder="discount %" formControlName="DisCount" type="text" nbInput fullWidth>
+                <span *ngIf="hasError('DisCount', 'min')" style="color: red">minimum number is 12</span>
+                <span *ngIf="hasError('DisCount', 'max')" style="color: red">maximum number is 30 </span>
+  
 
 
               </div>
             </div>
-            <div class=" col-md-6">
 
-              <div class="form-group">
-
-                <label>Pharmcy Name</label>
-
-                <nb-select placeholder="Select Showcase" [(selected)]="selectedPharmcyItem" class="form-control"
-                  formControlName="PharmcyId">
-                  <nb-option disabled value="">Option empty</nb-option>
-                  <nb-option *ngFor="let p of Pharmcies" [value]="p.id">{{p.pharmcyName}}</nb-option>
-                </nb-select>
-                <span *ngIf="hasError('PharmcyId', 'required')" style="color: red">Pharmcy is required</span>
-
-              </div>
-            </div>
-            <div class="form-group">
-
-
-
-              <label> Discount</label>
-
-              <input class="form-control" numbersOnly formControlName="DisCount" type="text" nbInput fullWidth>
-              <span *ngIf="hasError('DisCount', 'min')" style="color: red">minimum number is 10</span>
-              <span *ngIf="hasError('DisCount', 'max')" style="color: red">maximum number is 30 </span>
-
-
-            </div>
-            <div class=" col-md-6">
-
-              <div class="form-group">
-
-                <label>Invoice Type</label>
-
-                <nb-select placeholder="Select Showcase" [(selected)]="selectedInvoiceTypeItem" class="form-control"
-                  formControlName="InvoiceType">
-                  <nb-option disabled value="">Option empty</nb-option>
-                  <nb-option *ngFor="let it of InvoiceType" [value]="it.Value">{{it.Text}}</nb-option>
-                </nb-select>
-
-              </div>
-            </div>
+          
 
           </div>
 
@@ -126,7 +116,7 @@
                   {{i}}
                 </td>
                 <td>
-                  <nb-select placeholder="Select Showcase" class="form-control" formControlName="drugId">
+                  <nb-select placeholder="اسم الدواء"  formControlName="drugId">
                     <nb-option disabled value="">Option empty</nb-option>
                     <nb-option *ngFor="let d of StockDetails" [value]="d.drugId">{{d.drugName}}</nb-option>
                   </nb-select>
@@ -151,8 +141,8 @@
                 </td>
 
                 <td>
-                  <nb-icon *ngIf="i ==0" icon="plus" (click)=" addInvloiceDetailsList()"></nb-icon>
-                  <nb-icon *ngIf="i !=0" icon="trash" (click)="removeInvoiceDetails(i)"></nb-icon>
+                  <nb-icon *ngIf="i ==0" icon="plus" status="success" (click)=" addInvloiceDetailsList()"></nb-icon>
+                  <nb-icon *ngIf="i !=0" icon="trash"  status="danger"  (click)="removeInvoiceDetails(i)"></nb-icon>
 
                 </td>
 

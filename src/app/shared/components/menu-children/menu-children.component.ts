@@ -19,7 +19,6 @@ export class MenuChildrenComponent {
     this.UserRoles = this._AuthService.getUserRole();
 
     if (allowedRoles == this.UserRoles) {
-      debugger;
       return true;
     } else {
       debugger;
