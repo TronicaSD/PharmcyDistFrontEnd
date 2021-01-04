@@ -17,7 +17,7 @@ import { InvoiceComponent } from './components/invoice/invoice.component';
 import { PublicService } from '../core/publicService.Service';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { AuthGuard } from '../auth/services/auth.guard';
-import { NbSidebarService } from '@nebular/theme';
+import { NbSidebarService, NbThemeModule } from '@nebular/theme';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
@@ -35,12 +35,12 @@ import { SharedModule } from '../shared/shared.module';
   ],
   imports: [
     CommonModule,
+    SharedModule,
     HomeRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgbModule,
-    Ng2SmartTableModule,
-    SharedModule
+    NbThemeModule.forRoot({ name: "dark" }),
+    
   ],
   providers: [PublicService , AuthService ,AuthGuard ]
 })

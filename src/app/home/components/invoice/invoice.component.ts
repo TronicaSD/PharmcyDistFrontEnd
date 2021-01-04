@@ -108,7 +108,7 @@ export class InvoiceComponent implements OnInit {
 
     }
   };
-  source: LocalDataSource = new LocalDataSource();
+  public source: LocalDataSource = new LocalDataSource();
  
   selected: any;
 

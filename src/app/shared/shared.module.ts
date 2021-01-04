@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { NbEvaIconsModule } from "@nebular/eva-icons";
 import { NbActionsModule, NbButtonModule, NbCardModule, NbDatepickerModule, NbDialogModule, NbFormFieldModule, NbIconModule, NbLayoutModule, NbMenuModule, NbMenuService, NbSearchModule, NbSelectModule, NbSidebarModule, NbSidebarService, NbThemeModule, NbThemeService, NbToastrModule } from "@nebular/theme";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { Ng2SmartTableModule } from "ng2-smart-table";
 import { MenuChildrenComponent } from "./components/menu-children/menu-children.component";
 import { TopNavbarComponent } from "./components/top-navbar/top-navbar.component";
 import { NumbersOnlyDirective } from "./directives/number-only.directive";
@@ -29,8 +30,9 @@ import { NumbersOnlyDirective } from "./directives/number-only.directive";
      NbEvaIconsModule,
      NbIconModule,
      NbToastrModule.forRoot(),
-     NbDialogModule.forChild({ closeOnBackdropClick: false, autoFocus: true, closeOnEsc: true ,dialogClass:"defaultdialogue"})
- 
+     NbDialogModule.forChild({ closeOnBackdropClick: false, autoFocus: true, 
+      closeOnEsc: true ,dialogClass:"defaultdialogue"}),
+     Ng2SmartTableModule,
     ],
     exports: [
       NbActionsModule,
@@ -52,6 +54,7 @@ import { NumbersOnlyDirective } from "./directives/number-only.directive";
      NumbersOnlyDirective,
      MenuChildrenComponent,
      TopNavbarComponent,
+     Ng2SmartTableModule,
   
     ],
 
