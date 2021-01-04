@@ -39,6 +39,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NbThemeModule.forRoot({ name: "dark" }),
     FormsModule,
     ReactiveFormsModule,
+
+
+   
+  
     
   ],
   bootstrap: [AppComponent],
