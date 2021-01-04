@@ -32,34 +32,61 @@
           <div class="row">
             <div class=" col-md-6">
 
-              <div class="form-group">
-
+                <nb-form-field>
                 <label>pharmcy Name</label>
 
-                <nb-form-field>
                   <input class="form-control" formControlName="pharmcyName" type="text" nbInput fullWidth>
                   <span *ngIf="hasError('pharmcyName', 'required')" style="color: red">pharmcy Name is required</span>
 
                 </nb-form-field>
-
-              </div>
+              
             </div>
             <div class=" col-md-6">
-
-              <div class="form-group">
-
+                <nb-form-field>
                 <label>pharmcy Address</label>
 
-                <nb-form-field>
                   <input class="form-control" formControlName="address" type="text" nbInput fullWidth>
                   <span *ngIf="hasError('address', 'required')" style="color: red">Address is required</span>
 
                 </nb-form-field>
 
-              </div>
+          
             </div>
 
           </div>
+<br>
+
+          <div class="row">
+      
+
+            <div class="col-md-6">
+
+              <nb-form-field>
+                <label>Government </label>
+                <nb-select placeholder="Select Governorate" lass="form-control" formControlName="governerate_Id"
+                  (selectedChange)="changeCities($event)">
+                  <nb-option *ngFor="let g of allGovernorates" [value]="g.governorate_Id">{{g.governorate_Name}}</nb-option>
+                </nb-select>
+                <span *ngIf="hasError('governerate_Id', 'required')" style="color: red">Government is required</span>
+              </nb-form-field>
+         
+            </div>
+
+            <div class="col-md-6">
+              <nb-form-field>
+                <label>city </label>
+                <nb-select placeholder="Select City" lass="form-control" formControlName="city_Id">
+                  <nb-option *ngFor="let city of allCities" [value]="city.city_Id">{{city.city_Name}}</nb-option>
+                </nb-select>
+                <span *ngIf="hasError('city_Id', 'required')" style="color: red">city is required</span>
+              </nb-form-field>
+
+          
+            </div>
+
+          </div>
+<br>
+
         </form>
 
       </nb-card-body>

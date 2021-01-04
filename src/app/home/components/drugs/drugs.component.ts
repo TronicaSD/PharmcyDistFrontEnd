@@ -22,11 +22,11 @@ export class DrugsComponent implements OnInit {
 
         {
           name: 'editAction',
-          title: 'edit'
+          title: '<i class="fa fa-edit text-warning"></i>'
         },
         {
           name: 'deleteAction',
-          title: 'delete'
+          title:'<i class="fa fa-trash text-danger"></i>'
         }
       ],
       add: false,
@@ -76,7 +76,7 @@ export class DrugsComponent implements OnInit {
 
   getAllDrugs() {
 
-    this._PublicService.get("Drug/ViewGetAll").subscribe(res => {
+    this._PublicService.get("Drugs/ViewGetAll").subscribe(res => {
       this.Drugs = res;
       this.source.load(this.Drugs);
 
@@ -101,7 +101,7 @@ export class DrugsComponent implements OnInit {
   }
   Add() {
 
-    this._PublicService.post('Drug/AddData', this.AddForm.value).subscribe((Response) => {
+    this._PublicService.post('Drugs/AddData', this.AddForm.value).subscribe((Response) => {
       this.getAllDrugs();
 
       this._ToasterService.success("Drug Added successfully", "Success");
@@ -129,7 +129,7 @@ export class DrugsComponent implements OnInit {
     });
   }
   updateDrug() {
-    this._PublicService.put('Drug/UpdateData', this.EditForm.value).subscribe((Response) => {
+    this._PublicService.put('Drugs/UpdateData', this.EditForm.value).subscribe((Response) => {
       this.Drugs = Response;
       this.modalService.dismissAll();
       this._ToasterService.success("Drug Updated successfully", "Success");
@@ -147,7 +147,7 @@ export class DrugsComponent implements OnInit {
   //Delete Modal
   DeleteDrug(id: any) {
 
-    this._PublicService.delete("Drug/DeleteData", id).subscribe((Response) => {
+    this._PublicService.delete("Drugs/DeleteData", id).subscribe((Response) => {
       this.modalService.dismissAll();
       this._ToasterService.success("Drug Deleted successfully", "Success");
 

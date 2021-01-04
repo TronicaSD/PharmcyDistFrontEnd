@@ -95,51 +95,7 @@
 
               </div>
             </div>
-            <div class=" col-md-6">
-
-              <div class="form-group">
-
-                <label>Country</label>
-
-                <nb-select placeholder="Select Showcase" lass="form-control" formControlName="Country_Id"
-                  (selectedChange)="changeGovernments($event)">
-                  <nb-option disabled value="">Option empty</nb-option>
-                  <nb-option *ngFor="let c of Countries" [value]="c.country_Id">{{c.country_Name_Ar}}</nb-option>
-                </nb-select>
-                <span *ngIf="hasError('Country_Id', 'required')" style="color: red">Country is required</span>
-
-              </div>
-            </div>
-
-            <div class=" col-md-6">
-
-              <div class="form-group">
-
-                <label>Government </label>
-
-                <nb-select placeholder="Select Showcase" lass="form-control" formControlName="Governerate_Id"
-                  (selectedChange)="changeCities($event)">
-                  <nb-option disabled value="">Option empty</nb-option>
-                  <nb-option *ngFor="let g of Governorate" [value]="g.governorate_Id">{{g.governorate_Name}}</nb-option>
-                </nb-select>
-                <span *ngIf="hasError('Governerate_Id', 'required')" style="color: red">Government is required</span>
-
-              </div>
-            </div>
-            <div class=" col-md-6">
-
-              <div class="form-group">
-
-                <label>city </label>
-
-                <nb-select placeholder="Select Showcase" lass="form-control" formControlName="City_Id">
-                  <nb-option disabled value="">Option empty</nb-option>
-                  <nb-option *ngFor="let ci of Cities" [value]="ci.city_Id">{{ci.city_Name}}</nb-option>
-                </nb-select>
-                <span *ngIf="hasError('City_Id', 'required')" style="color: red">city is required</span>
-
-              </div>
-            </div>
+      
           </div>
 
           <table class="table">

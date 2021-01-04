@@ -9,7 +9,8 @@ import { PublicService } from 'src/app/core/publicService.Service';
   styleUrls: ['./pharmcy.component.css']
 })
 export class PharmcyComponent implements OnInit {
-
+  allCities:any;
+  allGovernorates:any;
   Pharmcies: any;
   closeResult: string;
   AddForm: FormGroup;
@@ -21,11 +22,11 @@ export class PharmcyComponent implements OnInit {
 
         {
           name: 'editAction',
-          title: 'edit'
+          title: '<i class="fa fa-edit text-warning"></i>'
         },
         {
           name: 'deleteAction',
-          title: 'delete'
+           title:'<i class="fa fa-trash text-danger"></i>'
         }
       ],
       add: false,
@@ -62,6 +63,8 @@ export class PharmcyComponent implements OnInit {
     this.AddForm = this._formbuilder.group({
       pharmcyName: ['', Validators.required],
       address: ['', Validators.required],
+      city_Id: ['', Validators.required],
+      governerate_Id: ['', Validators.required],
 
 
     });
@@ -69,13 +72,31 @@ export class PharmcyComponent implements OnInit {
     this.EditForm = this._formbuilder.group({
       pharmcyName: ['', Validators.required],
       address: ['', Validators.required],
-      id: [''],
+      id: ['',Validators.required],
+      city_Id: ['', Validators.required],
+      governerate_Id: ['', Validators.required],
+    });
+  }
+ 
+  
+  ngOnInit(): void {
+    this.getAllPharmcies();
+    this.getAllGovernorates();
+  }
+  getAllGovernorates() {
+    this._PublicService.get("GS_Governorate/ViewGetAll").subscribe(res => {
+      debugger
+      this.allGovernorates = res;
     });
   }
 
-  ngOnInit(): void {
-    this.getAllPharmcies();
+  changeCities(id: number) {
+    
+    this._PublicService.getByID("GS_City/ViewGetAllByGovern?id=", id).subscribe(res => {
+      this.allCities = res;
+    });
   }
+ 
 
   getAllPharmcies() {
     this._PublicService.get("Pharmcy/ViewGetAll",).subscribe(res => {
@@ -116,10 +137,11 @@ export class PharmcyComponent implements OnInit {
   //
   openEditModal(dialog: TemplateRef<any>, row: any) {
 
-    console.log(row);
     this.EditForm.controls['pharmcyName'].setValue(row.pharmcyName);
     this.EditForm.controls['address'].setValue(row.address);
     this.EditForm.controls['id'].setValue(row.id);
+    this.EditForm.controls['cityId'].setValue(row.cityId);
+    this.EditForm.controls['governerateId'].setValue(row.governerateId);
 
     this.dialogService.open(dialog, {
       dialogClass: "defaultdialogue"

@@ -24,11 +24,11 @@ export class StockDetailsComponent implements OnInit {
 
         {
           name: 'editAction',
-          title: 'edit'
+          title: '<i class="fa fa-edit text-warning"></i>'
         },
         {
           name: 'deleteAction',
-          title: 'delete'
+           title:'<i class="fa fa-trash text-danger"></i>'
         }
       ],
       add: false,
