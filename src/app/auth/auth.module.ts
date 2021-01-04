@@ -21,7 +21,7 @@ import { PublicService } from '../core/publicService.Service';
   imports: [
     CommonModule,
     AuthRoutingModule,
-    NbThemeModule.forRoot(),
+    NbThemeModule.forRoot({name:"dark"}),
     NbButtonModule,
     NbLayoutModule,
     NbInputModule,

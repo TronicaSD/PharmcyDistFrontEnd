@@ -35,7 +35,7 @@ import { NumbersOnlyDirective } from "./directives/number-only.directive";
     exports: [
       NbActionsModule,
       NbSearchModule,
-     NbThemeModule, // this will enable the default theme, you can change this to `cosmic` to enable the dark theme  
+
      NbLayoutModule,
      NbSidebarModule,
      NbMenuModule,

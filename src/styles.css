@@ -7,22 +7,23 @@
   padding: 2%;
 
 }
-
-.table-res {
+table {
   background-color: "#fff";
+  box-shadow: 3px 4px 15px 5px #2e3a59 ;
 }
 
-.table-res thead {
-  background-color: #0f0f0f;
+table thead{
+  background-color: #2e3a59;
+  color:#fff
 
 }
+table th{
+  border-top:none !important ;
+}
 
-.table-res tr th,
-tr td {
-  color: #fff;
-  border-bottom: thin #fff 1px;
-
-
+table tbody tr td {
+  color: #2e3a59;
+  border-bottom: thin #2e3a59 1px;
 }
 
 .modal-content {

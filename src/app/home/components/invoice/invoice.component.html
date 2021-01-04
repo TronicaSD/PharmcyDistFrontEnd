@@ -67,12 +67,12 @@
 
                 <label>Invoice Number</label>
 
-                <nb-form-field>
+                
                   <input class="form-control" formControlName="InvoiceNumber" type="text" nbInput fullWidth>
                   <span *ngIf="hasError('InvoiceNumber', 'required')" style="color: red">Invoice Number is
                     required</span>
 
-                </nb-form-field>
+                
 
               </div>
             </div>
@@ -95,9 +95,9 @@
 
               <label> Discount</label>
 
-              <nb-form-field>
+              
                 <input class="form-control" formControlName="DisCount" type="text" nbInput fullWidth>
-              </nb-form-field>
+              
 
             </div>
 
@@ -143,16 +143,16 @@
 
                 </td>
                 <td>
-                  <nb-form-field>
+                  
                     <input class="form-control" formControlName="qunantity" type="text" nbInput fullWidth
                       (change)="CalculateTotal()" (input)="calculateDrugPrice(i)">
-                  </nb-form-field>
+                  
                 </td>
                 <td>
-                  <nb-form-field>
+                  
                     <input class="form-control" formControlName="price" type="text" nbInput fullWidth
                       (change)="CalculateTotal()" (input)="calculateDrugPrice(i)">
-                  </nb-form-field>
+                  
                 </td>
                 <td>
                   <input class="form-control" disabled formControlName="total" type="text" fullWidth>
@@ -210,12 +210,12 @@
 
                 <label>Invoice Number</label>
 
-                <nb-form-field>
+                
                   <input class="form-control" formControlName="InvoiceNumber" type="text" nbInput fullWidth>
                   <span *ngIf="hasEditError('InvoiceNumber', 'required')" style="color: red">Invoice Number is
                     required</span>
 
-                </nb-form-field>
+                
 
               </div>
             </div>
@@ -238,9 +238,9 @@
 
               <label> Discount</label>
 
-              <nb-form-field>
+              
                 <input class="form-control" formControlName="DisCount" type="text" nbInput fullWidth>
-              </nb-form-field>
+              
 
             </div>
 
@@ -285,16 +285,16 @@
 
                 </td>
                 <td>
-                  <nb-form-field>
+                  
                     <input class="form-control" formControlName="qunantity" type="text" nbInput fullWidth
                       (change)="CalculateEditTotal()" (input)="calculateEditDrugPrice(in)">
-                  </nb-form-field>
+                  
                 </td>
                 <td>
-                  <nb-form-field>
+                  
                     <input class="form-control" formControlName="price" type="text" nbInput fullWidth
                       (change)="CalculateEditTotal()" (input)="calculateEditDrugPrice(in)">
-                  </nb-form-field>
+                  
                 </td>
                 <td>
                   <input class="form-control" disabled formControlName="total" type="text" fullWidth>
