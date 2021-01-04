@@ -84,7 +84,7 @@ export class StockDetailsComponent implements OnInit {
     this.EditForm.reset();
   }
   getAllDrugs() {
-    this._PublicService.get("Drug/ViewGetAll").subscribe(res => {
+    this._PublicService.get("Drugs/ViewGetAll").subscribe(res => {
       this.Drugs = res;
     });
   }

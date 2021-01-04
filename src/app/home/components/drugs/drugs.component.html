@@ -1,14 +1,17 @@
 <div class="container">
-  <div class="row">
-    <div class="offset-9 col-md-3">
 
-      <button nbButton status="primary" (click)="openAddDialog(Adddialog)"> <i class="fa fa-plus "></i></button>
-    </div>
-  </div>
-  <br>
   <nb-card>
     <nb-card-header>
-      Drug Table
+    
+      <div class="row">
+        <div class="col-md-3">
+             Drugs
+        </div>
+        <div class="offset-8 col-md-1">
+    
+          <button nbButton status="primary" (click)="openAddDialog(Adddialog)"> <i class="fa fa-plus "></i></button>
+        </div>
+      </div>
     </nb-card-header>
 
     <nb-card-body>
