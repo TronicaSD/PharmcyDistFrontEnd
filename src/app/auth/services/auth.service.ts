@@ -42,16 +42,12 @@ export class AuthService implements CanActivate {
           this._coockieService.set('token', response.token);
           this._coockieService.set('userName', result.unique_name);
           this._coockieService.set('userId', result.UserId);
-          this._coockieService.set('Password', result.Password);
           this._coockieService.set('role', result.role);
-          debugger;
 
           this._router.navigate(['/home']);
-          debugger;
 
         }, error: (error) => {
           console.log(error);
-          debugger;
 
         }
       }

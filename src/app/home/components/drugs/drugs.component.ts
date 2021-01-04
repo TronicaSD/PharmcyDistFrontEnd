@@ -78,9 +78,7 @@ export class DrugsComponent implements OnInit {
 
     this._PublicService.get("Drug/ViewGetAll").subscribe(res => {
       this.Drugs = res;
-      debugger;
       this.source.load(this.Drugs);
-      debugger;
 
     });
   }
