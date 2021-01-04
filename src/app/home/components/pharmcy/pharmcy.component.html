@@ -1,37 +1,37 @@
 <div class="container">
 
 
-<!-- table -->
- <div>
-  <nb-card>
-    <nb-card-header>
-    
-      <div class="row">
-        <div class="col-md-3">
-             Pharmcies
-        </div>
-        <div class="offset-8 col-md-1">
-    
-          <button nbButton status="primary" (click)="openAddModal(Adddialog)">
-            <i class="fa fa-plus "></i>
-          </button>
-        </div>
-      </div>
-    </nb-card-header>
+  <!-- table -->
+  <div>
+    <nb-card>
+      <nb-card-header>
 
-    <nb-card-body>
-      <ng2-smart-table [settings]="settings" [source]="source"
-        (custom)="onCustomAction(Deletedialog,Editdialog,$event)">
-      </ng2-smart-table>
-    </nb-card-body>
-  </nb-card>
- </div>
+        <div class="row">
+          <div class="col-md-3">
+            {{'Pharmcies' | translate}}
+          </div>
+          <div class="offset-8 col-md-1">
 
- <!-- add mdaaal -->
+            <button nbButton status="primary" (click)="openAddModal(Adddialog)">
+              <i class="fa fa-plus "></i>
+            </button>
+          </div>
+        </div>
+      </nb-card-header>
+
+      <nb-card-body>
+        <ng2-smart-table [settings]="settings" [source]="source"
+          (custom)="onCustomAction(Deletedialog,Editdialog,$event)">
+        </ng2-smart-table>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+  <!-- add mdaaal -->
   <ng-template #Adddialog class="model-full" let-data let-ref="dialogRef">
     <nb-card>
       <nb-card-header>
-        <h4 class="modal-title" id="modal-basic-title">Add Pharmcy</h4>
+        <h4 class="modal-title" id="modal-basic-title">{{'Add' | translate}} {{'Pharmcy' | translate}}</h4>
 
       </nb-card-header>
       <nb-card-body>
@@ -40,62 +40,68 @@
           <div class="row">
             <div class=" col-md-6">
 
-             
-                <label>pharmcy Name</label>
 
-                  <input class="form-control" formControlName="pharmcyName" type="text" nbInput fullWidth>
-                  <span *ngIf="hasError('pharmcyName', 'required')" style="color: red">pharmcy Name is required</span>
+              <label>{{'Pharmcy' | translate}} {{'Name' | translate}}</label>
 
-              
-              
+              <input class="form-control" formControlName="pharmcyName" type="text" nbInput fullWidth>
+              <span *ngIf="hasError('pharmcyName', 'required')" style="color: red">{{'Pharmcy' | translate}}
+                {{'Name' | translate}}
+                {{'IsRequired' | translate}}</span>
+
+
+
             </div>
             <div class=" col-md-6">
-           
-                <label>Street Name </label>
 
-                  <input class="form-control" formControlName="streetName" type="text" nbInput fullWidth>
-                  <span *ngIf="hasError('streetName', 'required')" style="color: red">street Name is required</span>
+              <label>{{'StreetName' | translate}} </label>
+
+              <input class="form-control" formControlName="streetName" type="text" nbInput fullWidth>
+              <span *ngIf="hasError('streetName', 'required')" style="color: red">{{'StreetName' | translate}}
+                {{'IsRequired' | translate}}</span>
 
 
-          
+
             </div>
 
           </div>
           <br>
 
           <div class="row">
-      
+
 
             <div class="col-md-6">
               <div class="form-group">
 
-            
-                <label>Government </label>
-                <nb-select placeholder="Select Governorate"   formControlName="governerateId"
+
+                <label> {{'Government' | translate}} </label>
+                <nb-select placeholder="Select  {{'Government' | translate}}" formControlName="governerateId"
                   (selectedChange)="changeCities($event)">
-                  <nb-option *ngFor="let g of allGovernorates" [value]="g.governorate_Id">{{g.governorate_Name}}</nb-option>
+                  <nb-option *ngFor="let g of allGovernorates" [value]="g.governorate_Id">{{g.governorate_Name}}
+                  </nb-option>
                 </nb-select>
-                <span *ngIf="hasError('governerateId', 'required')" style="color: red">Government is required</span>
-            
+                <span *ngIf="hasError('governerateId', 'required')" style="color: red"> {{'Government' | translate}}
+                  {{'IsRequired' | translate}}</span>
+
               </div>
-         
+
             </div>
 
             <div class="col-md-6 ">
               <div class="form-group">
-                <label>city </label>
-                <nb-select placeholder="Select City"   formControlName="cityId">
+                <label>{{'City' | translate}} </label>
+                <nb-select placeholder="Select City" formControlName="cityId">
                   <nb-option *ngFor="let city of allCities" [value]="city.city_Id">{{city.city_Name}}</nb-option>
                 </nb-select>
-                <span *ngIf="hasError('cityId', 'required')" style="color: red">city is required</span>
-             
-            </div>
+                <span *ngIf="hasError('cityId', 'required')" style="color: red">{{'City' | translate}}
+                  {{'IsRequired' | translate}}</span>
 
-          
+              </div>
+
+
             </div>
 
           </div>
-<br>
+          <br>
 
         </form>
 
@@ -103,23 +109,23 @@
 
       <nb-card-footer>
 
-        <button type="button" nbButton status="success" [disabled]="AddForm.invalid"
-          (click)="Add();ref.close()">Save</button>
+        <button type="button" nbButton status="success" [disabled]="AddForm.invalid" (click)="Add();ref.close()">
+          {{'Save' | translate}}</button>
 
-        <button nbButton (click)="ref.close()" status="danger">Close </button>
+        <button nbButton (click)="ref.close()" status="danger"> {{'Cancel' | translate}}</button>
 
 
       </nb-card-footer>
     </nb-card>
   </ng-template>
 
- 
- <!-- edit mdaaal -->
+
+  <!-- edit mdaaal -->
 
   <ng-template #Editdialog class="model-full" let-data let-ref="dialogRef">
     <nb-card>
       <nb-card-header>
-        <h4 class="modal-title" id="modal-basic-title">Edit Pharmcy</h4>
+        <h4 class="modal-title" id="modal-basic-title">{{'Edit' | translate}} {{'Pharmcy' | translate}}</h4>
 
       </nb-card-header>
 
@@ -130,14 +136,17 @@
 
               <div class="form-group">
 
-              <label>Pharmcy Name</label>
+                <label> {{'Pharmcy' | translate}} {{'Name' | translate}}</label>
 
-                <input class="form-control" class="form-control"  formControlName="pharmcyName" type="text" nbInput fullWidth>
-                <span *ngIf="hasEditError('pharmcyName', 'required')" style="color: red">PharmcyName is
-                  required</span>
+                <input class="form-control" class="form-control" formControlName="pharmcyName" type="text" nbInput
+                  fullWidth>
+                <span *ngIf="hasEditError('pharmcyName', 'required')" style="color: red">{{'Pharmcy' | translate}}
+                  {{'Name' | translate}}
+                  {{'IsRequired' | translate}}
+                </span>
 
-            </div>
-              
+              </div>
+
 
             </div>
 
@@ -145,13 +154,14 @@
 
               <div class="form-group">
 
-                <label>Street Name</label>
+                <label>{{'StreetName' | translate}}</label>
 
-           
-                  <input class="form-control" formControlName="streetName" type="text" nbInput fullWidth>
-                  <span *ngIf="hasEditError('streetName', 'required')" style="color: red">streetName is required</span>
 
-              
+                <input class="form-control" formControlName="streetName" type="text" nbInput fullWidth>
+                <span *ngIf="hasEditError('streetName', 'required')" style="color: red"> {{'StreetName' | translate}}
+                  {{'IsRequired' | translate}}</span>
+
+
 
               </div>
             </div>
@@ -160,38 +170,41 @@
           <br>
 
           <div class="row">
-      
+
 
             <div class="col-md-6">
               <div class="form-group">
 
-            
-                <label>Governorate </label>
-                <nb-select placeholder="Select Governorate"   formControlName="governerateId"
+
+                <label> {{'Government' | translate}} </label>
+                <nb-select placeholder="Select  {{'Government' | translate}}" formControlName="governerateId"
                   (selectedChange)="changeCities($event)">
-                  <nb-option *ngFor="let g of allGovernorates" [value]="g.governorate_Id">{{g.governorate_Name}}</nb-option>
+                  <nb-option *ngFor="let g of allGovernorates" [value]="g.governorate_Id">{{g.governorate_Name}}
+                  </nb-option>
                 </nb-select>
-                <span *ngIf="hasEditError('governerateId', 'required')" style="color: red">Government is required</span>
-            
+                <span *ngIf="hasEditError('governerateId', 'required')" style="color: red"> {{'Government' | translate}}
+                  {{'IsRequired' | translate}}</span>
+
               </div>
-         
+
             </div>
 
             <div class="col-md-6 ">
               <div class="form-group">
-                <label>city </label>
-                <nb-select placeholder="Select City"   formControlName="cityId">
+                <label>{{'City' | translate}} </label>
+                <nb-select placeholder="Select City" formControlName="cityId">
                   <nb-option *ngFor="let city of allCities" [value]="city.city_Id">{{city.city_Name}}</nb-option>
                 </nb-select>
-                <span *ngIf="hasEditError('cityId', 'required')" style="color: red">city is required</span>
-             
-            </div>
+                <span *ngIf="hasEditError('cityId', 'required')" style="color: red">{{'City' | translate}}
+                  {{'IsRequired' | translate}}</span>
 
-          
+              </div>
+
+
             </div>
 
           </div>
-<br>
+          <br>
         </form>
 
       </nb-card-body>
@@ -199,9 +212,9 @@
       <nb-card-footer>
 
         <button type="button" nbButton status="success" [disabled]="EditForm.invalid"
-          (click)="updatePharmcy();ref.close()">Save</button>
+          (click)="updatePharmcy();ref.close()"> {{'Save' | translate}}</button>
 
-        <button nbButton (click)="ref.close()" status="danger">Close </button>
+        <button nbButton (click)="ref.close()" status="danger"> {{'Cancel' | translate}}</button>
 
 
       </nb-card-footer>
@@ -209,19 +222,19 @@
   </ng-template>
 
 
- <!-- delete mdaaal -->
+  <!-- delete mdaaal -->
 
   <ng-template #Deletedialog let-data let-ref="dialogRef">
     <nb-card>
       <nb-card-header>
-        <h4 class="modal-title" id="modal-basic-title">Delete</h4>
+        <h4 class="modal-title" id="modal-basic-title">{{'Delete' | translate}} {{'Pharmcy' | translate}} </h4>
 
       </nb-card-header>
       <nb-card-body>
         <div class="row">
           <div class="col-md-12">
             <p class="text-danger" style="font-size: x-large;">
-              confirm to delete this item ?
+              {{'AreYouSureYouWantToDeleteThisItem' | translate}} ?
 
 
             </p>
@@ -232,9 +245,10 @@
 
       <nb-card-footer>
 
-        <button type="button" nbButton status="success" (click)="ref.close(true);ref.close()">save</button>
+        <button type="button" nbButton status="success" (click)="ref.close(true);ref.close()">
+          {{'Save' | translate}}</button>
 
-        <button nbButton status="danger" (click)="ref.close()">Close </button>
+        <button nbButton status="danger" (click)="ref.close()"> {{'Cancel' | translate}}</button>
 
       </nb-card-footer>
     </nb-card>

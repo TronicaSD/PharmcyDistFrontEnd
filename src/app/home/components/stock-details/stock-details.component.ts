@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateService } from '@ngx-translate/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { PublicService } from 'src/app/core/publicService.Service';
 import { IStockDetails } from '../../interface/IStockDetails';
@@ -17,50 +18,20 @@ export class StockDetailsComponent implements OnInit {
   closeResult: string;
   AddForm: FormGroup;
   EditForm: FormGroup;
-  settings = {
-    hideSubHeader: true,
-    actions: {
-      custom: [
-
-        {
-          name: 'editAction',
-          title: '<i class="fa fa-edit text-warning"></i>'
-        },
-        {
-          name: 'deleteAction',
-           title:'<i class="fa fa-trash text-danger"></i>'
-        }
-      ],
-      add: false,
-      edit: false,
-      delete: false
-    },
-
-    columns: {
-      id: {
-        title: 'ID',
-        type: 'number',
-      },
-      drugName: {
-        title: 'Drug Name',
-        type: 'string',
-      },
-
-      quantity: {
-        title: 'Quantity',
-        type: 'string',
-      },
-
-    }
-  };
+  settings: any;
   source: LocalDataSource = new LocalDataSource();
 
   Drugs: any;
+  TQuantity: string;
+  Action: string;
+  TDrug: string;
   constructor(private _PublicService: PublicService
     , private modalService: NbDialogService
     , private _formbuilder: FormBuilder
     , private dialogService: NbDialogService
     , private _ToasterService: NbToastrService
+    , private translate: TranslateService
+
   ) {
 
     this.AddForm = this._formbuilder.group({
@@ -73,10 +44,52 @@ export class StockDetailsComponent implements OnInit {
       Quantity: ['', Validators.required],
       id: [''],
     });
+    this.translate.get('Drug').subscribe((text: string) => {
+      this.TDrug = text;
+    })
+    this.translate.get('Action').subscribe((text: string) => {
+      this.Action = text;
+    })
+    this.translate.get('Quantity').subscribe((text: string) => {
+      this.TQuantity = text;
+    })
+    this.getAllStockDetails();
+
+    this.settings = {
+      hideSubHeader: true,
+      actions: {
+        custom: [
+
+          {
+            name: 'editAction',
+            title: '<i class="fa fa-edit text-warning"></i>'
+          },
+          {
+            name: 'deleteAction',
+            title: '<i class="fa fa-trash text-danger"></i>'
+          }
+        ],
+        add: false,
+        edit: false,
+        delete: false
+      },
+
+      columns: {
+        drugName: {
+          title: 'Drug Name',
+          type: 'string',
+        },
+
+        quantity: {
+          title: 'Quantity',
+          type: 'string',
+        },
+
+      }
+    };
   }
 
   ngOnInit(): void {
-    this.getAllStockDetails();
     this.getAllDrugs();
   }
   ClearData() {

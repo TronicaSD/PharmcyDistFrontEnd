@@ -1,6 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogService, NbToastrService } from '@nebular/theme';
+import { TranslateService } from '@ngx-translate/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { PublicService } from 'src/app/core/publicService.Service';
 @Component({
@@ -15,49 +16,17 @@ export class PharmcyComponent implements OnInit {
   closeResult: string;
   AddForm: FormGroup;
   EditForm: FormGroup;
-  settings = {
-    hideSubHeader: true,
-    actions: {
-      custom: [
-
-        {
-          name: 'editAction',
-          title: '<i class="fa fa-edit text-warning"></i>'
-        },
-        {
-          name: 'deleteAction',
-          title: '<i class="fa fa-trash text-danger"></i>'
-        }
-      ],
-      add: false,
-      edit: false,
-      delete: false
-    },
-
-    columns: {
-      id: {
-        title: 'ID',
-        type: 'number',
-      },
-      pharmcyName: {
-        title: 'Pharmcy Name',
-        type: 'string',
-      },
-
-      streetName: {
-        title: 'Street Name',
-        type: 'string',
-      },
-
-    }
-  };
+  settings: any;
   source: LocalDataSource = new LocalDataSource();
+  TName: string;
+  Action: string;
+  TStreetName: string;
 
   constructor(private _PublicService: PublicService
     , private _formbuilder: FormBuilder
     , private dialogService: NbDialogService
     , private _ToasterService: NbToastrService
-
+    , private translate: TranslateService
   ) {
 
     this.AddForm = this._formbuilder.group({
@@ -77,11 +46,53 @@ export class PharmcyComponent implements OnInit {
       cityId: ['', Validators.required],
       governerateId: ['', Validators.required],
     });
+    this.translate.get('Name').subscribe((text: string) => {
+      this.TName = text;
+    })
+    this.translate.get('Action').subscribe((text: string) => {
+      this.Action = text;
+    })
+    this.translate.get('StreetName').subscribe((text: string) => {
+      this.TStreetName = text;
+    })
+    this.getAllPharmcies();
+
+    this.settings = {
+      hideSubHeader: true,
+      actions: {
+        custom: [
+
+          {
+            name: 'editAction',
+            title: '<i class="fa fa-edit text-warning"></i>'
+          },
+          {
+            name: 'deleteAction',
+            title: '<i class="fa fa-trash text-danger"></i>'
+          }
+        ],
+        add: false,
+        edit: false,
+        delete: false
+      },
+
+      columns: {
+        pharmcyName: {
+          title: this.TName,
+          type: 'string',
+        },
+
+        streetName: {
+          title: this.TStreetName,
+          type: 'string',
+        },
+
+      }
+    };
   }
 
 
   ngOnInit(): void {
-    this.getAllPharmcies();
     this.getAllGovernorates();
   }
   getAllGovernorates() {

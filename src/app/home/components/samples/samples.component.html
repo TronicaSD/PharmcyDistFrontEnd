@@ -3,13 +3,13 @@
 
   <nb-card>
     <nb-card-header>
-    
+
       <div class="row">
         <div class="col-md-3">
-             Samples
+          {{'Samples' | translate}}
         </div>
         <div class="offset-8 col-md-1">
-    
+
           <button nbButton status="primary" (click)="openAddModal(Adddialog)"> <i class="fa fa-plus "></i></button>
         </div>
       </div>
@@ -26,7 +26,7 @@
   <ng-template #Adddialog class="model-full" let-data let-ref="dialogRef">
     <nb-card>
       <nb-card-header>
-        <h4 class="modal-title" id="modal-basic-title">Add Sample</h4>
+        <h4 class="modal-title" id="modal-basic-title">{{'Add' | translate}}{{'Samples' | translate}}</h4>
 
       </nb-card-header>
       <nb-card-body>
@@ -36,11 +36,12 @@
 
               <div class="form-group">
 
-                <label>Doctor Name</label>
+                <label>{{'Doctor' | translate}} {{'Name' | translate}}</label>
 
 
                 <input class="form-control" formControlName="DoctorName" type="text" nbInput fullWidth>
-                <span *ngIf="hasError('DoctorName', 'required')" style="color: red">Doctor Name is required</span>
+                <span *ngIf="hasError('DoctorName', 'required')" style="color: red">{{'Doctor' | translate}}
+                  {{'Name' | translate}} {{'IsRequired' | translate}}</span>
 
 
 
@@ -50,14 +51,15 @@
 
               <div class="form-group">
 
-                <label>Drug Name</label>
+                <label>{{'Drug' | translate}} {{'Name' | translate}}</label>
 
-                <nb-select placeholder="Select Showcase" [(selected)]="selectedItem" 
-                  formControlName="DrugId">
+                <nb-select placeholder="Select Showcase" [(selected)]="selectedItem" formControlName="DrugId">
                   <nb-option value="0">Option empty</nb-option>
                   <nb-option *ngFor="let d of StockDetails" [value]="d.drugId">{{d.drugName}}</nb-option>
                 </nb-select>
-                <span *ngIf="hasError('DrugId', 'required')" style="color: red;display: block;">Drug Name is required</span>
+                <span *ngIf="hasError('DrugId', 'required')" style="color: red;display: block;">{{'Drug' | translate}}
+                  {{'Name' | translate}}
+                  {{'IsRequired' | translate}}</span>
 
               </div>
             </div>
@@ -65,11 +67,12 @@
 
               <div class="form-group">
 
-                <label>Quantity</label>
+                <label>{{'Quantity' | translate}}</label>
 
-               
-                  <input class="form-control" formControlName="qunantity" type="text" numbersOnly nbInput fullWidth>
-                  <span *ngIf="hasError('qunantity', 'required')" style="color: red">Quantity is required</span>
+
+                <input class="form-control" formControlName="qunantity" type="text" numbersOnly nbInput fullWidth>
+                <span *ngIf="hasError('qunantity', 'required')" style="color: red">{{'Quantity' | translate}}
+                  {{'IsRequired' | translate}}</span>
 
 
               </div>
@@ -84,8 +87,8 @@
       <nb-card-footer>
 
         <button type="button" nbButton status="success" [disabled]="AddForm.invalid"
-          (click)="Add();ref.close()">Save</button>
-        <button nbButton status="danger" (click)="ref.close()">Close </button>
+          (click)="Add();ref.close()">{{'Save' | translate}}</button>
+        <button nbButton status="danger" (click)="ref.close()">{{'Cancel' | translate}}</button>
 
 
       </nb-card-footer>
@@ -95,7 +98,7 @@
   <ng-template #Editdialog class="model-full" let-data let-ref="dialogRef">
     <nb-card>
       <nb-card-header>
-        <h4 class="modal-title" id="modal-basic-title">Edit Sample</h4>
+        <h4 class="modal-title" id="modal-basic-title">{{'Edit' | translate}} {{'Samples' | translate}}</h4>
 
       </nb-card-header>
       <nb-card-body>
@@ -106,11 +109,12 @@
 
               <div class="form-group">
 
-                <label>Doctor Name</label>
+                <label>{{'Doctor' | translate}} {{'Name' | translate}}</label>
 
 
                 <input class="form-control" formControlName="DoctorName" type="text" nbInput fullWidth>
-                <span *ngIf="hasEditError('DoctorName', 'required')" style="color: red">Doctor Name is required</span>
+                <span *ngIf="hasEditError('DoctorName', 'required')" style="color: red">{{'Doctor' | translate}}
+                  {{'Name' | translate}} {{'IsRequired' | translate}}</span>
 
 
 
@@ -120,14 +124,14 @@
 
               <div class="form-group">
 
-                <label>Drug Name</label>
+                <label>{{'Drug' | translate}} {{'Name' | translate}}</label>
 
-                <nb-select placeholder="Select Showcase" 
-                  formControlName="DrugId">
-                 
+                <nb-select placeholder="Select Showcase" formControlName="DrugId">
+
                   <nb-option *ngFor="let d of Drugs" [value]="d.id">{{d.drugName}}</nb-option>
                 </nb-select>
-                <span *ngIf="hasEditError('DrugId', 'required')" style="color: red;display: block;">Drug is required</span>
+                <span *ngIf="hasEditError('DrugId', 'required')" style="color: red;display: block;">Drug
+                  {{'IsRequired' | translate}}</span>
 
               </div>
             </div>
@@ -135,12 +139,13 @@
 
               <div class="form-group">
 
-                <label>Quantity</label>
+                <label>{{'Quantity' | translate}}</label>
 
-             
-                  <input class="form-control" formControlName="qunantity" type="text" numbersOnly nbInput fullWidth>
-                  <span *ngIf="hasEditError('qunantity', 'required')" style="color: red">Quantity is required</span>
-          
+
+                <input class="form-control" formControlName="qunantity" type="text" numbersOnly nbInput fullWidth>
+                <span *ngIf="hasEditError('qunantity', 'required')" style="color: red">{{'Quantity' | translate}}
+                  {{'IsRequired' | translate}}</span>
+
 
 
               </div>
@@ -151,8 +156,8 @@
 
       <nb-card-footer>
         <button type="button" nbButton status="success" [disabled]="EditForm.invalid"
-          (click)="updateSample();ref.close()">Save</button>
-        <button nbButton status="danger" (click)="ref.close()">Close </button>
+          (click)="updateSample();ref.close()">{{'Save' | translate}}</button>
+        <button nbButton status="danger" (click)="ref.close()">{{'Cancel' | translate}}</button>
 
 
       </nb-card-footer>
@@ -162,14 +167,14 @@
   <ng-template #Deletedialog class="model-full" let-data let-ref="dialogRef">
     <nb-card>
       <nb-card-header>
-        <h4 class="modal-title" id="modal-basic-title">Delete</h4>
+        <h4 class="modal-title" id="modal-basic-title">{{'Delete' | translate}}</h4>
 
       </nb-card-header>
       <nb-card-body>
         <div class="row">
           <div class="col-md-8">
             <p class="text-danger">
-              confirm to delete this item ?
+              {{'AreYouSureYouWantToDeleteThisItem' | translate}}?
             </p>
           </div>
         </div>
@@ -179,8 +184,8 @@
       <nb-card-fotter>
 
         <button type="button" nbButton status="success" data-dismiss="Dmodal"
-          (click)="ref.close(true);ref.close()">save</button>
-        <button nbButton status="danger" (click)="ref.close(false)">Close </button>
+          (click)="ref.close(true);ref.close()">{{'Save' | translate}}</button>
+        <button nbButton status="danger" (click)="ref.close(false)">{{'Cancel' | translate}}</button>
 
 
       </nb-card-fotter>

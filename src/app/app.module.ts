@@ -9,6 +9,9 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
 import {
   NbChatModule,
   NbDatepickerModule,
@@ -22,6 +25,7 @@ import {
 
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -40,13 +44,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
 
-
-
-
-
   ],
+  exports: [TranslateModule],
 
   bootstrap: [AppComponent],
 })
 export class AppModule {
 }
+

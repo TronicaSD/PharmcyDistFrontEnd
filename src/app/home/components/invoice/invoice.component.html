@@ -8,7 +8,7 @@
 
         <div class="row">
           <div class="col-md-3">
-            Invoices
+            {{'Invoices' | translate}}
           </div>
           <div class="offset-8 col-md-1">
 
@@ -30,7 +30,7 @@
   <ng-template #Adddialog class="model-full" let-data let-ref="dialogRef">
     <nb-card>
       <nb-card-header>
-        <h4 class="modal-title" id="modal-basic-title">Add Invoice</h4>
+        <h4 class="modal-title" id="modal-basic-title">{{'Add ' | translate}}{{'Invoice' | translate}}</h4>
 
       </nb-card-header>
       <nb-card-body>
@@ -40,12 +40,13 @@
             <div class=" col-md-4">
 
               <div class="form-group">
-                <label>Pharmcy Name</label>
+                <label>{{'Pharmcy' | translate}} {{'Name' | translate}}</label>
 
                 <nb-select placeholder="Select pharamcy" formControlName="PharmcyId">
                   <nb-option *ngFor="let p of Pharmcies" [value]="p.id">{{p.pharmcyName}}</nb-option>
                 </nb-select>
-                <span *ngIf="hasError('PharmcyId', 'required')" style="color: red">Pharmcy is required</span>
+                <span *ngIf="hasError('PharmcyId', 'required')"
+                  style="color: red">{{'IsRequired' | translate}}{{'IsRequired' | translate}}</span>
 
               </div>
             </div>
@@ -54,9 +55,10 @@
 
               <div class="form-group">
 
-                <label>Invoice Type</label>
+                <label>{{'Invoice ' | translate}} {{'Type' | translate}}</label>
 
-                <nb-select placeholder="Select Invoice Type" formControlName="InvoiceType">
+                <nb-select placeholder="Select {{'Invoice ' | translate}} {{'Type' | translate}}"
+                  formControlName="InvoiceType">
                   <nb-option *ngFor="let it of invoiceTypeList" [value]="it.Value">{{it.Text}}</nb-option>
                 </nb-select>
 
@@ -71,7 +73,8 @@
                 <input nbInput placeholder="Pick Date" [nbDatepicker]="dateTimePicker" class="form-control"
                   formControlName="InvoiceDate">
                 <nb-datepicker #dateTimePicker></nb-datepicker>
-                <span *ngIf="hasError('InvoiceDate', 'required')" style="color: red">Date is required</span>
+                <span *ngIf="hasError('InvoiceDate', 'required')" style="color: red">Date
+                  {{'IsRequired' | translate}}</span>
 
               </div>
             </div>
@@ -103,7 +106,8 @@
                 <label>Invoice Number</label>
                 <input nbInput placeholder="Invoice Number" class="form-control" formControlName="InvoiceNumber"
                   type="text" fullWidth>
-                <span *ngIf="hasError('InvoiceNumber', 'required')" style="color: red">Invoice Number is required</span>
+                <span *ngIf="hasError('InvoiceNumber', 'required')" style="color: red">Invoice Number
+                  {{'IsRequired' | translate}}</span>
 
               </div>
             </div>
@@ -191,7 +195,7 @@
   <ng-template #Editdialog class="model-full" let-data let-ref="dialogRef">
     <nb-card>
       <nb-card-header>
-        <h4 class="modal-title" id="modal-basic-title">Edit Invoice</h4>
+        <h4 class="modal-title" id="modal-basic-title">{{'Edit' | translate}}{{'Invoice' | translate}}</h4>
 
       </nb-card-header>
       <nb-card-body>
@@ -200,12 +204,13 @@
             <div class=" col-md-4">
 
               <div class="form-group">
-                <label>Pharmcy Name</label>
+                <label>{{'Pharmcy' | translate}} {{'Name' | translate}}</label>
 
                 <nb-select placeholder="Select pharamcy" formControlName="PharmcyId">
                   <nb-option *ngFor="let p of Pharmcies" [value]="p.id">{{p.pharmcyName}}</nb-option>
                 </nb-select>
-                <span *ngIf="hasEditError('PharmcyId', 'required')" style="color: red">Pharmcy is required</span>
+                <span *ngIf="hasEditError('PharmcyId', 'required')"
+                  style="color: red">{{'IsRequired' | translate}}{{'IsRequired' | translate}}</span>
 
               </div>
             </div>
@@ -214,9 +219,10 @@
 
               <div class="form-group">
 
-                <label>Invoice Type</label>
+                <label>{{'Invoice ' | translate}} {{'Type' | translate}}</label>
 
-                <nb-select placeholder="Select Invoice Type" formControlName="InvoiceType">
+                <nb-select placeholder="Select {{'Invoice ' | translate}} {{'Type' | translate}}"
+                  formControlName="InvoiceType">
                   <nb-option *ngFor="let it of invoiceTypeList" [value]="it.Value">{{it.Text}}</nb-option>
                 </nb-select>
 
@@ -231,7 +237,8 @@
                 <input nbInput placeholder="Pick Date" [nbDatepicker]="dateTimePicker" class="form-control"
                   formControlName="InvoiceDate">
                 <nb-datepicker #dateTimePicker></nb-datepicker>
-                <span *ngIf="hasEditError('InvoiceDate', 'required')" style="color: red">Date is required</span>
+                <span *ngIf="hasEditError('InvoiceDate', 'required')" style="color: red">Date
+                  {{'IsRequired' | translate}}</span>
 
               </div>
             </div>
@@ -350,14 +357,14 @@
   <ng-template #Deletedialog class="model-full" let-data let-ref="dialogRef">
     <nb-card>
       <nb-card-header>
-        <h4 class="modal-title" id="modal-basic-title">Delete</h4>
+        <h4 class="modal-title" id="modal-basic-title">{{'Delete' | translate}}</h4>
 
       </nb-card-header>
       <nb-card-body>
         <div class="row">
           <div class="col-md-8">
             <p class="text-danger">
-              confirm to delete this item ?
+              {{'AreYouSureYouWantToDeleteThisItem' | translate}} ?
             </p>
           </div>
         </div>
