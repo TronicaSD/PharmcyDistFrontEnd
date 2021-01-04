@@ -24,10 +24,7 @@ export class HomeComponent implements OnInit {
       value: 'cosmic',
       name: 'Cosmic',
     },
-    {
-      value: 'corporate',
-      name: 'Corporate',
-    },
+    
   ];
 
   currentTheme = 'default';
