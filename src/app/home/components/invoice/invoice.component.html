@@ -18,6 +18,7 @@
       </nb-card-header>
 
       <nb-card-body>
+
         <ng2-smart-table [settings]="settings" [source]="source"
           (custom)="onCustomAction(Deletedialog,Editdialog,$event)">
         </ng2-smart-table>
@@ -137,7 +138,7 @@
 
                 </td>
                 <td>
-                  <input class="form-control" disabled formControlName="total" type="text" fullWidth>
+                  <input  nbInput class="form-control" disabled formControlName="total" type="text" fullWidth>
                 </td>
 
                 <td>

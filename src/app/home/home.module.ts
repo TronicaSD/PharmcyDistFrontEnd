@@ -15,7 +15,7 @@ import { InvoiceComponent } from './components/invoice/invoice.component';
 
 import { PublicService } from '../core/publicService.Service';
 import { AuthGuard } from '../auth/services/auth.guard';
-import {  NbThemeModule } from '@nebular/theme';
+import {  NbInputModule, NbThemeModule } from '@nebular/theme';
 import { SharedModule } from '../shared/shared.module';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
@@ -39,7 +39,7 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
     ReactiveFormsModule,
     HttpClientModule,
     NbThemeModule.forRoot({ name: "dark" }),
-    NbEvaIconsModule,
+ 
     
   ],
   providers: [PublicService , AuthService ,AuthGuard ]
