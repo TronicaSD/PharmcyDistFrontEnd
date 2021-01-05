@@ -38,12 +38,12 @@ export class MenuChildrenComponent {
         {
           title: 'Drugs',
           link: 'drugs',
-          icon: 'menu',
+          icon: 'drug',
         },
         {
           title: 'Pharmcies',
           link: 'pharmcies',
-          icon: 'menu',
+          icon: 'drug',
 
         }
       ],
@@ -51,14 +51,14 @@ export class MenuChildrenComponent {
     {
       title: 'Stock',
       link: '/home',
-      icon: 'checkmark',
+      icon: 'home',
       hidden: !(this.findRole(Role.admin)),
       expanded: false,
       children: [
         {
           title: 'Stock Details',
           link: 'stockDetails',
-          icon: 'checkmark',
+          icon: 'home',
 
         }
       ],
