@@ -31,7 +31,7 @@
   <ng-template #Adddialog class="model-full" let-data let-ref="dialogRef">
     <nb-card>
       <nb-card-header>
-        <h4 class="modal-title" id="modal-basic-title">{{'Add ' | translate}}{{'Invoice' | translate}}</h4>
+        <h4 class="modal-title" id="modal-basic-title">{{'Add' | translate}}{{'Invoice' | translate}}</h4>
 
       </nb-card-header>
       <nb-card-body>
@@ -56,7 +56,7 @@
 
               <div class="form-group">
 
-                <label>{{'Invoice ' | translate}} {{'Type' | translate}}</label>
+                <label>{{'Invoice' | translate}} {{'Type' | translate}}</label>
 
                 <nb-select placeholder="Select {{'Invoice ' | translate}} {{'Type' | translate}}"
                   formControlName="InvoiceType">
@@ -70,11 +70,11 @@
             <div class="col-md-4">
               <div class="form-group">
 
-                <label>Date</label>
+                <label> {{'Date' | translate}}</label>
                 <input nbInput placeholder="Pick Date" [nbDatepicker]="dateTimePicker" class="form-control"
-                  formControlName="InvoiceDate">
+                  (change)="onChanges()" formControlName="InvoiceDate">
                 <nb-datepicker #dateTimePicker></nb-datepicker>
-                <span *ngIf="hasError('InvoiceDate', 'required')" style="color: red">Date
+                <span *ngIf="hasError('InvoiceDate', 'required')" style="color: red"> {{'Date' | translate}}
                   {{'IsRequired' | translate}}</span>
 
               </div>
@@ -84,10 +84,10 @@
               <div class="form-group">
 
 
-                <label> Discount</label>
+                <label> {{'Discount' | translate}}</label>
 
-                <input (keyup)="CalculateTotal()" class="form-control" numbersOnly placeholder="discount %"
-                  formControlName="DisCount" type="text" nbInput fullWidth>
+                <input (keyup)="CalculateTotal()" class="form-control" numbersOnly
+                  placeholder="{{'Discount' | translate}} %" formControlName="DisCount" type="text" nbInput fullWidth>
                 <span *ngIf="hasError('DisCount', 'min')" style="color: red">minimum number is 12</span>
                 <span *ngIf="hasError('DisCount', 'max')" style="color: red">maximum number is 30 </span>
 
@@ -104,10 +104,11 @@
             <div class="col-md-4">
               <div class="form-group">
 
-                <label>Invoice Number</label>
-                <input nbInput placeholder="Invoice Number" class="form-control" formControlName="InvoiceNumber"
-                  type="text" fullWidth>
-                <span *ngIf="hasError('InvoiceNumber', 'required')" style="color: red">Invoice Number
+                <label>{{'Invoice' | translate}} {{'Number' | translate}}</label>
+                <input nbInput placeholder="{{'Invoice' | translate}} {{'Number' | translate}}" class="form-control"
+                  formControlName="InvoiceNumber" type="text" fullWidth disabled>
+                <span *ngIf="hasError('InvoiceNumber', 'required')" style="color: red">{{'Invoice' | translate}}
+                  {{'Number' | translate}}
                   {{'IsRequired' | translate}}</span>
 
               </div>
@@ -117,11 +118,11 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>Drug Name </th>
-                <th>Quantity </th>
-                <th>Price </th>
-                <th>Total </th>
-                <th>Action </th>
+                <th>{{'Drug' | translate}} {{'Name' | translate}} </th>
+                <th> {{'Quantity' | translate}} </th>
+                <th> {{'Price' | translate}} </th>
+                <th> {{'Total' | translate}} </th>
+                <th> {{'Action' | translate}} </th>
 
               </tr>
             </thead>
@@ -168,11 +169,11 @@
           </table>
           <tfoot>
             <tr>
-              <td>Total: </td>
+              <td> {{'Total' | translate}} : </td>
               <td>{{Total}}</td>
             </tr>
             <tr>
-              <td>Total after discount: </td>
+              <td> {{'TotalAfterDiscount' | translate}} : </td>
               <td>{{TotalDiscount}}</td>
             </tr>
           </tfoot>
@@ -182,10 +183,10 @@
 
       <nb-card-footer>
 
-        <button type="button" nbButton status="success" [disabled]="AddForm.invalid"
-          (click)="Add();ref.close()">Save</button>
+        <button type="button" nbButton status="success" [disabled]="AddForm.invalid" (click)="Add();ref.close()">
+          {{'Save' | translate}} </button>
 
-        <button nbButton status="danger" (click)="ClearForm();ref.close()">Close </button>
+        <button nbButton status="danger" (click)="ClearForm();ref.close()"> {{'Cancel' | translate}} </button>
 
 
       </nb-card-footer>
@@ -220,7 +221,7 @@
 
               <div class="form-group">
 
-                <label>{{'Invoice ' | translate}} {{'Type' | translate}}</label>
+                <label>{{'Invoice' | translate}} {{'Type' | translate}}</label>
 
                 <nb-select placeholder="Select {{'Invoice ' | translate}} {{'Type' | translate}}"
                   formControlName="InvoiceType">
@@ -234,11 +235,11 @@
             <div class="col-md-4">
               <div class="form-group">
 
-                <label>Date</label>
+                <label> {{'Date' | translate}}</label>
                 <input nbInput placeholder="Pick Date" [nbDatepicker]="dateTimePicker" class="form-control"
-                  formControlName="InvoiceDate">
+                  (change)="onEditChange()" formControlName="InvoiceDate">
                 <nb-datepicker #dateTimePicker></nb-datepicker>
-                <span *ngIf="hasEditError('InvoiceDate', 'required')" style="color: red">Date
+                <span *ngIf="hasEditError('InvoiceDate', 'required')" style="color: red"> {{'Date' | translate}}
                   {{'IsRequired' | translate}}</span>
 
               </div>
@@ -248,10 +249,10 @@
               <div class="form-group">
 
 
-                <label> Discount</label>
+                <label> {{'Discount' | translate}}</label>
 
-                <input class="form-control" numbersOnly placeholder="discount %" formControlName="DisCount" type="text"
-                  nbInput fullWidth>
+                <input class="form-control" numbersOnly placeholder="{{'Discount' | translate}} %"
+                  formControlName="DisCount" type="text" nbInput fullWidth>
                 <span *ngIf="hasEditError('DisCount', 'min')" style="color: red">minimum number is 12</span>
                 <span *ngIf="hasEditError('DisCount', 'max')" style="color: red">maximum number is 30 </span>
 
@@ -268,10 +269,11 @@
             <div class="col-md-4">
               <div class="form-group">
 
-                <label>Invoice Number</label>
-                <input nbInput placeholder="Invoice Number" class="form-control" formControlName="InvoiceNumber"
-                  type="text" fullWidth>
-                <span *ngIf="hasEditError('InvoiceNumber', 'required')" style="color: red">Invoice Number is
+                <label>{{'Invoice' | translate}} {{'Number' | translate}}</label>
+                <input nbInput placeholder="{{'Invoice' | translate}} {{'Number' | translate}}" class="form-control"
+                  formControlName="InvoiceNumber" type="text" fullWidth disabled>
+                <span *ngIf="hasEditError('InvoiceNumber', 'required')" style="color: red">{{'Invoice' | translate}}
+                  {{'Number' | translate}} is
                   required</span>
 
               </div>
@@ -282,11 +284,11 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>Drug Name </th>
-                <th>Quantity </th>
-                <th>Price </th>
-                <th>Total </th>
-                <th>Action </th>
+                <th>{{'Drug' | translate}} {{'Name' | translate}} </th>
+                <th> {{'Quantity' | translate}} </th>
+                <th> {{'Price' | translate}} </th>
+                <th> {{'Total' | translate}} </th>
+                <th> {{'Action' | translate}} </th>
 
               </tr>
             </thead>
@@ -331,11 +333,11 @@
           </table>
           <tfoot>
             <tr>
-              <td>Total: </td>
+              <td> {{'Total' | translate}} : </td>
               <td>{{TotalEdit}}</td>
             </tr>
             <tr>
-              <td>Total after discount: </td>
+              <td> {{'TotalAfterDiscount' | translate}} : </td>
               <td>{{TotalDiscountEdit}}</td>
             </tr>
           </tfoot>
@@ -346,8 +348,8 @@
       <nb-card-footer>
 
         <button type="button" nbButton status="success" [disabled]="EditForm.invalid"
-          (click)="updateInvoice();ref.close()">Save</button>
-        <button nbButton status="danger" (click)="ClearForm();ref.close()">Close </button>
+          (click)="updateInvoice();ref.close()"> {{'Save' | translate}} </button>
+        <button nbButton status="danger" (click)="ClearForm();ref.close()"> {{'Cancel' | translate}} </button>
 
 
       </nb-card-footer>
@@ -374,9 +376,10 @@
 
       <nb-card-footer>
 
-        <button type="button" nbButton status="success" (click)="ref.close(true);ref.close()">save</button>
+        <button type="button" nbButton status="success" (click)="ref.close(true);ref.close()"> {{'Save' | translate}}
+        </button>
 
-        <button nbButton status="danger" (click)="ref.close()">Close </button>
+        <button nbButton status="danger" (click)="ref.close()"> {{'Cancel' | translate}} </button>
 
       </nb-card-footer>
     </nb-card>

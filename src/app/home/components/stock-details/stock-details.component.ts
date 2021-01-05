@@ -25,6 +25,7 @@ export class StockDetailsComponent implements OnInit {
   TQuantity: string;
   Action: string;
   TDrug: string;
+  columnheaders: string[];
   constructor(private _PublicService: PublicService
     , private modalService: NbDialogService
     , private _formbuilder: FormBuilder
@@ -44,17 +45,35 @@ export class StockDetailsComponent implements OnInit {
       Quantity: ['', Validators.required],
       id: [''],
     });
-    this.translate.get('Drug').subscribe((text: string) => {
-      this.TDrug = text;
-    })
-    this.translate.get('Action').subscribe((text: string) => {
-      this.Action = text;
-    })
-    this.translate.get('Quantity').subscribe((text: string) => {
-      this.TQuantity = text;
-    })
-    this.getAllStockDetails();
+  }
 
+  ngOnInit(): void {
+    this.getAllStockDetails();
+    this.getAllDrugs();
+    this.setColumnheaders();
+    //LISTEN TO EVENTS
+    this.translate.onLangChange.subscribe(item => {
+      this.setColumnheaders();
+    });
+  }
+  setColumnheaders(): void {
+    let Action = 'Action';
+    let DrugName = 'DrugName';
+    let Quantity = 'Quantity';
+
+
+    this.columnheaders = ['', '', '']
+    //Used TranslateService from @ngx-translate/core
+    this.translate.get(Action).subscribe(label => this.columnheaders[0] = label);
+    this.translate.get(DrugName).subscribe(label => this.columnheaders[1] = label);
+
+    this.translate.get(Quantity).subscribe(label => {
+      this.columnheaders[2] = label;
+      this.loadTableSettings();
+    });
+
+  }
+  loadTableSettings() {
     this.settings = {
       hideSubHeader: true,
       actions: {
@@ -76,21 +95,17 @@ export class StockDetailsComponent implements OnInit {
 
       columns: {
         drugName: {
-          title: 'Drug Name',
+          title: this.columnheaders[1],
           type: 'string',
         },
 
         quantity: {
-          title: 'Quantity',
+          title: this.columnheaders[2],
           type: 'string',
         },
 
       }
     };
-  }
-
-  ngOnInit(): void {
-    this.getAllDrugs();
   }
   ClearData() {
     this.AddForm.reset();

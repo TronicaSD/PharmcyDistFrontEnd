@@ -1,8 +1,8 @@
-import { Component, OnInit, SkipSelf, TemplateRef } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, SkipSelf, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateService } from '@ngx-translate/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { PublicService } from 'src/app/core/publicService.Service';
 
@@ -20,6 +20,8 @@ export class DrugsComponent implements OnInit {
   settings: any;
   source: LocalDataSource = new LocalDataSource();
   Action: string;
+  currentLang: string;
+  columnheaders: string[];
 
   constructor(private _PublicService: PublicService
     , private modalService: NgbModal
@@ -27,6 +29,7 @@ export class DrugsComponent implements OnInit {
     , private dialogService: NbDialogService
     , private _ToasterService: NbToastrService
     , private translate: TranslateService
+    , private _changeDetectorRef: ChangeDetectorRef
   ) {
     this.AddForm = this._formbuilder.group({
       drugName: [null, Validators.required],
@@ -37,11 +40,37 @@ export class DrugsComponent implements OnInit {
       drugName: [null, Validators.required],
       id: [null],
     });
-    this.translate.get('Name').subscribe((text: string) => { this.TName = text })
-    this.translate.get('Action').subscribe((text: string) => {
-      this.Action = text;
-    })
+    this.currentLang = translate.currentLang;
+    translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.currentLang = event.lang;
+      // TODO This as a workaround.
+      this._changeDetectorRef.detectChanges();
+    });
+
+  }
+
+  ngOnInit(): void {
     this.getAllDrugs();
+    this.setColumnheaders();
+    //LISTEN TO EVENTS
+    this.translate.onLangChange.subscribe(item => {
+      this.setColumnheaders();
+    });
+  }
+  setColumnheaders(): void {
+    let Action = 'Action';
+    let Name = 'Name';
+
+    this.columnheaders = ['', '', '']
+    //Used TranslateService from @ngx-translate/core
+    this.translate.get(Action).subscribe(label => this.columnheaders[0] = label);
+    this.translate.get(Name).subscribe(label => {
+      this.columnheaders[1] = label;
+      this.loadTableSettings();
+    });
+
+  }
+  loadTableSettings() {
     this.settings = {
       hideSubHeader: true,
       actions: {
@@ -64,7 +93,7 @@ export class DrugsComponent implements OnInit {
       columns: {
 
         drugName: {
-          title: this.TName.toString(),
+          title: this.columnheaders[1],
           type: 'string',
           filter: true
         },
@@ -72,11 +101,6 @@ export class DrugsComponent implements OnInit {
       }
     };
   }
-
-  ngOnInit(): void {
-
-  }
-
   getAllDrugs() {
 
     this._PublicService.get("Drugs/ViewGetAll").subscribe(res => {

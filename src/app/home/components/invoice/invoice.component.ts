@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, TemplateRef } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { IInvoice } from '../../interface/IInvoice';
@@ -6,6 +6,7 @@ import * as moment from "moment";
 import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { PublicService } from 'src/app/core/publicService.Service';
 import { LocalDataSource } from 'ng2-smart-table';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-invoice',
@@ -56,67 +57,24 @@ export class InvoiceComponent implements OnInit {
   qunantity: any;
   price: any;
   newDate: string;
-  settings = {
-    hideSubHeader: true,
-    actions: {
-      custom: [
 
-        {
-          name: 'editAction',
-          title: '<i class="fa fa-edit text-warning"></i>'
-        },
-        {
-          name: 'deleteAction',
-          title: '<i class="fa fa-trash text-danger"></i>'
-        }
-      ],
-      add: false,
-      edit: false,
-      delete: false
-    },
-
-    columns: {
-
-      invoiceNumber: {
-        title: 'invoice Number',
-        type: 'string',
-      },
-
-      pharmcyName: {
-        title: 'pharmcy Name',
-        type: 'string',
-      },
-      invoiceTypeText: {
-        title: 'invoice Type',
-        type: 'string',
-      },
-      invoiceDate: {
-        title: 'invoice Date',
-        type: 'string',
-      },
-      disCount: {
-        title: 'disCount',
-        type: 'string',
-      },
-      totalPrice: {
-        title: 'total Price',
-        type: 'string',
-      },
-
-    }
-  };
   public source: LocalDataSource = new LocalDataSource();
 
   selected: any;
   TotalDiscount: any;
   TotalDiscountEdit: any;
   TotalEdit: any;
+  InvoiceNumber: string;
+  EditInvoiceNumber: string;
+  currentLang: string;
+  columnheaders: string[];
 
   constructor(private _PublicService: PublicService
     , private dialogService: NbDialogService
     , private _formbuilder: FormBuilder
     , private _ToasterService: NbToastrService
-
+    , private translate: TranslateService
+    , private _changeDetectorRef: ChangeDetectorRef
   ) {
 
     this.AddForm = this._formbuilder.group({
@@ -147,6 +105,18 @@ export class InvoiceComponent implements OnInit {
 
       invoiceDetails: this._formbuilder.array([])
     });
+
+    this.onChanges();
+    this.currentLang = translate.currentLang;
+
+    translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.currentLang = event.lang;
+      // TODO This as a workaround.
+      this._changeDetectorRef.detectChanges();
+    });
+
+
+
   }
 
   ngOnInit(): void {
@@ -154,22 +124,102 @@ export class InvoiceComponent implements OnInit {
     this.getAllStockDetails();
     this.getAllPharmcies();
     this.EditInvloiceDetailsList();
+    this.setColumnheaders();
+    //LISTEN TO EVENTS
+    this.translate.onLangChange.subscribe(item => {
+      this.setColumnheaders();
+    });
   }
+  setColumnheaders(): void {
+    let Invoice = 'Invoice';
+    let TotalPrice = 'TotalPrice';
+    let Discount = 'Discount';
+    let InvoiceType = 'InvoiceType';
+    let InvoiceDate = 'InvoiceDate';
+    let PharmcyName = 'PharmcyName';
+    let InvoiceNumber = 'InvoiceNumber';
+    let TotalAfterDiscount = 'TotalAfterDiscount';
+    this.columnheaders = ['', '', '']
+    //Used TranslateService from @ngx-translate/core
+    this.translate.get(InvoiceNumber).subscribe(label => this.columnheaders[0] = label);
+    this.translate.get(PharmcyName).subscribe(label => this.columnheaders[1] = label);
+    this.translate.get(InvoiceType).subscribe(label => this.columnheaders[2] = label);
+    this.translate.get(InvoiceDate).subscribe(label => this.columnheaders[3] = label);
+    this.translate.get(Discount).subscribe(label => this.columnheaders[4] = label);
+    this.translate.get(TotalPrice).subscribe(label => this.columnheaders[5] = label);
+    this.translate.get(TotalAfterDiscount).subscribe(label => this.columnheaders[6] = label);
 
+    this.translate.get(Invoice).subscribe(label => {
+      this.columnheaders[0] = label;
+      this.loadTableSettings();
+    });
+
+  }
+  settings: any;
+  loadTableSettings() {
+    this.settings = {
+      hideSubHeader: true,
+      actions: {
+        custom: [
+
+          {
+            name: 'editAction',
+            title: '<i class="fa fa-edit text-warning"></i>'
+          },
+          {
+            name: 'deleteAction',
+            title: '<i class="fa fa-trash text-danger"></i>'
+          }
+        ],
+        add: false,
+        edit: false,
+        delete: false
+      },
+
+      columns: {
+
+        invoiceNumber: {
+          title: this.columnheaders[0],
+          type: 'string',
+        },
+
+        pharmcyName: {
+          title: this.columnheaders[1],
+          type: 'string',
+        },
+        invoiceTypeText: {
+          title: this.columnheaders[2],
+          type: 'string',
+        },
+        invoiceDate: {
+          title: this.columnheaders[3],
+          type: 'string',
+        },
+        disCount: {
+          title: this.columnheaders[4],
+          type: 'string',
+        },
+        totalPrice: {
+          title: this.columnheaders[5],
+          type: 'string',
+        },
+        totalPriceAfterDis: {
+          title: this.columnheaders[6],
+          type: 'string',
+        },
+
+      }
+    };
+  }
   getAllPharmcies() {
     this._PublicService.get("Pharmcy/ViewGetAll").subscribe(res => {
       this.Pharmcies = res;
     });
   }
 
-
-
   getAllStockDetails() {
-
     this._PublicService.get("StockDetails/ViewGetAll").subscribe(res => {
       this.StockDetails = res;
-
-
     });
   }
   getAllInvoice() {
@@ -186,9 +236,20 @@ export class InvoiceComponent implements OnInit {
     return this.EditForm.controls[controlName].hasError(errorName);
   };
 
-
-
   /////////////add////////////////////
+  onChanges(): void {
+    this.AddForm.get('InvoiceDate').valueChanges.subscribe(
+      (InvoiceDate) => {
+        var formattedDate = InvoiceDate;
+        var month = formattedDate.getUTCMonth() + 1; //months from 1-12
+        var day = formattedDate.getUTCDate();
+        var year = formattedDate.getUTCFullYear();
+        this.InvoiceNumber = day + "_" + month + "_" + year + "_" + Math.floor(Math.random() * 3);
+        this.AddForm.controls['InvoiceNumber'].setValue(this.InvoiceNumber);
+
+      })
+  }
+
   CalculateTotal() {
     this.Total = this.AddinvoiceDetails.value.reduce((sum, item) => sum += (item.qunantity || 0) * (item.price || 0), 0)
     this.AddForm.controls['TotalPrice'].setValue(this.Total);
@@ -204,10 +265,10 @@ export class InvoiceComponent implements OnInit {
     this.AddinvoiceDetails.controls.forEach(x => {
       let price = parseInt(x.get('price').value)
       let quantity = parseInt(x.get('qunantity').value);
-      debugger;
+
 
       if ((price !== NaN) && (quantity !== NaN)) {
-        debugger;
+
         this.price = price * quantity;
         x.get('total').patchValue(this.price)
       }
@@ -234,7 +295,7 @@ export class InvoiceComponent implements OnInit {
     return this.AddinvoiceDetails;
   }
   addInvloiceDetailsList() {
-    debugger;
+
     this.invoiceDetails.push(this.newInoiceDetails());
   }
   removeInvoiceDetails(i: number) {
@@ -259,10 +320,27 @@ export class InvoiceComponent implements OnInit {
   }
 
   ////////////////Edit Modal
+  onEditChange(): void {
+
+    this.EditForm.get('InvoiceDate').valueChanges.subscribe(
+      (InvoiceDate) => {
+
+        var formattedDate = InvoiceDate;
+
+        var month = formattedDate.getUTCMonth() + 1; //months from 1-12
+        var day = formattedDate.getUTCDate();
+        var year = formattedDate.getUTCFullYear();
+        this.EditInvoiceNumber = day + "_" + month + "_" + year + "_" + Math.floor(Math.random() * 3);
+
+        this.EditForm.controls['InvoiceNumber'].setValue(this.EditInvoiceNumber);
+
+      }
+    )
+  }
   CalculateEditTotal() {
     this.TotalEdit = this.EditInvoiceDetails.value.reduce((sum, item) => sum += (item.qunantity || 0) * (item.price || 0), 0)
     this.EditForm.controls['TotalPrice'].setValue(this.TotalEdit);
-    debugger;
+
     if ((parseInt(this.EditForm.get('DisCount').value)) >= 12 && (parseInt(this.EditForm.get('DisCount').value)) <= 30) {
       this.TotalDiscountEdit
         = (parseInt(this.EditForm.get('TotalPrice').value) - ((parseInt(this.EditForm.get('TotalPrice').value)) * (parseInt(this.EditForm.get('DisCount').value))) / 100);
@@ -299,9 +377,13 @@ export class InvoiceComponent implements OnInit {
     this.EditForm.controls['PharmcyId'].setValue(row.pharmcyId);
     this.EditForm.controls['TotalPrice'].setValue(row.totalPrice);
     this.EditForm.controls['DisCount'].setValue(row.disCount);
-    this.TotalDiscountEdit
-      = (parseInt(this.EditForm.get('TotalPrice').value) - ((parseInt(this.EditForm.get('TotalPrice').value)) * (parseInt(this.EditForm.get('DisCount').value))) / 100);
-    this.TotalEdit = this.EditForm.controls['TotalPrice'].setValue(row.totalPrice);
+    if ((parseInt(this.EditForm.get('DisCount').value))) {
+      this.TotalDiscountEdit
+        = (parseInt(this.EditForm.get('TotalPrice').value) - ((parseInt(this.EditForm.get('TotalPrice').value)) * (parseInt(this.EditForm.get('DisCount').value))) / 100);
+
+    }
+    this.TotalEdit = this.EditForm.get('TotalPrice').value;
+
     this.invoiceDetailsEdit.removeAt(0);
     row.invoiceDetails.forEach(x => {
       var newEdirInoiceDetails = this._formbuilder.group({
@@ -323,10 +405,10 @@ export class InvoiceComponent implements OnInit {
     this._PublicService.put('Invoice/UpdateData', this.EditForm.value).subscribe((Response) => {
       this._ToasterService.success("Invoice Updated successfully", "Success");
       this.getAllInvoice();
-      debugger;
+
 
     }, (error) => {
-      debugger;
+
       this._ToasterService.danger("The quantity is less than that in stock", "Failed");
     });
     this.EditForm.reset();
@@ -348,7 +430,7 @@ export class InvoiceComponent implements OnInit {
     this.dialogService.open(dialog, {
       dialogClass: 'defaultdialogue'
     }).onClose.subscribe(res => {
-      debugger;
+
       if (res) {
 
         this.DeleteInvoice(id);
@@ -374,7 +456,7 @@ export class InvoiceComponent implements OnInit {
 
   }
   onCustomAction(Deletedialog: TemplateRef<any>, Editdialog: TemplateRef<any>, event) {
-    debugger;
+
     switch (event.action) {
       case 'deleteAction':
         this.openDeleteModal(Deletedialog, event.data.id)

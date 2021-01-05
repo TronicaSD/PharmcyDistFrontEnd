@@ -1,7 +1,7 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogService, NbToastrService } from '@nebular/theme';
-import { TranslateService } from '@ngx-translate/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { PublicService } from 'src/app/core/publicService.Service';
 @Component({
@@ -21,12 +21,16 @@ export class PharmcyComponent implements OnInit {
   TName: string;
   Action: string;
   TStreetName: string;
+  currentLang: string;
+  columnheaders: string[];
 
   constructor(private _PublicService: PublicService
     , private _formbuilder: FormBuilder
     , private dialogService: NbDialogService
     , private _ToasterService: NbToastrService
     , private translate: TranslateService
+    , private _changeDetectorRef: ChangeDetectorRef
+
   ) {
 
     this.AddForm = this._formbuilder.group({
@@ -38,7 +42,6 @@ export class PharmcyComponent implements OnInit {
 
 
     });
-
     this.EditForm = this._formbuilder.group({
       pharmcyName: ['', Validators.required],
       streetName: ['', Validators.required],
@@ -46,17 +49,39 @@ export class PharmcyComponent implements OnInit {
       cityId: ['', Validators.required],
       governerateId: ['', Validators.required],
     });
-    this.translate.get('Name').subscribe((text: string) => {
-      this.TName = text;
-    })
-    this.translate.get('Action').subscribe((text: string) => {
-      this.Action = text;
-    })
-    this.translate.get('StreetName').subscribe((text: string) => {
-      this.TStreetName = text;
-    })
-    this.getAllPharmcies();
+    this.currentLang = translate.currentLang;
+    translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.currentLang = event.lang;
+      // TODO This as a workaround.
+      this._changeDetectorRef.detectChanges();
+    });
+  }
 
+
+  ngOnInit(): void {
+    this.getAllPharmcies();
+    this.getAllGovernorates();
+    this.translate.onLangChange.subscribe(item => {
+      this.setColumnheaders();
+    });
+  }
+  setColumnheaders(): void {
+    let Action = 'Action';
+    let PharmcyName = 'PharmcyName';
+    let StreetName = 'StreetName';
+
+    this.columnheaders = ['', '', '']
+    //Used TranslateService from @ngx-translate/core
+    this.translate.get(Action).subscribe(label => this.columnheaders[0] = label);
+    this.translate.get(PharmcyName).subscribe(label => this.columnheaders[1] = label);
+
+    this.translate.get(StreetName).subscribe(label => {
+      this.columnheaders[2] = label;
+      this.loadTableSettings();
+    });
+
+  }
+  loadTableSettings() {
     this.settings = {
       hideSubHeader: true,
       actions: {
@@ -78,22 +103,17 @@ export class PharmcyComponent implements OnInit {
 
       columns: {
         pharmcyName: {
-          title: this.TName,
+          title: this.columnheaders[1],
           type: 'string',
         },
 
         streetName: {
-          title: this.TStreetName,
+          title: this.columnheaders[2],
           type: 'string',
         },
 
       }
     };
-  }
-
-
-  ngOnInit(): void {
-    this.getAllGovernorates();
   }
   getAllGovernorates() {
     this._PublicService.get("GS_Governorate/ViewGetAll").subscribe(res => {

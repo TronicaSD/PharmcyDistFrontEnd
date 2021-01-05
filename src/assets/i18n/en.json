@@ -10,8 +10,8 @@
     "Loading":"Loading...",
     "IsRequired":"Is Required",
     "CreateNewCategory":"Create New Category",
-    "Add":"Add Category",
-    "Edit":"Edit Category",
+    "Add":"Add",
+    "Edit":"Edit",
     "AreYouSureYouWantToDeleteThisItem":"Are You Sure You Want To Delete This Item.",
     "Save":"Save",
     "Cancel":"Cancel",
@@ -32,17 +32,28 @@
     "Sample":"Sample",
     "Samples":"Samples",
     "Doctor":"Doctor",
+    "DoctorName":"Doctor Name",
     "Invoice":"Invoice",
     "Invoices":"Invoices",
     "Type":"Type",
     "Date":"Date",
     "Number":"Number",
-    "Discount":"Number",
+    "Discount":"Discount",
     "Price":"Price",
     "Total":"Total",
-    "TotalAfterDiscount":"TotalAfterDiscount",
+    "TotalAfterDiscount":"Total After Discount",
     "minimumnumberis":"minimum number is",
-    "maximumnumberis":"mmaximun number is"
+    "maximumnumberis":"mmaximun number is",
+    "TotalPrice":"Total Price",
+    "InvoiceType":"Invoice Type",
+"InvoiceDate":"Invoice Date",
+"PharmcyName":"Pharmcy Name",
+"InvoiceNumber":"Invoice Number",
+"BasicInformation":"Basic Information",
+"Operations":"Operations",
+"StockDetails":"Stock Details",
+"DrugName":"Drug Name"
+
 
 
 

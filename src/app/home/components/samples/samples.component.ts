@@ -29,6 +29,7 @@ export class SamplesComponent implements OnInit {
   TQuantity: string;
   TName: string;
   TDoctor: string;
+  columnheaders: string[];
   constructor(private _PublicService: PublicService
     , private dialogService: NbDialogService
     , private _formbuilder: FormBuilder,
@@ -51,23 +52,39 @@ export class SamplesComponent implements OnInit {
       DoctorName: ['', Validators.required],
       id: [''],
     });
-    this.translate.get('Drug').subscribe((text: string) => {
-      this.TDrug = text;
-    })
-    this.translate.get('Doctor').subscribe((text: string) => {
-      this.TDoctor = text;
-    })
-    this.translate.get('Action').subscribe((text: string) => {
-      this.Action = text;
-    })
-    this.translate.get('Quantity').subscribe((text: string) => {
-      this.TQuantity = text;
-    })
-    this.translate.get('Name').subscribe((text: string) => {
-      this.TName = text;
-    })
-    this.getAllSample();
 
+
+
+  }
+
+  ngOnInit(): void {
+    this.getAllSample();
+    this.getAllDrugs();
+    this.getAllStockDetails();
+    this.setColumnheaders();
+    //LISTEN TO EVENTS
+    this.translate.onLangChange.subscribe(item => {
+      this.setColumnheaders();
+    });
+  } setColumnheaders(): void {
+    let Action = 'Action';
+    let DoctorName = 'DoctorName';
+    let DrugName = 'DrugName';
+    let Quantity = 'Quantity';
+
+    this.columnheaders = ['', '', '']
+    //Used TranslateService from @ngx-translate/core
+    this.translate.get(Action).subscribe(label => this.columnheaders[0] = label);
+    this.translate.get(DoctorName).subscribe(label => this.columnheaders[1] = label);
+    this.translate.get(DrugName).subscribe(label => this.columnheaders[2] = label);
+
+    this.translate.get(Quantity).subscribe(label => {
+      this.columnheaders[3] = label;
+      this.loadTableSettings();
+    });
+
+  }
+  loadTableSettings() {
     this.settings = {
       hideSubHeader: true,
       actions: {
@@ -89,25 +106,20 @@ export class SamplesComponent implements OnInit {
 
       columns: {
         doctorName: {
-          title: this.TDoctor,
+          title: this.columnheaders[1],
           type: 'string',
         },
         drugName: {
-          title: this.TDrug,
+          title: this.columnheaders[2],
           type: 'string',
         },
         qunantity: {
-          title: this.TQuantity,
+          title: this.columnheaders[3],
           type: 'string',
         },
 
       }
     };
-  }
-
-  ngOnInit(): void {
-    this.getAllDrugs();
-    this.getAllStockDetails();
   }
   ClearData() {
     this.AddForm.reset();

@@ -7,18 +7,19 @@
   padding: 2%;
 
 }
+
 table {
   background-color: "#fff";
-  box-shadow: 3px 4px 15px 5px #2e3a59 ;
+  box-shadow: 3px 4px 15px 5px #2e3a59;
 }
 
-table thead{
+table thead {
   background-color: #2e3a59;
-  color:#fff
-
+  color: #fff
 }
-table th{
-  border-top:none !important ;
+
+table th {
+  border-top: none !important;
 }
 
 table tbody tr td {
@@ -60,12 +61,21 @@ nb-card-footer button {
 .ng2-smart-actions {
   width: 14%;
 }
-.nb-theme-dark ng2-smart-table .ng2-smart-actions a.ng2-smart-action:not(:last-child)
-,.nb-theme-default ng2-smart-table .ng2-smart-actions a.ng2-smart-action:not(:last-child),
-.nb-theme-cosmic ng2-smart-table .ng2-smart-actions a.ng2-smart-action:not(:last-child){
-margin-top: 15%;
+
+.nb-theme-dark ng2-smart-table .ng2-smart-actions a.ng2-smart-action:not(:last-child),
+.nb-theme-default ng2-smart-table .ng2-smart-actions a.ng2-smart-action:not(:last-child),
+.nb-theme-cosmic ng2-smart-table .ng2-smart-actions a.ng2-smart-action:not(:last-child) {
+  margin-top: 15%;
 
 }
 
 
-label,span{display: block;}
+label,
+span {
+  display: block;
+}
+
+
+.ng2-smart-actions-title {
+  display: table-column !important;
+}

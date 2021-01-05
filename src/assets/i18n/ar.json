@@ -31,6 +31,7 @@
     "Sample":"العينه",
     "Samples":"العينات",
     "Doctor":"الدكتور",
+    "DoctorName":"أسم الدكتور",
     "Invoice":"الفاتورة",
     "Invoices":"الفواتير",
     "Type":"نوع",
@@ -41,7 +42,17 @@
     "Total":"الأجمالي",
     "TotalAfterDiscount":"الأجمالي بعد الخصم",
     "minimumnumberis":"أصغر رقم هو",
-    "maximumnumberis":"أكبر رقم هو"
+    "maximumnumberis":"أكبر رقم هو",
+    "TotalPrice":"أجمالي السعر",
+    "InvoiceType":"نوع الفاتورة",
+"InvoiceDate":"تاريخ الفاتورة",
+"PharmcyName":"أسم الصيدليه",
+"InvoiceNumber":"رقم الفاتورة",
+"BasicInformation":"المعلومات الرئيسية",
+"Operations":"العمليات",
+"StockDetails":"تفاصيل المخازن",
+"DrugName":"أسم الدواء"
+
 
 
 }

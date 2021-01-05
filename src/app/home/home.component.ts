@@ -3,6 +3,7 @@ import { NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme'
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -25,13 +26,15 @@ export class HomeComponent implements OnInit {
       value: 'cosmic',
       name: 'Cosmic',
     },
-    
+
   ];
 
   currentTheme = 'default';
   constructor(private themeService: NbThemeService, private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
-    public translate: TranslateService
+    public translate: TranslateService,
+    private _coockieService: CookieService,
+
   ) {
     this.themeService.onThemeChange()
       .subscribe((theme: any) => {
@@ -66,6 +69,7 @@ export class HomeComponent implements OnInit {
   }
   switchLang(lang: string) {
     this.translate.use(lang);
+    this._coockieService.set('language', lang);
   }
 
 }
