@@ -83,9 +83,9 @@ export class InvoiceComponent implements OnInit {
       InvoiceType: [1, Validators.required],
       PharmcyId: ['', Validators.required],
       TotalPrice: [''],
-      DisCount: ['', [
-        Validators.min(12), Validators.maxLength(2),
-        Validators.max(30)]],
+      DisCount: ['15', [Validators.required,
+      Validators.min(12), Validators.maxLength(2),
+      Validators.max(30)]],
 
       invoiceDetails: this._formbuilder.array([])
 
@@ -98,9 +98,9 @@ export class InvoiceComponent implements OnInit {
       InvoiceType: ['', Validators.required],
       PharmcyId: ['', Validators.required],
       TotalPrice: [''],
-      DisCount: ['', [
-        Validators.min(12),
-        Validators.max(30)]
+      DisCount: ['', [Validators.required,
+      Validators.min(12),
+      Validators.max(30)]
       ],
 
       invoiceDetails: this._formbuilder.array([])

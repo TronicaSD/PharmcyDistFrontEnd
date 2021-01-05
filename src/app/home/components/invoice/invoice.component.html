@@ -88,9 +88,12 @@
 
                 <input (keyup)="CalculateTotal()" class="form-control" numbersOnly
                   placeholder="{{'Discount' | translate}} %" formControlName="DisCount" type="text" nbInput fullWidth>
-                <span *ngIf="hasError('DisCount', 'min')" style="color: red">minimum number is 12</span>
-                <span *ngIf="hasError('DisCount', 'max')" style="color: red">maximum number is 30 </span>
-
+                <span *ngIf="hasError('DisCount', 'min')" style="color: red"> {{'minimumnumberis' | translate}}
+                  12</span>
+                <span *ngIf="hasError('DisCount', 'max')" style="color: red"> {{'maximumnumberis' | translate}} 30
+                </span>
+                <span *ngIf="hasError('DisCount', 'required')" style="color: red"> {{'Discount' | translate}}
+                  {{'IsRequired' | translate}}</span>
 
 
               </div>
@@ -253,9 +256,12 @@
 
                 <input class="form-control" numbersOnly placeholder="{{'Discount' | translate}} %"
                   formControlName="DisCount" type="text" nbInput fullWidth>
-                <span *ngIf="hasEditError('DisCount', 'min')" style="color: red">minimum number is 12</span>
-                <span *ngIf="hasEditError('DisCount', 'max')" style="color: red">maximum number is 30 </span>
-
+                <span *ngIf="hasEditError('DisCount', 'min')" style="color: red"> {{'minimumnumberis' | translate}}
+                  12</span>
+                <span *ngIf="hasEditError('DisCount', 'max')" style="color: red"> {{'maximumnumberis' | translate}} 30
+                </span>
+                <span *ngIf="hasEditError('DisCount', 'required')" style="color: red"> {{'Discount' | translate}}
+                  {{'IsRequired' | translate}}</span>
 
 
               </div>
