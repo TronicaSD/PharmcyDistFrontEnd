@@ -85,12 +85,12 @@ export class MenuChildrenComponent implements OnInit {
           {
             title: this.columnheaders[1],
             link: 'drugs',
-            icon: 'menu',
+                icon: 'drug',
           },
           {
             title: this.columnheaders[2],
             link: 'pharmcies',
-            icon: 'menu',
+              icon: 'drug',
 
           }
         ],
@@ -98,14 +98,14 @@ export class MenuChildrenComponent implements OnInit {
       {
         title: this.columnheaders[3],
         link: '/home',
-        icon: 'checkmark',
+          icon: 'home',
         hidden: !(this.findRole(Role.admin)),
         expanded: false,
         children: [
           {
             title: this.columnheaders[4],
             link: 'stockDetails',
-            icon: 'checkmark',
+                icon: 'home',
 
           }
         ],
