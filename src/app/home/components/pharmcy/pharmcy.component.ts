@@ -1,6 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogService, NbToastrService } from '@nebular/theme';
+import { TranslateService } from '@ngx-translate/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { PublicService } from 'src/app/core/publicService.Service';
 @Component({
@@ -9,55 +10,23 @@ import { PublicService } from 'src/app/core/publicService.Service';
   styleUrls: ['./pharmcy.component.css']
 })
 export class PharmcyComponent implements OnInit {
-  allCities:any;
-  allGovernorates:any;
+  allCities: any;
+  allGovernorates: any;
   Pharmcies: any;
   closeResult: string;
   AddForm: FormGroup;
   EditForm: FormGroup;
-  settings = {
-    hideSubHeader: true,
-    actions: {
-      custom: [
-
-        {
-          name: 'editAction',
-          title: '<i class="fa fa-edit text-warning"></i>'
-        },
-        {
-          name: 'deleteAction',
-           title:'<i class="fa fa-trash text-danger"></i>'
-        }
-      ],
-      add: false,
-      edit: false,
-      delete: false
-    },
-
-    columns: {
-      id: {
-        title: 'ID',
-        type: 'number',
-      },
-      pharmcyName: {
-        title: 'Pharmcy Name',
-        type: 'string',
-      },
-
-      streetName: {
-        title: 'Street Name',
-        type: 'string',
-      },
-
-    }
-  };
+  settings: any;
   source: LocalDataSource = new LocalDataSource();
+  TName: string;
+  Action: string;
+  TStreetName: string;
 
   constructor(private _PublicService: PublicService
     , private _formbuilder: FormBuilder
     , private dialogService: NbDialogService
     , private _ToasterService: NbToastrService
-
+    , private translate: TranslateService
   ) {
 
     this.AddForm = this._formbuilder.group({
@@ -73,31 +42,74 @@ export class PharmcyComponent implements OnInit {
     this.EditForm = this._formbuilder.group({
       pharmcyName: ['', Validators.required],
       streetName: ['', Validators.required],
-      id: ['',Validators.required],
+      id: ['', Validators.required],
       cityId: ['', Validators.required],
       governerateId: ['', Validators.required],
     });
-  }
- 
-  
-  ngOnInit(): void {
+    this.translate.get('Name').subscribe((text: string) => {
+      this.TName = text;
+    })
+    this.translate.get('Action').subscribe((text: string) => {
+      this.Action = text;
+    })
+    this.translate.get('StreetName').subscribe((text: string) => {
+      this.TStreetName = text;
+    })
     this.getAllPharmcies();
+
+    this.settings = {
+      hideSubHeader: true,
+      actions: {
+        custom: [
+
+          {
+            name: 'editAction',
+            title: '<i class="fa fa-edit text-warning"></i>'
+          },
+          {
+            name: 'deleteAction',
+            title: '<i class="fa fa-trash text-danger"></i>'
+          }
+        ],
+        add: false,
+        edit: false,
+        delete: false
+      },
+
+      columns: {
+        pharmcyName: {
+          title: this.TName,
+          type: 'string',
+        },
+
+        streetName: {
+          title: this.TStreetName,
+          type: 'string',
+        },
+
+      }
+    };
+  }
+
+
+  ngOnInit(): void {
     this.getAllGovernorates();
   }
   getAllGovernorates() {
     this._PublicService.get("GS_Governorate/ViewGetAll").subscribe(res => {
       this.allGovernorates = res;
+      debugger;
       this.changeCities(1);
     });
   }
 
   changeCities(id: number) {
-    
+
     this._PublicService.getByID("GS_City/ViewGetAllByGovern?id=", id).subscribe(res => {
       this.allCities = res;
     });
   }
- 
+
 
   getAllPharmcies() {
     this._PublicService.get("Pharmcy/ViewGetAll",).subscribe(res => {
@@ -143,7 +155,7 @@ export class PharmcyComponent implements OnInit {
     this.EditForm.controls['id'].setValue(row.id);
     this.EditForm.controls['cityId'].setValue(row.cityId);
     this.EditForm.controls['governerateId'].setValue(row.governerateId);
-debugger;
+    debugger;
     this.dialogService.open(dialog, {
       dialogClass: "defaultdialogue"
 

@@ -5,13 +5,13 @@
   <div>
     <nb-card>
       <nb-card-header>
-    
+
         <div class="row">
           <div class="col-md-3">
-               Invoices
+            {{'Invoices' | translate}}
           </div>
           <div class="offset-8 col-md-1">
-      
+
             <button nbButton status="primary" (click)="openAddModal(Adddialog)"> <i class="fa fa-plus "></i></button>
           </div>
         </div>
@@ -31,7 +31,7 @@
   <ng-template #Adddialog class="model-full" let-data let-ref="dialogRef">
     <nb-card>
       <nb-card-header>
-        <h4 class="modal-title" id="modal-basic-title">Add Invoice</h4>
+        <h4 class="modal-title" id="modal-basic-title">{{'Add ' | translate}}{{'Invoice' | translate}}</h4>
 
       </nb-card-header>
       <nb-card-body>
@@ -41,24 +41,24 @@
             <div class=" col-md-4">
 
               <div class="form-group">
-                <label>Pharmcy Name</label>
+                <label>{{'Pharmcy' | translate}} {{'Name' | translate}}</label>
 
-                <nb-select placeholder="Select pharamcy"  
-                  formControlName="PharmcyId">
+                <nb-select placeholder="Select pharamcy" formControlName="PharmcyId">
                   <nb-option *ngFor="let p of Pharmcies" [value]="p.id">{{p.pharmcyName}}</nb-option>
                 </nb-select>
-                <span *ngIf="hasError('PharmcyId', 'required')" style="color: red">Pharmcy is required</span>
+                <span *ngIf="hasError('PharmcyId', 'required')"
+                  style="color: red">{{'IsRequired' | translate}}{{'IsRequired' | translate}}</span>
 
               </div>
             </div>
-   
+
             <div class=" col-md-4">
 
               <div class="form-group">
 
-                <label>Invoice Type</label>
+                <label>{{'Invoice ' | translate}} {{'Type' | translate}}</label>
 
-                <nb-select placeholder="Select Invoice Type" 
+                <nb-select placeholder="Select {{'Invoice ' | translate}} {{'Type' | translate}}"
                   formControlName="InvoiceType">
                   <nb-option *ngFor="let it of invoiceTypeList" [value]="it.Value">{{it.Text}}</nb-option>
                 </nb-select>
@@ -74,7 +74,8 @@
                 <input nbInput placeholder="Pick Date" [nbDatepicker]="dateTimePicker" class="form-control"
                   formControlName="InvoiceDate">
                 <nb-datepicker #dateTimePicker></nb-datepicker>
-                <span *ngIf="hasError('InvoiceDate', 'required')" style="color: red">Date is required</span>
+                <span *ngIf="hasError('InvoiceDate', 'required')" style="color: red">Date
+                  {{'IsRequired' | translate}}</span>
 
               </div>
             </div>
@@ -82,22 +83,36 @@
 
               <div class="form-group">
 
-           
+
                 <label> Discount</label>
 
-                <input class="form-control" numbersOnly  placeholder="discount %" formControlName="DisCount" type="text" nbInput fullWidth>
+                <input (keyup)="CalculateTotal()" class="form-control" numbersOnly placeholder="discount %"
+                  formControlName="DisCount" type="text" nbInput fullWidth>
                 <span *ngIf="hasError('DisCount', 'min')" style="color: red">minimum number is 12</span>
                 <span *ngIf="hasError('DisCount', 'max')" style="color: red">maximum number is 30 </span>
-  
+
 
 
               </div>
             </div>
 
-          
+
+
 
           </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
 
+                <label>Invoice Number</label>
+                <input nbInput placeholder="Invoice Number" class="form-control" formControlName="InvoiceNumber"
+                  type="text" fullWidth>
+                <span *ngIf="hasError('InvoiceNumber', 'required')" style="color: red">Invoice Number
+                  {{'IsRequired' | translate}}</span>
+
+              </div>
+            </div>
+          </div>
           <table class="table">
             <thead>
               <tr>
@@ -117,7 +132,7 @@
                   {{i}}
                 </td>
                 <td>
-                  <nb-select placeholder="اسم الدواء"  formControlName="drugId">
+                  <nb-select placeholder="اسم الدواء" formControlName="drugId" required>
                     <nb-option disabled value="">Option empty</nb-option>
                     <nb-option *ngFor="let d of StockDetails" [value]="d.drugId">{{d.drugName}}</nb-option>
                   </nb-select>
@@ -125,25 +140,25 @@
                 </td>
                 <td>
 
-                  <input class="form-control" numbersOnly formControlName="qunantity" type="text" nbInput fullWidth
-                    (change)="CalculateTotal()" (input)="calculateDrugPrice(i)">
+                  <input class="form-control" required numbersOnly formControlName="qunantity" type="text" nbInput
+                    fullWidth (keyup)="CalculateTotal()" (input)="calculateDrugPrice(i)">
 
 
                 </td>
                 <td>
 
-                  <input class="form-control" numbersOnly formControlName="price" type="text" nbInput fullWidth
-                    (change)="CalculateTotal()" (input)="calculateDrugPrice(i)">
+                  <input class="form-control" required numbersOnly formControlName="price" type="text" nbInput fullWidth
+                    (keyup)="CalculateTotal()" (input)="calculateDrugPrice(i)">
 
 
                 </td>
                 <td>
-                  <input  nbInput class="form-control" disabled formControlName="total" type="text" fullWidth>
+                  <input class="form-control" disabled formControlName="total" type="text" fullWidth required>
                 </td>
 
                 <td>
                   <nb-icon *ngIf="i ==0" icon="plus" status="success" (click)=" addInvloiceDetailsList()"></nb-icon>
-                  <nb-icon *ngIf="i !=0" icon="trash"  status="danger"  (click)="removeInvoiceDetails(i)"></nb-icon>
+                  <nb-icon *ngIf="i !=0" icon="trash" status="danger" (click)="removeInvoiceDetails(i)"></nb-icon>
 
                 </td>
 
@@ -151,6 +166,16 @@
             </tbody>
 
           </table>
+          <tfoot>
+            <tr>
+              <td>Total: </td>
+              <td>{{Total}}</td>
+            </tr>
+            <tr>
+              <td>Total after discount: </td>
+              <td>{{TotalDiscount}}</td>
+            </tr>
+          </tfoot>
         </form>
 
       </nb-card-body>
@@ -171,122 +196,83 @@
   <ng-template #Editdialog class="model-full" let-data let-ref="dialogRef">
     <nb-card>
       <nb-card-header>
-        <h4 class="modal-title" id="modal-basic-title">Edit Invoice</h4>
+        <h4 class="modal-title" id="modal-basic-title">{{'Edit' | translate}}{{'Invoice' | translate}}</h4>
 
       </nb-card-header>
       <nb-card-body>
         <form [formGroup]="EditForm">
-
           <div class="row">
-            <div class="col-md-6">
+            <div class=" col-md-4">
+
+              <div class="form-group">
+                <label>{{'Pharmcy' | translate}} {{'Name' | translate}}</label>
+
+                <nb-select placeholder="Select pharamcy" formControlName="PharmcyId">
+                  <nb-option *ngFor="let p of Pharmcies" [value]="p.id">{{p.pharmcyName}}</nb-option>
+                </nb-select>
+                <span *ngIf="hasEditError('PharmcyId', 'required')"
+                  style="color: red">{{'IsRequired' | translate}}{{'IsRequired' | translate}}</span>
+
+              </div>
+            </div>
+
+            <div class=" col-md-4">
+
+              <div class="form-group">
+
+                <label>{{'Invoice ' | translate}} {{'Type' | translate}}</label>
+
+                <nb-select placeholder="Select {{'Invoice ' | translate}} {{'Type' | translate}}"
+                  formControlName="InvoiceType">
+                  <nb-option *ngFor="let it of invoiceTypeList" [value]="it.Value">{{it.Text}}</nb-option>
+                </nb-select>
+
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
               <div class="form-group">
 
                 <label>Date</label>
-                <input nbInput placeholder="Pick Date" [nbDatepicker]="dateTimePicker" formControlName="InvoiceDate">
+                <input nbInput placeholder="Pick Date" [nbDatepicker]="dateTimePicker" class="form-control"
+                  formControlName="InvoiceDate">
                 <nb-datepicker #dateTimePicker></nb-datepicker>
-                <span *ngIf="hasEditError('InvoiceDate', 'required')" style="color: red">Date is required</span>
+                <span *ngIf="hasEditError('InvoiceDate', 'required')" style="color: red">Date
+                  {{'IsRequired' | translate}}</span>
 
               </div>
             </div>
-            <div class=" col-md-6">
+            <div class=" col-md-4">
 
+              <div class="form-group">
+
+
+                <label> Discount</label>
+
+                <input class="form-control" numbersOnly placeholder="discount %" formControlName="DisCount" type="text"
+                  nbInput fullWidth>
+                <span *ngIf="hasEditError('DisCount', 'min')" style="color: red">minimum number is 12</span>
+                <span *ngIf="hasEditError('DisCount', 'max')" style="color: red">maximum number is 30 </span>
+
+
+
+              </div>
+            </div>
+
+
+
+
+          </div>
+          <div class="row">
+            <div class="col-md-4">
               <div class="form-group">
 
                 <label>Invoice Number</label>
-
-
-                <input class="form-control" formControlName="InvoiceNumber" type="text" nbInput fullWidth>
+                <input nbInput placeholder="Invoice Number" class="form-control" formControlName="InvoiceNumber"
+                  type="text" fullWidth>
                 <span *ngIf="hasEditError('InvoiceNumber', 'required')" style="color: red">Invoice Number is
                   required</span>
-
-
-
-              </div>
-            </div>
-            <div class=" col-md-6">
-
-              <div class="form-group">
-
-                <label>Pharmcy Name</label>
-
-                <nb-select placeholder="Select Showcase" [(selected)]="selectedPharmcyItem" class="form-control"
-                  formControlName="PharmcyId">
-                  <nb-option disabled value="">Option empty</nb-option>
-                  <nb-option *ngFor="let p of Pharmcies" [value]="p.id">{{p.pharmcyName}}</nb-option>
-                </nb-select>
-                <span *ngIf="hasEditError('PharmcyId', 'required')" style="color: red">Pharmcy is required</span>
-
-              </div>
-            </div>
-            <div class="form-group">
-
-              <label> Discount</label>
-
-
-              <input class="form-control" numbersOnly formControlName="DisCount" type="text" nbInput fullWidth>
-
-              <span *ngIf="hasEditError('DisCount', 'min')" style="color: red">minimum number is 10</span>
-              <span *ngIf="hasEditError('DisCount', 'max')" style="color: red">maximum number is 30 </span>
-            </div>
-
-            <div class=" col-md-6">
-
-              <div class="form-group">
-
-                <label>Invoice Type</label>
-
-                <nb-select placeholder="Select Showcase" [(selected)]="selectedInvoiceTypeItem" class="form-control"
-                  formControlName="InvoiceType">
-                  <nb-option disabled value="">Option empty</nb-option>
-                  <nb-option *ngFor="let it of InvoiceType" [value]="it.Value">{{it.Text}}</nb-option>
-                </nb-select>
-
-              </div>
-            </div>
-            <div class=" col-md-6">
-
-              <div class="form-group">
-
-                <label>Country</label>
-
-                <nb-select placeholder="Select Showcase" formControlName="Country_Id"
-                  (selectedChange)="changeGovernments($event)">
-                  <nb-option disabled value="">Option empty</nb-option>
-                  <nb-option *ngFor="let c of Countries" [value]="c.country_Id">{{c.country_Name_Ar}}</nb-option>
-                </nb-select>
-                <span *ngIf="hasEditError('Country_Id', 'required')" style="color: red">Country is required</span>
-
-              </div>
-            </div>
-
-            <div class=" col-md-6">
-
-              <div class="form-group">
-
-                <label>Government </label>
-
-                <nb-select placeholder="Select Showcase" formControlName="Governerate_Id"
-                  (selectedChange)="changeCities($event)">
-                  <nb-option disabled value="">Option empty</nb-option>
-                  <nb-option *ngFor="let g of Governorate" [value]="g.governorate_Id">{{g.governorate_Name}}</nb-option>
-                </nb-select>
-                <span *ngIf="hasEditError('Governerate_Id', 'required')" style="color: red">Government is
-                  required</span>
-
-              </div>
-            </div>
-
-            <div class=" col-md-6">
-
-              <div class="form-group">
-
-                <label>city </label>
-
-                <nb-select placeholder="Select Showcase" formControlName="City_Id">
-                  <nb-option disabled value="">Option empty</nb-option>
-                  <nb-option *ngFor="let ci of Cities" [value]="ci.city_Id">{{ci.city_Name}}</nb-option>
-                </nb-select>
-                <span *ngIf="hasEditError('City_Id', 'required')" style="color: red">city is required</span>
 
               </div>
             </div>
@@ -310,7 +296,7 @@
                   {{in}}
                 </td>
                 <td>
-                  <nb-select placeholder="Select Showcase" class="form-control" formControlName="drugId">
+                  <nb-select placeholder="Select Showcase" formControlName="drugId" required>
                     <nb-option disabled value="">Option empty</nb-option>
                     <nb-option *ngFor="let d of StockDetails" [value]="d.drugId">{{d.drugName}}</nb-option>
                   </nb-select>
@@ -318,19 +304,19 @@
                 </td>
                 <td>
 
-                  <input class="form-control" numbersOnly formControlName="qunantity" type="text" nbInput fullWidth
-                    (change)="CalculateEditTotal()" (input)="calculateEditDrugPrice(in)">
+                  <input class="form-control" required numbersOnly formControlName="qunantity" type="text" nbInput
+                    fullWidth (keyup)="CalculateEditTotal()" (input)="calculateEditDrugPrice(in)">
 
                 </td>
                 <td>
 
-                  <input class="form-control" numbersOnly formControlName="price" type="text" nbInput fullWidth
-                    (change)="CalculateEditTotal()" (input)="calculateEditDrugPrice(in)">
+                  <input class="form-control" required numbersOnly formControlName="price" type="text" nbInput fullWidth
+                    (keyup)="CalculateEditTotal()" (input)="calculateEditDrugPrice(in)">
 
 
                 </td>
                 <td>
-                  <input class="form-control" disabled formControlName="total" type="text" fullWidth>
+                  <input class="form-control" disabled formControlName="total" type="text" fullWidth required>
                 </td>
 
                 <td>
@@ -343,6 +329,16 @@
             </tbody>
 
           </table>
+          <tfoot>
+            <tr>
+              <td>Total: </td>
+              <td>{{TotalEdit}}</td>
+            </tr>
+            <tr>
+              <td>Total after discount: </td>
+              <td>{{TotalDiscountEdit}}</td>
+            </tr>
+          </tfoot>
         </form>
 
       </nb-card-body>
@@ -362,14 +358,14 @@
   <ng-template #Deletedialog class="model-full" let-data let-ref="dialogRef">
     <nb-card>
       <nb-card-header>
-        <h4 class="modal-title" id="modal-basic-title">Delete</h4>
+        <h4 class="modal-title" id="modal-basic-title">{{'Delete' | translate}}</h4>
 
       </nb-card-header>
       <nb-card-body>
         <div class="row">
           <div class="col-md-8">
             <p class="text-danger">
-              confirm to delete this item ?
+              {{'AreYouSureYouWantToDeleteThisItem' | translate}} ?
             </p>
           </div>
         </div>

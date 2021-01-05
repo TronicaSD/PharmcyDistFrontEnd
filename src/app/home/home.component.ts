@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -9,7 +10,7 @@ import { Subject } from 'rxjs';
 })
 export class HomeComponent implements OnInit {
 
-  userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
+  userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
   private destroy$: Subject<void> = new Subject<void>();
   themes = [
     {
@@ -28,18 +29,21 @@ export class HomeComponent implements OnInit {
   ];
 
   currentTheme = 'default';
-  constructor(private themeService: NbThemeService,private sidebarService: NbSidebarService,
+  constructor(private themeService: NbThemeService, private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
-        ) {
+    public translate: TranslateService
+  ) {
     this.themeService.onThemeChange()
-          .subscribe((theme: any) => {
-            console.log(`Theme changed to ${theme.name}`);
-          });
+      .subscribe((theme: any) => {
+        console.log(`Theme changed to ${theme.name}`);
+      });
+    translate.addLangs(['ar', 'en']);
+    translate.setDefaultLang('ar');
   }
 
   ngOnInit(): void {
     this.currentTheme = this.themeService.currentTheme;
-    
+
     this.themeService.onThemeChange()
       .pipe(
         map(({ name }) => name),
@@ -59,6 +63,9 @@ export class HomeComponent implements OnInit {
     this.sidebarService.toggle(true, 'menu-sidebar');
 
     return false;
+  }
+  switchLang(lang: string) {
+    this.translate.use(lang);
   }
 
 }

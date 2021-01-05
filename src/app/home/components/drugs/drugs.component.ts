@@ -2,6 +2,7 @@ import { Component, OnInit, SkipSelf, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateService } from '@ngx-translate/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { PublicService } from 'src/app/core/publicService.Service';
 
@@ -15,49 +16,18 @@ export class DrugsComponent implements OnInit {
   closeResult: string;
   AddForm: FormGroup;
   EditForm: FormGroup;
-  settings = {
-    hideSubHeader: true,
-    actions: {
-      custom: [
-
-        {
-          name: 'editAction',
-          title: '<i class="fa fa-edit text-warning"></i>'
-        },
-        {
-          name: 'deleteAction',
-          title:'<i class="fa fa-trash text-danger"></i>'
-        }
-      ],
-      add: false,
-      edit: false,
-      delete: false
-    },
-
-    columns: {
-      id: {
-        title: 'ID',
-        type: 'number',
-        filter: true
-
-      },
-      drugName: {
-        title: 'Drug Name',
-        type: 'string',
-        filter: true
-      },
-
-    }
-  };
+  TName: string = "";
+  settings: any;
   source: LocalDataSource = new LocalDataSource();
+  Action: string;
 
   constructor(private _PublicService: PublicService
     , private modalService: NgbModal
     , private _formbuilder: FormBuilder
     , private dialogService: NbDialogService
     , private _ToasterService: NbToastrService
+    , private translate: TranslateService
   ) {
-
     this.AddForm = this._formbuilder.group({
       drugName: [null, Validators.required],
 
@@ -67,7 +37,40 @@ export class DrugsComponent implements OnInit {
       drugName: [null, Validators.required],
       id: [null],
     });
+    this.translate.get('Name').subscribe((text: string) => { this.TName = text })
+    this.translate.get('Action').subscribe((text: string) => {
+      this.Action = text;
+    })
     this.getAllDrugs();
+    this.settings = {
+      hideSubHeader: true,
+      actions: {
+        custom: [
+
+          {
+            name: 'editAction',
+            title: '<i class="fa fa-edit text-warning"></i>'
+          },
+          {
+            name: 'deleteAction',
+            title: '<i class="fa fa-trash text-danger"></i>'
+          }
+        ],
+        add: false,
+        edit: false,
+        delete: false
+      },
+
+      columns: {
+
+        drugName: {
+          title: this.TName.toString(),
+          type: 'string',
+          filter: true
+        },
+
+      }
+    };
   }
 
   ngOnInit(): void {
@@ -79,6 +82,7 @@ export class DrugsComponent implements OnInit {
     this._PublicService.get("Drugs/ViewGetAll").subscribe(res => {
       this.Drugs = res;
       this.source.load(this.Drugs);
+
 
     });
   }

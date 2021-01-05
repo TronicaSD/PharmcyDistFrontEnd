@@ -9,7 +9,7 @@ import { AuthService } from './auth.service';
 export class AuthGuard implements CanActivate {
   constructor(private router: Router,
     private auth: AuthService) {
-    debugger;
+
 
   }
 
@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    debugger;
+
 
     let shouldShow: boolean = false;
 
@@ -30,7 +30,7 @@ export class AuthGuard implements CanActivate {
           return true;
         }
         else {
-          debugger;
+
           window.alert('You don\'t have permission to view this page');
           shouldShow = false;
 

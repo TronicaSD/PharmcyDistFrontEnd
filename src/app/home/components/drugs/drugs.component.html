@@ -2,13 +2,13 @@
 
   <nb-card>
     <nb-card-header>
-    
+
       <div class="row">
         <div class="col-md-3">
-             Drugs
+          {{'Drugs' | translate}}
         </div>
         <div class="offset-8 col-md-1">
-    
+
           <button nbButton status="primary" (click)="openAddDialog(Adddialog)"> <i class="fa fa-plus "></i></button>
         </div>
       </div>
@@ -24,7 +24,7 @@
 </div>
 <ng-template #Adddialog class="model-full" let-data let-ref="dialogRef">
   <nb-card>
-    <nb-card-header>Add Drug</nb-card-header>
+    <nb-card-header> {{'Add' | translate}} {{'Drug' | translate}}</nb-card-header>
     <nb-card-body>
       <form [formGroup]="AddForm" (submit)="Add()">
 
@@ -33,12 +33,13 @@
 
 
 
-            <label> Name</label>
+            <label> {{'Name' | translate}} </label>
 
-              <input class="form-control" formControlName="drugName" type="text" nbInput fullWidth>
-              <span *ngIf="hasError('drugName', 'required')" style="color: red">Name is required</span>
+            <input class="form-control" formControlName="drugName" type="text" nbInput fullWidth>
+            <span *ngIf="hasError('drugName', 'required')" style="color: red">{{'Name' | translate}}
+              {{'IsRequired' | translate}}</span>
 
-     
+
 
 
           </div>
@@ -48,15 +49,15 @@
     </nb-card-body>
     <nb-card-footer>
       <button type="button" class="cancel" [disabled]="AddForm.invalid" nbButton status="success"
-        (click)="Add();ref.close()">Save</button>
-      <button nbButton (click)="ref.close()" status="danger">Close </button>
+        (click)="Add();ref.close()">{{'Save' | translate}} </button>
+      <button nbButton (click)="ref.close()" status="danger">{{'Cancel' | translate}} </button>
     </nb-card-footer>
   </nb-card>
 </ng-template>
 
 <ng-template #Editdialog class="model-full" let-data let-ref="dialogRef">
   <nb-card>
-    <nb-card-header>Edit Drug</nb-card-header>
+    <nb-card-header> {{'Edit' | translate}} {{'Drug' | translate}}</nb-card-header>
     <nb-card-body>
       <form [formGroup]="EditForm" (submit)="updateDrug()">
 
@@ -65,13 +66,14 @@
 
             <div class="form-group">
 
-              <label> Name</label>
+              <label> {{'Name' | translate}}</label>
 
-         
-                <input class="form-control" formControlName="drugName" type="text" nbInput fullWidth>
-                <span *ngIf="hasEditError('drugName', 'required')" style="color: red">Name is required</span>
 
-            
+              <input class="form-control" formControlName="drugName" type="text" nbInput fullWidth>
+              <span *ngIf="hasEditError('drugName', 'required')" style="color: red">{{'Name' | translate}}
+                {{'IsRequired' | translate}}</span>
+
+
 
             </div>
           </div>
@@ -81,8 +83,8 @@
     </nb-card-body>
     <nb-card-footer>
       <button nbButton type="button" nbButton status="success" [disabled]="EditForm.invalid" data-dismiss="modal"
-        (click)="updateDrug();ref.close()">Save</button>
-      <button nbButton status="danger" (click)="ref.close()">Close </button>
+        (click)="updateDrug();ref.close()">{{'Save' | translate}}</button>
+      <button nbButton status="danger" (click)="ref.close()">{{'Cancel' | translate}} </button>
     </nb-card-footer>
   </nb-card>
 </ng-template>
@@ -91,16 +93,17 @@
 
 <ng-template #Deletedialog class="model-full" let-data let-ref="dialogRef">
   <nb-card>
-    <nb-card-header>Delete </nb-card-header>
+    <nb-card-header> {{'Delete' | translate}} {{'Drug' | translate}} </nb-card-header>
     <nb-card-body>
       <div class="row col-md-8  col-offset-4">
 
-        <p class="text-danger"> Confirm to delete item ?</p>
+        <p class="text-danger"> {{'AreYouSureYouWantToDeleteThisItem' | translate}} ?</p>
       </div>
     </nb-card-body>
     <nb-card-footer>
-      <button nbButton type="button" nbButton status="success" (click)="ref.close(true);ref.close()">Confirm</button>
-      <button nbButton status="danger" (click)="ref.close()">Close </button>
+      <button nbButton type="button" nbButton status="success"
+        (click)="ref.close(true);ref.close()">{{'Save' | translate}}</button>
+      <button nbButton status="danger" (click)="ref.close()">{{'Cancel' | translate}} </button>
     </nb-card-footer>
   </nb-card>
 </ng-template>

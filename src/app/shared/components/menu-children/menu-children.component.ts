@@ -21,7 +21,7 @@ export class MenuChildrenComponent {
     if (allowedRoles == this.UserRoles) {
       return true;
     } else {
-      debugger;
+
       return false;
 
     }
