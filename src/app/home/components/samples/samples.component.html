@@ -53,7 +53,8 @@
 
                 <label>{{'Drug' | translate}} {{'Name' | translate}}</label>
 
-                <nb-select placeholder="Select Showcase" [(selected)]="selectedItem" formControlName="DrugId">
+                <nb-select placeholder="Select a Drug" [(selected)]="selectedItem" 
+                  formControlName="DrugId">
                   <nb-option value="0">Option empty</nb-option>
                   <nb-option *ngFor="let d of StockDetails" [value]="d.drugId">{{d.drugName}}</nb-option>
                 </nb-select>
