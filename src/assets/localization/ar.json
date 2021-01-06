@@ -21,7 +21,7 @@
     "StreetName":"أسم الشارع ",
     "Government":"المحافظة ",
     "City":"المدينه",
-    "Action":"الأجراء",
+    "Action":"الاختيارات",
     "Stock":"المخزن",
     "Stocks":"المخازن",
     "Quantity":"الكمية",
@@ -51,7 +51,10 @@
 "BasicInformation":"المعلومات الرئيسية",
 "Operations":"العمليات",
 "StockDetails":"تفاصيل المخازن",
-"DrugName":"أسم الدواء"
+"DrugName":"أسم الدواء",
+"Config":" الاعدادات",
+"InvoiceAndSamples":"الفواتير و العينات"
+
 
 
 

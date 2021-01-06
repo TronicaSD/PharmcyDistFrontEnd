@@ -88,6 +88,8 @@ export class SamplesComponent implements OnInit {
     this.settings = {
       hideSubHeader: true,
       actions: {
+        position: "right",  
+        columnTitle:this.columnheaders[0],
         custom: [
 
           {

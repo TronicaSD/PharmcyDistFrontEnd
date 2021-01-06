@@ -52,7 +52,11 @@
 "BasicInformation":"Basic Information",
 "Operations":"Operations",
 "StockDetails":"Stock Details",
-"DrugName":"Drug Name"
+"DrugName":"Drug Name",
+"Config":" Configuration",
+"InvoiceAndSamples":"Invoices And Samples "
+
+
 
 
 

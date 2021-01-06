@@ -38,27 +38,18 @@ export class MenuChildrenComponent implements OnInit {
     });
   }
   setColumnheaders(): void {
-    let BasicInformation = 'BasicInformation';
-    let Operations = 'Operations';
-    let Stocks = 'Stocks';
-    let Drugs = 'Drugs';
-    let Pharmcies = 'Pharmcies';
-    let StockDetails = 'StockDetails';
-    let Samples = 'Samples';
-    let Invoices = 'Invoices';
-    this.columnheaders = ['', '', '']
-    this.translate.get(BasicInformation).subscribe(label => this.columnheaders[0] = label);
-    this.translate.get(Drugs).subscribe(label => this.columnheaders[1] = label);
-    this.translate.get(Pharmcies).subscribe(label => this.columnheaders[2] = label);
-    this.translate.get(Stocks).subscribe(label => this.columnheaders[3] = label);
-    this.translate.get(StockDetails).subscribe(label => this.columnheaders[4] = label);
-    this.translate.get(Operations).subscribe(label => this.columnheaders[5] = label);
-    this.translate.get(Samples).subscribe(label => this.columnheaders[6] = label);
-    this.translate.get(Invoices).subscribe(label => {
-      this.columnheaders[7] = label;
+
+    this.columnheaders = []
+    this.translate.get('Config').subscribe(label => this.columnheaders[0] = label);
+    this.translate.get('Drugs').subscribe(label => this.columnheaders[1] = label);
+    this.translate.get('Pharmcies').subscribe(label => this.columnheaders[2] = label);
+    this.translate.get('Stocks').subscribe(label => this.columnheaders[3] = label);
+    this.translate.get('StockDetails').subscribe(label => this.columnheaders[4] = label);
+    this.translate.get('InvoiceAndSamples').subscribe(label => this.columnheaders[5] = label);
+    this.translate.get('Samples').subscribe(label => this.columnheaders[6] = label);
+    this.translate.get('Invoices').subscribe(label => { this.columnheaders[7] = label;
       this.GetMenueItem();
     });
-    debugger;
   }
   findRole(allowedRoles: any) {
     this.UserRoles = this._AuthService.getUserRole();
@@ -78,14 +69,14 @@ export class MenuChildrenComponent implements OnInit {
       {
         title: this.columnheaders[0],
         link: '/home',
-        icon: 'menu',
+        icon: 'settings-2-outline',
         hidden: !(this.findRole(Role.admin)),
         expanded: false,
         children: [
           {
             title: this.columnheaders[1],
             link: 'drugs',
-                icon: 'drug',
+                icon: 'drag',
           },
           {
             title: this.columnheaders[2],
@@ -98,7 +89,7 @@ export class MenuChildrenComponent implements OnInit {
       {
         title: this.columnheaders[3],
         link: '/home',
-          icon: 'home',
+        icon: 'home',
         hidden: !(this.findRole(Role.admin)),
         expanded: false,
         children: [
@@ -113,7 +104,7 @@ export class MenuChildrenComponent implements OnInit {
       {
         title: this.columnheaders[5],
         link: '/home',
-        icon: 'keypad',
+        icon: 'edit-2-outline',
         hidden: !(this.findRole(Role.user)),
 
         expanded: false,
@@ -121,13 +112,11 @@ export class MenuChildrenComponent implements OnInit {
           {
             title: this.columnheaders[6],
             link: 'Samples',
-            icon: 'list',
 
           },
           {
             title: this.columnheaders[7],
             link: 'Invoice',
-            icon: 'list',
 
           },
         ],

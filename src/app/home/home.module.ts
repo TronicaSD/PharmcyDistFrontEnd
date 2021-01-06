@@ -59,5 +59,5 @@ export class HomeModule {
 export function httpTranslateLoader(http: HttpClient) {
   debugger;
 
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, './assets/localization/', '.json');
 }

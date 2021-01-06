@@ -25,7 +25,6 @@ import {
 
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],

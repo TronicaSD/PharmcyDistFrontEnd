@@ -79,12 +79,14 @@ export class PharmcyComponent implements OnInit {
       this.columnheaders[2] = label;
       this.loadTableSettings();
     });
-
+  
   }
   loadTableSettings() {
     this.settings = {
       hideSubHeader: true,
       actions: {
+        position: "right",  
+        columnTitle:this.columnheaders[0],
         custom: [
 
           {
@@ -118,7 +120,7 @@ export class PharmcyComponent implements OnInit {
   getAllGovernorates() {
     this._PublicService.get("GS_Governorate/ViewGetAll").subscribe(res => {
       this.allGovernorates = res;
-      debugger;
+      
       this.changeCities(1);
     });
   }
@@ -175,7 +177,7 @@ export class PharmcyComponent implements OnInit {
     this.EditForm.controls['id'].setValue(row.id);
     this.EditForm.controls['cityId'].setValue(row.cityId);
     this.EditForm.controls['governerateId'].setValue(row.governerateId);
-    debugger;
+    
     this.dialogService.open(dialog, {
       dialogClass: "defaultdialogue"
 
@@ -221,9 +223,9 @@ export class PharmcyComponent implements OnInit {
       dialogClass: "defaultdialogue"
 
     }).onClose.subscribe(res => {
-      debugger;
+      
       if (res) {
-        debugger;
+        
         this.DeletePharmcy(id);
       }
 
@@ -232,7 +234,7 @@ export class PharmcyComponent implements OnInit {
   }
 
   onCustomAction(Deletedialog: TemplateRef<any>, Editdialog: TemplateRef<any>, event) {
-    debugger;
+    
     switch (event.action) {
       case 'deleteAction':
         this.openDeleteModal(Deletedialog, event.data.id)

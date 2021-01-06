@@ -27,28 +27,7 @@ export class InvoiceComponent implements OnInit {
   closeResult: string;
   AddForm: FormGroup;
   EditForm: FormGroup;
-  InvoiceObject: IInvoice = {
-    id: 0,
-    invoiceNumber: 0,
-    pharmcyId: 0,
-    pharmcyName: '',
-    invoiceType: 0,
-    invoiceTypeText: '',
-    invoiceDate: new Date(),
-    totalPrice: 0,
-    disCount: 0,
 
-    invoiceDetails: [{
-      drugId: 0,
-      drugName: "",
-      invoiceId: 0,
-      price: 0,
-      qunantity: 0,
-      total: 0,
-      id: 0
-    }]
-
-  };
   Drugs: any;
   Pharmcies: Object;
   StockDetails: Object;
@@ -157,9 +136,13 @@ export class InvoiceComponent implements OnInit {
   }
   settings: any;
   loadTableSettings() {
+    let actionsColumn="";
+    this.translate.get('Action').subscribe(val=>{actionsColumn= val;})
     this.settings = {
       hideSubHeader: true,
       actions: {
+        position: "right",  
+        columnTitle: actionsColumn,
         custom: [
 
           {
