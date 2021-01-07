@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { NbEvaIconsModule } from "@nebular/eva-icons";
 import { NbActionsModule, NbButtonModule, NbCardModule, NbDatepickerModule, NbDialogModule, NbFormFieldModule, NbIconModule, NbInputModule, NbLayoutModule, NbMenuModule, NbMenuService, NbSearchModule, NbSelectModule, NbSidebarModule, NbSidebarService, NbThemeModule, NbThemeService, NbToastrModule } from "@nebular/theme";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { TranslateModule } from "@ngx-translate/core";
 import { Ng2SmartTableModule } from "ng2-smart-table";
 import { MenuChildrenComponent } from "./components/menu-children/menu-children.component";
 import { TopNavbarComponent } from "./components/top-navbar/top-navbar.component";
@@ -15,12 +16,11 @@ import { NumbersOnlyDirective } from "./directives/number-only.directive";
       NumbersOnlyDirective,
     ],
     imports: [
-      NbInputModule,
-      NbMenuModule.forRoot(),
-      NbLayoutModule,
-      NbActionsModule,
-      NbSearchModule,
-      NbSelectModule,
+     NbMenuModule.forRoot(),
+     NbLayoutModule,
+     NbActionsModule,
+     NbSearchModule,
+     NbSelectModule,
      NbSidebarModule,
      NbCardModule,
      NgbModule,
@@ -35,9 +35,9 @@ import { NumbersOnlyDirective } from "./directives/number-only.directive";
      Ng2SmartTableModule,
     ],
     exports: [
-      NbActionsModule,
-      NbSearchModule,
-NbInputModule,
+     NbActionsModule,
+     NbSearchModule,
+     NbInputModule,
      NbLayoutModule,
      NbSidebarModule,
      NbMenuModule,
@@ -55,6 +55,7 @@ NbInputModule,
      MenuChildrenComponent,
      TopNavbarComponent,
      Ng2SmartTableModule,
+     TranslateModule
   
     ],
 

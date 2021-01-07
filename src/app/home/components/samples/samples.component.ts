@@ -53,7 +53,7 @@ export class SamplesComponent implements OnInit {
       id: [''],
     });
 
-
+    this.setColumnheaders();
 
   }
 
@@ -61,24 +61,23 @@ export class SamplesComponent implements OnInit {
     this.getAllSample();
     this.getAllDrugs();
     this.getAllStockDetails();
-    this.setColumnheaders();
+   
     //LISTEN TO EVENTS
     this.translate.onLangChange.subscribe(item => {
       this.setColumnheaders();
     });
-  } setColumnheaders(): void {
-    let Action = 'Action';
-    let DoctorName = 'DoctorName';
-    let DrugName = 'DrugName';
-    let Quantity = 'Quantity';
+  } 
+  setColumnheaders() {
 
-    this.columnheaders = ['', '', '']
+ 
+
+    this.columnheaders = []
     //Used TranslateService from @ngx-translate/core
-    this.translate.get(Action).subscribe(label => this.columnheaders[0] = label);
-    this.translate.get(DoctorName).subscribe(label => this.columnheaders[1] = label);
-    this.translate.get(DrugName).subscribe(label => this.columnheaders[2] = label);
+    this.translate.get('Action').subscribe(label => this.columnheaders[0] = label);
+    this.translate.get('DoctorName').subscribe(label => this.columnheaders[1] = label);
+    this.translate.get('DrugName').subscribe(label => this.columnheaders[2] = label);
 
-    this.translate.get(Quantity).subscribe(label => {
+    this.translate.get('Quantity').subscribe(label => {
       this.columnheaders[3] = label;
       this.loadTableSettings();
     });
@@ -91,7 +90,6 @@ export class SamplesComponent implements OnInit {
         position: "right",  
         columnTitle:this.columnheaders[0],
         custom: [
-
           {
             name: 'editAction',
             title: '<i class="fa fa-edit text-warning"></i>'
@@ -105,11 +103,12 @@ export class SamplesComponent implements OnInit {
         edit: false,
         delete: false
       },
-
+      
       columns: {
         doctorName: {
           title: this.columnheaders[1],
           type: 'string',
+          
         },
         drugName: {
           title: this.columnheaders[2],
@@ -123,6 +122,7 @@ export class SamplesComponent implements OnInit {
       }
     };
   }
+
   ClearData() {
     this.AddForm.reset();
 
@@ -142,7 +142,6 @@ export class SamplesComponent implements OnInit {
   getAllSample() {
     this._PublicService.get("Sample/ViewGetAll").subscribe(res => {
       this.Samples = res;
-      debugger;
       this.source.load(this.Samples);
 
     });
@@ -159,7 +158,7 @@ export class SamplesComponent implements OnInit {
 
   }
   Add() {
-    debugger;
+    
     this._PublicService.post('Sample/AddData', this.AddForm.value).subscribe((Response) => {
       this.getAllSample();
       this._ToasterService.success("Sample added successfully");
@@ -205,7 +204,7 @@ export class SamplesComponent implements OnInit {
       dialogClass: "defaultdialogue"
 
     }).onClose.subscribe(res => {
-      debugger;
+      
       if (res) {
 
         this.DeleteSample(id);
@@ -225,7 +224,7 @@ export class SamplesComponent implements OnInit {
   }
 
   onCustomAction(Deletedialog: TemplateRef<any>, Editdialog: TemplateRef<any>, event) {
-    debugger;
+    
     switch (event.action) {
       case 'deleteAction':
         this.openDeleteModal(Deletedialog, event.data.id)

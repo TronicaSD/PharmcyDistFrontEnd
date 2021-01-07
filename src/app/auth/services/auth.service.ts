@@ -76,21 +76,7 @@ export class AuthService implements CanActivate {
   }
 
 
-  logoutOnClose() {
-    let LoginUser = JSON.parse(localStorage.getItem("LoginUser"));
-    if (LoginUser !== null) {
-      this.http
-        .post<LoginModel>(environment.baseUrl + "account/logout", LoginUser)
-        .subscribe(
-          (success) => {
-            localStorage.clear();
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-    }
-  }
+
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot

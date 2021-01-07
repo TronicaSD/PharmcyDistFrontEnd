@@ -192,13 +192,13 @@ export class DrugsComponent implements OnInit {
 
 
   openDeletedialog(dialog: TemplateRef<any>, id: any) {
-    debugger;
+    
     this.dialogService.open(dialog, {
       dialogClass: "defaultdialogue"
     }).onClose.subscribe(res => {
-      debugger;
+      
       if (res) {
-        debugger;
+        
         this.DeleteDrug(id);
       }
 
@@ -207,7 +207,7 @@ export class DrugsComponent implements OnInit {
   }
 
   onCustomAction(Deletedialog: TemplateRef<any>, Editdialog: TemplateRef<any>, event) {
-    debugger;
+    
     switch (event.action) {
       case 'deleteAction':
         this.openDeletedialog(Deletedialog, event.data.id)

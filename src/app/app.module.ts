@@ -6,7 +6,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -42,12 +42,24 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NbThemeModule.forRoot({ name: "dark" }),
     FormsModule,
     ReactiveFormsModule,
+    TranslateModule.forRoot({
+      defaultLanguage: 'ar',
+      loader: {
+        provide: TranslateLoader,
+        useFactory: httpTranslateLoader,
+        deps: [HttpClient]
+      }
+    })
 
   ],
-  exports: [TranslateModule],
+  exports: [],
 
   bootstrap: [AppComponent],
 })
 export class AppModule {
 }
 
+export function httpTranslateLoader(http: HttpClient) {
+
+  return new TranslateHttpLoader(http, './assets/localization/', '.json');
+}

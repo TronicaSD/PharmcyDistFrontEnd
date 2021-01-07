@@ -21,7 +21,7 @@ export class MenuChildrenComponent implements OnInit {
     private _coockieService: CookieService
     , private _changeDetectorRef: ChangeDetectorRef) {
     var lang = this._coockieService.get('language');
-    debugger;
+    
     this.translate.use(lang);
     this.currentLang = translate.currentLang;
     translate.onLangChange.subscribe((event: LangChangeEvent) => {

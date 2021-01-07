@@ -40,15 +40,8 @@ import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-transla
     HomeRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NbThemeModule.forRoot({ name: "dark" }),
     NbEvaIconsModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: httpTranslateLoader,
-        deps: [HttpClient]
-      }
-    })
+ 
   ],
   exports: [TranslateModule],
 
@@ -56,8 +49,4 @@ import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-transla
 })
 export class HomeModule {
 }
-export function httpTranslateLoader(http: HttpClient) {
-  debugger;
 
-  return new TranslateHttpLoader(http, './assets/localization/', '.json');
-}

@@ -40,8 +40,6 @@ export class HomeComponent implements OnInit {
       .subscribe((theme: any) => {
         console.log(`Theme changed to ${theme.name}`);
       });
-    translate.addLangs(['ar', 'en']);
-    translate.setDefaultLang('ar');
   }
 
   ngOnInit(): void {

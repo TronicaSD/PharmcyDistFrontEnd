@@ -180,7 +180,7 @@ export class StockDetailsComponent implements OnInit {
 
   //Delete Modal
   DeleteStockDetails(id: number) {
-    debugger;
+    
     this._PublicService.delete("StockDetails/DeleteData", id).subscribe((Response) => {
 
       this._ToasterService.success("Drug DeletedFrom Stock successfully", "Success");
@@ -193,13 +193,13 @@ export class StockDetailsComponent implements OnInit {
 
 
   openDeleteModal(dialog: any, id: number) {
-    debugger;
+    
 
     this.dialogService.open(dialog, {
       dialogClass: "defaultdialogue"
 
     }).onClose.subscribe(res => {
-      debugger;
+      
       if (res) {
 
         this.DeleteStockDetails(id);
@@ -210,7 +210,7 @@ export class StockDetailsComponent implements OnInit {
   }
 
   onCustomAction(Deletedialog: TemplateRef<any>, Editdialog: TemplateRef<any>, event) {
-    debugger;
+    
     switch (event.action) {
       case 'deleteAction':
         this.openDeleteModal(Deletedialog, event.data.id)
