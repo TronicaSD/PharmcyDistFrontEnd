@@ -2,18 +2,18 @@
   <nb-layout-header >
     <div class="row">
 
-      <div class="col-sm-2 ">
+      <div class="col-sm-2 col-xs-3 ">
         <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
           <nb-icon icon="menu-2-outline"></nb-icon>
         </a>
       </div>
-      <div class=" col-sm-9 ">
+      <div class=" col-sm-9 col-xs-8 ">
   <nb-select size="small"   [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
     <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
   </nb-select>
 
   </div>
-  <div class=" col-sm-1 " >
+  <div class=" col-sm-1  col-xs-1" >
       <div class="form-inline">
         <select  class="form-control" #selectedLang (change)="switchLang(selectedLang.value)">
           <option *ngFor="let language of translate.getLangs()" [value]="language"

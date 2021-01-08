@@ -78,6 +78,9 @@ span {
 .ng2-smart-actions-title {
   display: table-column !important;
 }
+.fa{
+  font-size: larger;
+}
 
 @media (max-width :1000px){
   .nb-theme-dark ng2-smart-table .ng2-smart-actions{
@@ -85,10 +88,14 @@ span {
     display: block;
     position: relative;
   }
- 
+
   nb-layout-header{
     padding: 5%;
-    
+
+    }
+    .row{
+      width:100%;
+      display:contents;
     }
 
 }
