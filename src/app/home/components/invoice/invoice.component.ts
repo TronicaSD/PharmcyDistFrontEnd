@@ -177,8 +177,9 @@ export class InvoiceComponent implements OnInit {
           type: 'string',
           valuePrepareFunction: (invoiceDate) => {
             if (invoiceDate) {
+              let date=new Date(invoiceDate);
 
-              return moment(invoiceDate).format('M/d/yyyy');
+              return date.getDate()+'-'+date.getMonth()+1+'-'+date.getFullYear();
             }
             return null;
           }
@@ -286,13 +287,21 @@ export class InvoiceComponent implements OnInit {
   }
 
   Add() {
+    let date=new Date(Date.UTC(
+      this.AddForm.value.InvoiceDate.getFullYear(),
+      this.AddForm.value.InvoiceDate.getMonth(),
+      this.AddForm.value.InvoiceDate.getDate()
+    ));
+    this.AddForm.controls.InvoiceDate.setValue(date);
+    debugger;
     this._PublicService.post('Invoice/AddData', this.AddForm.value).subscribe((Response) => {
       this.getAllInvoice();
+    this.ClearForm();
+
       this._ToasterService.success("Invoice added successfully", "Success");
     }, (error) => {
       this._ToasterService.danger("The quantity is less than that in stock", "Failed");
     });
-    this.ClearForm();
   }
 
   openAddModal(dialog: TemplateRef<any>) {
