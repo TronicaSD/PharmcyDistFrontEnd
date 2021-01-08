@@ -1,37 +1,37 @@
-<nb-layout>
-  <nb-layout-header>
+<nb-layout windowMode>
+  <nb-layout-header >
     <div class="row">
 
-      <div class="col-md-5">
+      <div class="col-sm-2 ">
         <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
           <nb-icon icon="menu-2-outline"></nb-icon>
         </a>
       </div>
-      <!-- <div class="col-md-5">
-  <nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
+      <div class=" col-sm-9 ">
+  <nb-select size="small"   [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
     <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
   </nb-select>
 
-  </div> -->
-      <span class="form-inline">
-        <select class="form-control" #selectedLang (change)="switchLang(selectedLang.value)">
+  </div>
+  <div class=" col-sm-1 " >
+      <div class="form-inline">
+        <select  class="form-control" #selectedLang (change)="switchLang(selectedLang.value)">
           <option *ngFor="let language of translate.getLangs()" [value]="language"
             [selected]="language === translate.currentLang">
             {{ language }}
           </option>
         </select>
-      </span>
+      </div>
     </div>
+  </div>
   </nb-layout-header>
 
-  <nb-sidebar Left>
+  <nb-sidebar responsive>
     <nb-menu-children></nb-menu-children>
   </nb-sidebar>
 
 
-  <nb-layout-column class="colored-column-warning">
-    <div class="content">
+  <nb-layout-column >
       <router-outlet></router-outlet>
-    </div>
   </nb-layout-column>
 </nb-layout>
