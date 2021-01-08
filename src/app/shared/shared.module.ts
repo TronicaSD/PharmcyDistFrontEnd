@@ -29,6 +29,8 @@ import { NumbersOnlyDirective } from "./directives/number-only.directive";
      NbDatepickerModule.forRoot(),
      NbEvaIconsModule,
      NbIconModule,
+    NbThemeModule.forRoot({ name: "dark" }),
+
      NbToastrModule.forRoot(),
      NbDialogModule.forChild({ closeOnBackdropClick: false, autoFocus: true, 
       closeOnEsc: true ,dialogClass:"defaultdialogue"}),
@@ -55,7 +57,8 @@ import { NumbersOnlyDirective } from "./directives/number-only.directive";
      MenuChildrenComponent,
      TopNavbarComponent,
      Ng2SmartTableModule,
-     TranslateModule
+     TranslateModule,
+     NbThemeModule,
   
     ],
 

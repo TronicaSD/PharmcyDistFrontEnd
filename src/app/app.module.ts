@@ -39,7 +39,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NbDialogModule.forRoot(),
     NbWindowModule.forRoot(),
     NbToastrModule.forRoot(),
-    NbThemeModule.forRoot({ name: "default" }),
     FormsModule,
     ReactiveFormsModule,
     TranslateModule.forRoot({

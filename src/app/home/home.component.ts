@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
 
   ];
 
-  currentTheme = 'default';
+  currentTheme = 'dark';
   currentLanguage = 'ar';
   constructor(private themeService: NbThemeService, private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
