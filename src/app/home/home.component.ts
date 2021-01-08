@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit {
   ];
 
   currentTheme = 'default';
+  currentLanguage = 'ar';
   constructor(private themeService: NbThemeService, private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
     public translate: TranslateService,
@@ -70,6 +71,7 @@ export class HomeComponent implements OnInit {
   switchLang(lang: string) {
     this.translate.use(lang);
     this._coockieService.set('language', lang);
+
   }
   logOut() {
     debugger;
