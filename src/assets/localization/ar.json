@@ -58,7 +58,11 @@
 "QuantityInSample":"  العينات",
 "QuantityInInvoice":" الفواتير",
 "Inventory":"الجرد",
-"quantityInStock":"  المخزن"
+"quantityInStock":"المخزن",
+"from":"من",
+"to":"ألي",
+"Search":"بحث"
+
 
 
 
