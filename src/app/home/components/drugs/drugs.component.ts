@@ -33,11 +33,14 @@ export class DrugsComponent implements OnInit {
   ) {
     this.AddForm = this._formbuilder.group({
       drugName: [null, Validators.required],
+      price: [null, Validators.required],
+
 
     });
 
     this.EditForm = this._formbuilder.group({
       drugName: [null, Validators.required],
+      price: [null, Validators.required],
       id: [null],
     });
     this.currentLang = translate.currentLang;
@@ -60,11 +63,13 @@ export class DrugsComponent implements OnInit {
   setColumnheaders(): void {
     let Action = 'Action';
     let Name = 'Name';
+    let Price = 'Price';
 
     this.columnheaders = ['', '', '']
     //Used TranslateService from @ngx-translate/core
     this.translate.get(Action).subscribe(label => this.columnheaders[0] = label);
-    this.translate.get(Name).subscribe(label => {
+    this.translate.get(Name).subscribe(label => this.columnheaders[1] = label);
+    this.translate.get(Price).subscribe(label => {
       this.columnheaders[1] = label;
       this.loadTableSettings();
     });
@@ -100,7 +105,11 @@ export class DrugsComponent implements OnInit {
           type: 'string',
           filter: true
         },
-
+        price: {
+          title: this.columnheaders[2],
+          type: 'string',
+          filter: true
+        },
       }
     };
   }
@@ -152,6 +161,8 @@ export class DrugsComponent implements OnInit {
   openEditDialog(dialog: TemplateRef<any>, row: any) {
 
     this.EditForm.controls['drugName'].setValue(row.drugName);
+    this.EditForm.controls['price'].setValue(row.price);
+
     this.EditForm.controls['id'].setValue(row.id);
 
     this.dialogService.open(dialog, {

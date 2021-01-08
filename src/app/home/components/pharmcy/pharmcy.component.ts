@@ -75,9 +75,11 @@ export class PharmcyComponent implements OnInit {
     //Used TranslateService from @ngx-translate/core
     this.translate.get(Action).subscribe(label => this.columnheaders[0] = label);
     this.translate.get(PharmcyName).subscribe(label => this.columnheaders[1] = label);
+    this.translate.get("Government").subscribe(label => this.columnheaders[2] = label);
+    this.translate.get("City").subscribe(label => this.columnheaders[3] = label);
 
     this.translate.get(StreetName).subscribe(label => {
-      this.columnheaders[2] = label;
+      this.columnheaders[4] = label;
       this.loadTableSettings();
     });
 
@@ -110,9 +112,17 @@ export class PharmcyComponent implements OnInit {
           title: this.columnheaders[1],
           type: 'string',
         },
+        governerateName: {
+          title: this.columnheaders[2],
+          type: 'string',
+        },
+        cityName: {
+          title: this.columnheaders[3],
+          type: 'string',
+        },
 
         streetName: {
-          title: this.columnheaders[2],
+          title: this.columnheaders[4],
           type: 'string',
         },
 

@@ -29,7 +29,7 @@
       <form [formGroup]="AddForm" (submit)="Add()">
 
         <div class="row">
-          <div class=" col-md-12">
+          <div class=" col-md-6">
 
 
 
@@ -37,6 +37,20 @@
 
             <input class="form-control" formControlName="drugName" type="text" nbInput fullWidth>
             <span *ngIf="hasError('drugName', 'required')" style="color: red">{{'Name' | translate}}
+              {{'IsRequired' | translate}}</span>
+
+
+
+
+          </div>
+          <div class=" col-md-6">
+
+
+
+            <label> {{'price' | translate}} </label>
+
+            <input class="form-control" formControlName="price" numbersOnly type="text" nbInput fullWidth>
+            <span *ngIf="hasError('price', 'required')" style="color: red">{{'Name' | translate}}
               {{'IsRequired' | translate}}</span>
 
 
@@ -62,7 +76,7 @@
       <form [formGroup]="EditForm" (submit)="updateDrug()">
 
         <div class="row">
-          <div class=" col-md-12">
+          <div class=" col-md-6">
 
             <div class="form-group">
 
@@ -77,7 +91,18 @@
 
             </div>
           </div>
+          <div class=" col-md-6">
 
+            <label> {{'price' | translate}} </label>
+
+            <input class="form-control" formControlName="price" numbersOnly type="text" nbInput fullWidth>
+            <span *ngIf="hasEditError('price', 'required')" style="color: red">{{'Name' | translate}}
+              {{'IsRequired' | translate}}</span>
+
+
+
+
+          </div>
         </div>
       </form>
     </nb-card-body>

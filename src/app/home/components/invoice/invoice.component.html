@@ -125,21 +125,23 @@
                 <td>
                   <nb-select placeholder="اسم الدواء" formControlName="drugId" required>
                     <nb-option disabled value="">Option empty</nb-option>
-                    <nb-option *ngFor="let d of StockDetails" [value]="d.drugId">{{d.drugName}}</nb-option>
+                    <nb-option *ngFor="let d of StockDetails" [value]="d.drugId"
+                      (selectionChange)="calculateDrugPrice()">
+                      {{d.drugName}}</nb-option>
                   </nb-select>
 
                 </td>
                 <td>
 
                   <input class="form-control" required numbersOnly formControlName="qunantity" type="text" nbInput
-                    fullWidth (keyup)="CalculateTotal()" (input)="calculateDrugPrice(i)">
+                    fullWidth (keyup)="CalculateTotal()" (input)="calculateDrugPrice()">
 
 
                 </td>
                 <td>
 
-                  <input class="form-control" required numbersOnly formControlName="price" type="text" nbInput fullWidth
-                    (keyup)="CalculateTotal()" (input)="calculateDrugPrice(i)">
+                  <input class="form-control" required numbersOnly formControlName="price" disabled type="text" nbInput
+                    fullWidth (keyup)="CalculateTotal()">
 
 
                 </td>
@@ -278,7 +280,8 @@
                   {{in}}
                 </td>
                 <td>
-                  <nb-select placeholder="Select Showcase" formControlName="drugId" required>
+                  <nb-select placeholder="Select Showcase" formControlName="drugId" required
+                    (input)="calculateEditDrugPrice(in)">
                     <nb-option disabled value="">Option empty</nb-option>
                     <nb-option *ngFor="let d of StockDetails" [value]="d.drugId">{{d.drugName}}</nb-option>
                   </nb-select>
@@ -293,7 +296,7 @@
                 <td>
 
                   <input class="form-control" required numbersOnly formControlName="price" type="text" nbInput fullWidth
-                    (keyup)="CalculateEditTotal()" (input)="calculateEditDrugPrice(in)">
+                    (keyup)="CalculateEditTotal()" disabled (input)="calculateEditDrugPrice(in)">
 
 
                 </td>

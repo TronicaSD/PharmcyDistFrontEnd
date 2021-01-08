@@ -45,9 +45,9 @@ export class InventoryComponent implements OnInit {
   }
   setColumnheaders(): void {
     let DrugName = 'DrugName';
-    let quantityInStock = 'quantityInStock';
-    let QuantityInSample = 'QuantityInSample';
-    let QuantityInInvoice = 'QuantityInInvoice';
+    let quantityInStock = 'Stock';
+    let QuantityInSample = 'Samples';
+    let QuantityInInvoice = 'Invoices';
     let Total = 'Total';
 
     this.columnheaders = ['', '']
