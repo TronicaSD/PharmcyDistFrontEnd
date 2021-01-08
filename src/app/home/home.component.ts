@@ -74,7 +74,7 @@ export class HomeComponent implements OnInit {
 
   }
   logOut() {
-    debugger;
+   
     this._authService.logout();
   }
 

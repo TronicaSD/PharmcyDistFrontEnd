@@ -73,29 +73,37 @@ export class InventoryComponent implements OnInit {
         add: false,
         edit: false,
         delete: false,
-        filter: true
       },
 
       columns: {
         drugName: {
           title: this.columnheaders[0],
           type: 'string',
+          filter:true,
+
         }
         , quantityInSample: {
           title: this.columnheaders[1],
           type: 'string',
+          filter:false
+
         },
         quantityInInvoice: {
           title: this.columnheaders[2],
           type: 'string',
+          filter:false
+
         },
         quantityInStock: {
           title: this.columnheaders[3],
           type: 'string',
+          filter:false
         },
         total: {
           title: this.columnheaders[4],
           type: 'string',
+          filter:false
+
 
         },
       }
@@ -103,9 +111,9 @@ export class InventoryComponent implements OnInit {
   }
 
   getAllInventory() {
-    debugger;
+   
     //  this.SeacrhForm.value.from = new Date(this.SeacrhForm.value.from.getUTCDate());
-    debugger;
+   
 
     this._PublicService.post("StockDetails/ViewInventoey", this.SeacrhForm.value).subscribe(res => {
       this.allStockDetails = res;

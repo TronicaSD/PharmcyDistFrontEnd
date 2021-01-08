@@ -58,7 +58,7 @@ export class StockDetailsComponent implements OnInit {
         add: false,
         edit: false,
         delete: false,
-        filter: true
+  
       },
 
       columns: {
@@ -70,6 +70,8 @@ export class StockDetailsComponent implements OnInit {
         quantity: {
           title: this.columnheaders[1],
           type: 'string',
+        filter: false
+
         },
 
       }

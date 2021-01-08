@@ -70,7 +70,7 @@ export class DrugsComponent implements OnInit {
     this.translate.get(Action).subscribe(label => this.columnheaders[0] = label);
     this.translate.get(Name).subscribe(label => this.columnheaders[1] = label);
     this.translate.get(Price).subscribe(label => {
-      this.columnheaders[1] = label;
+      this.columnheaders[2] = label;
       this.loadTableSettings();
     });
 
@@ -95,7 +95,6 @@ export class DrugsComponent implements OnInit {
         add: false,
         edit: false,
         delete: false,
-        filter: true
       },
 
       columns: {
@@ -103,12 +102,12 @@ export class DrugsComponent implements OnInit {
         drugName: {
           title: this.columnheaders[1],
           type: 'string',
-          filter: true
+          filter: false
         },
         price: {
           title: this.columnheaders[2],
           type: 'string',
-          filter: true
+          filter: false
         },
       }
     };

@@ -84,10 +84,10 @@ export class InvoiceComponent implements OnInit {
       invoiceDetails: this._formbuilder.array([])
     });
     this.AddForm.valueChanges.subscribe(x => {
-      debugger;
+     
       this.calculateDrugPrice();
     })
-    debugger;
+   
     this.currentLang = translate.currentLang;
     translate.onLangChange.subscribe((event: LangChangeEvent) => {
       this.currentLang = event.lang;
@@ -252,9 +252,9 @@ export class InvoiceComponent implements OnInit {
     this.AddinvoiceDetails.controls.forEach(x => {
       let drugId = parseInt(x.get('drugId').value);
       var drug = this.StockDetails.find(a => a.drugId == drugId);
-      debugger;
+     
       x.get('price').patchValue(drug.price);
-      debugger;
+     
 
       let price = parseInt(x.get('price').value)
       let quantity = parseInt(x.get('qunantity').value);
@@ -302,7 +302,7 @@ export class InvoiceComponent implements OnInit {
       this.AddForm.value.InvoiceDate.getDate()
     ));
     this.AddForm.controls.InvoiceDate.setValue(date);
-    debugger;
+   
     this._PublicService.post('Invoice/AddData', this.AddForm.value).subscribe((Response) => {
       this.getAllInvoice();
     this.ClearForm();
@@ -338,9 +338,9 @@ export class InvoiceComponent implements OnInit {
     this.EditInvoiceDetails.controls.forEach(x => {
       let drugId = parseInt(x.get('drugId').value);
       var drug = this.StockDetails.find(a => a.drugId == drugId);
-      debugger;
+     
       x.get('price').patchValue(drug.price);
-      debugger;
+     
       let price = parseInt(x.get('price').value)
       let quantity = parseInt(x.get('qunantity').value)
       this.price = price * quantity;

@@ -40,7 +40,7 @@ export class receiptDetailsComponent implements OnInit {
   selected: any;
   TotalDiscount: any;
   TotalDiscountEdit: any;
-  TotalEdit: any;
+ 
   receiptNumber: string;
   EditreceiptNumber: string;
   currentLang: string;
@@ -86,14 +86,12 @@ export class receiptDetailsComponent implements OnInit {
     });
   }
   setColumnheaders(): void {
-    let Action = 'Action';
-    let Date = 'Date';
-    let Type = 'Type';
-    this.columnheaders = ['', '', '']
+
+    this.columnheaders = []
     //Used TranslateService from @ngx-translate/core
-    this.translate.get(Action).subscribe(label => this.columnheaders[0] = label);
-    this.translate.get(Type).subscribe(label => this.columnheaders[1] = label);
-    this.translate.get(Date).subscribe(label => this.columnheaders[2] = label);
+    this.translate.get("Action").subscribe(label => this.columnheaders[0] = label);
+    this.translate.get('SerialNum').subscribe(label => this.columnheaders[1] = label);
+    this.translate.get('Date').subscribe(label => this.columnheaders[2] = label);
     this.translate.get('Quantity').subscribe(label => {
       this.columnheaders[3] = label;
       this.loadTableSettings();
@@ -104,37 +102,45 @@ export class receiptDetailsComponent implements OnInit {
   loadTableSettings() {
     let actionsColumn = "";
     this.translate.get('Action').subscribe(val => { actionsColumn = val; })
-    debugger;
+   
     this.settings = {
       // hideSubHeader: true,
       actions: {
         position: "right",
         columnTitle: actionsColumn,
         custom: [
+          {
+            name: 'view',
+            title: '<i class="fa fa-eye text-primary "></i>'
+          },
 
           {
-            name: 'editAction',
+            name: 'edit',
             title: '<i class="fa fa-edit text-warning"></i>'
           },
           {
-            name: 'deleteAction',
+            name: 'delete',
             title: '<i class="fa fa-trash text-danger"></i>'
           }
         ],
         add: false,
         edit: false,
         delete: false,
-        filter: true
       },
 
       columns: {
-        transactionTypeText: {
+
+        id:{
           title: this.columnheaders[1],
-          type: 'string',
+        filter: false,
+
         },
+  
         date: {
           title: this.columnheaders[2],
           type: 'string',
+        filter: false,
+
           valuePrepareFunction: (type) => {
             if (type) {
               return moment(type).format('M/d/yyyy');
@@ -145,6 +151,8 @@ export class receiptDetailsComponent implements OnInit {
         totalPrice: {
           title: this.columnheaders[3],
           type: 'string',
+        filter: false,
+
 
         }
 
@@ -221,16 +229,12 @@ export class receiptDetailsComponent implements OnInit {
     });
   }
 
-  ////////////////Edit Modal
-  CalculateEditTotal() {
-    this.TotalEdit = this.EditreceiptDetails.value.reduce((accumulator, current) => parseInt(accumulator) + parseInt(current.quantity), 0);
-    this.EditForm.controls['TotalPrice'].setValue(this.TotalEdit);
-  }
+ 
 
   EditreceiptDetails: FormArray;
   get receiptDetailsEdit(): FormArray {
     this.EditreceiptDetails = this.EditForm.get("receiptDetails") as FormArray;
-    debugger;
+ 
     return this.EditreceiptDetails;
   }
   EditreceiptDetailsList() {
@@ -238,18 +242,16 @@ export class receiptDetailsComponent implements OnInit {
   }
   removereceiptDetailsEdit(i: number) {
     this.receiptDetailsEdit.removeAt(i);
-    this.CalculateEditTotal();
 
   }
   openEditModal(dialog: TemplateRef<any>, row: any) {
     this.EditForm.controls['Id'].setValue(row.id);
     this.EditForm.controls['Date'].setValue(row.date);
     this.EditForm.controls['TotalPrice'].setValue(row.totalPrice);
-    this.TotalEdit = this.EditForm.get('TotalPrice').value;
 
     this.receiptDetailsEdit.removeAt(0);
     row.receiptDetails.forEach(x => {
-      debugger;
+     
       var newEdirreceiptDetails = this._formbuilder.group({
         drugId: x.drugId,
         drugName: "",
@@ -257,16 +259,16 @@ export class receiptDetailsComponent implements OnInit {
         quantity: x.quantity,
         id: x.id,
       });
-      debugger;
+     
       this.receiptDetailsEdit.push(newEdirreceiptDetails)
-      debugger;
+     
     });
     this.dialogService.open(dialog, {
       dialogClass: 'lg-modal'
     });
   }
   updatereceipt() {
-    debugger;
+   
     this._PublicService.put('receipt/UpdateData', this.EditForm.value).subscribe((Response) => {
       this._ToasterService.success("receipt Updated successfully", "Success");
       this.getAllreceipt();
@@ -278,6 +280,15 @@ export class receiptDetailsComponent implements OnInit {
     });
     this.EditForm.reset();
 
+  }
+
+  viewObj:any;
+  openViewDialog(dialog: TemplateRef<any>, row: any){
+    debugger;
+    this.viewObj=row;
+    this.dialogService.open(dialog, {
+      dialogClass: 'lg-modal'
+    });
   }
 
 
@@ -320,15 +331,19 @@ export class receiptDetailsComponent implements OnInit {
     }
 
   }
-  onCustomAction(Deletedialog: TemplateRef<any>, Editdialog: TemplateRef<any>, event) {
+  onCustomAction(Deletedialog: TemplateRef<any>, Editdialog: TemplateRef<any>, Viewdialog: TemplateRef<any>, event) {
 
     switch (event.action) {
-      case 'deleteAction':
+      case 'delete':
         this.openDeleteModal(Deletedialog, event.data.id)
         break;
-      case 'editAction':
+      case 'edit':
         this.openEditModal(Editdialog, event.data)
         break;
+        case 'view':
+          this.openViewDialog(Viewdialog, event.data)
+          break;
+  
 
     }
   }

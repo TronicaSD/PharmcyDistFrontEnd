@@ -58,15 +58,10 @@ nb-card-footer button {
 }
 
 .ng2-smart-actions {
-  width: 14%;
+  width: 20%;
 }
 
-.nb-theme-dark ng2-smart-table .ng2-smart-actions a.ng2-smart-action:not(:last-child),
-.nb-theme-default ng2-smart-table .ng2-smart-actions a.ng2-smart-action:not(:last-child),
-.nb-theme-cosmic ng2-smart-table .ng2-smart-actions a.ng2-smart-action:not(:last-child) {
-  margin-top: 15%;
 
-}
 
 
 label,
@@ -101,4 +96,7 @@ span {
 }
 .row{
   width:100%;
+}
+i .fa :hover{
+  cursor: pointer;
 }

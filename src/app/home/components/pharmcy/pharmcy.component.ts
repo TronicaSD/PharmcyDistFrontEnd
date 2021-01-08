@@ -86,7 +86,6 @@ export class PharmcyComponent implements OnInit {
   }
   loadTableSettings() {
     this.settings = {
-      // hideSubHeader: true,
       actions: {
         position: "right",
         columnTitle: this.columnheaders[0],
@@ -104,26 +103,35 @@ export class PharmcyComponent implements OnInit {
         add: false,
         edit: false,
         delete: false,
-        filter: true
       },
 
       columns: {
         pharmcyName: {
           title: this.columnheaders[1],
           type: 'string',
+        filter: false
+
         },
         governerateName: {
           title: this.columnheaders[2],
           type: 'string',
+        filter: false
+
+
         },
         cityName: {
           title: this.columnheaders[3],
           type: 'string',
+          filter: false
+
         },
 
         streetName: {
           title: this.columnheaders[4],
           type: 'string',
+        filter: false
+
+
         },
 
       }

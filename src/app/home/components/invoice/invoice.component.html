@@ -124,8 +124,7 @@
                 </td>
                 <td>
                   <nb-select placeholder="drug name" formControlName="drugId" required>
-                    <nb-option disabled value="">Option empty</nb-option>
-                    <nb-option *ngFor="let d of StockDetails" [value]="d.drugId"
+                      <nb-option *ngFor="let d of StockDetails" [value]="d.drugId"
                       (selectionChange)="calculateDrugPrice()">
                       {{d.drugName}}</nb-option>
                   </nb-select>
@@ -282,8 +281,7 @@
                 <td>
                   <nb-select placeholder="Select Showcase" formControlName="drugId" required
                     (input)="calculateEditDrugPrice(in)">
-                    <nb-option disabled value="">Option empty</nb-option>
-                    <nb-option *ngFor="let d of StockDetails" [value]="d.drugId">{{d.drugName}}</nb-option>
+                      <nb-option *ngFor="let d of StockDetails" [value]="d.drugId">{{d.drugName}}</nb-option>
                   </nb-select>
 
                 </td>
