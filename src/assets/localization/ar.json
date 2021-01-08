@@ -58,7 +58,11 @@
 "QuantityInSample":"الكمية في العينات",
 "QuantityInInvoice":"الكمية في الفواتير",
 "Inventory":"الجرد",
-"quantityInStock":"الكمية في المخزن"
+"quantityInStock":"الكمية في المخزن",
+"from":"من",
+"to":"ألي",
+"Search":"بحث"
+
 
 
 

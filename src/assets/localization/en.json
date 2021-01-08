@@ -59,7 +59,10 @@
 "QuantityInSample":" Quantity In Sample ",
 "QuantityInInvoice":"Quantity In Invoice",
 "Inventory":"Inventory",
-"quantityInStock":"Quantity In Stock"
+"quantityInStock":"Quantity In Stock",
+"from":"From",
+"to":"To",
+"Search":"Search"
 
 
 
