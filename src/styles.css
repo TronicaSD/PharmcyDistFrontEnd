@@ -79,3 +79,10 @@ span {
 .ng2-smart-actions-title {
   display: table-column !important;
 }
+
+
+.nb-theme-dark ng2-smart-table .ng2-smart-actions{
+
+  display: block;
+  position: relative;
+}

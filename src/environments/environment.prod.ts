@@ -1,7 +1,7 @@
 export const environment = {
 
   production: true,
-  serverUrl: './api/',
+  baseUrl: './api/',
   imageUrl: './files/'
 
 };
