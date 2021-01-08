@@ -72,10 +72,10 @@ export class DrugsComponent implements OnInit {
   }
   loadTableSettings() {
     this.settings = {
-      hideSubHeader: true,
+      // hideSubHeader: true,
       actions: {
-        position: "right",  
-        columnTitle:this.columnheaders[0],
+        position: "right",
+        columnTitle: this.columnheaders[0],
         custom: [
 
           {
@@ -89,7 +89,8 @@ export class DrugsComponent implements OnInit {
         ],
         add: false,
         edit: false,
-        delete: false
+        delete: false,
+        filter: true
       },
 
       columns: {
@@ -192,13 +193,13 @@ export class DrugsComponent implements OnInit {
 
 
   openDeletedialog(dialog: TemplateRef<any>, id: any) {
-    
+
     this.dialogService.open(dialog, {
       dialogClass: "defaultdialogue"
     }).onClose.subscribe(res => {
-      
+
       if (res) {
-        
+
         this.DeleteDrug(id);
       }
 
@@ -207,7 +208,7 @@ export class DrugsComponent implements OnInit {
   }
 
   onCustomAction(Deletedialog: TemplateRef<any>, Editdialog: TemplateRef<any>, event) {
-    
+
     switch (event.action) {
       case 'deleteAction':
         this.openDeletedialog(Deletedialog, event.data.id)

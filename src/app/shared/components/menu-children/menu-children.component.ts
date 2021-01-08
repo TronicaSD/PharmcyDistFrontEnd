@@ -21,7 +21,6 @@ export class MenuChildrenComponent implements OnInit {
     private _coockieService: CookieService
     , private _changeDetectorRef: ChangeDetectorRef) {
     var lang = this._coockieService.get('language');
-    
     this.translate.use(lang);
     this.currentLang = translate.currentLang;
     translate.onLangChange.subscribe((event: LangChangeEvent) => {
@@ -45,9 +44,13 @@ export class MenuChildrenComponent implements OnInit {
     this.translate.get('Pharmcies').subscribe(label => this.columnheaders[2] = label);
     this.translate.get('Stocks').subscribe(label => this.columnheaders[3] = label);
     this.translate.get('StockDetails').subscribe(label => this.columnheaders[4] = label);
-    this.translate.get('InvoiceAndSamples').subscribe(label => this.columnheaders[5] = label);
-    this.translate.get('Samples').subscribe(label => this.columnheaders[6] = label);
-    this.translate.get('Invoices').subscribe(label => { this.columnheaders[7] = label;
+    this.translate.get('receipt').subscribe(label => this.columnheaders[5] = label);
+    this.translate.get('Inventory').subscribe(label => this.columnheaders[6] = label);
+    this.translate.get('InvoiceAndSamples').subscribe(label => this.columnheaders[7] = label);
+    this.translate.get('Samples').subscribe(label => this.columnheaders[8] = label);
+
+    this.translate.get('Invoices').subscribe(label => {
+      this.columnheaders[9] = label;
       this.GetMenueItem();
     });
   }
@@ -76,12 +79,12 @@ export class MenuChildrenComponent implements OnInit {
           {
             title: this.columnheaders[1],
             link: 'drugs',
-                icon: 'drag',
+            icon: 'drag',
           },
           {
             title: this.columnheaders[2],
             link: 'pharmcies',
-              icon: 'drug',
+            icon: 'drug',
 
           }
         ],
@@ -95,14 +98,26 @@ export class MenuChildrenComponent implements OnInit {
         children: [
           {
             title: this.columnheaders[4],
-            link: 'stockDetails',
-                icon: 'home',
+            link: 'StocktDetails',
+            icon: 'home',
+
+          },
+          {
+            title: this.columnheaders[5],
+            link: 'receiptDetails',
+            icon: 'home',
+
+          },
+          {
+            title: this.columnheaders[6],
+            link: 'Inventroy',
+            icon: 'home',
 
           }
         ],
       },
       {
-        title: this.columnheaders[5],
+        title: this.columnheaders[7],
         link: '/home',
         icon: 'edit-2-outline',
         hidden: !(this.findRole(Role.user)),
@@ -110,12 +125,12 @@ export class MenuChildrenComponent implements OnInit {
         expanded: false,
         children: [
           {
-            title: this.columnheaders[6],
+            title: this.columnheaders[8],
             link: 'Samples',
 
           },
           {
-            title: this.columnheaders[7],
+            title: this.columnheaders[9],
             link: 'Invoice',
 
           },

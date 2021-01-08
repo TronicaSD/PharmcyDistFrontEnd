@@ -4,6 +4,7 @@ import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie-service';
+import { AuthService } from '../auth/services/auth.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -34,6 +35,7 @@ export class HomeComponent implements OnInit {
     private menuService: NbMenuService,
     public translate: TranslateService,
     private _coockieService: CookieService,
+    private _authService: AuthService,
 
   ) {
     this.themeService.onThemeChange()
@@ -68,6 +70,10 @@ export class HomeComponent implements OnInit {
   switchLang(lang: string) {
     this.translate.use(lang);
     this._coockieService.set('language', lang);
+  }
+  logOut() {
+    debugger;
+    this._authService.logout();
   }
 
 }

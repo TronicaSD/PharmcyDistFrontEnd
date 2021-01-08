@@ -3,6 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { DrugsComponent } from './components/drugs/drugs.component';
 import { PharmcyComponent } from './components/pharmcy/pharmcy.component';
 import { StockDetailsComponent } from './components/stock-details/stock-details.component';
+import { receiptDetailsComponent } from './components/receipt-details/receipt-details.component';
+import { InventoryComponent } from './components/inventory/inventory.component';
+
 import { SamplesComponent } from './components/samples/samples.component';
 import { InvoiceComponent } from './components/invoice/invoice.component';
 import { AuthGuard } from '../../app/auth/services/auth.guard';
@@ -17,7 +20,9 @@ const routes: Routes = [
     children: [
       { path: 'drugs', component: DrugsComponent, canActivate: [AuthGuard], data: { roles: [Role.admin] } },
       { path: 'pharmcies', component: PharmcyComponent, canActivate: [AuthGuard], data: { roles: [Role.admin] } },
-      { path: 'stockDetails', component: StockDetailsComponent, canActivate: [AuthGuard], data: { roles: [Role.admin] } },
+      { path: 'receiptDetails', component: receiptDetailsComponent, canActivate: [AuthGuard], data: { roles: [Role.admin] } },
+      { path: 'StocktDetails', component: StockDetailsComponent, canActivate: [AuthGuard], data: { roles: [Role.admin] } },
+      { path: 'Inventroy', component: InventoryComponent, canActivate: [AuthGuard], data: { roles: [Role.admin] } },
       { path: 'Samples', component: SamplesComponent, canActivate: [AuthGuard], data: { roles: [Role.user] } },
       { path: 'Invoice', component: InvoiceComponent, canActivate: [AuthGuard], data: { roles: [Role.user] } },
 

@@ -8,163 +8,19 @@
 
       <div class="row">
         <div class="col-md-3">
-          {{'Stocks' | translate}}
+          {{'StockDetails' | translate}}
           <nb-icon icon="home">
 
           </nb-icon>
         </div>
-        <div class="offset-8 col-md-1">
 
-          <button nbButton status="primary" (click)="openAddModal(Adddialog)"> <i class="fa fa-plus "></i></button>
-        </div>
       </div>
     </nb-card-header>
 
     <nb-card-body>
-      <ng2-smart-table [settings]="settings" [source]="source"
-        (custom)="onCustomAction(Deletedialog,Editdialog,$event)">
+      <ng2-smart-table [settings]="settings" [source]="source">
       </ng2-smart-table>
     </nb-card-body>
   </nb-card>
 
-  <ng-template #Adddialog class="model-full" let-data let-ref="dialogRef">
-    <nb-card>
-
-      <nb-card-header>
-        <h4 class="modal-title" id="modal-basic-title">{{'Add' | translate}} {{'Drug' | translate}} {{'To' | translate}}
-          {{'Stock' | translate}}
-        </h4>
-
-      </nb-card-header>
-
-      <nb-card-body class="modal-body">
-        <form [formGroup]="AddForm">
-          <div class="row">
-            <div class="col-md-6">
-
-              <div class="form-group">
-
-                <label> {{'Drug' | translate}} {{'Name' | translate}}</label><br>
-
-                <nb-select placeholder="Select a drug" formControlName="DrugId">
-                  <nb-option *ngFor="let d of Drugs" [value]="d.id">{{d.drugName}}</nb-option>
-
-                </nb-select>
-                <span *ngIf="hasError('DrugId', 'required')" style="color: red;display: block;">{{'Drug' | translate}}
-                  {{'Name' | translate}} {{'IsRequired' | translate}}</span>
-
-              </div>
-            </div>
-            <div class=" col-md-6">
-
-              <div class="form-group">
-
-                <label>{{'Quantity' | translate}}</label>
-
-
-                <input class="form-control" numbersOnly formControlName="Quantity" type="text" nbInput fullWidth>
-                <span *ngIf="hasError('Quantity', 'required')" style="color: red">{{'Quantity' | translate}}
-                  {{'IsRequired' | translate}}</span>
-
-
-
-              </div>
-            </div>
-          </div>
-
-
-        </form>
-
-      </nb-card-body>
-
-      <nb-card-footer>
-
-        <button type="button" nbButton status="success" [disabled]="AddForm.invalid" data-dismiss="modal"
-          (click)="Add();ref.close()">{{'Save' | translate}}</button> <button nbButton status="danger"
-          (click)="ref.close()">{{'Cancel' | translate}}</button> </nb-card-footer>
-    </nb-card>
-  </ng-template>
-  <ng-template #Editdialog class="model-full" let-data let-ref="dialogRef">
-    <nb-card>
-      <nb-card-header>
-        <h4 class="modal-title" id="modal-basic-title">{{'Edit' | translate}} {{'Drug' | translate}}
-          {{'In' | translate}}
-          {{'Stock' | translate}}</h4>
-
-      </nb-card-header>
-      <nb-card-body>
-        <form [formGroup]="EditForm" (submit)="updateStockDetails()">
-
-          <div class="row">
-            <div class=" col-md-6">
-
-              <div class="form-group">
-
-                <label>{{'Drug' | translate}} {{'Name' | translate}}</label>
-
-                <nb-select placeholder="Select Showcase" [(selected)]="selectedItem" disabled formControlName="DrugId">
-                  <nb-option value="0">Option empty</nb-option>
-                  <nb-option *ngFor="let d of Drugs" [value]="d.id">{{d.drugName}}</nb-option>
-                </nb-select>
-                <span *ngIf="hasEditError('DrugId', 'required')" style="color: red">{{'Drug' | translate}}
-                  {{'Name' | translate}} {{'IsRequired' | translate}}</span>
-
-              </div>
-            </div>
-
-            <div class=" col-md-6">
-
-              <div class="form-group">
-
-                <label>{{'Quantity' | translate}}</label>
-
-
-                <input class="form-control" numbersOnly formControlName="Quantity" type="text" nbInput fullWidth>
-                <span *ngIf="hasEditError('Quantity', 'required')" style="color: red">{{'Quantity' | translate}}
-                  {{'IsRequired' | translate}}</span>
-
-
-
-              </div>
-            </div>
-
-          </div>
-        </form>
-      </nb-card-body>
-
-      <nb-card-footer>
-
-        <button type="button" nbButton status="success" [disabled]="EditForm.invalid" data-dismiss="modal"
-          (click)="updateStockDetails();ref.close()">{{'Save' | translate}}</button> <button nbButton status="danger"
-          (click)="ref.close()">{{'Cancel' | translate}}</button> </nb-card-footer>
-    </nb-card>
-  </ng-template>
-  <ng-template #Deletedialog class="model-full" let-data let-deletemodalref="dialogRef">
-    <nb-card>
-      <nb-card-header>
-        <h4 class="modal-title" id="modal-basic-title">{{'Delete' | translate}}
-          {{'Drug' | translate}} {{'From' | translate}}
-          {{'Stock' | translate}}</h4>
-
-      </nb-card-header>
-      <nb-card-body>
-        <div class="row">
-          <div class="col-md-12">
-            <p class="text-danger" style="font-size: x-large;">
-              {{'AreYouSureYouWantToDeleteThisItem' | translate}} ?
-
-
-            </p>
-          </div>
-        </div>
-      </nb-card-body>
-
-      <nb-card-footer>
-
-        <button type="button" nbButton status="success"
-          (click)="deletemodalref.close(true)">{{'Save' | translate}}</button> <button type="button" nbButton
-          status="danger" (click)="deletemodalref.close(false)">
-          {{'Cancel' | translate}}</button> </nb-card-footer>
-    </nb-card>
-  </ng-template>
 </div>

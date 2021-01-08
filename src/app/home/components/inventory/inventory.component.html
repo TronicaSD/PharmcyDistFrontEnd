@@ -1,0 +1,55 @@
+<div class="container">
+
+  <div class="row mb-4">
+    <div class="col-md-8">
+      <form [formGroup]="SeacrhForm" (submit)="getAllInventory()">
+
+        <div class="row">
+          <div class=" col-md-6">
+
+            <label> {{'from' | translate}}</label>
+            <input nbInput placeholder="Pick Date" [nbDatepicker]="dateTimefromPicker" class="form-control"
+              formControlName="from">
+            <nb-datepicker #dateTimefromPicker></nb-datepicker>
+          </div>
+          <div class=" col-md-6">
+
+            <label> {{'to' | translate}}</label>
+            <input nbInput placeholder="Pick Date" [nbDatepicker]="dateTimetoPicker" class="form-control"
+              formControlName="to">
+            <nb-datepicker #dateTimetoPicker></nb-datepicker>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-4">
+      <button type="button" class="cancel" nbButton status="success"
+        (click)="  getAllInventory()">{{'Search' | translate}} </button>
+
+    </div>
+
+
+
+  </div>
+
+  <nb-card>
+    <nb-card-header>
+
+      <div class="row">
+        <div class="col-md-3">
+          {{'Inventroy' | translate}}
+          <nb-icon icon="home">
+
+          </nb-icon>
+        </div>
+
+      </div>
+    </nb-card-header>
+
+    <nb-card-body>
+      <ng2-smart-table [settings]="settings" [source]="source">
+      </ng2-smart-table>
+    </nb-card-body>
+  </nb-card>
+
+</div>

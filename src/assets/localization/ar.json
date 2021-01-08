@@ -53,7 +53,13 @@
 "StockDetails":"تفاصيل المخازن",
 "DrugName":"أسم الدواء",
 "Config":" الاعدادات",
-"InvoiceAndSamples":"الفواتير و العينات"
+"InvoiceAndSamples":"الفواتير و العينات",
+"receipt":"الأستلام",
+"QuantityInSample":"الكمية في العينات",
+"QuantityInInvoice":"الكمية في الفواتير",
+"Inventory":"الجرد",
+"quantityInStock":"الكمية في المخزن"
+
 
 
 

@@ -60,6 +60,7 @@ export class PharmcyComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllPharmcies();
+    this.setColumnheaders();
     this.getAllGovernorates();
     this.translate.onLangChange.subscribe(item => {
       this.setColumnheaders();
@@ -79,14 +80,14 @@ export class PharmcyComponent implements OnInit {
       this.columnheaders[2] = label;
       this.loadTableSettings();
     });
-  
+
   }
   loadTableSettings() {
     this.settings = {
-      hideSubHeader: true,
+      // hideSubHeader: true,
       actions: {
-        position: "right",  
-        columnTitle:this.columnheaders[0],
+        position: "right",
+        columnTitle: this.columnheaders[0],
         custom: [
 
           {
@@ -100,7 +101,8 @@ export class PharmcyComponent implements OnInit {
         ],
         add: false,
         edit: false,
-        delete: false
+        delete: false,
+        filter: true
       },
 
       columns: {
@@ -120,7 +122,7 @@ export class PharmcyComponent implements OnInit {
   getAllGovernorates() {
     this._PublicService.get("GS_Governorate/ViewGetAll").subscribe(res => {
       this.allGovernorates = res;
-      
+
       this.changeCities(1);
     });
   }
@@ -177,7 +179,7 @@ export class PharmcyComponent implements OnInit {
     this.EditForm.controls['id'].setValue(row.id);
     this.EditForm.controls['cityId'].setValue(row.cityId);
     this.EditForm.controls['governerateId'].setValue(row.governerateId);
-    
+
     this.dialogService.open(dialog, {
       dialogClass: "defaultdialogue"
 
@@ -223,9 +225,9 @@ export class PharmcyComponent implements OnInit {
       dialogClass: "defaultdialogue"
 
     }).onClose.subscribe(res => {
-      
+
       if (res) {
-        
+
         this.DeletePharmcy(id);
       }
 
@@ -234,7 +236,7 @@ export class PharmcyComponent implements OnInit {
   }
 
   onCustomAction(Deletedialog: TemplateRef<any>, Editdialog: TemplateRef<any>, event) {
-    
+
     switch (event.action) {
       case 'deleteAction':
         this.openDeleteModal(Deletedialog, event.data.id)

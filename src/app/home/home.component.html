@@ -1,19 +1,16 @@
 <nb-layout>
   <nb-layout-header>
-    <div class="row">
+    <div class="col-md-9">
+      <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
+        <nb-icon icon="menu-2-outline"></nb-icon>
+      </a>
+    </div>
+    <div class="col-md-3" style="display: contents;">
+      <nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary" style="margin: .5%;">
+        <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
+      </nb-select>
 
-      <div class="col-md-5">
-        <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
-          <nb-icon icon="menu-2-outline"></nb-icon>
-        </a>
-      </div>
-      <!-- <div class="col-md-5">
-  <nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
-    <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
-  </nb-select>
-
-  </div> -->
-      <span class="form-inline">
+      <span class="form-inline" style="margin: .5%;">
         <select class="form-control" #selectedLang (change)="switchLang(selectedLang.value)">
           <option *ngFor="let language of translate.getLangs()" [value]="language"
             [selected]="language === translate.currentLang">
@@ -21,7 +18,13 @@
           </option>
         </select>
       </span>
+      <span style="margin: .5%;">
+        <button (click)="logOut()" class="form-control">
+          Logout
+        </button>
+      </span>
     </div>
+
   </nb-layout-header>
 
   <nb-sidebar Left>

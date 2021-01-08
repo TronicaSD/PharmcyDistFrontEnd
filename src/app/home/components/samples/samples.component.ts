@@ -61,15 +61,15 @@ export class SamplesComponent implements OnInit {
     this.getAllSample();
     this.getAllDrugs();
     this.getAllStockDetails();
-   
+
     //LISTEN TO EVENTS
     this.translate.onLangChange.subscribe(item => {
       this.setColumnheaders();
     });
-  } 
+  }
   setColumnheaders() {
 
- 
+
 
     this.columnheaders = []
     //Used TranslateService from @ngx-translate/core
@@ -85,10 +85,10 @@ export class SamplesComponent implements OnInit {
   }
   loadTableSettings() {
     this.settings = {
-      hideSubHeader: true,
+      // hideSubHeader: true,
       actions: {
-        position: "right",  
-        columnTitle:this.columnheaders[0],
+        position: "right",
+        columnTitle: this.columnheaders[0],
         custom: [
           {
             name: 'editAction',
@@ -101,14 +101,15 @@ export class SamplesComponent implements OnInit {
         ],
         add: false,
         edit: false,
-        delete: false
+        delete: false,
+        filter: true
       },
-      
+
       columns: {
         doctorName: {
           title: this.columnheaders[1],
           type: 'string',
-          
+
         },
         drugName: {
           title: this.columnheaders[2],
@@ -139,6 +140,7 @@ export class SamplesComponent implements OnInit {
 
     });
   }
+
   getAllSample() {
     this._PublicService.get("Sample/ViewGetAll").subscribe(res => {
       this.Samples = res;
@@ -158,7 +160,7 @@ export class SamplesComponent implements OnInit {
 
   }
   Add() {
-    
+
     this._PublicService.post('Sample/AddData', this.AddForm.value).subscribe((Response) => {
       this.getAllSample();
       this._ToasterService.success("Sample added successfully");
@@ -204,7 +206,7 @@ export class SamplesComponent implements OnInit {
       dialogClass: "defaultdialogue"
 
     }).onClose.subscribe(res => {
-      
+
       if (res) {
 
         this.DeleteSample(id);
@@ -224,7 +226,7 @@ export class SamplesComponent implements OnInit {
   }
 
   onCustomAction(Deletedialog: TemplateRef<any>, Editdialog: TemplateRef<any>, event) {
-    
+
     switch (event.action) {
       case 'deleteAction':
         this.openDeleteModal(Deletedialog, event.data.id)

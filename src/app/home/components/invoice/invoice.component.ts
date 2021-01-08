@@ -7,6 +7,7 @@ import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { PublicService } from 'src/app/core/publicService.Service';
 import { LocalDataSource } from 'ng2-smart-table';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { MomentFormatPipe } from '../../pipes/MomentFormatPipe';
 
 @Component({
   selector: 'app-invoice',
@@ -58,7 +59,6 @@ export class InvoiceComponent implements OnInit {
 
     this.AddForm = this._formbuilder.group({
       InvoiceDate: [new Date(), Validators.required],
-      InvoiceNumber: ['', Validators.required],
       InvoiceType: [1, Validators.required],
       PharmcyId: ['', Validators.required],
       TotalPrice: [''],
@@ -73,7 +73,6 @@ export class InvoiceComponent implements OnInit {
     this.EditForm = this._formbuilder.group({
       Id: [''],
       InvoiceDate: ['', Validators.required],
-      InvoiceNumber: ['', Validators.required],
       InvoiceType: ['', Validators.required],
       PharmcyId: ['', Validators.required],
       TotalPrice: [''],
@@ -85,9 +84,7 @@ export class InvoiceComponent implements OnInit {
       invoiceDetails: this._formbuilder.array([])
     });
 
-    this.onChanges();
     this.currentLang = translate.currentLang;
-
     translate.onLangChange.subscribe((event: LangChangeEvent) => {
       this.currentLang = event.lang;
       // TODO This as a workaround.
@@ -136,12 +133,12 @@ export class InvoiceComponent implements OnInit {
   }
   settings: any;
   loadTableSettings() {
-    let actionsColumn="";
-    this.translate.get('Action').subscribe(val=>{actionsColumn= val;})
+    let actionsColumn = "";
+    this.translate.get('Action').subscribe(val => { actionsColumn = val; })
     this.settings = {
-      hideSubHeader: true,
+      // hideSubHeader: true,
       actions: {
-        position: "right",  
+        position: "right",
         columnTitle: actionsColumn,
         custom: [
 
@@ -156,7 +153,8 @@ export class InvoiceComponent implements OnInit {
         ],
         add: false,
         edit: false,
-        delete: false
+        delete: false,
+        filter: true
       },
 
       columns: {
@@ -177,10 +175,24 @@ export class InvoiceComponent implements OnInit {
         invoiceDate: {
           title: this.columnheaders[3],
           type: 'string',
+          valuePrepareFunction: (invoiceDate) => {
+            if (invoiceDate) {
+
+              return moment(invoiceDate).format('M/d/yyyy');
+            }
+            return null;
+          }
         },
         disCount: {
           title: this.columnheaders[4],
           type: 'string',
+          valuePrepareFunction: (disCount) => {
+            if (disCount) {
+
+              return disCount + '%';
+            }
+            return null;
+          }
         },
         totalPrice: {
           title: this.columnheaders[5],
@@ -220,18 +232,18 @@ export class InvoiceComponent implements OnInit {
   };
 
   /////////////add////////////////////
-  onChanges(): void {
-    this.AddForm.get('InvoiceDate').valueChanges.subscribe(
-      (InvoiceDate) => {
-        var formattedDate = InvoiceDate;
-        var month = formattedDate.getUTCMonth() + 1; //months from 1-12
-        var day = formattedDate.getUTCDate();
-        var year = formattedDate.getUTCFullYear();
-        this.InvoiceNumber = day + "_" + month + "_" + year + "_" + Math.floor(Math.random() * 3);
-        this.AddForm.controls['InvoiceNumber'].setValue(this.InvoiceNumber);
+  // onChanges(): void {
+  //   this.AddForm.get('InvoiceDate').valueChanges.subscribe(
+  //     (InvoiceDate) => {
+  //       var formattedDate = InvoiceDate;
+  //       var month = formattedDate.getUTCMonth() + 1; //months from 1-12
+  //       var day = formattedDate.getUTCDate();
+  //       var year = formattedDate.getUTCFullYear();
+  //       this.InvoiceNumber = day + "_" + month + "_" + year + "_" + Math.floor(Math.random() * 3);
+  //       this.AddForm.controls['InvoiceNumber'].setValue(this.InvoiceNumber);
 
-      })
-  }
+  //     })
+  // }
 
   CalculateTotal() {
     this.Total = this.AddinvoiceDetails.value.reduce((sum, item) => sum += (item.qunantity || 0) * (item.price || 0), 0)
@@ -283,6 +295,7 @@ export class InvoiceComponent implements OnInit {
   }
   removeInvoiceDetails(i: number) {
     this.invoiceDetails.removeAt(i);
+    this.CalculateTotal();
   }
 
   Add() {
@@ -303,23 +316,23 @@ export class InvoiceComponent implements OnInit {
   }
 
   ////////////////Edit Modal
-  onEditChange(): void {
+  // onEditChange(): void {
 
-    this.EditForm.get('InvoiceDate').valueChanges.subscribe(
-      (InvoiceDate) => {
+  //   this.EditForm.get('InvoiceDate').valueChanges.subscribe(
+  //     (InvoiceDate) => {
 
-        var formattedDate = InvoiceDate;
+  //       var formattedDate = InvoiceDate;
 
-        var month = formattedDate.getUTCMonth() + 1; //months from 1-12
-        var day = formattedDate.getUTCDate();
-        var year = formattedDate.getUTCFullYear();
-        this.EditInvoiceNumber = day + "_" + month + "_" + year + "_" + Math.floor(Math.random() * 3);
+  //       var month = formattedDate.getUTCMonth() + 1; //months from 1-12
+  //       var day = formattedDate.getUTCDate();
+  //       var year = formattedDate.getUTCFullYear();
+  //       this.EditInvoiceNumber = day + "_" + month + "_" + year + "_" + Math.floor(Math.random() * 3);
 
-        this.EditForm.controls['InvoiceNumber'].setValue(this.EditInvoiceNumber);
+  //       this.EditForm.controls['InvoiceNumber'].setValue(this.EditInvoiceNumber);
 
-      }
-    )
-  }
+  //     }
+  //   )
+  // }
   CalculateEditTotal() {
     this.TotalEdit = this.EditInvoiceDetails.value.reduce((sum, item) => sum += (item.qunantity || 0) * (item.price || 0), 0)
     this.EditForm.controls['TotalPrice'].setValue(this.TotalEdit);
@@ -351,11 +364,12 @@ export class InvoiceComponent implements OnInit {
   }
   removeInvoiceDetailsEdit(i: number) {
     this.invoiceDetailsEdit.removeAt(i);
+    this.CalculateEditTotal();
+
   }
   openEditModal(dialog: TemplateRef<any>, row: any) {
     this.EditForm.controls['Id'].setValue(row.id);
     this.EditForm.controls['InvoiceDate'].setValue(row.invoiceDate);
-    this.EditForm.controls['InvoiceNumber'].setValue(row.invoiceNumber);
     this.EditForm.controls['InvoiceType'].setValue(row.invoiceType);
     this.EditForm.controls['PharmcyId'].setValue(row.pharmcyId);
     this.EditForm.controls['TotalPrice'].setValue(row.totalPrice);

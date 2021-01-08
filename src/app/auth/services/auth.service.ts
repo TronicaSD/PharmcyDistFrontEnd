@@ -43,6 +43,7 @@ export class AuthService implements CanActivate {
           this._coockieService.set('userName', result.unique_name);
           this._coockieService.set('userId', result.UserId);
           this._coockieService.set('role', result.role);
+          this._coockieService.set('language', "ar");
 
           this._router.navigate(['/home']);
 
