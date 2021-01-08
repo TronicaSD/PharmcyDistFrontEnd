@@ -44,7 +44,7 @@ export class MenuChildrenComponent implements OnInit {
     this.translate.get('Pharmcies').subscribe(label => this.columnheaders[2] = label);
     this.translate.get('Stocks').subscribe(label => this.columnheaders[3] = label);
     this.translate.get('StockDetails').subscribe(label => this.columnheaders[4] = label);
-    this.translate.get('receipt').subscribe(label => this.columnheaders[5] = label);
+    this.translate.get('Receipts').subscribe(label => this.columnheaders[5] = label);
     this.translate.get('Inventory').subscribe(label => this.columnheaders[6] = label);
     this.translate.get('InvoiceAndSamples').subscribe(label => this.columnheaders[7] = label);
     this.translate.get('Samples').subscribe(label => this.columnheaders[8] = label);

@@ -50,15 +50,15 @@
 "InvoiceNumber":"رقم الفاتورة",
 "BasicInformation":"المعلومات الرئيسية",
 "Operations":"العمليات",
-"StockDetails":"تفاصيل المخازن",
+"StockDetails":" المخزون",
 "DrugName":"أسم الدواء",
 "Config":" الاعدادات",
 "InvoiceAndSamples":"الفواتير و العينات",
-"receipt":"الأستلام",
-"QuantityInSample":"الكمية في العينات",
-"QuantityInInvoice":"الكمية في الفواتير",
+"Receipts":"الأستلام",
+"QuantityInSample":"  العينات",
+"QuantityInInvoice":" الفواتير",
 "Inventory":"الجرد",
-"quantityInStock":"الكمية في المخزن"
+"quantityInStock":"  المخزن"
 
 
 

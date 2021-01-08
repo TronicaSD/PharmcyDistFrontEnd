@@ -46,6 +46,8 @@ import { InventoryComponent } from './components/inventory/inventory.component';
     ReactiveFormsModule,
     HttpClientModule,
     NbEvaIconsModule,
+    NbThemeModule.forRoot({ name: "default" }),
+
 
   ],
   exports: [TranslateModule],

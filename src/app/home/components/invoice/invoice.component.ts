@@ -231,19 +231,6 @@ export class InvoiceComponent implements OnInit {
     return this.EditForm.controls[controlName].hasError(errorName);
   };
 
-  /////////////add////////////////////
-  // onChanges(): void {
-  //   this.AddForm.get('InvoiceDate').valueChanges.subscribe(
-  //     (InvoiceDate) => {
-  //       var formattedDate = InvoiceDate;
-  //       var month = formattedDate.getUTCMonth() + 1; //months from 1-12
-  //       var day = formattedDate.getUTCDate();
-  //       var year = formattedDate.getUTCFullYear();
-  //       this.InvoiceNumber = day + "_" + month + "_" + year + "_" + Math.floor(Math.random() * 3);
-  //       this.AddForm.controls['InvoiceNumber'].setValue(this.InvoiceNumber);
-
-  //     })
-  // }
 
   CalculateTotal() {
     this.Total = this.AddinvoiceDetails.value.reduce((sum, item) => sum += (item.qunantity || 0) * (item.price || 0), 0)
@@ -315,24 +302,7 @@ export class InvoiceComponent implements OnInit {
     });
   }
 
-  ////////////////Edit Modal
-  // onEditChange(): void {
 
-  //   this.EditForm.get('InvoiceDate').valueChanges.subscribe(
-  //     (InvoiceDate) => {
-
-  //       var formattedDate = InvoiceDate;
-
-  //       var month = formattedDate.getUTCMonth() + 1; //months from 1-12
-  //       var day = formattedDate.getUTCDate();
-  //       var year = formattedDate.getUTCFullYear();
-  //       this.EditInvoiceNumber = day + "_" + month + "_" + year + "_" + Math.floor(Math.random() * 3);
-
-  //       this.EditForm.controls['InvoiceNumber'].setValue(this.EditInvoiceNumber);
-
-  //     }
-  //   )
-  // }
   CalculateEditTotal() {
     this.TotalEdit = this.EditInvoiceDetails.value.reduce((sum, item) => sum += (item.qunantity || 0) * (item.price || 0), 0)
     this.EditForm.controls['TotalPrice'].setValue(this.TotalEdit);
@@ -367,6 +337,8 @@ export class InvoiceComponent implements OnInit {
     this.CalculateEditTotal();
 
   }
+ 
+
   openEditModal(dialog: TemplateRef<any>, row: any) {
     this.EditForm.controls['Id'].setValue(row.id);
     this.EditForm.controls['InvoiceDate'].setValue(row.invoiceDate);
@@ -450,6 +422,14 @@ export class InvoiceComponent implements OnInit {
     for (let i = Addcontrol.length - 1; i >= 0; i--) {
       Addcontrol.removeAt(i)
     }
+
+    this.AddForm.controls['InvoiceDate'].setValue(new Date());
+    this.AddForm.controls['InvoiceType'].setValue(1);
+    this.AddForm.controls['DisCount'].setValue('15');
+
+    this.EditForm.controls['InvoiceDate'].setValue(new Date());
+    this.EditForm.controls['InvoiceType'].setValue(1);
+    this.EditForm.controls['DisCount'].setValue('15');
 
   }
   onCustomAction(Deletedialog: TemplateRef<any>, Editdialog: TemplateRef<any>, event) {
