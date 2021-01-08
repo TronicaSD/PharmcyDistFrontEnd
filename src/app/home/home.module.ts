@@ -47,6 +47,7 @@ import { InventoryComponent } from './components/inventory/inventory.component';
     HttpClientModule,
     NbEvaIconsModule,
 
+
   ],
   exports: [TranslateModule],
 

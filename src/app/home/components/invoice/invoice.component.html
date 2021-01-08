@@ -41,13 +41,13 @@
             <div class=" col-md-4">
 
               <div class="form-group">
-                <label>{{'Pharmcy' | translate}} {{'Name' | translate}}</label>
+                <label> {{'Pharmcy' | translate}}   </label>
 
                 <nb-select placeholder="Select pharamcy" formControlName="PharmcyId">
                   <nb-option *ngFor="let p of Pharmcies" [value]="p.id">{{p.pharmcyName}}</nb-option>
                 </nb-select>
                 <span *ngIf="hasError('PharmcyId', 'required')"
-                  style="color: red">{{'IsRequired' | translate}}{{'IsRequired' | translate}}</span>
+                  style="color: red">{{'Pharmcy' | translate}} {{'IsRequired' | translate}}</span>
 
               </div>
             </div>
@@ -123,7 +123,7 @@
                   {{i}}
                 </td>
                 <td>
-                  <nb-select placeholder="اسم الدواء" formControlName="drugId" required>
+                  <nb-select placeholder="drug name" formControlName="drugId" required>
                     <nb-option disabled value="">Option empty</nb-option>
                     <nb-option *ngFor="let d of StockDetails" [value]="d.drugId"
                       (selectionChange)="calculateDrugPrice()">

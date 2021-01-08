@@ -54,7 +54,6 @@
                 <label>{{'Drug' | translate}} {{'Name' | translate}}</label>
 
                 <nb-select placeholder="Select a Drug" [(selected)]="selectedItem" formControlName="DrugId">
-                  <nb-option value="0">Option empty</nb-option>
                   <nb-option *ngFor="let d of StockDetails" [value]="d.drugId">{{d.drugName}}</nb-option>
                 </nb-select>
                 <span *ngIf="hasError('DrugId', 'required')" style="color: red;display: block;">{{'Drug' | translate}}

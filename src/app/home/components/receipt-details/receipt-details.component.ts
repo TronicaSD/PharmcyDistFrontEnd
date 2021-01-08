@@ -89,13 +89,12 @@ export class receiptDetailsComponent implements OnInit {
     let Action = 'Action';
     let Date = 'Date';
     let Type = 'Type';
-    let TotalPrice = 'TotalPrice';
     this.columnheaders = ['', '', '']
     //Used TranslateService from @ngx-translate/core
     this.translate.get(Action).subscribe(label => this.columnheaders[0] = label);
     this.translate.get(Type).subscribe(label => this.columnheaders[1] = label);
     this.translate.get(Date).subscribe(label => this.columnheaders[2] = label);
-    this.translate.get(TotalPrice).subscribe(label => {
+    this.translate.get('Quantity').subscribe(label => {
       this.columnheaders[3] = label;
       this.loadTableSettings();
     });
