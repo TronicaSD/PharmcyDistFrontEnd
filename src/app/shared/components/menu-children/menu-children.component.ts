@@ -99,19 +99,16 @@ export class MenuChildrenComponent implements OnInit {
           {
             title: this.columnheaders[4],
             link: 'StocktDetails',
-            icon: 'home',
 
           },
           {
             title: this.columnheaders[5],
             link: 'receiptDetails',
-            icon: 'home',
 
           },
           {
             title: this.columnheaders[6],
             link: 'Inventroy',
-            icon: 'home',
 
           }
         ],
