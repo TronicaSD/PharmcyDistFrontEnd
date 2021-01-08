@@ -13,15 +13,20 @@
 
           </nb-icon>
         </div>
-        <div class="offset-8 col-md-1">
+        <div class="offset-6 col-md-1">
+
+          <button nbButton status="default" (click)="exportoExcel()"> Export Excel</button>
+        </div>
+        <div class="offset-1  col-md-1">
 
           <button nbButton status="primary" (click)="openAddModal(Adddialog)"> <i class="fa fa-plus "></i></button>
         </div>
+        
       </div>
     </nb-card-header>
 
     <nb-card-body>
-      <ng2-smart-table [settings]="settings" [source]="source"
+      <ng2-smart-table  id="excel-table" [settings]="settings" [source]="source"
         (custom)="onCustomAction(Deletedialog,Editdialog,Viewdialog,$event)">
       </ng2-smart-table>
     </nb-card-body>

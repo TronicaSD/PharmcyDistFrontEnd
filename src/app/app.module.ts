@@ -41,6 +41,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NbToastrModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
+    NbThemeModule.forRoot({name:"default"}),
     TranslateModule.forRoot({
       defaultLanguage: 'ar',
       loader: {

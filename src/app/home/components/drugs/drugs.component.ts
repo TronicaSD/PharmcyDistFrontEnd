@@ -95,6 +95,8 @@ export class DrugsComponent implements OnInit {
         add: false,
         edit: false,
         delete: false,
+        filter: false
+
       },
 
       columns: {
@@ -102,7 +104,7 @@ export class DrugsComponent implements OnInit {
         drugName: {
           title: this.columnheaders[1],
           type: 'string',
-          filter: false
+          filter: true
         },
         price: {
           title: this.columnheaders[2],

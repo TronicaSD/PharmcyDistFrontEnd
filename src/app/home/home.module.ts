@@ -22,7 +22,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { StockDetailsComponent } from './components/stock-details/stock-details.component';
 import { InventoryComponent } from './components/inventory/inventory.component';
-
 @NgModule({
   declarations: [
     HomeComponent,

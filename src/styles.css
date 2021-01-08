@@ -100,3 +100,11 @@ span {
 i .fa :hover{
   cursor: pointer;
 }
+
+.nb-theme-default ng2-smart-table table tr.ng2-smart-titles th a:hover, .nb-theme-default ng2-smart-table table tr.ng2-smart-titles th a:active, .nb-theme-default ng2-smart-table table tr.ng2-smart-titles th a:visited{
+color: #fff;
+
+}
+.nb-theme-default ng2-smart-table .ng2-smart-actions{
+  height: none;
+}

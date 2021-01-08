@@ -5,28 +5,29 @@
       <form [formGroup]="SeacrhForm" (submit)="getAllInventory()">
 
         <div class="row">
-          <div class=" col-md-6">
+          <div class=" col-md-4">
 
             <label> {{'from' | translate}}</label>
             <input nbInput placeholder="Pick Date" [nbDatepicker]="dateTimefromPicker" class="form-control"
               formControlName="from">
             <nb-datepicker #dateTimefromPicker></nb-datepicker>
           </div>
-          <div class=" col-md-6">
+          <div class=" col-md-4">
 
             <label> {{'to' | translate}}</label>
             <input nbInput placeholder="Pick Date" [nbDatepicker]="dateTimetoPicker" class="form-control"
               formControlName="to">
             <nb-datepicker #dateTimetoPicker></nb-datepicker>
           </div>
+          <div class="col-md-4">
+            <button style="margin-top: 2vw;" type="button" class="cancel" size="small" nbButton status="warning"
+              (click)="  getAllInventory()">{{'Search' | translate}} </button>
+      
+          </div>
         </div>
       </form>
     </div>
-    <div class="col-md-4">
-      <button type="button" class="cancel" nbButton status="success"
-        (click)="  getAllInventory()">{{'Search' | translate}} </button>
 
-    </div>
 
 
 
@@ -36,18 +37,20 @@
     <nb-card-header>
 
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
           {{'Inventory' | translate}}
-          <nb-icon icon="home">
+      
+        </div>
+        <div class="offset-8 col-md-1">
 
-          </nb-icon>
+          <button nbButton status="default" (click)="exportoExcel()"> Export Excel</button>
         </div>
 
       </div>
     </nb-card-header>
 
     <nb-card-body>
-      <ng2-smart-table [settings]="settings" [source]="source">
+      <ng2-smart-table id="excel-table" [settings]="settings" [source]="source">
       </ng2-smart-table>
     </nb-card-body>
   </nb-card>
