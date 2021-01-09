@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
+import * as moment from 'moment';
 import { LocalDataSource } from 'ng2-smart-table';
 import { PublicService } from 'src/app/core/publicService.Service';
 import { ISample } from '../../interface/ISample';
@@ -41,6 +42,7 @@ export class SamplesComponent implements OnInit {
       DrugId: ['', Validators.required],
       qunantity: ['', Validators.required],
       DoctorName: ['', Validators.required],
+      Date: [new Date(), Validators.required],
 
 
 
@@ -50,6 +52,7 @@ export class SamplesComponent implements OnInit {
       DrugId: ['', Validators.required],
       qunantity: ['', Validators.required],
       DoctorName: ['', Validators.required],
+      Date: ['', Validators.required],
       id: [''],
     });
 
@@ -68,17 +71,15 @@ export class SamplesComponent implements OnInit {
     });
   }
   setColumnheaders() {
-
-
-
     this.columnheaders = []
     //Used TranslateService from @ngx-translate/core
     this.translate.get('Action').subscribe(label => this.columnheaders[0] = label);
     this.translate.get('DoctorName').subscribe(label => this.columnheaders[1] = label);
     this.translate.get('DrugName').subscribe(label => this.columnheaders[2] = label);
+    this.translate.get('Date').subscribe(label => this.columnheaders[3] = label);
 
     this.translate.get('Quantity').subscribe(label => {
-      this.columnheaders[3] = label;
+      this.columnheaders[4] = label;
       this.loadTableSettings();
     });
 
@@ -115,8 +116,20 @@ export class SamplesComponent implements OnInit {
           title: this.columnheaders[2],
           type: 'string',
         },
-        qunantity: {
+        date: {
           title: this.columnheaders[3],
+          type: 'string',
+          valuePrepareFunction: (date) => {
+            if (date) {
+              let dates = new Date(date);
+
+              return dates.getDate() + '-' + dates.getMonth() + 1 + '-' + dates.getFullYear();
+            }
+            return null;
+          }
+        },
+        qunantity: {
+          title: this.columnheaders[4],
           type: 'string',
         },
 
@@ -160,6 +173,13 @@ export class SamplesComponent implements OnInit {
 
   }
   Add() {
+    debugger;
+    let date = new Date(Date.UTC(
+      this.AddForm.value.Date.getFullYear(),
+      this.AddForm.value.Date.getMonth(),
+      this.AddForm.value.Date.getDate()
+    ));
+    this.AddForm.controls.Date.setValue(date);
 
     this._PublicService.post('Sample/AddData', this.AddForm.value).subscribe((Response) => {
       this.getAllSample();
@@ -178,6 +198,7 @@ export class SamplesComponent implements OnInit {
     this.EditForm.controls['DrugId'].setValue(row.drugId);
     this.EditForm.controls['qunantity'].setValue(row.qunantity);
     this.EditForm.controls['DoctorName'].setValue(row.doctorName);
+    this.EditForm.controls['Date'].setValue(new Date(row.date));
     this.EditForm.controls['id'].setValue(row.id);
 
     this.dialogService.open(dialog, {
@@ -185,7 +206,14 @@ export class SamplesComponent implements OnInit {
     });
   }
   updateSample() {
-
+    debugger;
+    let date = new Date(Date.UTC(
+      this.EditForm.value.Date.getFullYear(),
+      this.EditForm.value.Date.getMonth(),
+      this.EditForm.value.Date.getDate()
+    ));
+    this.EditForm.controls.Date.setValue(date);
+    debugger;
     this._PublicService.put('Sample/UpdateData', this.EditForm.value).subscribe((Response) => {
       this.Samples = Response;
       this._ToasterService.success("Sample updated Successfully");

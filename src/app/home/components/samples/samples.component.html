@@ -32,6 +32,18 @@
       <nb-card-body>
         <form [formGroup]="AddForm">
           <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+
+                <label> {{'Date' | translate}}</label>
+                <input nbInput placeholder="Pick Date" [nbDatepicker]="dateTimePicker" class="form-control"
+                  formControlName="Date">
+                <nb-datepicker #dateTimePicker></nb-datepicker>
+                <span *ngIf="hasError('Date', 'required')" style="color: red"> {{'Date' | translate}}
+                  {{'IsRequired' | translate}}</span>
+
+              </div>
+            </div>
             <div class=" col-md-6">
 
               <div class="form-group">
@@ -104,6 +116,18 @@
         <form [formGroup]="EditForm" (submit)="UpdateSampleObject()">
 
           <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+
+                <label> {{'Date' | translate}}</label>
+                <input nbInput placeholder="Pick Date" [nbDatepicker]="dateTimePicker" class="form-control"
+                  formControlName="Date">
+                <nb-datepicker #dateTimePicker></nb-datepicker>
+                <span *ngIf="hasEditError('Date', 'required')" style="color: red"> {{'Date' | translate}}
+                  {{'IsRequired' | translate}}</span>
+
+              </div>
+            </div>
             <div class=" col-md-6">
 
               <div class="form-group">

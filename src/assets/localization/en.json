@@ -62,8 +62,9 @@
 "quantityInStock":"Quantity In Stock",
 "from":"From",
 "to":"To",
-"Search":"Search"
-
+"Search":"Search",
+"quantityInInvoicePostponed":"Invoice Postponed",
+"quantityInInvoiceforefront":"Invoice forefront"
 
 
 

@@ -25,7 +25,6 @@
     "Stock":"المخزن",
     "Stocks":"المخازن",
     "Quantity":"الكمية",
-    "To":"الي",
     "In":"في",
     "From":"من",
     "Sample":"العينه",
@@ -61,7 +60,9 @@
 "quantityInStock":"المخزن",
 "from":"من",
 "to":"ألي",
-"Search":"بحث"
+"Search":"بحث",
+"quantityInInvoicePostponed":"الفواتير الأجلة",
+"quantityInInvoiceforefront":"الفواتير المقدمة"
 
 
 

@@ -49,18 +49,20 @@ export class InventoryComponent implements OnInit {
     let DrugName = 'DrugName';
     let quantityInStock = 'Stock';
     let QuantityInSample = 'Samples';
-    let QuantityInInvoice = 'Invoices';
+    let quantityInInvoicePostponed = 'quantityInInvoicePostponed';
+    let quantityInInvoiceforefront = 'quantityInInvoiceforefront';
     let Total = 'Total';
 
     this.columnheaders = ['', '']
     //Used TranslateService from @ngx-translate/core
     this.translate.get(DrugName).subscribe(label => this.columnheaders[0] = label);
     this.translate.get(QuantityInSample).subscribe(label => this.columnheaders[1] = label);
-    this.translate.get(QuantityInInvoice).subscribe(label => this.columnheaders[2] = label);
-    this.translate.get(quantityInStock).subscribe(label => this.columnheaders[3] = label);
+    this.translate.get(quantityInInvoicePostponed).subscribe(label => this.columnheaders[2] = label);
+    this.translate.get(quantityInInvoiceforefront).subscribe(label => this.columnheaders[3] = label);
+    this.translate.get(quantityInStock).subscribe(label => this.columnheaders[4] = label);
 
     this.translate.get(Total).subscribe(label => {
-      this.columnheaders[4] = label;
+      this.columnheaders[5] = label;
       this.loadTableSettings();
     });
 
@@ -81,30 +83,36 @@ export class InventoryComponent implements OnInit {
         drugName: {
           title: this.columnheaders[0],
           type: 'string',
-          filter:true,
+          filter: true,
 
         }
         , quantityInSample: {
           title: this.columnheaders[1],
           type: 'string',
-          filter:false
+          filter: false
 
         },
-        quantityInInvoice: {
+        quantityInInvoicePostponed: {
           title: this.columnheaders[2],
           type: 'string',
-          filter:false
+          filter: false
+
+        },
+        quantityInInvoiceforefront: {
+          title: this.columnheaders[3],
+          type: 'string',
+          filter: false
 
         },
         quantityInStock: {
-          title: this.columnheaders[3],
-          type: 'string',
-          filter:false
-        },
-        total: {
           title: this.columnheaders[4],
           type: 'string',
-          filter:false
+          filter: false
+        },
+        total: {
+          title: this.columnheaders[5],
+          type: 'string',
+          filter: false
 
 
         },
@@ -113,9 +121,9 @@ export class InventoryComponent implements OnInit {
   }
 
   getAllInventory() {
-   
+
     //  this.SeacrhForm.value.from = new Date(this.SeacrhForm.value.from.getUTCDate());
-   
+
 
     this._PublicService.post("StockDetails/ViewInventoey", this.SeacrhForm.value).subscribe(res => {
       this.allStockDetails = res;
@@ -123,21 +131,20 @@ export class InventoryComponent implements OnInit {
 
     });
   }
-  exportoExcel(): void
-  {
+  exportoExcel(): void {
     /* pass here the table id */
     let element = document.getElementById('excel-table');
-    const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
     ws['!cols'][3] = { hidden: true };
-    
- 
+
+
     /* generate workbook and add the worksheet */
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
- 
-    /* save to file */  
+
+    /* save to file */
     XLSX.writeFile(wb, "Stocks.xlsx");
- 
+
   }
 
 }
