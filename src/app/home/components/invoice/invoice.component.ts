@@ -15,6 +15,7 @@ import { MomentFormatPipe } from '../../pipes/MomentFormatPipe';
   styleUrls: ['./invoice.component.css']
 })
 export class InvoiceComponent implements OnInit {
+  selectedPharmcy:any;
   selectedInvoiceTypeItem = '';
   selectedPharmcyItem = '';
   selectedItem = '';
@@ -111,28 +112,19 @@ export class InvoiceComponent implements OnInit {
     });
   }
   setColumnheaders(): void {
-    let Invoice = 'Invoice';
-    let TotalPrice = 'TotalPrice';
-    let Discount = 'Discount';
-    let InvoiceType = 'InvoiceType';
-    let InvoiceDate = 'InvoiceDate';
-    let PharmcyName = 'PharmcyName';
-    let InvoiceNumber = 'InvoiceNumber';
-    let TotalAfterDiscount = 'TotalAfterDiscount';
+   
+    
     this.columnheaders = ['', '', '']
     //Used TranslateService from @ngx-translate/core
-    this.translate.get(InvoiceNumber).subscribe(label => this.columnheaders[0] = label);
-    this.translate.get(PharmcyName).subscribe(label => this.columnheaders[1] = label);
-    this.translate.get(InvoiceType).subscribe(label => this.columnheaders[2] = label);
-    this.translate.get(InvoiceDate).subscribe(label => this.columnheaders[3] = label);
-    this.translate.get(Discount).subscribe(label => this.columnheaders[4] = label);
-    this.translate.get(TotalPrice).subscribe(label => this.columnheaders[5] = label);
-    this.translate.get(TotalAfterDiscount).subscribe(label => this.columnheaders[6] = label);
+    this.translate.get('InvoiceNumber').subscribe(label => { this.columnheaders[0] = label});
+    this.translate.get('PharmcyName').subscribe(label => this.columnheaders[1] = label);
+    this.translate.get('InvoiceType').subscribe(label => this.columnheaders[2] = label);
+    this.translate.get('InvoiceDate').subscribe(label => this.columnheaders[3] = label);
+    this.translate.get('Discount').subscribe(label => this.columnheaders[4] = label);
+    this.translate.get('TotalPrice').subscribe(label => this.columnheaders[5] = label);
+    this.translate.get('TotalAfterDiscount').subscribe(label => this.columnheaders[6] = label);
 
-    this.translate.get(Invoice).subscribe(label => {
-      this.columnheaders[0] = label;
-      this.loadTableSettings();
-    });
+    this.loadTableSettings();
 
   }
   settings: any;
@@ -147,6 +139,10 @@ export class InvoiceComponent implements OnInit {
         custom: [
 
           {
+            name: 'viewAction',
+            title: '<i class="fa fa-eye text-primary"></i>'
+          },
+          {
             name: 'editAction',
             title: '<i class="fa fa-edit text-warning"></i>'
           },
@@ -158,7 +154,6 @@ export class InvoiceComponent implements OnInit {
         add: false,
         edit: false,
         delete: false,
-        filter: true
       },
 
       columns: {
@@ -166,6 +161,8 @@ export class InvoiceComponent implements OnInit {
         invoiceNumber: {
           title: this.columnheaders[0],
           type: 'string',
+        filter: true,
+
         },
 
         pharmcyName: {
@@ -175,10 +172,14 @@ export class InvoiceComponent implements OnInit {
         invoiceTypeText: {
           title: this.columnheaders[2],
           type: 'string',
+        filter: false,
+
         },
         invoiceDate: {
           title: this.columnheaders[3],
-          type: 'string',
+          type:"string",
+          width: '12%',
+        filter: false,
           valuePrepareFunction: (invoiceDate) => {
             if (invoiceDate) {
               let date=new Date(invoiceDate);
@@ -191,6 +192,8 @@ export class InvoiceComponent implements OnInit {
         disCount: {
           title: this.columnheaders[4],
           type: 'string',
+        filter: false,
+
           valuePrepareFunction: (disCount) => {
             if (disCount) {
 
@@ -201,9 +204,11 @@ export class InvoiceComponent implements OnInit {
         },
         totalPrice: {
           title: this.columnheaders[5],
+        filter: false,
           type: 'string',
         },
         totalPriceAfterDis: {
+        filter: false,
           title: this.columnheaders[6],
           type: 'string',
         },
@@ -228,6 +233,43 @@ export class InvoiceComponent implements OnInit {
       this.source.load(this.Invoices);
 
     });
+  }
+  unpaidInovices:any=[];
+  getUnpadidInvoices(){
+    
+    this._PublicService.getByID("Invoice/GetByPharmcy",this.selectedPharmcy).subscribe(res => {
+      this.unpaidInovices = res;
+ 
+    });
+
+  }
+
+  confirmPay(dialog:TemplateRef<any>,data:IInvoice){
+this.dialogService.open(dialog).onClose.subscribe({
+next:(res)=>{
+  this.payInvoice(data);
+},error:()=>{
+  this._ToasterService.danger("Failed to request"); 
+}
+
+})
+  }
+  payInvoice(invoice:any){
+
+    this._PublicService.put("Invoice/ChangeStatus",invoice).subscribe(
+
+    {
+      next:()=>{
+        this._ToasterService.success("Invoice Paied successfully", "Success");
+        this. getUnpadidInvoices();
+        this. getAllInvoice();
+      },
+      error:()=>{
+        this._ToasterService.danger("Invoice failed to pay", "Failed");
+      }
+    }
+    );
+
   }
   public hasError = (controlName: string, errorName: string) => {
     return this.AddForm.controls[controlName].hasError(errorName);
@@ -406,8 +448,7 @@ export class InvoiceComponent implements OnInit {
     this.EditForm.reset();
 
   }
-
-
+ 
   //Delete Modal
   DeleteInvoice(id: any) {
     this._PublicService.delete("Invoice/DeleteData", id).subscribe((Response) => {
@@ -455,7 +496,19 @@ export class InvoiceComponent implements OnInit {
     this.EditForm.controls['DisCount'].setValue('15');
 
   }
-  onCustomAction(Deletedialog: TemplateRef<any>, Editdialog: TemplateRef<any>, event) {
+  viewModel:any={};
+
+  openViewModal(dialog:any,data:any){
+
+    console.log(data);
+    this.dialogService.open(dialog, {
+      dialogClass: 'lg-modal'
+    });
+
+this.viewModel=data;
+  }
+
+  onCustomAction(Deletedialog: TemplateRef<any>, Editdialog: TemplateRef<any>,Viewdialog:TemplateRef<any>, event) {
 
     switch (event.action) {
       case 'deleteAction':
@@ -464,6 +517,9 @@ export class InvoiceComponent implements OnInit {
       case 'editAction':
         this.openEditModal(Editdialog, event.data)
         break;
+        case 'viewAction':
+          this.openViewModal(Viewdialog, event.data)
+          break;
 
     }
   }

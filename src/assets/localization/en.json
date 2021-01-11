@@ -64,7 +64,14 @@
 "to":"To",
 "Search":"Search",
 "quantityInInvoicePostponed":"Invoice Postponed",
-"quantityInInvoiceforefront":"Invoice forefront"
+"quantityInInvoiceforefront":"Invoice forefront",
+"PleaseChooseOne":"Please Choose One ?",
+"UnpaidInvoice":"Some of old invoices not paid",
+"Status":"Status",
+"ConfirmPayingMsg":"Confirm to pay invoice ",
+"Confirm":"Confirmation"
+
+
 
 
 

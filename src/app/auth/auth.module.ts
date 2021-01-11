@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
-import { NbButtonModule, NbCardModule, NbFormFieldModule, NbIconModule, NbInputModule, NbLayoutModule, NbThemeModule }
+import { NbButtonModule, NbCardModule, NbFormFieldModule, NbIconModule, NbInputModule, NbLayoutModule, NbSpinnerModule, NbThemeModule }
   from '@nebular/theme';
 
 import { NbEvaIconsModule } from '@nebular/eva-icons';
@@ -30,7 +30,8 @@ import { PublicService } from '../core/publicService.Service';
     ReactiveFormsModule,
     NbFormFieldModule,
     NbEvaIconsModule,
-    HttpClientModule
+    HttpClientModule,
+    NbSpinnerModule
   ]
 })
 export class AuthModule { }

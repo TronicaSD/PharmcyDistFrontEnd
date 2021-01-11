@@ -13,7 +13,7 @@ import { AuthService } from '../services/auth.service';
 export class LoginComponent implements OnInit {
   showPassword: boolean = false;
   loginForm: FormGroup;
-
+  loader:boolean=false;
   constructor(private _formbuilder: FormBuilder
     , private _loginService: AuthService
   ) {
@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
   };
 
   login() {
+    this.loader=true;
     this._loginService.login(this.loginForm.value);
 
   }

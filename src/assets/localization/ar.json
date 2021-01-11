@@ -62,7 +62,13 @@
 "to":"ألي",
 "Search":"بحث",
 "quantityInInvoicePostponed":"الفواتير الأجلة",
-"quantityInInvoiceforefront":"الفواتير المدفوعة"
+"quantityInInvoiceforefront":"الفواتير المدفوعة",
+"PleaseChooseOne":"من فضلك اختار؟",
+"UnpaidInvoice":"يوجد فواتير لم تحصل بعد",
+"Status":"الحاله",
+"ConfirmPayingMsg":"تاكيد دفع الفاتوره",
+"Confirm":"تاكيد"
+
 
 
 

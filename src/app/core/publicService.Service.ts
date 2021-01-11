@@ -49,7 +49,7 @@ export class PublicService {
   getByID(url: string, id: any): Observable<any> {
 
     return this.http.get<any>(
-      environment.baseUrl + url + id,
+      environment.baseUrl + url + "/"+id,
       { headers: new HttpHeaders({ Authorization: "Bearer " + this.getToken() }) });
 
   }
