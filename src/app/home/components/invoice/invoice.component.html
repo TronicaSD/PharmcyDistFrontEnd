@@ -120,7 +120,7 @@
               <tr *ngFor="let iv of AddinvoiceDetails.controls;let i =index" [formGroupName]="i">
 
                 <td>
-                  {{i}}
+                  {{i+1}}
                 </td>
                 <td>
                   <nb-select placeholder="drug name" formControlName="drugId" required>

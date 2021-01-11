@@ -4,7 +4,7 @@ import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { PublicService } from 'src/app/core/publicService.Service';
 import * as XLSX from 'xlsx';
-
+import { DatePipe } from '@angular/common'
 
 @Component({
   selector: 'app-inventory',
@@ -19,15 +19,16 @@ export class InventoryComponent implements OnInit {
   columnheaders: string[];
   settings: any;
   SeacrhForm: any;
+  defaultDate:Date=new Date();
 
-  constructor(private _PublicService: PublicService
+  constructor(private _PublicService: PublicService,private datePipe: DatePipe
     , private translate: TranslateService
     , private _formbuilder: FormBuilder
-
     , private _changeDetectorRef: ChangeDetectorRef) {
+      let fromDate= new Date(this.defaultDate.getFullYear(),this.defaultDate.getMonth(),1);
     this.SeacrhForm = this._formbuilder.group({
-      from: [null, Validators.required],
-      to: [null, Validators.required],
+      from: [fromDate, Validators.required],
+      to: [this.defaultDate, Validators.required],
 
     });
     this.currentLang = translate.currentLang;
@@ -122,10 +123,11 @@ export class InventoryComponent implements OnInit {
 
   getAllInventory() {
 
-    //  this.SeacrhForm.value.from = new Date(this.SeacrhForm.value.from.getUTCDate());
+      this.SeacrhForm.value.from = this.datePipe.transform( this.SeacrhForm.value.from, 'MM/dd/yyyy');
+      this.SeacrhForm.value.to = this.datePipe.transform( this.SeacrhForm.value.to, 'MM/dd/yyyy');
 
 
-    this._PublicService.post("StockDetails/ViewInventoey", this.SeacrhForm.value).subscribe(res => {
+    this._PublicService.post("StockDetails/ViewInventorey", this.SeacrhForm.value).subscribe(res => {
       this.allStockDetails = res;
       this.source.load(this.allStockDetails);
 

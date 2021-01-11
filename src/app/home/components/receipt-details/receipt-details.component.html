@@ -69,7 +69,7 @@
               <tr *ngFor="let iv of AddreceiptDetails.controls;let i =index" [formGroupName]="i">
 
                 <td>
-                  {{i}}
+                  {{i+1}}
                 </td>
                 <td>
                   <nb-select placeholder="اسم الدواء" formControlName="drugId" required>
@@ -146,7 +146,7 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>{{'Drug' | translate}} {{'Name' | translate}} </th>
+                <th>{{'DrugName' | translate}}  </th>
                 <th> {{'Quantity' | translate}} </th>
                 <th> {{'Action' | translate}} </th>
 
@@ -156,7 +156,7 @@
               <tr *ngFor="let iv of EditreceiptDetails.controls;let i =index" [formGroupName]="i">
 
                 <td>
-                  {{i}}
+                  {{i+1}}
                 </td>
                 <td>
                   <nb-select placeholder="اسم الدواء" formControlName="drugId" required>
@@ -268,7 +268,7 @@
             <tr *ngFor="let drug of viewObj.receiptDetails;let i =index" >
 
               <td>
-                {{i}}
+                {{i+1}}
               </td>
               <td>
 

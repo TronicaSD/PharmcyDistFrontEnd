@@ -26,7 +26,7 @@
   <ng-template #Adddialog class="model-full" let-data let-ref="dialogRef">
     <nb-card>
       <nb-card-header>
-        <h4 class="modal-title" id="modal-basic-title">{{'Add' | translate}}{{'Samples' | translate}}</h4>
+        <h4 class="modal-title" id="modal-basic-title">{{'Add' | translate}}</h4>
 
       </nb-card-header>
       <nb-card-body>
@@ -48,12 +48,12 @@
 
               <div class="form-group">
 
-                <label>{{'Doctor' | translate}} {{'Name' | translate}}</label>
+                <label>{{'DoctorName' | translate}}</label>
 
 
                 <input class="form-control" formControlName="DoctorName" type="text" nbInput fullWidth>
-                <span *ngIf="hasError('DoctorName', 'required')" style="color: red">{{'Doctor' | translate}}
-                  {{'Name' | translate}} {{'IsRequired' | translate}}</span>
+                <span *ngIf="hasError('DoctorName', 'required')" style="color: red">{{'DoctorName' | translate}}
+                  {{'IsRequired' | translate}}</span>
 
 
 
@@ -63,13 +63,13 @@
 
               <div class="form-group">
 
-                <label>{{'Drug' | translate}} {{'Name' | translate}}</label>
+                <label>{{'DrugName' | translate}} </label>
 
                 <nb-select placeholder="Select a Drug" [(selected)]="selectedItem" formControlName="DrugId">
                   <nb-option *ngFor="let d of StockDetails" [value]="d.drugId">{{d.drugName}}</nb-option>
                 </nb-select>
-                <span *ngIf="hasError('DrugId', 'required')" style="color: red;display: block;">{{'Drug' | translate}}
-                  {{'Name' | translate}}
+                <span *ngIf="hasError('DrugId', 'required')" style="color: red;display: block;">{{'DrugName' | translate}}
+                
                   {{'IsRequired' | translate}}</span>
 
               </div>
@@ -132,12 +132,12 @@
 
               <div class="form-group">
 
-                <label>{{'Doctor' | translate}} {{'Name' | translate}}</label>
+                <label>{{'DoctorName' | translate}} {{'Name' | translate}}</label>
 
 
                 <input class="form-control" formControlName="DoctorName" type="text" nbInput fullWidth>
-                <span *ngIf="hasEditError('DoctorName', 'required')" style="color: red">{{'Doctor' | translate}}
-                  {{'Name' | translate}} {{'IsRequired' | translate}}</span>
+                <span *ngIf="hasEditError('DoctorName', 'required')" style="color: red">{{'DoctorName' | translate}}
+                {{'IsRequired' | translate}}</span>
 
 
 
@@ -147,7 +147,7 @@
 
               <div class="form-group">
 
-                <label>{{'Drug' | translate}} {{'Name' | translate}}</label>
+                <label>{{'DrugName' | translate}} </label>
 
                 <nb-select placeholder="Select Showcase" formControlName="DrugId">
 

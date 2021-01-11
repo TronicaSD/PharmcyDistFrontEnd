@@ -6,6 +6,8 @@ import { PublicService } from 'src/app/core/publicService.Service';
 import { LocalDataSource } from 'ng2-smart-table';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import * as XLSX from 'xlsx';
+import { DatePipe } from '@angular/common'
+
 @Component({
   selector: 'app-receipt-details',
   templateUrl: './receipt-details.component.html',
@@ -46,7 +48,7 @@ export class receiptDetailsComponent implements OnInit {
   currentLang: string;
   columnheaders: string[];
 
-  constructor(private _PublicService: PublicService
+  constructor(private _PublicService: PublicService,private datePipe: DatePipe
     , private dialogService: NbDialogService
     , private _formbuilder: FormBuilder
     , private _ToasterService: NbToastrService
@@ -130,9 +132,12 @@ export class receiptDetailsComponent implements OnInit {
 
       columns: {
 
-        id:{
+        index:{
           title: this.columnheaders[1],
         filter: false,
+        valuePrepareFunction: (value,row,cell) => {
+          return cell.row.index+1;
+         }
 
         },
   
@@ -230,13 +235,19 @@ export class receiptDetailsComponent implements OnInit {
   }
 
   Add() {
-    this._PublicService.post('receipt/AddData', this.AddForm.value).subscribe((Response) => {
+    let date= this.datePipe.transform( this.AddForm.value.Date, 'MM/dd/yyyy');
+    let modal=this.AddForm.value;
+    debugger
+    modal.Date=date;
+   
+    this._PublicService.post('receipt/AddData', modal).subscribe((Response) => {
       this.getAllreceipt();
       this._ToasterService.success("Drugs added To receipts successfully", "Success");
     }, (error) => {
       this._ToasterService.danger("Failed To Update", "Failed");
     });
     this.ClearForm();
+    this.AddForm.controls.Date.setValue(new Date());
   }
 
   openAddModal(dialog: TemplateRef<any>) {

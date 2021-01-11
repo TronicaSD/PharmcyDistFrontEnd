@@ -8,7 +8,7 @@
     "Delete":  "حذف ",
     "Home":  "الرئيسبه ",
     "Loading":"...تحميل",
-    "IsRequired":"مطلوبه",
+    "IsRequired":"مطلوب",
     "Add":"أضافة ",
     "Edit":"تعديل ",
     "AreYouSureYouWantToDeleteThisItem":".هل أنت متأكد أنك تريد مسح هذا العنصر",
@@ -62,7 +62,7 @@
 "to":"ألي",
 "Search":"بحث",
 "quantityInInvoicePostponed":"الفواتير الأجلة",
-"quantityInInvoiceforefront":"الفواتير المقدمة"
+"quantityInInvoiceforefront":"الفواتير المدفوعة"
 
 
 
