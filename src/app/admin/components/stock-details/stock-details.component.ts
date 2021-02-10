@@ -3,6 +3,7 @@ import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { PublicService } from 'src/app/core/publicService.Service';
 import * as XLSX from 'xlsx';
+import * as _ from 'lodash';
 import {Chart}  from 'chart.js';
 @Component({
   selector: 'app-stock-details',
@@ -86,8 +87,10 @@ export class StockDetailsComponent implements OnInit {
   }
   getAllStockDetails() {
     this._PublicService.get("StockDetails/ViewGetAll").subscribe(res => {
+      res=_.orderBy(res,"quantity").reverse();
       this.allStockDetails = res;
       this.source.load(this.allStockDetails);
+
       res.forEach(item=>{
 this.chartNames.push(item.drugName);
 this.chartValues.push(item.quantity);
