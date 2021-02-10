@@ -7,18 +7,22 @@
     <nb-card-header>
 
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-9">
           {{'StockDetails' | translate}}
           <nb-icon icon="home">
 
           </nb-icon>
+        </div>
+        <div class=" col-md-3">
+
+          <button nbButton status="default" (click)="exportoExcel()"> Export Excel</button>
         </div>
 
       </div>
     </nb-card-header>
 
     <nb-card-body>
-      <ng2-smart-table [settings]="settings" [source]="source">
+      <ng2-smart-table   id="table" [settings]="settings" [source]="source">
       </ng2-smart-table>
     </nb-card-body>
   </nb-card>

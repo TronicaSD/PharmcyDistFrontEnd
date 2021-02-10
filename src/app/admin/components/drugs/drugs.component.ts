@@ -77,8 +77,17 @@ export class DrugsComponent implements OnInit {
   }
   loadTableSettings() {
     this.settings = {
+      pager: {
+        display: true,
+        perPage: 10,
+        pagging:true,
+     
+      },
+
       // hideSubHeader: true,
       actions: {
+        
+    
         position: "right",
         columnTitle: this.columnheaders[0],
         custom: [

@@ -7,17 +7,17 @@
     <nb-card-header>
 
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-9">
           {{'Receipts' | translate}}
           <nb-icon icon="home">
 
           </nb-icon>
         </div>
-        <div class="offset-6 col-md-1">
+        <div class="col-md-2">
 
           <button nbButton status="default" (click)="exportoExcel()"> Export Excel</button>
         </div>
-        <div class="offset-1  col-md-1">
+        <div class=" col-md-1">
 
           <button nbButton status="primary" (click)="openAddModal(Adddialog)"> <i class="fa fa-plus "></i></button>
         </div>
@@ -87,8 +87,8 @@
                 </td>
 
                 <td>
-                  <nb-icon *ngIf="i ==0" icon="plus" status="success" (click)=" addreceiptDetailsList()"></nb-icon>
-                  <nb-icon *ngIf="i !=0" icon="trash" status="danger" (click)="removereceiptDetails(i)"></nb-icon>
+                  <nb-icon style="font-size: xx-large;" *ngIf="i ==0" icon="plus" status="success" (click)=" addreceiptDetailsList()"></nb-icon>
+                  <nb-icon  style="font-size: xx-large;" *ngIf="i !=0" icon="trash" status="danger" (click)="removereceiptDetails(i)"></nb-icon>
 
                 </td>
 

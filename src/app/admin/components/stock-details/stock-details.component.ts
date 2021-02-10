@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { PublicService } from 'src/app/core/publicService.Service';
-
+import * as XLSX from 'xlsx';
 @Component({
   selector: 'app-stock-details',
   templateUrl: './stock-details.component.html',
@@ -83,6 +83,22 @@ export class StockDetailsComponent implements OnInit {
       this.source.load(this.allStockDetails);
 
     });
+  }
+  exportoExcel(): void
+  {
+    /* pass here the table id */
+    let element = document.getElementById('table');
+    const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+    ws['!cols'][3] = { hidden: true };
+    
+ 
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+ 
+    /* save to file */  
+    XLSX.writeFile(wb, "Stocks.xlsx");
+ 
   }
 
 

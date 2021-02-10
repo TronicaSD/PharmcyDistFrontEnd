@@ -18,7 +18,7 @@ export class FileService {
 
 
   downloadFile(fileName: string,Url: string): Observable<any> {
-    return this.http.get<any>(environment.serverUrl + Url+ "/" + fileName,
+    return this.http.get<any>(environment.baseUrl + Url+ "/" + fileName,
         {
           responseType: "blob" as "json",
           headers: { Authorization: "Bearer " + localStorage.getItem("Token") }

@@ -16,6 +16,7 @@ import {
   NbChatModule,
   NbDatepickerModule,
   NbDialogModule,
+  NbLayoutDirection,
   NbMenuModule,
   NbSidebarModule,
   NbThemeModule,
@@ -41,7 +42,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NbToastrModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
-    NbThemeModule.forRoot({name:"default"}),
+    NbThemeModule.forRoot({name:"default"},[],[],NbLayoutDirection.LTR),
     TranslateModule.forRoot({
       defaultLanguage: 'ar',
       loader: {

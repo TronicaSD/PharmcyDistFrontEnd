@@ -1,21 +1,22 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { BrowserModule } from "@angular/platform-browser";
 import { NbEvaIconsModule } from "@nebular/eva-icons";
 import { NbActionsModule, NbButtonModule, NbCardModule, NbDatepickerModule, NbDialogModule, NbFormFieldModule, NbIconModule, NbInputModule, NbLayoutModule, NbMenuModule, NbMenuService, NbSearchModule, NbSelectModule, NbSidebarModule, NbSidebarService, NbThemeModule, NbThemeService, NbToastrModule, NbToggleModule } from "@nebular/theme";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { TranslateModule } from "@ngx-translate/core";
 import { Ng2SmartTableModule } from "ng2-smart-table";
 import { MenuChildrenComponent } from "./components/menu-children/menu-children.component";
-import { TopNavbarComponent } from "./components/top-navbar/top-navbar.component";
 import { NumbersOnlyDirective } from "./directives/number-only.directive";
 
 @NgModule({
     declarations: [
       MenuChildrenComponent,
-      TopNavbarComponent,
       NumbersOnlyDirective,
     ],
     imports: [
+      FormsModule,
      NbMenuModule.forRoot(),
      NbLayoutModule,
      NbActionsModule,
@@ -29,7 +30,7 @@ import { NumbersOnlyDirective } from "./directives/number-only.directive";
      NbDatepickerModule.forRoot(),
      NbEvaIconsModule,
      NbIconModule,
-
+     TranslateModule,
      NbToastrModule.forRoot(),
      NbDialogModule.forChild({ closeOnBackdropClick: false, autoFocus: true, 
       closeOnEsc: true ,dialogClass:"defaultdialogue"}),
@@ -55,7 +56,6 @@ import { NumbersOnlyDirective } from "./directives/number-only.directive";
      NbDialogModule,
      NumbersOnlyDirective,
      MenuChildrenComponent,
-     TopNavbarComponent,
      Ng2SmartTableModule,
      TranslateModule,
      NbToggleModule

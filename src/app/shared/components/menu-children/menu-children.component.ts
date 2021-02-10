@@ -4,7 +4,7 @@ import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthGuard } from 'src/app/auth/services/auth.guard';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { Role } from 'src/app/home/enums/roles';
+import { Role } from 'src/app/shared/enums/roles';
 
 @Component({
   selector: 'nb-menu-children',
@@ -106,11 +106,7 @@ export class MenuChildrenComponent implements OnInit {
             link: 'receiptDetails',
 
           },
-          {
-            title: this.columnheaders[6],
-            link: 'Inventroy',
-
-          }
+        
         ],
       },
       {
@@ -131,6 +127,11 @@ export class MenuChildrenComponent implements OnInit {
             link: 'Invoice',
 
           },
+          {
+            title: this.columnheaders[6],
+            link: 'Inventroy',
+
+          }
         ],
       },
 

@@ -7,7 +7,6 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
 } from "@angular/router";
-import { NetworkService } from "../../core/network.service";
 import { environment } from "../../../environments/environment";
 import { BehaviorSubject, Observable } from "rxjs";
 import { LoginModel } from "../login/models/login.model";
@@ -24,7 +23,6 @@ export class AuthService implements CanActivate {
   constructor(
     private _router: Router,
     private http: HttpClient,
-    private network: NetworkService,
     private _coockieService: CookieService,
 
 
@@ -45,7 +43,8 @@ export class AuthService implements CanActivate {
           this._coockieService.set('role', result.role);
           this._coockieService.set('language', "ar");
 
-          this._router.navigate(['/home']);
+          this.navigateToModule(result.role);
+
 
         }, error: (error) => {
           console.log(error);
@@ -63,7 +62,28 @@ export class AuthService implements CanActivate {
     return !!localStorage.getItem('token');
   }
 
+navigateToModule(role:string){
 
+  switch (role) {
+    case 'admin':
+  this._router.navigate(['/admin']);
+      
+      break;
+
+      case 'agent':
+  this._router.navigate(['/agent']);
+      
+      break;
+
+      case 'gm':
+        this._router.navigate(['/gm']);
+            
+            break;
+  
+    default:
+      break;
+  }
+}
   changePassword(data: any) {
     return this.http.put<any>(
       environment.baseUrl + "Account/ChangePassword/",
@@ -82,7 +102,7 @@ export class AuthService implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    if (this.network.online) {
+ 
       if (this.isAuthenticated()) {
 
         if (next.data.role && next.url[0].path != "change-password") {
@@ -94,11 +114,7 @@ export class AuthService implements CanActivate {
       } else {
         this.logout();
       }
-    } else {
-      console.log("Network Disconnt");
-
-      // momken hena na5leeha yroute 3ala page feeha no connection
-    }
+  
   }
   /**
    * this is used to clear anything that needs to be removed

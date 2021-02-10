@@ -2,12 +2,12 @@ import { ChangeDetectorRef, Component, OnInit, TemplateRef } from '@angular/core
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { IInvoice } from '../../interface/IInvoice';
-import * as moment from "moment";
+
 import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { PublicService } from 'src/app/core/publicService.Service';
 import { LocalDataSource } from 'ng2-smart-table';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
-import { MomentFormatPipe } from '../../pipes/MomentFormatPipe';
+
 
 @Component({
   selector: 'app-invoice',
