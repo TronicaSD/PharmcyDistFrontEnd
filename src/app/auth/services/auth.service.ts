@@ -63,6 +63,7 @@ export class AuthService implements CanActivate {
   }
 
 navigateToModule(role:string){
+  debugger;
 
   switch (role) {
     case 'admin':
@@ -71,12 +72,12 @@ navigateToModule(role:string){
       break;
 
       case 'agent':
-  this._router.navigate(['/agent']);
+  this._router.navigate(['/home']);
       
       break;
 
       case 'gm':
-        this._router.navigate(['/gm']);
+        this._router.navigate(['/reports']);
             
             break;
   

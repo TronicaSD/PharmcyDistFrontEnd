@@ -113,7 +113,7 @@ export class MenuChildrenComponent implements OnInit {
         title: this.columnheaders[7],
         link: '/home',
         icon: 'edit-2-outline',
-        hidden: !(this.findRole(Role.user)),
+        hidden: !(this.findRole(Role.agent)),
 
         expanded: false,
         children: [

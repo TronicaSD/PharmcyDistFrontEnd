@@ -14,9 +14,9 @@ const routes: Routes = [
   {
     path: '', component: HomeComponent,
     children: [
-      { path: 'Inventroy', component: InventoryComponent, canActivate: [AuthGuard], data: { roles: [Role.admin] } },
-      { path: 'Samples', component: SamplesComponent, canActivate: [AuthGuard], data: { roles: [Role.user] } },
-      { path: 'Invoice', component: InvoiceComponent, canActivate: [AuthGuard], data: { roles: [Role.user] } },
+      { path: 'Inventroy', component: InventoryComponent, canActivate: [AuthGuard], data: { roles: [Role.agent] } },
+      { path: 'Samples', component: SamplesComponent, canActivate: [AuthGuard], data: { roles: [Role.agent] } },
+      { path: 'Invoice', component: InvoiceComponent, canActivate: [AuthGuard], data: { roles: [Role.agent] } },
 
     ]
 

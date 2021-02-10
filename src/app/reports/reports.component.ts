@@ -6,12 +6,12 @@ import { TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from '../auth/services/auth.service';
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-reports',
+  templateUrl: './reports.component.html',
+  styleUrls: ['./reports.component.css']
 })
-export class HomeComponent implements OnInit {
-
+export class ReportsComponent implements OnInit {
+  
   userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
   private destroy$: Subject<void> = new Subject<void>();
   themes = [

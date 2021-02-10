@@ -69,7 +69,8 @@
 "UnpaidInvoice":"Some of old invoices not paid",
 "Status":"Status",
 "ConfirmPayingMsg":"Confirm to pay invoice ",
-"Confirm":"Confirmation"
+"Confirm":"Confirmation",
+"Receipts":"Receipts"
 
 
 

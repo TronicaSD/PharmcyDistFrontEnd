@@ -1,0 +1,14 @@
+<div class="container">
+  <!-- <div class="row mb-4">
+    <input class="form-control"  #search class="search" type="text" placeholder="Search..." (change)="onSearch(search.value)">
+
+  </div> -->
+  <div class="offset-10 col-md-2">
+    <button  (click)="exportoExcel()" class="btn btn-danger" type="button"> Export Excel</button>
+  </div>
+  <div class="row">
+<ng2-smart-table  id="table" [settings]="settings" [source]="source" >
+    </ng2-smart-table>
+  </div>
+      
+  </div>

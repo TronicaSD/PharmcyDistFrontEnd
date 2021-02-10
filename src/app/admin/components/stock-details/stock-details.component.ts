@@ -3,6 +3,7 @@ import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { PublicService } from 'src/app/core/publicService.Service';
 import * as XLSX from 'xlsx';
+import {Chart}  from 'chart.js';
 @Component({
   selector: 'app-stock-details',
   templateUrl: './stock-details.component.html',
@@ -14,7 +15,11 @@ export class StockDetailsComponent implements OnInit {
   currentLang: string;
   columnheaders: string[];
   settings: any;
-
+  chart: any;
+  chartNames:any[]=[];
+  chartValues:any[]=[];
+  chartColors:any[]=[];
+  chartHeader="Stocks";
   constructor(private _PublicService: PublicService
     , private translate: TranslateService
     , private _changeDetectorRef: ChangeDetectorRef) {
@@ -33,6 +38,7 @@ export class StockDetailsComponent implements OnInit {
     this.translate.onLangChange.subscribe(item => {
       this.setColumnheaders();
     });
+
   }
   setColumnheaders(): void {
     let DrugName = 'DrugName';
@@ -46,6 +52,7 @@ export class StockDetailsComponent implements OnInit {
       this.columnheaders[1] = label;
       this.loadTableSettings();
     });
+ 
 
   }
   loadTableSettings() {
@@ -81,6 +88,88 @@ export class StockDetailsComponent implements OnInit {
     this._PublicService.get("StockDetails/ViewGetAll").subscribe(res => {
       this.allStockDetails = res;
       this.source.load(this.allStockDetails);
+      res.forEach(item=>{
+this.chartNames.push(item.drugName);
+this.chartValues.push(item.quantity);
+this.chartColors.push(this.generateColors());
+
+      });
+      this.generateBarChart();
+    });
+  }
+  generateColors() {
+    var r = Math.floor(Math.random() * 255);
+    var g = Math.floor(Math.random() * 255);
+    var b = Math.floor(Math.random() * 255);
+    return ('rgb(' + r + ',' + g + ',' + b + ')') as never;
+  }
+  generateBarChart(){
+    this.chart = new Chart("chart", {
+      type:'bar',
+      options: {
+        animation: { duration: 1000, easing: 'linear' },
+        tooltips: {
+          enabled: true,
+          mode: 'single',
+          callbacks: {
+            label: function (tooltipItems: any, data: any) {
+              return data.datasets[0].data[tooltipItems.index] ;
+            },
+          },
+        },
+        title: {
+          display: true,
+          fontSize: 10,
+          text: this.chartHeader
+        },
+        scales: {
+          xAxes: [
+            {
+              gridLines: {
+                display: true
+              },
+
+
+            }
+          ],
+
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true,
+                fontColor: "#000",
+                fontSize: 10
+
+              }
+            }
+          ]
+        },
+        legend:{
+          align:"center",
+          display:false
+        }
+
+      },
+
+      data: {
+        labels: this.chartNames.map(s => s.substring(0, 18)),
+
+
+        datasets: [
+          {
+            data: this.chartValues,
+            backgroundColor: this.chartColors,
+            borderColor: "#fff",
+         
+
+
+          },
+
+        ],
+
+
+      },
+
 
     });
   }

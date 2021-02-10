@@ -15,6 +15,7 @@ import { AuthGuard } from '../auth/services/auth.guard';
 import { SharedModule } from '../shared/shared.module';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { InventoryComponent } from './components/inventory/inventory.component';
+import { NbLayoutDirectionService } from '@nebular/theme';
 @NgModule({
   declarations: [
     HomeComponent,
@@ -38,7 +39,7 @@ import { InventoryComponent } from './components/inventory/inventory.component';
 
   ],
 
-  providers: [PublicService, AuthService, AuthGuard]
+  providers: [PublicService, AuthService, AuthGuard,NbLayoutDirectionService]
 })
 export class HomeModule {
 }
