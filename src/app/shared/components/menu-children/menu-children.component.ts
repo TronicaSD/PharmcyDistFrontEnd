@@ -54,15 +54,15 @@ export class MenuChildrenComponent implements OnInit {
       this.GetMenueItem();
     });
   }
-  findRole(allowedRoles: any) {
+  findRole(allowedRoles: any[]) {
     this.UserRoles = this._AuthService.getUserRole();
 
-    if (allowedRoles == this.UserRoles) {
-      return true;
-    } else {
+    if (allowedRoles.includes(this.UserRoles)) {
 
       return false;
+    } else {
 
+      return true;
     }
   }
   items: NbMenuItem[];
@@ -73,7 +73,7 @@ export class MenuChildrenComponent implements OnInit {
         title: this.columnheaders[0],
         link: '/home',
         icon: 'settings-2-outline',
-        hidden: !(this.findRole(Role.admin)),
+        hidden: (this.findRole([Role.admin])),
         expanded: false,
         children: [
           {
@@ -93,7 +93,7 @@ export class MenuChildrenComponent implements OnInit {
         title: this.columnheaders[3],
         link: '/home',
         icon: 'home',
-        hidden: !(this.findRole(Role.admin)),
+        hidden: (this.findRole([Role.admin])),
         expanded: false,
         children: [
           {
@@ -106,14 +106,14 @@ export class MenuChildrenComponent implements OnInit {
             link: 'receiptDetails',
 
           },
-        
+
         ],
       },
       {
         title: this.columnheaders[7],
         link: '/home',
         icon: 'edit-2-outline',
-        hidden: !(this.findRole(Role.agent)),
+        hidden: (this.findRole([Role.agent])),
 
         expanded: false,
         children: [

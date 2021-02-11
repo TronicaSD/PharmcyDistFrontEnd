@@ -1,34 +1,34 @@
 <nb-layout>
-    <nb-layout-header>
-   
-      <div class="col-md-3" style="display: contents;">
-        <nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary" style="margin: .5%;">
-          <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
-        </nb-select>
-  
-        <span class="form-inline" style="margin: .5%;">
-          <select class="form-control" #selectedLang (change)="switchLang(selectedLang.value)">
-            <option *ngFor="let language of translate.getLangs()" [value]="language"
-              [selected]="language === translate.currentLang">
-              {{ language }}
-            </option>
-          </select>
-        </span>
-        <span style="margin: .5%;">
-          <button (click)="logOut()" class="form-control">
-            Logout
-          </button>
-        </span>
-      </div>
-  
-    </nb-layout-header>
-  
-  
-  
-  
-    <nb-layout-column >
-      <router-outlet></router-outlet>
+  <nb-layout-header>
+
+    <div class="col-md-3" style="display: contents;">
+      <nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary" style="margin: .5%;">
+        <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
+      </nb-select>
+
+      <span class="form-inline" style="margin: .5%;">
+        <select class="form-control" #selectedLang (change)="switchLang(selectedLang.value)">
+          <option *ngFor="let language of translate.getLangs()" [value]="language"
+            [selected]="language === translate.currentLang">
+            {{ language }}
+          </option>
+        </select>
+      </span>
+      <span style="margin: .5%;">
+        <button (click)="logOut()" class="form-control">
+          Logout
+        </button>
+      </span>
+    </div>
+
+  </nb-layout-header>
+
+
+
+
+  <nb-layout-column>
+    <router-outlet></router-outlet>
+    <app-dashboard></app-dashboard>
   </nb-layout-column>
-  
-  </nb-layout>
-  
+
+</nb-layout>

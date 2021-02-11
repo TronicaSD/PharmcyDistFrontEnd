@@ -11,13 +11,12 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { PublicService } from '../core/publicService.Service';
 import { AuthService } from '../auth/services/auth.service';
 import { AuthGuard } from '../auth/services/auth.guard';
-import { NbLayoutDirectionService, NbTabsetModule } from '@nebular/theme';
+import { NbLayoutDirectionService } from '@nebular/theme';
 import { StockReportsComponent } from './components/stock-reports/stock-reports.component';
 import { SalesReportsComponent } from './components/sales-reports/sales-reports.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
-  declarations: [ReportsComponent, StockReportsComponent, SalesReportsComponent, DashboardComponent],
+  declarations: [ReportsComponent,StockReportsComponent,SalesReportsComponent],
   imports: [
     CommonModule,
     ReportsRoutingModule,
@@ -26,8 +25,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     ReactiveFormsModule,
     HttpClientModule,
     NbEvaIconsModule,
-    NbTabsetModule
   ],
-  providers: [PublicService, AuthService, AuthGuard, NbLayoutDirectionService]
+  providers: [PublicService, AuthService, AuthGuard,NbLayoutDirectionService]
 })
 export class ReportsModule { }

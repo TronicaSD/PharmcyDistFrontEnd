@@ -4,7 +4,7 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { PublicService } from 'src/app/core/publicService.Service';
 import * as XLSX from 'xlsx';
 import * as _ from 'lodash';
-import {Chart}  from 'chart.js';
+import { Chart } from 'chart.js';
 @Component({
   selector: 'app-stock-details',
   templateUrl: './stock-details.component.html',
@@ -17,10 +17,10 @@ export class StockDetailsComponent implements OnInit {
   columnheaders: string[];
   settings: any;
   chart: any;
-  chartNames:any[]=[];
-  chartValues:any[]=[];
-  chartColors:any[]=[];
-  chartHeader="Stocks";
+  chartNames: any[] = [];
+  chartValues: any[] = [];
+  chartColors: any[] = [];
+  chartHeader = "Stocks";
   constructor(private _PublicService: PublicService
     , private translate: TranslateService
     , private _changeDetectorRef: ChangeDetectorRef) {
@@ -38,6 +38,7 @@ export class StockDetailsComponent implements OnInit {
     this.setColumnheaders();
     this.translate.onLangChange.subscribe(item => {
       this.setColumnheaders();
+      this.getAllStockDetailsForChart();
     });
 
   }
@@ -53,7 +54,7 @@ export class StockDetailsComponent implements OnInit {
       this.columnheaders[1] = label;
       this.loadTableSettings();
     });
- 
+
 
   }
   loadTableSettings() {
@@ -66,7 +67,7 @@ export class StockDetailsComponent implements OnInit {
         add: false,
         edit: false,
         delete: false,
-  
+
       },
 
       columns: {
@@ -78,7 +79,7 @@ export class StockDetailsComponent implements OnInit {
         quantity: {
           title: this.columnheaders[1],
           type: 'string',
-        filter: false
+          filter: false
 
         },
 
@@ -86,15 +87,26 @@ export class StockDetailsComponent implements OnInit {
     };
   }
   getAllStockDetails() {
-    this._PublicService.get("StockDetails/ViewGetAll").subscribe(res => {
-      res=_.orderBy(res,"quantity").reverse();
+    this._PublicService.get("StockDetails/ViewGetAllForChart").subscribe(res => {
+      res = _.orderBy(res, "quantity").reverse();
       this.allStockDetails = res;
+      debugger;
+      this.source.load(this.allStockDetails);
+    });
+  }
+
+  getAllStockDetailsForChart() {
+    this._PublicService.get("StockDetails/ViewGetAllForChart").subscribe(res => {
+      res = _.orderBy(res, "quantity").reverse();
+      this.allStockDetails = res;
+      debugger;
       this.source.load(this.allStockDetails);
 
-      res.forEach(item=>{
-this.chartNames.push(item.drugName);
-this.chartValues.push(item.quantity);
-this.chartColors.push(this.generateColors());
+      res.forEach(item => {
+        debugger;
+        this.chartNames.push(item.drugName);
+        this.chartValues.push(item.quantity);
+        this.chartColors.push(this.generateColors());
 
       });
       this.generateBarChart();
@@ -106,9 +118,9 @@ this.chartColors.push(this.generateColors());
     var b = Math.floor(Math.random() * 255);
     return ('rgb(' + r + ',' + g + ',' + b + ')') as never;
   }
-  generateBarChart(){
+  generateBarChart() {
     this.chart = new Chart("chart", {
-      type:'bar',
+      type: 'bar',
       options: {
         animation: { duration: 1000, easing: 'linear' },
         tooltips: {
@@ -116,7 +128,7 @@ this.chartColors.push(this.generateColors());
           mode: 'single',
           callbacks: {
             label: function (tooltipItems: any, data: any) {
-              return data.datasets[0].data[tooltipItems.index] ;
+              return data.datasets[0].data[tooltipItems.index];
             },
           },
         },
@@ -147,9 +159,9 @@ this.chartColors.push(this.generateColors());
             }
           ]
         },
-        legend:{
-          align:"center",
-          display:false
+        legend: {
+          align: "center",
+          display: false
         }
 
       },
@@ -163,7 +175,7 @@ this.chartColors.push(this.generateColors());
             data: this.chartValues,
             backgroundColor: this.chartColors,
             borderColor: "#fff",
-         
+
 
 
           },
@@ -176,21 +188,20 @@ this.chartColors.push(this.generateColors());
 
     });
   }
-  exportoExcel(): void
-  {
+  exportoExcel(): void {
     /* pass here the table id */
     let element = document.getElementById('table');
-    const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
     ws['!cols'][3] = { hidden: true };
-    
- 
+
+
     /* generate workbook and add the worksheet */
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
- 
-    /* save to file */  
+
+    /* save to file */
     XLSX.writeFile(wb, "Stocks.xlsx");
- 
+
   }
 
 

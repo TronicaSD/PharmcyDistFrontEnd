@@ -14,10 +14,10 @@ const routes: Routes = [
   {
     path: '', component: AdminComponent,
     children: [
-      { path: 'drugs', component: DrugsComponent, canActivate: [AuthGuard], data: { roles: [Role.admin] } },
-      { path: 'pharmcies', component: PharmcyComponent, canActivate: [AuthGuard], data: { roles: [Role.admin] } },
-      { path: 'receiptDetails', component: receiptDetailsComponent, canActivate: [AuthGuard], data: { roles: [Role.admin] } },
-      { path: 'StocktDetails', component: StockDetailsComponent, canActivate: [AuthGuard], data: { roles: [Role.admin] } },
+      { path: 'drugs', component: DrugsComponent, canActivate: [AuthGuard], data: { roles: [Role.admin, Role.gm] } },
+      { path: 'pharmcies', component: PharmcyComponent, canActivate: [AuthGuard], data: { roles: [Role.admin, Role.gm] } },
+      { path: 'receiptDetails', component: receiptDetailsComponent, canActivate: [AuthGuard], data: { roles: [Role.admin, Role.gm] } },
+      { path: 'StocktDetails', component: StockDetailsComponent, canActivate: [AuthGuard], data: { roles: [Role.admin, Role.gm] } },
 
     ]
 

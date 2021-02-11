@@ -42,7 +42,6 @@ export class AuthService implements CanActivate {
           this._coockieService.set('userId', result.UserId);
           this._coockieService.set('role', result.role);
           this._coockieService.set('language', "ar");
-
           this.navigateToModule(result.role);
 
 
@@ -62,29 +61,28 @@ export class AuthService implements CanActivate {
     return !!localStorage.getItem('token');
   }
 
-navigateToModule(role:string){
-  debugger;
+  navigateToModule(role: string) {
+    debugger;
 
-  switch (role) {
-    case 'admin':
-  this._router.navigate(['/admin']);
-      
-      break;
+    switch (role) {
+      case 'admin':
+        this._router.navigate(['/admin']);
+
+        break;
 
       case 'agent':
-  this._router.navigate(['/home']);
-      
-      break;
+        this._router.navigate(['/home']);
+
+        break;
 
       case 'gm':
         this._router.navigate(['/reports']);
-            
-            break;
-  
-    default:
-      break;
+        break;
+
+      default:
+        break;
+    }
   }
-}
   changePassword(data: any) {
     return this.http.put<any>(
       environment.baseUrl + "Account/ChangePassword/",
@@ -103,19 +101,19 @@ navigateToModule(role:string){
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
- 
-      if (this.isAuthenticated()) {
 
-        if (next.data.role && next.url[0].path != "change-password") {
-          let userRole = localStorage.getItem("Role");
-          if (userRole == next.data.role) return true;
-        } else {
-          this._router.navigate(["login"]);
-        }
+    if (this.isAuthenticated()) {
+
+      if (next.data.role && next.url[0].path != "change-password") {
+        let userRole = localStorage.getItem("Role");
+        if (userRole == next.data.role) return true;
       } else {
-        this.logout();
+        this._router.navigate(["login"]);
       }
-  
+    } else {
+      this.logout();
+    }
+
   }
   /**
    * this is used to clear anything that needs to be removed

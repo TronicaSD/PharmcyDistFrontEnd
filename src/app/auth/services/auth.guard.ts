@@ -17,15 +17,12 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-
-
     let shouldShow: boolean = false;
-
     if (this.auth.isAuthenticated()) {
       if (next.data.roles[0] && next.url[0].path != "change-password") {
         let userRole = this.auth.getUserRole();
-
-        if (userRole == next.data.roles[0]) {
+        debugger
+        if (next.data.roles.includes(userRole)) {
           shouldShow = true;
           return true;
         }
