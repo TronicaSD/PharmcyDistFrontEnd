@@ -71,7 +71,11 @@
 "ConfirmPayingMsg":"Confirm to pay invoice ",
 "Confirm":"Confirmation",
 "Receipts":"Receipts",
-"Sales":Sales
+"Sales":"Sales",
+"TotalPriceAfterDiscount":"Total Price After Discount",
+"UserName":"User Name",
+"TotalCount":" Total Count",
+"TotalDrugs":"Total Drugs"
 
 
 
