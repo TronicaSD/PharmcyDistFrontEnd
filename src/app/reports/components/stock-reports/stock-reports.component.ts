@@ -21,6 +21,8 @@ export class StockReportsComponent implements OnInit {
   UserList: any[];
   TotalDrugs: number;
   TotalCount: any;
+  TotalUsers: number;
+  TotalPriceInStock: number = 0;
 
   constructor(private _PublicService: PublicService
     , private translate: TranslateService
@@ -37,7 +39,7 @@ export class StockReportsComponent implements OnInit {
     });
     this.getAllStockDetailsForChart();
     this.GetAllUser();
-    this.getAllDrugs();
+    //  this.getAllDrugs();
   }
   defaultDate: Date = new Date();
   chartNames: any[] = [];
@@ -61,8 +63,10 @@ export class StockReportsComponent implements OnInit {
       res = _.orderBy(res, "quantity").reverse();
       this.allStockDetails = res;
       this.TotalCount = res.length;
-
+      this.TotalDrugs = res.length;
+      this.TotalPriceInStock = 0;
       res.forEach(item => {
+        this.TotalPriceInStock += item.quantity * item.price;
         this.chartNames.push(item.drugName);
         this.chartValues.push(item.quantity);
         this.chartColors.push(this.generateColors());
@@ -153,6 +157,7 @@ export class StockReportsComponent implements OnInit {
   GetAllUser() {
     this._PublicService.get("User/ViewGetAll").subscribe((Response) => {
       this.UserList = Response;
+      this.TotalUsers = Response.length;
 
     }, (error) => {
     });
@@ -160,10 +165,12 @@ export class StockReportsComponent implements OnInit {
   }
   getAllDrugs() {
 
-    this._PublicService.get("Drugs/ViewGetAll").subscribe(res => {
+    this._PublicService.get("StockDetails/ViewGetAllByDrug").subscribe(res => {
       this.TotalDrugs = res.length;
-
-
     });
+  }
+  ClearFilter() {
+    this.SeacrhForm.reset();
+    this.getAllStockDetailsForChart();
   }
 }

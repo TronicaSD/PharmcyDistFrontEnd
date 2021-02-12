@@ -26,6 +26,7 @@ export class SalesReportsComponent implements OnInit {
   TotalPriceList: any;
   TotalCount: _.Dictionary<number>;
   TotalDrugs: number;
+  TotalPharmcies: any;
 
 
 
@@ -47,7 +48,6 @@ export class SalesReportsComponent implements OnInit {
     });
     this.getAllInvoiceForChart();
     this.GetAllUser();
-    this.getAllDrugs();
   }
   defaultDate: Date = new Date();
   chartNames: any[] = [];
@@ -69,9 +69,17 @@ export class SalesReportsComponent implements OnInit {
       this.allInvoice = res;
       this.TotalPriceList = [];
       this.TotalPriceAfterDiscountList = [];
-
-
       debugger;
+
+      var resArr = [];
+      res.forEach(function (item) {
+        var i = resArr.findIndex(x => x.pharmcyId == item.pharmcyId);
+        if (i <= -1) {
+          resArr.push({ id: item.id, pharmcyId: item.pharmcyId });
+        }
+      });
+      this.TotalPharmcies = resArr.length;
+
       res.forEach(item => {
         this.TotalPriceList.push(item.total);
         this.TotalPriceAfterDiscountList.push(item.totalAfterDiscount);
@@ -82,7 +90,6 @@ export class SalesReportsComponent implements OnInit {
       this.TotalPrice = _.sum(this.TotalPriceList);
       this.TotalCount = res.length;
       this.TotalPriceAfterDiscount = _.sum(this.TotalPriceAfterDiscountList);
-      debugger;
 
       this.generateBarChart();
     });
@@ -169,17 +176,12 @@ export class SalesReportsComponent implements OnInit {
   GetAllUser() {
     this._PublicService.get("User/ViewGetAll").subscribe((Response) => {
       this.UserList = Response;
-      debugger;
     }, (error) => {
     });
 
   }
-  getAllDrugs() {
-
-    this._PublicService.get("Drugs/ViewGetAll").subscribe(res => {
-      this.TotalDrugs = res.length;
-
-
-    });
+  ClearFilter() {
+    this.SeacrhForm.reset();
+    this.getAllInvoiceForChart();
   }
 }

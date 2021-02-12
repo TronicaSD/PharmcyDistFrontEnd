@@ -72,7 +72,15 @@
 "TotalPriceAfterDiscount":" أجمالي السعر بعد الخصم",
 "UserName":"أسم المستخدم",
 "TotalCount":"أجمالي عدد العناصر ",
-"TotalDrugs":"أجمالي عدد الأدوية "
+"TotalDrugsInStock":"أجمالي عدد الأدوية في المخزن",
+"TotalPriceInStock":"أجمالي السعر في المخزن",
+"TotalVendors":"أجمالي عدد الموزعين",
+"ClearFilter":"تفريغ الفلاتر ",
+"TotalInvoices":"عدد الفواتير",
+"TotalInvoicePriceAfterDiscount":" أجمالي سعر الفواتير بعد الخصم",
+"TotalInvoicePrice":"أجمالي سعر الفواتير",
+"TotalPharmcies":"أجمالي عدد الصيدليات"
+
 
 
 

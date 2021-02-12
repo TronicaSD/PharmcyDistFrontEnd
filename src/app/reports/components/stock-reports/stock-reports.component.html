@@ -1,3 +1,77 @@
+<div class="row">
+  <!-- <div class="col-md-3">
+
+    <nb-card class="card-box">
+      <div class="row">
+
+
+        <div class="col-md-6">
+          <p class="p-total">{{'TotalPrice' | translate}}</p>
+        </div>
+        <div class="col-md-6">
+          <i class="fa fa-shopping-cart p-total"></i>
+        </div>
+      </div>
+
+      <span>{{TotalPrice}}</span>
+    </nb-card>
+  </div>
+-->
+  <div class="col-md-4">
+
+    <nb-card class="card-box">
+      <div class="row">
+
+
+        <div class="col-md-6">
+          <p class="p-total">{{'TotalVendors' | translate}}</p>
+        </div>
+        <div class="col-md-6">
+          <i class="fa fa-user p-total"></i>
+        </div>
+      </div>
+
+      <span>{{TotalUsers}}</span>
+    </nb-card>
+  </div>
+
+  <div class="col-md-4">
+
+    <nb-card class="card-box">
+      <div class="row">
+
+
+        <div class="col-md-6">
+          <p class="p-totalItems">{{'TotalPriceInStock' | translate}}</p>
+        </div>
+        <div class="col-md-6">
+          <i class="fa fa-money p-totalItems"></i>
+        </div>
+      </div>
+
+      <span>{{TotalPriceInStock}}</span>
+    </nb-card>
+  </div>
+  <div class="col-md-4">
+
+    <nb-card class="card-box">
+      <div class="row">
+
+
+        <div class="col-md-6">
+          <p class="p-Drug">{{'TotalDrugsInStock' | translate}}</p>
+        </div>
+        <div class="col-md-6">
+          <i class="fa fa-circle p-Drug"></i>
+        </div>
+      </div>
+
+      <span>{{TotalDrugs}}</span>
+    </nb-card>
+  </div>
+
+</div>
+
 <form [formGroup]="SeacrhForm">
 
   <div class="row mb-4">
@@ -25,84 +99,12 @@
     <div class="col-md-3">
       <button style="margin-top: 2vw;" type="button" class="cancel" size="small" outline nbButton status="info"
         (click)="  getAllStockDetailsForChart()">{{'Search' | translate}} </button>
-
+      <button style="margin-top: 2vw;margin-right: 2%;margin-left: 2%;" type="button" class="cancel" size="small"
+        outline nbButton status="danger" (click)="  ClearFilter()">{{'ClearFilter' | translate}} </button>
     </div>
   </div>
 
 </form>
-<div class="row">
-  <!-- <div class="col-md-3">
-
-    <nb-card class="card-box">
-      <div class="row">
-
-
-        <div class="col-md-6">
-          <p class="p-total">{{'TotalPrice' | translate}}</p>
-        </div>
-        <div class="col-md-6">
-          <i class="fa fa-shopping-cart p-total"></i>
-        </div>
-      </div>
-
-      <span>{{TotalPrice}}</span>
-    </nb-card>
-  </div>
-
-  <div class="col-md-3">
-
-    <nb-card class="card-box">
-      <div class="row">
-
-
-        <div class="col-md-6">
-          <p class="p-totalAfterDis">{{'TotalPriceAfterDiscount' | translate}}</p>
-        </div>
-        <div class="col-md-6">
-          <i class="fa fa-money p-totalAfterDis"></i>
-        </div>
-      </div>
-
-      <span>{{TotalPriceAfterDiscount}}</span>
-    </nb-card>
-  </div> -->
-
-  <div class="col-md-3">
-
-    <nb-card class="card-box">
-      <div class="row">
-
-
-        <div class="col-md-6">
-          <p class="p-totalItems">{{'TotalCount' | translate}}</p>
-        </div>
-        <div class="col-md-6">
-          <i class="fa fa-plus p-totalItems"></i>
-        </div>
-      </div>
-
-      <span>{{TotalCount}}</span>
-    </nb-card>
-  </div>
-  <div class="col-md-3">
-
-    <nb-card class="card-box">
-      <div class="row">
-
-
-        <div class="col-md-6">
-          <p class="p-Drug">{{'TotalDrugs' | translate}}</p>
-        </div>
-        <div class="col-md-6">
-          <i class="fa fa-flask p-Drug"></i>
-        </div>
-      </div>
-
-      <span>{{TotalDrugs}}</span>
-    </nb-card>
-  </div>
-
-</div>
 
 
 

@@ -75,7 +75,15 @@
 "TotalPriceAfterDiscount":"Total Price After Discount",
 "UserName":"User Name",
 "TotalCount":" Total Count",
-"TotalDrugs":"Total Drugs"
+"TotalDrugsInStock":"Total Drugs In Stock",
+"TotalPriceInStock":"Total Price In Stock",
+"TotalVendors":"Total Vendors",
+"ClearFilter":"Clear Filters",
+"TotalInvoices":"Total Invoices",
+"TotalInvoicePriceAfterDiscount":"Total Invoices Price After Discount",
+"TotalInvoicePrice":"Total Invoices Price",
+"TotalPharmcies":"Total Pharmcies"
+
 
 
 
