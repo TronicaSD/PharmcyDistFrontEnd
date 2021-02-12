@@ -68,7 +68,13 @@
 "Status":"الحاله",
 "ConfirmPayingMsg":"تاكيد دفع الفاتوره",
 "Confirm":"تاكيد",
-"Sales":"مبيعات"
+"Sales":"مبيعات",
+"TotalPriceAfterDiscount":" أجمالي السعر بعد الخصم",
+"UserName":"أسم المستخدم",
+"TotalCount":"أجمالي عدد العناصر ",
+"TotalDrugs":"أجمالي عدد الأدوية "
+
+
 
 
 

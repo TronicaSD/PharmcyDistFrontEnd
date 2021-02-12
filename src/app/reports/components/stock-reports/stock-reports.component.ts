@@ -18,22 +18,26 @@ export class StockReportsComponent implements OnInit {
   chartValuesForUser: any;
   chartColorsForUser: any;
   chartNamesForUser: any;
+  UserList: any[];
+  TotalDrugs: number;
+  TotalCount: any;
 
   constructor(private _PublicService: PublicService
     , private translate: TranslateService
-    , private _formbuilder: FormBuilder
-
-    , private _changeDetectorRef: ChangeDetectorRef) { }
+    , private _formbuilder: FormBuilder) { }
 
   ngOnInit(): void {
     let fromDate = new Date(this.defaultDate.getFullYear(), this.defaultDate.getMonth(), 1);
 
     this.SeacrhForm = this._formbuilder.group({
-      from: [fromDate, Validators.required],
-      to: [this.defaultDate, Validators.required],
+      from: ["", Validators.required],
+      to: ["", Validators.required],
+      UserId: [""],
 
     });
     this.getAllStockDetailsForChart();
+    this.GetAllUser();
+    this.getAllDrugs();
   }
   defaultDate: Date = new Date();
   chartNames: any[] = [];
@@ -44,17 +48,27 @@ export class StockReportsComponent implements OnInit {
   chartHeader = "All Stocks For Each User";
 
   getAllStockDetailsForChart() {
-    this._PublicService.post("StockDetails/ViewGetAllForAll", this.SeacrhForm.value).subscribe(res => {
+
+
+    if (this.SeacrhForm.value.UserId != "" || this.SeacrhForm.value.from != "" || this.SeacrhForm.value.to != "") {
+      this.chart.destroy();
+      this.chartNames = [];
+      this.chartValues = [];
+      this.chartColors = [];
+
+    }
+    this._PublicService.post("StockDetails/ViewGetAllForChart", this.SeacrhForm.value).subscribe(res => {
       res = _.orderBy(res, "quantity").reverse();
       this.allStockDetails = res;
+      this.TotalCount = res.length;
 
       res.forEach(item => {
-
         this.chartNames.push(item.drugName);
         this.chartValues.push(item.quantity);
         this.chartColors.push(this.generateColors());
-
       });
+
+
       this.generateBarChart();
     });
   }
@@ -148,4 +162,21 @@ export class StockReportsComponent implements OnInit {
   }
 
  
+  //GetAllUser
+  GetAllUser() {
+    this._PublicService.get("User/ViewGetAll").subscribe((Response) => {
+      this.UserList = Response;
+
+    }, (error) => {
+    });
+
+  }
+  getAllDrugs() {
+
+    this._PublicService.get("Drugs/ViewGetAll").subscribe(res => {
+      this.TotalDrugs = res.length;
+
+
+    });
+  }
 }

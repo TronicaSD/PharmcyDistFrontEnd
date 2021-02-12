@@ -1,1 +1,111 @@
-<p>sales-reports works!</p>
+<form [formGroup]="SeacrhForm">
+
+  <div class="row mb-4">
+    <div class=" col-md-3">
+
+      <label> {{'from' | translate}}</label>
+      <input nbInput placeholder="Pick Date" [nbDatepicker]="dateTimefromPicker" class="form-control"
+        formControlName="from">
+      <nb-datepicker #dateTimefromPicker></nb-datepicker>
+    </div>
+    <div class=" col-md-3">
+
+      <label> {{'to' | translate}}</label>
+      <input nbInput placeholder="Pick Date" [nbDatepicker]="dateTimetoPicker" class="form-control"
+        formControlName="to">
+      <nb-datepicker #dateTimetoPicker></nb-datepicker>
+    </div>
+    <div class=" col-md-3">
+
+      <label> {{'UserName' | translate}}</label>
+      <nb-select formControlName="UserId">
+        <nb-option *ngFor="let it of UserList" [value]="it.userId">{{it.userName}}</nb-option>
+      </nb-select>
+    </div>
+    <div class="col-md-3">
+      <button style="margin-top: 2vw;" type="button" class="cancel" size="small" outline nbButton status="info"
+        (click)="  getAllInvoiceForChart()">{{'Search' | translate}} </button>
+
+    </div>
+  </div>
+
+</form>
+
+<div class="row">
+  <div class="col-md-3">
+
+    <nb-card class="card-box">
+      <div class="row">
+
+
+        <div class="col-md-6">
+          <p class="p-total">{{'TotalPrice' | translate}}</p>
+        </div>
+        <div class="col-md-6">
+          <i class="fa fa-shopping-cart p-total"></i>
+        </div>
+      </div>
+
+      <span>{{TotalPrice}}</span>
+    </nb-card>
+  </div>
+
+  <div class="col-md-3">
+
+    <nb-card class="card-box">
+      <div class="row">
+
+
+        <div class="col-md-6">
+          <p class="p-totalAfterDis">{{'TotalPriceAfterDiscount' | translate}}</p>
+        </div>
+        <div class="col-md-6">
+          <i class="fa fa-money p-totalAfterDis"></i>
+        </div>
+      </div>
+
+      <span>{{TotalPriceAfterDiscount}}</span>
+    </nb-card>
+  </div>
+
+  <div class="col-md-3">
+
+    <nb-card class="card-box">
+      <div class="row">
+
+
+        <div class="col-md-6">
+          <p class="p-totalItems">{{'TotalCount' | translate}}</p>
+        </div>
+        <div class="col-md-6">
+          <i class="fa fa-plus p-totalItems"></i>
+        </div>
+      </div>
+
+      <span>{{TotalCount}}</span>
+    </nb-card>
+  </div>
+  <div class="col-md-3">
+
+    <nb-card class="card-box">
+      <div class="row">
+
+
+        <div class="col-md-6">
+          <p class="p-Drug">{{'TotalDrugs' | translate}}</p>
+        </div>
+        <div class="col-md-6">
+          <i class="fa fa-flask p-Drug"></i>
+        </div>
+      </div>
+
+      <span>{{TotalDrugs}}</span>
+    </nb-card>
+  </div>
+
+</div>
+
+
+<div class="row">
+  <canvas id="Invoicechart" style="height:470px !important"></canvas>
+</div>
