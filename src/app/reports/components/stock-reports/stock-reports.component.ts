@@ -84,24 +84,36 @@ export class StockReportsComponent implements OnInit {
           text: this.chartHeaderForUsers
         },
         scales: {
+
           xAxes: [
             {
-              gridLines: {
-                display: true
-              },
+              ticks: {
+                beginAtZero: true,
+                fontColor: "#000",
+                fontSize: 10.
+              
 
+              },
+              gridLines:{ 
+                display:false
+              }
 
             }
           ],
-
+          
           yAxes: [
             {
               ticks: {
                 beginAtZero: true,
                 fontColor: "#000",
-                fontSize: 10
+                fontSize: 10.
+              
 
+              },
+              gridLines:{ 
+                display:false
               }
+
             }
           ]
         },
@@ -135,94 +147,5 @@ export class StockReportsComponent implements OnInit {
     });
   }
 
-  // getAllStockDetailsForEachUserChart() {
-  //   this._PublicService.get("StockDetails/ViewGetAllForChart").subscribe(res => {
-  //     res = _.orderBy(res, "quantity").reverse();
-  //     this.allStockDetailsForUser = res;
-  //     debugger;
-  //     res.forEach(Parentitem => {
-  //       debugger;
-  //       Parentitem.forEach(item => {
-  //         debugger;
-  //         this.chartNamesForUser.push(item.drug.drugName);
-  //         this.chartValuesForUser.push(item.quantity);
-  //         this.chartColorsForUser.push(this.generateColors());
-
-  //       });
-
-  //       this.generateBarChart();
-  //     });
-  //   });
-  // }
-
-  // generateBarChartEachUser() {
-  //   this.chart = new Chart("chart", {
-  //     type: 'bar',
-  //     options: {
-  //       animation: { duration: 1000, easing: 'linear' },
-  //       tooltips: {
-  //         enabled: true,
-  //         mode: 'single',
-  //         callbacks: {
-  //           label: function (tooltipItems: any, data: any) {
-  //             return data.datasets[0].data[tooltipItems.index];
-  //           },
-  //         },
-  //       },
-  //       title: {
-  //         display: true,
-  //         fontSize: 10,
-  //         text: this.chartHeaderForUsers
-  //       },
-  //       scales: {
-  //         xAxes: [
-  //           {
-  //             gridLines: {
-  //               display: true
-  //             },
-
-
-  //           }
-  //         ],
-
-  //         yAxes: [
-  //           {
-  //             ticks: {
-  //               beginAtZero: true,
-  //               fontColor: "#000",
-  //               fontSize: 10
-
-  //             }
-  //           }
-  //         ]
-  //       },
-  //       legend: {
-  //         align: "center",
-  //         display: false
-  //       }
-
-  //     },
-
-  //     data: {
-  //       labels: this.chartNamesForUser.map(s => s.substring(0, 18)),
-
-
-  //       datasets: [
-  //         {
-  //           data: this.chartValuesForUser,
-  //           backgroundColor: this.chartColorsForUser,
-  //           borderColor: "#fff",
-
-
-
-  //         },
-
-  //       ],
-
-
-  //     },
-
-
-  //   });
-  // }
+ 
 }
