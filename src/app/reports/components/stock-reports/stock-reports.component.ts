@@ -102,24 +102,36 @@ export class StockReportsComponent implements OnInit {
           text: this.chartHeaderForUsers
         },
         scales: {
+
           xAxes: [
             {
-              gridLines: {
-                display: true
-              },
+              ticks: {
+                beginAtZero: true,
+                fontColor: "#000",
+                fontSize: 10.
+              
 
+              },
+              gridLines:{ 
+                display:false
+              }
 
             }
           ],
-
+          
           yAxes: [
             {
               ticks: {
                 beginAtZero: true,
                 fontColor: "#000",
-                fontSize: 10
+                fontSize: 10.
+              
 
+              },
+              gridLines:{ 
+                display:false
               }
+
             }
           ]
         },
@@ -153,6 +165,7 @@ export class StockReportsComponent implements OnInit {
     });
   }
 
+ 
   //GetAllUser
   GetAllUser() {
     this._PublicService.get("User/ViewGetAll").subscribe((Response) => {
