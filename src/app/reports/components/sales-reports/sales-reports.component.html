@@ -49,7 +49,7 @@
         </div>
       </div>
 
-      <span>{{TotalCount}}</span>
+      <span>{{userList.length}}</span>
     </nb-card>
   </div>
   <div class="col-md-3">
@@ -92,7 +92,7 @@
 
       <label> {{'VendorName' | translate}}</label>
       <nb-select formControlName="UserId">
-        <nb-option *ngFor="let it of UserList" [value]="it.userId">{{it.userName}}</nb-option>
+        <nb-option *ngFor="let it of userList" [value]="it.userId">{{it.userName}}</nb-option>
       </nb-select>
     </div>
     <div class="col-md-3">
@@ -109,10 +109,10 @@
 
 
 <div class="row">
-  <canvas id="Invoicechart" style="height:470px !important"></canvas>
+  <canvas id="vendorchart" style="height:470px !important"></canvas>
 </div>
 
 
-<div class="row" *ngIf="ShowIserChart">
-  <canvas id="InvoicechartForEachUser" style="height:470px !important"></canvas>
+<div class="row" >
+  <canvas id="drugsChart" style="height:470px !important"></canvas>
 </div>

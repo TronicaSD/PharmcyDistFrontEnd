@@ -12,7 +12,7 @@ import { PublicService } from 'src/app/core/publicService.Service';
 })
 export class StockReportsComponent implements OnInit {
   allStockDetails: any[];
-  chart: Chart = new Chart("barchart", {});
+  chart:any;
   SeacrhForm: any;
   allStockDetailsForUser: any[];
   chartValuesForUser: any;
@@ -23,44 +23,40 @@ export class StockReportsComponent implements OnInit {
   TotalCount: any;
   TotalUsers: number;
   TotalPriceInStock: number = 0;
-
+  defaultDate: Date = new Date();
+  chartNames: any[] = [];
+  chartValues: any[] = [];
+  chartColors: any[] = [];
+  AppendChart: any;
+  chartHeader = "";
   constructor(private _PublicService: PublicService
     , private translate: TranslateService
     , private _formbuilder: FormBuilder) { }
 
   ngOnInit(): void {
     let fromDate = new Date(this.defaultDate.getFullYear(), this.defaultDate.getMonth(), 1);
-
+this.translate.get("StockDetails").subscribe(res=>this.chartHeader=res);
     this.SeacrhForm = this._formbuilder.group({
       from: ["", Validators.required],
       to: ["", Validators.required],
-      UserId: [""],
+       UserId: [""],
 
     });
     this.getAllStockDetailsForChart();
     this.GetAllUser();
     //  this.getAllDrugs();
   }
-  defaultDate: Date = new Date();
-  chartNames: any[] = [];
-  chartValues: any[] = [];
-  chartColors: any[] = [];
-  AppendChart: any;
-  chartHeaderForUsers = "All Stocks For All User";
-  chartHeader = "All Stocks For Each User";
+ 
 
   getAllStockDetailsForChart() {
-
-    this.chart.destroy();
-    debugger;
+if (this.chart) {
+  this.chart.destroy();
+  
+}
     this.chartNames = [];
     this.chartValues = [];
     this.chartColors = [];
-    if (this.SeacrhForm.value.UserId != "" || this.SeacrhForm.value.from != "" || this.SeacrhForm.value.to != "") {
-      this.chart.destroy();
-      this.chartNames = [];
-      this.chartValues = [];
-      this.chartColors = [];
+  
       if (this.SeacrhForm.value.from != "") {
         let date = new Date(Date.UTC(
           this.SeacrhForm.value.from.getFullYear(),
@@ -79,20 +75,22 @@ export class StockReportsComponent implements OnInit {
         this.SeacrhForm.controls.to.setValue(date);
 
       }
-    }
-    debugger;
+    
+  
     this._PublicService.post("StockDetails/ViewGetAllForChart", this.SeacrhForm.value).subscribe(res => {
       res = _.orderBy(res, "quantity").reverse();
       this.allStockDetails = res;
       this.TotalCount = res.length;
-      this.TotalDrugs = res.length;
       this.TotalPriceInStock = 0;
+      let stockQty=[];
       res.forEach(item => {
         this.TotalPriceInStock += item.quantity * item.price;
         this.chartNames.push(item.drugName);
         this.chartValues.push(item.quantity);
         this.chartColors.push(this.generateColors());
+        stockQty.push(item.quantity);
       });
+      this.TotalDrugs = _.sum(stockQty);
 
 
       this.generateBarChart();
@@ -121,7 +119,7 @@ export class StockReportsComponent implements OnInit {
         title: {
           display: true,
           fontSize: 10,
-          text: this.chartHeaderForUsers
+          text: this.chartHeader
         },
         scales: {
 
@@ -190,7 +188,7 @@ export class StockReportsComponent implements OnInit {
 
   //GetAllUser
   GetAllUser() {
-    this._PublicService.get("User/ViewGetAll").subscribe((Response) => {
+    this._PublicService.get("User/GetAllAgents").subscribe((Response) => {
       this.UserList = Response;
       this.TotalUsers = Response.length;
 
@@ -205,8 +203,7 @@ export class StockReportsComponent implements OnInit {
     });
   }
   ClearFilter() {
-    // this.SeacrhForm.reset();
-    debugger;
+
     this.SeacrhForm.controls.from.setValue("");
     this.SeacrhForm.controls.to.setValue("");
     this.SeacrhForm.controls.UserId.setValue("");

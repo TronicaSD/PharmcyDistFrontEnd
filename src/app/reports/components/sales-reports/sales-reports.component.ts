@@ -13,23 +13,21 @@ import { PublicService } from 'src/app/core/publicService.Service';
 })
 export class SalesReportsComponent implements OnInit {
   allInvoice: any[];
-  chart: Chart = new Chart("barchart", {});
+  chart: any ;
   SeacrhForm: any;
   allInvoiceForUser: any[];
   chartValuesForUser: any[] = [];
   chartColorsForUser: any;
   chartNamesForUser: any[] = [];
-  UserList: any[];
+  userList: any[]=[];
   TotalPriceAfterDiscount: number;
   TotalPrice: number;
   TotalPriceAfterDiscountList: any;
   TotalPriceList: any;
-  TotalCount: _.Dictionary<number>;
   TotalDrugs: number;
   TotalPharmcies: any;
   allInvoiceForEachUser: any;
-  chartForUser: Chart = new Chart("barchart", {});
-  ShowIserChart: boolean = false;
+  chartForUser: any;
 
 
 
@@ -60,15 +58,14 @@ export class SalesReportsComponent implements OnInit {
   chartHeader = "Sales";
 
   getAllInvoiceForChart() {
+    if (this.chart) {
     this.chart.destroy();
+      
+    }
     this.chartNames = [];
     this.chartValues = [];
     this.chartColors = [];
-    if (this.SeacrhForm.value.UserId != "" || this.SeacrhForm.value.from != "" || this.SeacrhForm.value.to != "") {
-      this.chartNames = [];
-      this.chartValues = [];
-      this.chartColors = [];
-      this.chart.destroy();
+  
       if (this.SeacrhForm.value.from != "") {
         let date = new Date(Date.UTC(
           this.SeacrhForm.value.from.getFullYear(),
@@ -87,17 +84,13 @@ export class SalesReportsComponent implements OnInit {
         this.SeacrhForm.controls.to.setValue(date);
 
       }
-      if (this.SeacrhForm.value.UserId != "") {
-        this.ShowIserChart = true;
-        this.getAllInvoiceForEachChart()
-      }
-    }
+ 
+    
     this._PublicService.post("Invoice/ViewGetAllForChart", this.SeacrhForm.value).subscribe(res => {
       res = _.orderBy(res, "quantity").reverse();
       this.allInvoice = res;
       this.TotalPriceList = [];
       this.TotalPriceAfterDiscountList = [];
-      debugger;
 
       var resArr = [];
       res.forEach(function (item) {
@@ -116,7 +109,6 @@ export class SalesReportsComponent implements OnInit {
         this.chartColors.push(this.generateColors());
       });
       this.TotalPrice = _.sum(this.TotalPriceList);
-      this.TotalCount = res.length;
       this.TotalPriceAfterDiscount = _.sum(this.TotalPriceAfterDiscountList);
 
       this.generateBarChart();
@@ -129,7 +121,8 @@ export class SalesReportsComponent implements OnInit {
     return ('rgb(' + r + ',' + g + ',' + b + ')') as never;
   }
   generateBarChart() {
-    this.chart = new Chart("Invoicechart", {
+    debugger;
+    this.chart = new Chart("vendorchart", {
       type: 'bar',
       options: {
         animation: { duration: 1000, easing: 'linear' },
@@ -145,7 +138,7 @@ export class SalesReportsComponent implements OnInit {
         title: {
           display: true,
           fontSize: 10,
-          text: this.chartHeader
+          text: 'Sales Per Vendor'
         },
         scales: {
           xAxes: [
@@ -202,14 +195,13 @@ export class SalesReportsComponent implements OnInit {
 
   //GetAllUser
   GetAllUser() {
-    this._PublicService.get("User/ViewGetAll").subscribe((Response) => {
-      this.UserList = Response;
+    this._PublicService.get("User/GetAllAgents").subscribe((Response) => {
+      this.userList = Response;
     }, (error) => {
     });
 
   }
   ClearFilter() {
-    this.ShowIserChart = false;
     this.SeacrhForm.controls.from.setValue("");
     this.SeacrhForm.controls.to.setValue("");
     this.SeacrhForm.controls.UserId.setValue("");
@@ -223,7 +215,6 @@ export class SalesReportsComponent implements OnInit {
   getAllInvoiceForEachChart() {
     this._PublicService.post("Invoice/ViewGetEachUserForChart", this.SeacrhForm.value).subscribe(res => {
       this.allInvoiceForEachUser = res;
-      debugger;
       res.forEach(item => {
         this.chartNamesForUser.push(item.drugName);
         this.chartValuesForUser.push(item.totalForDrug);
@@ -235,7 +226,7 @@ export class SalesReportsComponent implements OnInit {
   }
 
   generateBaForUserChart() {
-    this.chartForUser = new Chart("InvoicechartForEachUser", {
+    this.chartForUser = new Chart("drugsChart", {
       type: 'bar',
       options: {
         animation: { duration: 1000, easing: 'linear' },
@@ -251,7 +242,7 @@ export class SalesReportsComponent implements OnInit {
         title: {
           display: true,
           fontSize: 10,
-          text: this.chartHeader
+          text: 'sales per drug'
         },
         scales: {
           xAxes: [
