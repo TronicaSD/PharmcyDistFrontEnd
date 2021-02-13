@@ -22,15 +22,11 @@ export class SamplesComponent implements OnInit {
   EditForm: FormGroup;
   settings: any;
   source: LocalDataSource = new LocalDataSource();
-
-  Drugs: any;
-  StockDetails: any;
-  TDrug: string;
+  StockDrugs: any;
   Action: string;
-  TQuantity: string;
-  TName: string;
-  TDoctor: string;
   columnheaders: string[];
+  loading=true;
+  defaultDate:any;
   constructor(private _PublicService: PublicService
     , private dialogService: NbDialogService
     , private _formbuilder: FormBuilder,
@@ -38,31 +34,32 @@ export class SamplesComponent implements OnInit {
     , private translate: TranslateService
   ) {
 
+  
+
+  }
+
+  ngOnInit(): void {
     this.AddForm = this._formbuilder.group({
-      DrugId: ['', Validators.required],
+      drugId: ['', Validators.required],
       qunantity: ['', Validators.required],
-      DoctorName: ['', Validators.required],
-      Date: [new Date(), Validators.required],
+      doctorName: ['', Validators.required],
+      date: [null, Validators.required],
 
 
 
     });
 
     this.EditForm = this._formbuilder.group({
-      DrugId: ['', Validators.required],
+      drugId: [0, Validators.required],
       qunantity: ['', Validators.required],
-      DoctorName: ['', Validators.required],
-      Date: ['', Validators.required],
+      doctorName: ['', Validators.required],
+      date: ['', Validators.required],
       id: [''],
     });
 
     this.setColumnheaders();
-
-  }
-
-  ngOnInit(): void {
     this.getAllSample();
-    this.getAllDrugs();
+   
     this.getAllStockDetails();
 
     //LISTEN TO EVENTS
@@ -103,22 +100,27 @@ export class SamplesComponent implements OnInit {
         add: false,
         edit: false,
         delete: false,
-        filter: true
       },
 
       columns: {
         doctorName: {
           title: this.columnheaders[1],
           type: 'string',
+        filter: true
+
 
         },
         drugName: {
           title: this.columnheaders[2],
           type: 'string',
+        filter: true
+
         },
         date: {
           title: this.columnheaders[3],
           type: 'string',
+        filter: false,
+
           valuePrepareFunction: (date) => {
             if (date) {
               let dates = new Date(date);
@@ -131,6 +133,8 @@ export class SamplesComponent implements OnInit {
         qunantity: {
           title: this.columnheaders[4],
           type: 'string',
+        filter: false,
+
         },
 
       }
@@ -141,15 +145,10 @@ export class SamplesComponent implements OnInit {
     this.AddForm.reset();
 
   }
-  getAllDrugs() {
-    this._PublicService.get("Drugs/ViewGetAll").subscribe(res => {
-      this.Drugs = res;
 
-    });
-  }
   getAllStockDetails() {
     this._PublicService.get("StockDetails/ViewGetAll").subscribe(res => {
-      this.StockDetails = res;
+      this.StockDrugs = res;
 
     });
   }
@@ -158,7 +157,7 @@ export class SamplesComponent implements OnInit {
     this._PublicService.get("Sample/ViewGetAll").subscribe(res => {
       this.Samples = res;
       this.source.load(this.Samples);
-
+this.loading=false;
     });
   }
   public hasError = (controlName: string, errorName: string) => {
@@ -173,13 +172,12 @@ export class SamplesComponent implements OnInit {
 
   }
   Add() {
-    debugger;
     let date = new Date(Date.UTC(
-      this.AddForm.value.Date.getFullYear(),
-      this.AddForm.value.Date.getMonth(),
-      this.AddForm.value.Date.getDate()
+      this.AddForm.value.date.getFullYear(),
+      this.AddForm.value.date.getMonth(),
+      this.AddForm.value.date.getDate()
     ));
-    this.AddForm.controls.Date.setValue(date);
+    this.AddForm.controls.date.setValue(date);
 
     this._PublicService.post('Sample/AddData', this.AddForm.value).subscribe((Response) => {
       this.getAllSample();
@@ -195,10 +193,10 @@ export class SamplesComponent implements OnInit {
   ////////////Edit Modal//////////
   openEditModal(dialog: TemplateRef<any>, row: any) {
 
-    this.EditForm.controls['DrugId'].setValue(row.drugId);
+    this.EditForm.controls['drugId'].setValue(row.drugId);
     this.EditForm.controls['qunantity'].setValue(row.qunantity);
-    this.EditForm.controls['DoctorName'].setValue(row.doctorName);
-    this.EditForm.controls['Date'].setValue(new Date(row.date));
+    this.EditForm.controls['doctorName'].setValue(row.doctorName);
+    this.EditForm.controls['date'].setValue(new Date(row.date));
     this.EditForm.controls['id'].setValue(row.id);
 
     this.dialogService.open(dialog, {
@@ -206,14 +204,12 @@ export class SamplesComponent implements OnInit {
     });
   }
   updateSample() {
-    debugger;
     let date = new Date(Date.UTC(
-      this.EditForm.value.Date.getFullYear(),
-      this.EditForm.value.Date.getMonth(),
-      this.EditForm.value.Date.getDate()
+      this.EditForm.value.date.getFullYear(),
+      this.EditForm.value.date.getMonth(),
+      this.EditForm.value.date.getDate()
     ));
-    this.EditForm.controls.Date.setValue(date);
-    debugger;
+    this.EditForm.controls.date.setValue(date);
     this._PublicService.put('Sample/UpdateData', this.EditForm.value).subscribe((Response) => {
       this.Samples = Response;
       this._ToasterService.success("Sample updated Successfully");

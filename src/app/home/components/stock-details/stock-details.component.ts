@@ -20,7 +20,7 @@ export class StockDetailsComponent implements OnInit {
   chartNames: any[] = [];
   chartValues: any[] = [];
   chartColors: any[] = [];
-  chartHeader = "Stocks";
+  chartHeader = " ";
   constructor(private _PublicService: PublicService
     , private translate: TranslateService
     , private _changeDetectorRef: ChangeDetectorRef) {
@@ -38,19 +38,17 @@ export class StockDetailsComponent implements OnInit {
     this.setColumnheaders();
     this.translate.onLangChange.subscribe(item => {
       this.setColumnheaders();
-      this.getAllStockDetailsForChart();
     });
 
   }
   setColumnheaders(): void {
-    let DrugName = 'DrugName';
-    let Quantity = 'Quantity';
-
+  
     this.columnheaders = ['', '', '']
-    //Used TranslateService from @ngx-translate/core
-    this.translate.get(DrugName).subscribe(label => this.columnheaders[0] = label);
+    this.translate.get('Stocks').subscribe(label => this.chartHeader = label);
 
-    this.translate.get(Quantity).subscribe(label => {
+    this.translate.get('DrugName').subscribe(label => this.columnheaders[0] = label);
+    
+    this.translate.get('Quantity').subscribe(label => {
       this.columnheaders[1] = label;
       this.loadTableSettings();
     });
@@ -86,17 +84,10 @@ export class StockDetailsComponent implements OnInit {
       }
     };
   }
-  getAllStockDetails() {
-    this._PublicService.get("StockDetails/ViewGetAllForChart").subscribe(res => {
-      res = _.orderBy(res, "quantity").reverse();
-      this.allStockDetails = res;
-      debugger;
-      this.source.load(this.allStockDetails);
-    });
-  }
 
-  getAllStockDetailsForChart() {
-    this._PublicService.get("StockDetails/ViewGetAllForChart").subscribe(res => {
+
+  getAllStockDetails() {
+    this._PublicService.get("StockDetails/ViewGetAll").subscribe(res => {
       res = _.orderBy(res, "quantity").reverse();
       this.allStockDetails = res;
       debugger;

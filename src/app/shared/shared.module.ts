@@ -3,7 +3,7 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
 import { NbEvaIconsModule } from "@nebular/eva-icons";
-import { NbActionsModule, NbButtonModule, NbCardModule, NbDatepickerModule, NbDialogModule, NbFormFieldModule, NbIconModule, NbInputModule, NbLayoutModule, NbMenuModule, NbMenuService, NbSearchModule, NbSelectModule, NbSidebarModule, NbSidebarService, NbThemeModule, NbThemeService, NbToastrModule, NbToggleModule } from "@nebular/theme";
+import { NbActionsModule, NbButtonModule, NbCardModule, NbDatepickerModule, NbDialogModule, NbFormFieldModule, NbIconModule, NbInputModule, NbLayoutModule, NbMenuModule, NbMenuService, NbSearchModule, NbSelectModule, NbSidebarModule, NbSidebarService, NbSpinnerModule, NbThemeModule, NbThemeService, NbToastrModule, NbToggleModule } from "@nebular/theme";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { TranslateModule } from "@ngx-translate/core";
 import { Ng2SmartTableModule } from "ng2-smart-table";
@@ -35,7 +35,8 @@ import { NumbersOnlyDirective } from "./directives/number-only.directive";
      NbDialogModule.forChild({ closeOnBackdropClick: false, autoFocus: true, 
       closeOnEsc: true ,dialogClass:"defaultdialogue"}),
      Ng2SmartTableModule,
-     NbToggleModule
+     NbToggleModule,
+     NbSpinnerModule
     ],
     exports: [
      NbActionsModule,
@@ -58,7 +59,8 @@ import { NumbersOnlyDirective } from "./directives/number-only.directive";
      MenuChildrenComponent,
      Ng2SmartTableModule,
      TranslateModule,
-     NbToggleModule
+     NbToggleModule,
+     NbSpinnerModule
   
     ],
 

@@ -93,7 +93,7 @@ export class MenuChildrenComponent implements OnInit {
         title: this.columnheaders[3],
         link: '/home',
         icon: 'home',
-        hidden: (this.findRole([Role.admin])),
+        hidden: (this.findRole([Role.agent])),
         expanded: false,
         children: [
           {
@@ -117,6 +117,7 @@ export class MenuChildrenComponent implements OnInit {
 
         expanded: false,
         children: [
+         
           {
             title: this.columnheaders[8],
             link: 'Samples',

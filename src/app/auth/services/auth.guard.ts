@@ -21,7 +21,6 @@ export class AuthGuard implements CanActivate {
     if (this.auth.isAuthenticated()) {
       if (next.data.roles[0] && next.url[0].path != "change-password") {
         let userRole = this.auth.getUserRole();
-        debugger
         if (next.data.roles.includes(userRole)) {
           shouldShow = true;
           return true;

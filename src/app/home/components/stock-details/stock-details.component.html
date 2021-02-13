@@ -1,8 +1,6 @@
 <div class="container">
 
-<div>
-  <canvas id="chart"></canvas>
-</div>
+
 
 
   <nb-card>
@@ -24,6 +22,11 @@
     </nb-card-header>
 
     <nb-card-body>
+
+      <div>
+        <canvas id="chart"></canvas>
+      </div>
+      <br>
       <ng2-smart-table   id="table" [settings]="settings" [source]="source">
       </ng2-smart-table>
     </nb-card-body>

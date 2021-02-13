@@ -13,8 +13,8 @@ import { AuthGuard } from '../auth/services/auth.guard';
 import { TranslateModule } from '@ngx-translate/core';
 import { DrugsComponent } from './components/drugs/drugs.component';
 import { PharmcyComponent } from './components/pharmcy/pharmcy.component';
-import { receiptDetailsComponent } from './components/receipt-details/receipt-details.component';
-import { StockDetailsComponent } from './components/stock-details/stock-details.component';
+import { receiptDetailsComponent } from '../home/components/receipt-details/receipt-details.component';
+import { StockDetailsComponent } from '../home/components/stock-details/stock-details.component';
 import { NbLayoutDirectionService } from '@nebular/theme';
 import { ChartsModule } from 'ng2-charts';
 @NgModule({

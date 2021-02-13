@@ -5,7 +5,7 @@
       <div class="form-group">
         <label>{{'PharmcyName' | translate}}</label>
 
-        <nb-select placeholder="please Choose One?"  [(ngModel)]="selectedPharmcy" [selected]="selectedPharmcy"
+        <nb-select placeholder="Please choose one"  [(ngModel)]="selectedPharmcy" [selected]="selectedPharmcy"
         
         (selectedChange)="getUnpadidInvoices()" >
           <nb-option *ngFor="let p of Pharmcies" [value]="p.id">{{p.pharmcyName}}</nb-option>
@@ -61,10 +61,10 @@
       <nb-card-header>
 
         <div class="row">
-          <div class="col-md-3">
+          <div class="col-md-11">
             {{'Invoices' | translate}}
           </div>
-          <div class="offset-8 col-md-1">
+          <div class="col-md-1">
 
             <button nbButton status="primary" (click)="openAddModal(Adddialog)"> <i class="fa fa-plus "></i></button>
           </div>
@@ -92,7 +92,7 @@
         <form [formGroup]="AddForm">
 
           <div class="row">
-            <div class=" col-md-4">
+            <div class=" col-md-5">
 
               <div class="form-group">
                 <label> {{'PharmcyName' | translate}}   </label>
@@ -106,7 +106,7 @@
               </div>
             </div>
 
-            <div class=" col-md-4">
+            <div class=" col-md-5">
 
               <div class="form-group">
 
@@ -120,8 +120,9 @@
               </div>
             </div>
           </div>
+          
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-5">
               <div class="form-group">
 
                 <label> {{'Date' | translate}}</label>
@@ -133,14 +134,14 @@
 
               </div>
             </div>
-            <div class=" col-md-4">
+            <div class=" col-md-5">
 
               <div class="form-group">
 
 
                 <label> {{'Discount' | translate}}</label>
 
-                <input (keyup)="CalculateTotal()" class="form-control" numbersOnly
+                %<input (keyup)="CalculateTotal()" class="form-control" numbersOnly
                   placeholder="{{'Discount' | translate}} %" formControlName="DisCount" type="text" nbInput fullWidth>
                 <span *ngIf="hasError('DisCount', 'min')" style="color: red"> {{'minimumnumberis' | translate}}
                   12</span>
@@ -204,8 +205,8 @@
                 </td>
 
                 <td>
-                  <nb-icon *ngIf="i ==0" icon="plus" status="success" (click)=" addInvloiceDetailsList()"></nb-icon>
-                  <nb-icon *ngIf="i !=0" icon="trash" status="danger" (click)="removeInvoiceDetails(i)"></nb-icon>
+                  <nb-icon style="font-size: xx-large;color: #009688;" *ngIf="i ==0" icon="plus" status="success" (click)=" addInvloiceDetailsList()"></nb-icon>
+                  <nb-icon  style="font-size: xx-large;" *ngIf="i !=0" icon="trash" status="danger" (click)="removeInvoiceDetails(i)"></nb-icon>
 
                 </td>
 

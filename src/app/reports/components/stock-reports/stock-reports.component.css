@@ -4,15 +4,16 @@
   padding-top: 4%;
   font-size: 27px;
   font-weight: bold;
-  background: white;
+
   color: #3e3e5d;
-  box-shadow: 3px 3px 12px 6px #f3f3f3;
+  box-shadow: 3px 3px 12px 6px #3e3e5d;
 }
 
 .p-total {
   text-align: center;
   color: rgb(179, 53, 53);
   margin: 1%;
+  font-weight: 700;
 }
 
 .p-totalAfterDis {

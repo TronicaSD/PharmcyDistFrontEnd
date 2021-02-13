@@ -6,8 +6,6 @@ import { Role } from '../shared/enums/roles';
 import { AdminComponent } from './admin.component';
 import { DrugsComponent } from './components/drugs/drugs.component';
 import { PharmcyComponent } from './components/pharmcy/pharmcy.component';
-import { receiptDetailsComponent } from './components/receipt-details/receipt-details.component';
-import { StockDetailsComponent } from './components/stock-details/stock-details.component';
 
 const routes: Routes = [
 
@@ -16,8 +14,7 @@ const routes: Routes = [
     children: [
       { path: 'drugs', component: DrugsComponent, canActivate: [AuthGuard], data: { roles: [Role.admin, Role.gm] } },
       { path: 'pharmcies', component: PharmcyComponent, canActivate: [AuthGuard], data: { roles: [Role.admin, Role.gm] } },
-      { path: 'receiptDetails', component: receiptDetailsComponent, canActivate: [AuthGuard], data: { roles: [Role.admin, Role.gm] } },
-      { path: 'StocktDetails', component: StockDetailsComponent, canActivate: [AuthGuard], data: { roles: [Role.admin, Role.gm] } },
+    
 
     ]
 

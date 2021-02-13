@@ -474,7 +474,8 @@ next:(res)=>{
   }
 
   ClearForm() {
-
+this.Total=0;
+this.TotalDiscount=0;
     this.AddForm.reset();
     this.EditForm.reset();
     const Editcontrol = <FormArray>this.EditForm.controls['invoiceDetails'];

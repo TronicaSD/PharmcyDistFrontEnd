@@ -42,25 +42,31 @@ nb-card-footer button {
 .defaultdialogue {
   display: block !important;
   width: 600px;
+  box-shadow: 0px 0px 20px 8px #2e3a59;
 
 }
 
 .md-modal {
   display: block !important;
   width: 700px;
+  box-shadow: 0px 0px 20px 8px #2e3a59;
+
 
 }
 
 .lg-modal {
   display: block !important;
   width: 1000px;
+  box-shadow: 0px 0px 20px 8px #2e3a59;
 
 }
 
 .ng2-smart-actions {
   width: 20%;
 }
-
+.cdk-overlay-pane{
+       border-radius: .25rem  !important;
+}
 
 
 
@@ -105,7 +111,9 @@ i .fa :hover{
 color: #fff;
 
 }
-.nb-theme-default ng2-smart-table .ng2-smart-actions{
+.nb-theme-default ng2-smart-table .ng2-smart-actions ,.nb-theme-dark ng2-smart-table .ng2-smart-actions,
+.nb-theme-cosmic ng2-smart-table .ng2-smart-actions{
   height: none;
-}
+  padding-top: 1.5%;
 
+}
