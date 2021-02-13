@@ -42,7 +42,7 @@
 
 
         <div class="col-md-6">
-          <p class="p-totalItems">{{'TotalInvoices' | translate}}</p>
+          <p class="p-totalItems">{{'NumberOfVendor' | translate}}</p>
         </div>
         <div class="col-md-6">
           <i class="fa fa-file p-totalItems"></i>
@@ -90,7 +90,7 @@
     </div>
     <div class=" col-md-3">
 
-      <label> {{'UserName' | translate}}</label>
+      <label> {{'VendorName' | translate}}</label>
       <nb-select formControlName="UserId">
         <nb-option *ngFor="let it of UserList" [value]="it.userId">{{it.userName}}</nb-option>
       </nb-select>
@@ -110,4 +110,9 @@
 
 <div class="row">
   <canvas id="Invoicechart" style="height:470px !important"></canvas>
+</div>
+
+
+<div class="row" *ngIf="ShowIserChart">
+  <canvas id="InvoicechartForEachUser" style="height:470px !important"></canvas>
 </div>

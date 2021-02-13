@@ -12,7 +12,7 @@ import { PublicService } from 'src/app/core/publicService.Service';
 })
 export class StockReportsComponent implements OnInit {
   allStockDetails: any[];
-  chart: Chart;
+  chart: Chart = new Chart("barchart", {});
   SeacrhForm: any;
   allStockDetailsForUser: any[];
   chartValuesForUser: any;
@@ -51,14 +51,36 @@ export class StockReportsComponent implements OnInit {
 
   getAllStockDetailsForChart() {
 
-
+    this.chart.destroy();
+    debugger;
+    this.chartNames = [];
+    this.chartValues = [];
+    this.chartColors = [];
     if (this.SeacrhForm.value.UserId != "" || this.SeacrhForm.value.from != "" || this.SeacrhForm.value.to != "") {
       this.chart.destroy();
       this.chartNames = [];
       this.chartValues = [];
       this.chartColors = [];
+      if (this.SeacrhForm.value.from != "") {
+        let date = new Date(Date.UTC(
+          this.SeacrhForm.value.from.getFullYear(),
+          this.SeacrhForm.value.from.getMonth(),
+          this.SeacrhForm.value.from.getDate()
+        ));
+        this.SeacrhForm.controls.from.setValue(date);
 
+      }
+      if (this.SeacrhForm.value.to != "") {
+        let date = new Date(Date.UTC(
+          this.SeacrhForm.value.to.getFullYear(),
+          this.SeacrhForm.value.to.getMonth(),
+          this.SeacrhForm.value.to.getDate()
+        ));
+        this.SeacrhForm.controls.to.setValue(date);
+
+      }
     }
+    debugger;
     this._PublicService.post("StockDetails/ViewGetAllForChart", this.SeacrhForm.value).subscribe(res => {
       res = _.orderBy(res, "quantity").reverse();
       this.allStockDetails = res;
@@ -109,27 +131,27 @@ export class StockReportsComponent implements OnInit {
                 beginAtZero: true,
                 fontColor: "#000",
                 fontSize: 10.
-              
+
 
               },
-              gridLines:{ 
-                display:false
+              gridLines: {
+                display: false
               }
 
             }
           ],
-          
+
           yAxes: [
             {
               ticks: {
                 beginAtZero: true,
                 fontColor: "#000",
                 fontSize: 10.
-              
+
 
               },
-              gridLines:{ 
-                display:false
+              gridLines: {
+                display: false
               }
 
             }
@@ -165,7 +187,7 @@ export class StockReportsComponent implements OnInit {
     });
   }
 
- 
+
   //GetAllUser
   GetAllUser() {
     this._PublicService.get("User/ViewGetAll").subscribe((Response) => {
@@ -183,7 +205,15 @@ export class StockReportsComponent implements OnInit {
     });
   }
   ClearFilter() {
-    this.SeacrhForm.reset();
+    // this.SeacrhForm.reset();
+    debugger;
+    this.SeacrhForm.controls.from.setValue("");
+    this.SeacrhForm.controls.to.setValue("");
+    this.SeacrhForm.controls.UserId.setValue("");
+    this.chart.destroy();
+    this.chartNames = [];
+    this.chartValues = [];
+    this.chartColors = [];
     this.getAllStockDetailsForChart();
   }
 }

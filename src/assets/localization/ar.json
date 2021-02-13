@@ -79,6 +79,8 @@
 "TotalInvoices":"عدد الفواتير",
 "TotalInvoicePriceAfterDiscount":" أجمالي سعر الفواتير بعد الخصم",
 "TotalInvoicePrice":"أجمالي سعر الفواتير",
+"VendorName":"أسم الموزع",
+"NumberOfVendor": "عدد الموزعين",
 "TotalPharmcies":"أجمالي عدد الصيدليات"
 
 

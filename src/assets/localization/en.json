@@ -82,6 +82,8 @@
 "TotalInvoices":"Total Invoices",
 "TotalInvoicePriceAfterDiscount":"Total Invoices Price After Discount",
 "TotalInvoicePrice":"Total Invoices Price",
+"VendorName":"Vendor Name",
+"NumberOfVendor": "Number Of Vendor",
 "TotalPharmcies":"Total Pharmcies"
 
 

@@ -13,12 +13,12 @@ import { PublicService } from 'src/app/core/publicService.Service';
 })
 export class SalesReportsComponent implements OnInit {
   allInvoice: any[];
-  chart: Chart;
+  chart: Chart = new Chart("barchart", {});
   SeacrhForm: any;
   allInvoiceForUser: any[];
-  chartValuesForUser: any;
+  chartValuesForUser: any[] = [];
   chartColorsForUser: any;
-  chartNamesForUser: any;
+  chartNamesForUser: any[] = [];
   UserList: any[];
   TotalPriceAfterDiscount: number;
   TotalPrice: number;
@@ -27,7 +27,9 @@ export class SalesReportsComponent implements OnInit {
   TotalCount: _.Dictionary<number>;
   TotalDrugs: number;
   TotalPharmcies: any;
-
+  allInvoiceForEachUser: any;
+  chartForUser: Chart = new Chart("barchart", {});
+  ShowIserChart: boolean = false;
 
 
 
@@ -47,6 +49,7 @@ export class SalesReportsComponent implements OnInit {
 
     });
     this.getAllInvoiceForChart();
+
     this.GetAllUser();
   }
   defaultDate: Date = new Date();
@@ -57,12 +60,37 @@ export class SalesReportsComponent implements OnInit {
   chartHeader = "Sales";
 
   getAllInvoiceForChart() {
-
+    this.chart.destroy();
+    this.chartNames = [];
+    this.chartValues = [];
+    this.chartColors = [];
     if (this.SeacrhForm.value.UserId != "" || this.SeacrhForm.value.from != "" || this.SeacrhForm.value.to != "") {
       this.chartNames = [];
       this.chartValues = [];
       this.chartColors = [];
       this.chart.destroy();
+      if (this.SeacrhForm.value.from != "") {
+        let date = new Date(Date.UTC(
+          this.SeacrhForm.value.from.getFullYear(),
+          this.SeacrhForm.value.from.getMonth(),
+          this.SeacrhForm.value.from.getDate()
+        ));
+        this.SeacrhForm.controls.from.setValue(date);
+
+      }
+      if (this.SeacrhForm.value.to != "") {
+        let date = new Date(Date.UTC(
+          this.SeacrhForm.value.to.getFullYear(),
+          this.SeacrhForm.value.to.getMonth(),
+          this.SeacrhForm.value.to.getDate()
+        ));
+        this.SeacrhForm.controls.to.setValue(date);
+
+      }
+      if (this.SeacrhForm.value.UserId != "") {
+        this.ShowIserChart = true;
+        this.getAllInvoiceForEachChart()
+      }
     }
     this._PublicService.post("Invoice/ViewGetAllForChart", this.SeacrhForm.value).subscribe(res => {
       res = _.orderBy(res, "quantity").reverse();
@@ -83,7 +111,7 @@ export class SalesReportsComponent implements OnInit {
       res.forEach(item => {
         this.TotalPriceList.push(item.total);
         this.TotalPriceAfterDiscountList.push(item.totalAfterDiscount);
-        this.chartNames.push(this.datepipe.transform(item.enteredDate, 'yyyy/MM/dd'));
+        this.chartNames.push(item.createdByName);
         this.chartValues.push(item.total);
         this.chartColors.push(this.generateColors());
       });
@@ -181,7 +209,100 @@ export class SalesReportsComponent implements OnInit {
 
   }
   ClearFilter() {
-    this.SeacrhForm.reset();
+    this.ShowIserChart = false;
+    this.SeacrhForm.controls.from.setValue("");
+    this.SeacrhForm.controls.to.setValue("");
+    this.SeacrhForm.controls.UserId.setValue("");
+    this.chart.destroy();
+    this.chartNames = [];
+    this.chartValues = [];
+    this.chartColors = [];
     this.getAllInvoiceForChart();
   }
+  //Chart ForEach User
+  getAllInvoiceForEachChart() {
+    this._PublicService.post("Invoice/ViewGetEachUserForChart", this.SeacrhForm.value).subscribe(res => {
+      this.allInvoiceForEachUser = res;
+      debugger;
+      res.forEach(item => {
+        this.chartNamesForUser.push(item.drugName);
+        this.chartValuesForUser.push(item.totalForDrug);
+        this.chartColors.push(this.generateColors());
+      });
+
+      this.generateBaForUserChart();
+    });
+  }
+
+  generateBaForUserChart() {
+    this.chartForUser = new Chart("InvoicechartForEachUser", {
+      type: 'bar',
+      options: {
+        animation: { duration: 1000, easing: 'linear' },
+        tooltips: {
+          enabled: true,
+          mode: 'single',
+          callbacks: {
+            label: function (tooltipItems: any, data: any) {
+              return data.datasets[0].data[tooltipItems.index];
+            },
+          },
+        },
+        title: {
+          display: true,
+          fontSize: 10,
+          text: this.chartHeader
+        },
+        scales: {
+          xAxes: [
+            {
+              gridLines: {
+                display: true
+              },
+
+
+            }
+          ],
+
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true,
+                fontColor: "#000",
+                fontSize: 10
+
+              }
+            }
+          ]
+        },
+        legend: {
+          align: "center",
+          display: false
+        }
+
+      },
+
+      data: {
+        labels: this.chartNamesForUser.map(s => s.substring(0, 18)),
+
+
+        datasets: [
+          {
+            data: this.chartValuesForUser,
+            backgroundColor: this.chartColors,
+            borderColor: "#fff",
+
+
+
+          },
+
+        ],
+
+
+      },
+
+
+    });
+  }
+
 }
