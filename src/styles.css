@@ -117,3 +117,6 @@ color: #fff;
   padding-top: 1.5%;
 
 }
+.nb-theme-default nb-card ,nb-theme-dark  nb-card{
+  margin-bottom: 0 im !important;
+}
