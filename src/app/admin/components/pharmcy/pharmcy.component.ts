@@ -147,7 +147,7 @@ export class PharmcyComponent implements OnInit {
 
   changeCities(id: number) {
 
-    this._PublicService.getByID("GS_City/ViewGetAllByGovern?id=", id).subscribe(res => {
+    this._PublicService.getByID("GS_City/ViewGetAllByGovern", id).subscribe(res => {
       this.allCities = res;
     });
   }
