@@ -47,10 +47,13 @@ export class MenuChildrenComponent implements OnInit {
     this.translate.get('Receipts').subscribe(label => this.columnheaders[5] = label);
     this.translate.get('Inventory').subscribe(label => this.columnheaders[6] = label);
     this.translate.get('InvoiceAndSamples').subscribe(label => this.columnheaders[7] = label);
-    this.translate.get('Samples').subscribe(label => this.columnheaders[8] = label);
 
-    this.translate.get('Invoices').subscribe(label => {
-      this.columnheaders[9] = label;
+    this.translate.get('Samples').subscribe(label => this.columnheaders[8] = label);
+    this.translate.get('Invoices').subscribe(label => this.columnheaders[9] = label);
+    this.translate.get('Governments').subscribe(label => this.columnheaders[10] = label);
+    this.translate.get('Cities').subscribe(label => this.columnheaders[11] = label);
+    this.translate.get('Doctors').subscribe(label => {
+      this.columnheaders[12] = label;
       this.GetMenueItem();
     });
   }
@@ -86,6 +89,25 @@ export class MenuChildrenComponent implements OnInit {
             link: 'pharmcies',
             icon: 'drug',
 
+          },
+          {
+            title: this.columnheaders[10],
+            link: 'countries',
+            icon: 'drug',
+
+          }
+          ,
+          {
+            title: this.columnheaders[11],
+            link: 'cities',
+            icon: 'drug',
+
+          },
+          {
+            title: this.columnheaders[12],
+            link: 'doctors',
+            icon: 'drug',
+
           }
         ],
       },
@@ -117,7 +139,7 @@ export class MenuChildrenComponent implements OnInit {
 
         expanded: false,
         children: [
-         
+
           {
             title: this.columnheaders[8],
             link: 'Samples',

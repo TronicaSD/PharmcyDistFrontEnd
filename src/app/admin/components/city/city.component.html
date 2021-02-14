@@ -1,0 +1,138 @@
+<div class="container">
+
+  <nb-card>
+    <nb-card-header>
+
+      <div class="row">
+        <div class="col-md-11">
+          {{'Cities' | translate}}
+        </div>
+        <div class=" col-md-1">
+
+          <button nbButton status="primary" (click)="openAddDialog(Adddialog)"> <i class="fa fa-plus "></i></button>
+        </div>
+      </div>
+    </nb-card-header>
+
+    <nb-card-body>
+      <ng2-smart-table [settings]="settings" [source]="source"
+        (custom)="onCustomAction(Deletedialog,Editdialog,$event)">
+      </ng2-smart-table>
+    </nb-card-body>
+  </nb-card>
+
+</div>
+<ng-template #Adddialog class="model-full" let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header> {{'Add' | translate}} {{'City' | translate}}</nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="AddForm" (submit)="Add()">
+
+        <div class="row">
+          <div class=" col-md-6">
+
+
+
+            <label> {{'Name' | translate}} </label>
+
+            <input class="form-control" formControlName="city_Name" type="text" nbInput fullWidth>
+            <span *ngIf="hasError('city_Name', 'required')" style="color: red">{{'Name' | translate}}
+              {{'IsRequired' | translate}}</span>
+
+
+
+
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+
+
+              <label> {{'Government' | translate}} </label>
+              <nb-select placeholder="Select  {{'Government' | translate}}" formControlName="gov_Id"
+                (selectedChange)="changeCities($event)">
+                <nb-option *ngFor="let g of allGovernorates" [value]="g.governorate_Id">{{g.governorate_Name}}
+                </nb-option>
+              </nb-select>
+              <span *ngIf="hasError('gov_Id', 'required')" style="color: red"> {{'Government' | translate}}
+                {{'IsRequired' | translate}}</span>
+
+            </div>
+
+          </div>
+
+        </div>
+      </form>
+    </nb-card-body>
+    <nb-card-footer>
+      <button type="button" class="cancel" [disabled]="AddForm.invalid" nbButton status="success"
+        (click)="Add();ref.close()">{{'Save' | translate}} </button>
+      <button nbButton (click)="ref.close()" status="danger">{{'Cancel' | translate}} </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+<ng-template #Editdialog class="model-full" let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header> {{'Edit' | translate}} {{'City' | translate}}</nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="EditForm" (submit)="updatecity()">
+
+        <div class="row">
+          <div class=" col-md-6">
+
+            <div class="form-group">
+
+              <label> {{'Name' | translate}}</label>
+
+
+              <input class="form-control" formControlName="city_Name" type="text" nbInput fullWidth>
+              <span *ngIf="hasEditError('city_Name', 'required')" style="color: red">{{'Name' | translate}}
+                {{'IsRequired' | translate}}</span>
+
+
+
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label> {{'Government' | translate}} </label>
+              <nb-select placeholder="Select  {{'Government' | translate}}" formControlName="gov_Id"
+                (selectedChange)="changeCities($event)">
+                <nb-option *ngFor="let g of allGovernorates" [value]="g.governorate_Id">{{g.governorate_Name}}
+                </nb-option>
+              </nb-select>
+              <span *ngIf="hasEditError('gov_Id', 'required')" style="color: red"> {{'Government' | translate}}
+                {{'IsRequired' | translate}}</span>
+
+            </div>
+
+          </div>
+        </div>
+      </form>
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton type="button" nbButton status="success" [disabled]="EditForm.invalid" data-dismiss="modal"
+        (click)="updatecity();ref.close()">{{'Save' | translate}}</button>
+      <button nbButton status="danger" (click)="ref.close()">{{'Cancel' | translate}} </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+
+
+<ng-template #Deletedialog class="model-full" let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header> {{'Delete' | translate}} {{'City' | translate}} </nb-card-header>
+    <nb-card-body>
+      <div class="row col-md-8  col-offset-4">
+
+        <p class="text-danger"> {{'AreYouSureYouWantToDeleteThisItem' | translate}} ?</p>
+      </div>
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton type="button" nbButton status="success"
+        (click)="ref.close(true);ref.close()">{{'Save' | translate}}</button>
+      <button nbButton status="danger" (click)="ref.close()">{{'Cancel' | translate}} </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

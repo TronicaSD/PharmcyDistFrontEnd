@@ -17,8 +17,14 @@ import { receiptDetailsComponent } from '../home/components/receipt-details/rece
 import { StockDetailsComponent } from '../home/components/stock-details/stock-details.component';
 import { NbLayoutDirectionService } from '@nebular/theme';
 import { ChartsModule } from 'ng2-charts';
+import { countryComponent } from './components/country/country.component';
+import { cityComponent } from './components/city/city.component';
+import { doctorsComponent } from './components/doctors/doctors.component';
 @NgModule({
-  declarations: [AdminComponent,DrugsComponent,PharmcyComponent,receiptDetailsComponent,StockDetailsComponent
+  declarations: [AdminComponent, DrugsComponent, PharmcyComponent,
+    receiptDetailsComponent,
+    StockDetailsComponent, countryComponent,
+    cityComponent, doctorsComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +35,8 @@ import { ChartsModule } from 'ng2-charts';
     HttpClientModule,
     NbEvaIconsModule,
     ChartsModule,
+
   ],
-  providers: [PublicService, AuthService, AuthGuard,NbLayoutDirectionService]
+  providers: [PublicService, AuthService, AuthGuard, NbLayoutDirectionService]
 })
 export class AdminModule { }

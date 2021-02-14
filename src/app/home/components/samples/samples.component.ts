@@ -27,6 +27,7 @@ export class SamplesComponent implements OnInit {
   columnheaders: string[];
   loading = true;
   defaultDate: any;
+  Doctors: any[];
   constructor(private _PublicService: PublicService
     , private dialogService: NbDialogService
     , private _formbuilder: FormBuilder,
@@ -42,7 +43,7 @@ export class SamplesComponent implements OnInit {
     this.AddForm = this._formbuilder.group({
       drugId: ['', Validators.required],
       qunantity: ['', Validators.required],
-      doctorName: ['', Validators.required],
+      doctorId: ['', Validators.required],
       date: [new Date(), Validators.required],
 
 
@@ -52,11 +53,11 @@ export class SamplesComponent implements OnInit {
     this.EditForm = this._formbuilder.group({
       drugId: [0, Validators.required],
       qunantity: ['', Validators.required],
-      doctorName: ['', Validators.required],
+      doctorId: ['', Validators.required],
       date: ['', Validators.required],
       id: [''],
     });
-
+    this.getAllDoctors();
     this.setColumnheaders();
     this.getAllSample();
 
@@ -195,7 +196,7 @@ export class SamplesComponent implements OnInit {
 
     this.EditForm.controls['drugId'].setValue(row.drugId);
     this.EditForm.controls['qunantity'].setValue(row.qunantity);
-    this.EditForm.controls['doctorName'].setValue(row.doctorName);
+    this.EditForm.controls['doctorId'].setValue(row.doctorId);
     this.EditForm.controls['date'].setValue(new Date(row.date));
     this.EditForm.controls['id'].setValue(row.id);
 
@@ -248,7 +249,14 @@ export class SamplesComponent implements OnInit {
     });
 
   }
+  getAllDoctors() {
 
+    this._PublicService.get("Doctors/ViewGetAll").subscribe(res => {
+      this.Doctors = res;
+
+
+    });
+  }
   onCustomAction(Deletedialog: TemplateRef<any>, Editdialog: TemplateRef<any>, event) {
 
     switch (event.action) {

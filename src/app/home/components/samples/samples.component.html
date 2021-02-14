@@ -52,8 +52,11 @@
                 <label>{{'DoctorName' | translate}}</label>
 
 
-                <input class="form-control" formControlName="doctorName" type="text" nbInput fullWidth>
-                <span *ngIf="hasError('doctorName', 'required')" style="color: red">{{'DoctorName' | translate}}
+                <nb-select placeholder="Select Showcase" formControlName="doctorId">
+
+                  <nb-option *ngFor="let d of Doctors" [value]="d.id">{{d.name}}</nb-option>
+                </nb-select> <span *ngIf="hasError('doctorId', 'required')"
+                  style="color: red">{{'DoctorName' | translate}}
                   {{'IsRequired' | translate}}</span>
 
 
@@ -139,9 +142,11 @@
 
                 <label>{{'DoctorName' | translate}} {{'Name' | translate}}</label>
 
+                <nb-select placeholder="Select Showcase" formControlName="doctorId">
 
-                <input class="form-control" formControlName="doctorName" type="text" nbInput fullWidth>
-                <span *ngIf="hasEditError('doctorName', 'required')" style="color: red">{{'DoctorName' | translate}}
+                  <nb-option *ngFor="let d of Doctors" [value]="d.id">{{d.name}}</nb-option>
+                </nb-select>
+                <span *ngIf="hasEditError('doctorId', 'required')" style="color: red">{{'DoctorName' | translate}}
                   {{'IsRequired' | translate}}</span>
 
 
