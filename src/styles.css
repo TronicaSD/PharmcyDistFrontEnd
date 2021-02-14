@@ -120,3 +120,8 @@ color: #fff;
 .nb-theme-default nb-card ,nb-theme-dark  nb-card{
   margin-bottom: 0 im !important;
 }
+ 
+
+.row{
+  direction: rtl;
+}
