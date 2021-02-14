@@ -25,8 +25,8 @@ export class SamplesComponent implements OnInit {
   StockDrugs: any;
   Action: string;
   columnheaders: string[];
-  loading=true;
-  defaultDate:any;
+  loading = true;
+  defaultDate: any;
   constructor(private _PublicService: PublicService
     , private dialogService: NbDialogService
     , private _formbuilder: FormBuilder,
@@ -34,7 +34,7 @@ export class SamplesComponent implements OnInit {
     , private translate: TranslateService
   ) {
 
-  
+
 
   }
 
@@ -43,7 +43,7 @@ export class SamplesComponent implements OnInit {
       drugId: ['', Validators.required],
       qunantity: ['', Validators.required],
       doctorName: ['', Validators.required],
-      date: [null, Validators.required],
+      date: [new Date(), Validators.required],
 
 
 
@@ -59,7 +59,7 @@ export class SamplesComponent implements OnInit {
 
     this.setColumnheaders();
     this.getAllSample();
-   
+
     this.getAllStockDetails();
 
     //LISTEN TO EVENTS
@@ -106,20 +106,20 @@ export class SamplesComponent implements OnInit {
         doctorName: {
           title: this.columnheaders[1],
           type: 'string',
-        filter: true
+          filter: true
 
 
         },
         drugName: {
           title: this.columnheaders[2],
           type: 'string',
-        filter: true
+          filter: true
 
         },
         date: {
           title: this.columnheaders[3],
           type: 'string',
-        filter: false,
+          filter: false,
 
           valuePrepareFunction: (date) => {
             if (date) {
@@ -133,7 +133,7 @@ export class SamplesComponent implements OnInit {
         qunantity: {
           title: this.columnheaders[4],
           type: 'string',
-        filter: false,
+          filter: false,
 
         },
 
@@ -157,7 +157,7 @@ export class SamplesComponent implements OnInit {
     this._PublicService.get("Sample/ViewGetAll").subscribe(res => {
       this.Samples = res;
       this.source.load(this.Samples);
-this.loading=false;
+      this.loading = false;
     });
   }
   public hasError = (controlName: string, errorName: string) => {

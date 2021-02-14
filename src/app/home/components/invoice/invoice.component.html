@@ -5,29 +5,33 @@
       <div class="form-group">
         <label>{{'PharmcyName' | translate}}</label>
 
-        <nb-select placeholder="Please choose one"  [(ngModel)]="selectedPharmcy" [selected]="selectedPharmcy"
-        
-        (selectedChange)="getUnpadidInvoices()" >
+        <nb-select placeholder="Please choose one" [(ngModel)]="selectedPharmcy" [selected]="selectedPharmcy">
           <nb-option *ngFor="let p of Pharmcies" [value]="p.id">{{p.pharmcyName}}</nb-option>
         </nb-select>
-     
+
 
       </div>
     </div>
+    <div class="col-md-4">
+      <button style="margin-top: 2vw;" type="button" class="cancel" size="small" outline nbButton status="info"
+        (click)="getUnpadidInvoices()">{{'Search' | translate}} </button>
+      <button style="margin-top: 2vw;margin-right: 2%;margin-left: 2%;" type="button" class="cancel" size="small"
+        outline nbButton status="danger" (click)="ClearFilter()">{{'ClearFilter' | translate}} </button>
+    </div>
   </div>
-  
+
 
 
   <div *ngIf="unpaidInovices.length>0">
     <span class="text-danger">
       {{'UnpaidInvoice' | translate}}
     </span>
-<br>
+    <br>
     <table class="table">
       <thead>
         <tr>
           <th>#</th>
-          <th>{{'InvoiceNumber' | translate}}  </th>
+          <th>{{'InvoiceNumber' | translate}} </th>
           <th> {{'Date' | translate}} </th>
           <th> {{'Price' | translate}} </th>
           <th> {{'TotalAfterDiscount' | translate}} </th>
@@ -37,16 +41,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of unpaidInovices;let i =index" >
+        <tr *ngFor="let item of unpaidInovices;let i =index">
 
           <td>{{i+1}}</td>
           <td>{{item.invoiceNumber}}</td>
-          <td>{{item.invoiceDate}}         </td>
-          <td>{{item.totalPrice}}  </td>
+          <td>{{item.invoiceDate}} </td>
+          <td>{{item.totalPrice}} </td>
           <td>{{item.totalPriceAfterDis}}% </td>
           <td>{{item.disCount}} </td>
-          <td>    <nb-toggle status="success" (checkedChange)="confirmPay(ConfirmDialog,item)"
-             [checked]="item.invoiceType===1? 'false' :'true' "></nb-toggle> </td>
+          <td>
+            <nb-toggle status="success" (checkedChange)="confirmPay(ConfirmDialog,item)"
+              [checked]="item.invoiceType===1? 'false' :'true' "></nb-toggle>
+          </td>
 
         </tr>
       </tbody>
@@ -56,7 +62,7 @@
   </div>
 
   <div>
-    
+
     <nb-card>
       <nb-card-header>
 
@@ -95,13 +101,13 @@
             <div class=" col-md-5">
 
               <div class="form-group">
-                <label> {{'PharmcyName' | translate}}   </label>
+                <label> {{'PharmcyName' | translate}} </label>
 
-                <nb-select  placeholder="{{'PleaseChooseOne ' | translate}} " formControlName="PharmcyId">
+                <nb-select placeholder="{{'PleaseChooseOne ' | translate}} " formControlName="PharmcyId">
                   <nb-option *ngFor="let p of Pharmcies" [value]="p.id">{{p.pharmcyName}}</nb-option>
                 </nb-select>
-                <span *ngIf="hasError('PharmcyId', 'required')"
-                  style="color: red">{{'PharmcyName' | translate}} {{'IsRequired' | translate}}</span>
+                <span *ngIf="hasError('PharmcyId', 'required')" style="color: red">{{'PharmcyName' | translate}}
+                  {{'IsRequired' | translate}}</span>
 
               </div>
             </div>
@@ -112,15 +118,14 @@
 
                 <label>{{'InvoiceType' | translate}} </label>
 
-                <nb-select 
-                  formControlName="InvoiceType">
+                <nb-select formControlName="InvoiceType">
                   <nb-option *ngFor="let it of invoiceTypeList" [value]="it.Value">{{it.Text}}</nb-option>
                 </nb-select>
 
               </div>
             </div>
           </div>
-          
+
           <div class="row">
             <div class="col-md-5">
               <div class="form-group">
@@ -163,7 +168,7 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>{{'DrugName' | translate}}  </th>
+                <th>{{'DrugName' | translate}} </th>
                 <th> {{'Quantity' | translate}} </th>
                 <th> {{'Price' | translate}} </th>
                 <th> {{'Total' | translate}} </th>
@@ -180,7 +185,7 @@
                 <td>
 
                   <nb-select placeholder=" {{'DrugName ' | translate}} " formControlName="drugId" required>
-                      <nb-option *ngFor="let d of StockDetails" [value]="d.drugId"
+                    <nb-option *ngFor="let d of StockDetails" [value]="d.drugId"
                       (selectionChange)="calculateDrugPrice()">
                       {{d.drugName}}</nb-option>
                   </nb-select>
@@ -205,8 +210,10 @@
                 </td>
 
                 <td>
-                  <nb-icon style="font-size: xx-large;color: #009688;" *ngIf="i ==0" icon="plus" status="success" (click)=" addInvloiceDetailsList()"></nb-icon>
-                  <nb-icon  style="font-size: xx-large;" *ngIf="i !=0" icon="trash" status="danger" (click)="removeInvoiceDetails(i)"></nb-icon>
+                  <nb-icon style="font-size: xx-large;color: #009688;" *ngIf="i ==0" icon="plus" status="success"
+                    (click)=" addInvloiceDetailsList()"></nb-icon>
+                  <nb-icon style="font-size: xx-large;" *ngIf="i !=0" icon="trash" status="danger"
+                    (click)="removeInvoiceDetails(i)"></nb-icon>
 
                 </td>
 
@@ -258,8 +265,8 @@
                 <nb-select placeholder="Select pharamcy" formControlName="PharmcyId">
                   <nb-option *ngFor="let p of Pharmcies" [value]="p.id">{{p.pharmcyName}}</nb-option>
                 </nb-select>
-                <span *ngIf="hasEditError('PharmcyId', 'required')"
-                  style="color: red"> {{'PharmcyName' | translate}}{{'IsRequired' | translate}}</span>
+                <span *ngIf="hasEditError('PharmcyId', 'required')" style="color: red">
+                  {{'PharmcyName' | translate}}{{'IsRequired' | translate}}</span>
 
               </div>
             </div>
@@ -270,8 +277,7 @@
 
                 <label>{{'InvoiceType' | translate}}</label>
 
-                <nb-select placeholder="{{'PleaseChooseOne ' | translate}} "
-                  formControlName="InvoiceType">
+                <nb-select placeholder="{{'PleaseChooseOne ' | translate}} " formControlName="InvoiceType">
                   <nb-option *ngFor="let it of invoiceTypeList" [value]="it.Value">{{it.Text}}</nb-option>
                 </nb-select>
 
@@ -337,7 +343,7 @@
                 <td>
                   <nb-select placeholder="{{'PleaseChooseOne ' | translate}} " formControlName="drugId" required
                     (input)="calculateEditDrugPrice(in)">
-                      <nb-option *ngFor="let d of StockDetails" [value]="d.drugId">{{d.drugName}}</nb-option>
+                    <nb-option *ngFor="let d of StockDetails" [value]="d.drugId">{{d.drugName}}</nb-option>
                   </nb-select>
 
                 </td>
@@ -455,124 +461,118 @@
   <nb-card>
 
     <nb-card-body>
-   
-        <div class="row">
-          <div class=" col-md-4">
 
-            <div class="form-group">
-              <label>{{'PharmcyName' | translate}} </label>
+      <div class="row">
+        <div class=" col-md-4">
 
-              <input nbInput [(ngModel)]="viewModel.pharmcyName"  disabled >
+          <div class="form-group">
+            <label>{{'PharmcyName' | translate}} </label>
 
-           
+            <input nbInput [(ngModel)]="viewModel.pharmcyName" disabled>
+
+
           </div>
         </div>
 
-          <div class=" col-md-4">
+        <div class=" col-md-4">
 
-            <div class="form-group">
+          <div class="form-group">
 
-              <label>{{'InvoiceType' | translate}}</label>
+            <label>{{'InvoiceType' | translate}}</label>
 
-              <input nbInput  disabled [(ngModel)]="viewModel.invoiceTypeText"  >
+            <input nbInput disabled [(ngModel)]="viewModel.invoiceTypeText">
 
-            </div>
           </div>
-
-        </div>
-        <div class="row">
-          <div class="col-md-4">
-            <div class="form-group">
-
-              <label> {{'Date' | translate}}</label>
-              <input nbInput disabled [(ngModel)]="viewModel.invoiceDate" [nbDatepicker]="dateTimePicker" 
-               >
-              <nb-datepicker #dateTimePicker></nb-datepicker>
-        
-
-            </div>
-          </div>
-          <div class=" col-md-4">
-
-            <div class="form-group">
-
-
-              <label> {{'Discount' | translate}}</label>
-
-              <input disabled  [(ngModel)]="viewModel.disCount"
-               type="text" nbInput fullWidth>
-     
-            
-
-
-            </div>
-          </div>
-
         </div>
 
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
 
-        <table class="table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>{{'DrugName' | translate}}</th>
-              <th> {{'Quantity' | translate}} </th>
-              <th> {{'Price' | translate}} </th>
-              <th> {{'Total' | translate}} </th>
-       
-
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of viewModel.invoiceDetails;let in =index" >
-              <td>
-                {{in}}
-              </td>
-              <td>
-                   <input disabled type="text" nbInput [(ngModel)]="item.drugName"
-                  fullWidth >
-
-              </td>
-              <td>
-
-                   <input disabled type="text" nbInput [(ngModel)]="item.qunantity"
-                  fullWidth >
-
-              </td>
-              <td>
-
-               <input disabled type="text" nbInput [(ngModel)]="item.price"
-                  fullWidth >
+            <label> {{'Date' | translate}}</label>
+            <input nbInput disabled [(ngModel)]="viewModel.invoiceDate" [nbDatepicker]="dateTimePicker">
+            <nb-datepicker #dateTimePicker></nb-datepicker>
 
 
-              </td>
-              <td>
-           <input disabled type="text" nbInput [(ngModel)]="item.total"
-                  fullWidth >
-              </td>
+          </div>
+        </div>
+        <div class=" col-md-4">
 
-     
+          <div class="form-group">
 
-            </tr>
-          </tbody>
 
-        </table>
-        <tfoot>
+            <label> {{'Discount' | translate}}</label>
+
+            <input disabled [(ngModel)]="viewModel.disCount" type="text" nbInput fullWidth>
+
+
+
+
+          </div>
+        </div>
+
+      </div>
+
+
+      <table class="table">
+        <thead>
           <tr>
-            <td> {{'Total' | translate}} : </td>
-            <td>{{viewModel.totalPrice}}</td>
+            <th>#</th>
+            <th>{{'DrugName' | translate}}</th>
+            <th> {{'Quantity' | translate}} </th>
+            <th> {{'Price' | translate}} </th>
+            <th> {{'Total' | translate}} </th>
+
+
           </tr>
-          <tr>
-            <td> {{'TotalAfterDiscount' | translate}} : </td>
-            <td>{{viewModel.  totalPriceAfterDis}}</td>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of viewModel.invoiceDetails;let in =index">
+            <td>
+              {{in}}
+            </td>
+            <td>
+              <input disabled type="text" nbInput [(ngModel)]="item.drugName" fullWidth>
+
+            </td>
+            <td>
+
+              <input disabled type="text" nbInput [(ngModel)]="item.qunantity" fullWidth>
+
+            </td>
+            <td>
+
+              <input disabled type="text" nbInput [(ngModel)]="item.price" fullWidth>
+
+
+            </td>
+            <td>
+              <input disabled type="text" nbInput [(ngModel)]="item.total" fullWidth>
+            </td>
+
+
+
           </tr>
-        </tfoot> 
-  
+        </tbody>
+
+      </table>
+      <tfoot>
+        <tr>
+          <td> {{'Total' | translate}} : </td>
+          <td>{{viewModel.totalPrice}}</td>
+        </tr>
+        <tr>
+          <td> {{'TotalAfterDiscount' | translate}} : </td>
+          <td>{{viewModel.  totalPriceAfterDis}}</td>
+        </tr>
+      </tfoot>
+
 
     </nb-card-body>
     <nb-card-footer>
 
-  
+
 
       <button nbButton status="danger" (click)="ref.close()"> {{'Cancel' | translate}} </button>
 

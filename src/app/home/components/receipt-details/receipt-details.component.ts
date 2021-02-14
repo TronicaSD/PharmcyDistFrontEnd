@@ -42,13 +42,13 @@ export class receiptDetailsComponent implements OnInit {
   selected: any;
   TotalDiscount: any;
   TotalDiscountEdit: any;
- 
+
   receiptNumber: string;
   EditreceiptNumber: string;
   currentLang: string;
   columnheaders: string[];
 
-  constructor(private _PublicService: PublicService,private datePipe: DatePipe
+  constructor(private _PublicService: PublicService, private datePipe: DatePipe
     , private dialogService: NbDialogService
     , private _formbuilder: FormBuilder
     , private _ToasterService: NbToastrService
@@ -94,7 +94,7 @@ export class receiptDetailsComponent implements OnInit {
     this.translate.get("Action").subscribe(label => this.columnheaders[0] = label);
     this.translate.get('SerialNum').subscribe(label => this.columnheaders[1] = label);
     this.translate.get('Date').subscribe(label => this.columnheaders[2] = label);
-    this.translate.get('Quantity').subscribe(label => {
+    this.translate.get('TotalPrice').subscribe(label => {
       this.columnheaders[3] = label;
       this.loadTableSettings();
     });
@@ -104,7 +104,7 @@ export class receiptDetailsComponent implements OnInit {
   loadTableSettings() {
     let actionsColumn = "";
     this.translate.get('Action').subscribe(val => { actionsColumn = val; })
-   
+
     this.settings = {
       // hideSubHeader: true,
       actions: {
@@ -132,19 +132,19 @@ export class receiptDetailsComponent implements OnInit {
 
       columns: {
 
-        index:{
+        index: {
           title: this.columnheaders[1],
-        filter: false,
-        valuePrepareFunction: (value,row,cell) => {
-          return cell.row.index+1;
-         }
+          filter: false,
+          valuePrepareFunction: (value, row, cell) => {
+            return cell.row.index + 1;
+          }
 
         },
-  
+
         date: {
           title: this.columnheaders[2],
           type: 'string',
-        filter: false,
+          filter: false,
 
           valuePrepareFunction: (type) => {
             if (type) {
@@ -156,7 +156,7 @@ export class receiptDetailsComponent implements OnInit {
         totalPrice: {
           title: this.columnheaders[3],
           type: 'string',
-        filter: false,
+          filter: false,
 
 
         }
@@ -165,26 +165,26 @@ export class receiptDetailsComponent implements OnInit {
     };
   }
 
-  exportoExcel(): void
-  {
+  exportoExcel(): void {
     /* pass here the table id */
     let element = document.getElementById('excel-table');
-    const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
     ws['!cols'][3] = { hidden: true };
-    
- 
+
+
     /* generate workbook and add the worksheet */
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
- 
-    /* save to file */  
+
+    /* save to file */
     XLSX.writeFile(wb, "Stocks.xlsx");
- 
+
   }
 
   getAllreceipt() {
     this._PublicService.get("receipt/ViewGetAll").subscribe(res => {
       this.receipt = res;
+      debugger;
       this.source.load(this.receipt);
     });
   }
@@ -205,7 +205,10 @@ export class receiptDetailsComponent implements OnInit {
 
   /////////////add////////////////////
   CalculateTotal() {
+    debugger;
     this.Total = this.AddreceiptDetails.value.reduce((accumulator, current) => parseInt(accumulator) + parseInt(current.quantity), 0);
+    debugger;
+
     this.AddForm.controls['TotalPrice'].setValue(this.Total);
   }
 
@@ -235,11 +238,12 @@ export class receiptDetailsComponent implements OnInit {
   }
 
   Add() {
-    let date= this.datePipe.transform( this.AddForm.value.Date, 'MM/dd/yyyy');
-    let modal=this.AddForm.value;
+    debugger;
+    let date = this.datePipe.transform(this.AddForm.value.Date, 'MM/dd/yyyy');
+    let modal = this.AddForm.value;
     debugger
-    modal.Date=date;
-   
+    modal.Date = date;
+
     this._PublicService.post('receipt/AddData', modal).subscribe((Response) => {
       this.getAllreceipt();
       this._ToasterService.success("Drugs added To receipts successfully", "Success");
@@ -257,12 +261,12 @@ export class receiptDetailsComponent implements OnInit {
     });
   }
 
- 
+
 
   EditreceiptDetails: FormArray;
   get receiptDetailsEdit(): FormArray {
     this.EditreceiptDetails = this.EditForm.get("receiptDetails") as FormArray;
- 
+
     return this.EditreceiptDetails;
   }
   EditreceiptDetailsList() {
@@ -279,7 +283,7 @@ export class receiptDetailsComponent implements OnInit {
 
     this.receiptDetailsEdit.removeAt(0);
     row.receiptDetails.forEach(x => {
-     
+
       var newEdirreceiptDetails = this._formbuilder.group({
         drugId: x.drugId,
         drugName: "",
@@ -287,16 +291,16 @@ export class receiptDetailsComponent implements OnInit {
         quantity: x.quantity,
         id: x.id,
       });
-     
+
       this.receiptDetailsEdit.push(newEdirreceiptDetails)
-     
+
     });
     this.dialogService.open(dialog, {
       dialogClass: 'lg-modal'
     });
   }
   updatereceipt() {
-   
+
     this._PublicService.put('receipt/UpdateData', this.EditForm.value).subscribe((Response) => {
       this._ToasterService.success("receipt Updated successfully", "Success");
       this.getAllreceipt();
@@ -310,10 +314,10 @@ export class receiptDetailsComponent implements OnInit {
 
   }
 
-  viewObj:any;
-  openViewDialog(dialog: TemplateRef<any>, row: any){
+  viewObj: any;
+  openViewDialog(dialog: TemplateRef<any>, row: any) {
     debugger;
-    this.viewObj=row;
+    this.viewObj = row;
     this.dialogService.open(dialog, {
       dialogClass: 'lg-modal'
     });
@@ -368,10 +372,10 @@ export class receiptDetailsComponent implements OnInit {
       case 'edit':
         this.openEditModal(Editdialog, event.data)
         break;
-        case 'view':
-          this.openViewDialog(Viewdialog, event.data)
-          break;
-  
+      case 'view':
+        this.openViewDialog(Viewdialog, event.data)
+        break;
+
 
     }
   }
