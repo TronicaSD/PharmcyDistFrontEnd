@@ -13,13 +13,13 @@ import { PublicService } from 'src/app/core/publicService.Service';
 })
 export class SalesReportsComponent implements OnInit {
   allInvoice: any[];
-  chart: any ;
+  chart: any;
   SeacrhForm: any;
   allInvoiceForUser: any[];
   chartValuesForUser: any[] = [];
   chartColorsForUser: any;
   chartNamesForUser: any[] = [];
-  userList: any[]=[];
+  userList: any[] = [];
   TotalPriceAfterDiscount: number;
   TotalPrice: number;
   TotalPriceAfterDiscountList: any;
@@ -27,7 +27,8 @@ export class SalesReportsComponent implements OnInit {
   TotalDrugs: number;
   TotalPharmcies: any;
   allInvoiceForEachUser: any;
-  chartForUser: any;
+  chartForUser: Chart = new Chart("drugsChart", {});
+  //chartForUser: chart=new chart("");
 
 
 
@@ -59,33 +60,36 @@ export class SalesReportsComponent implements OnInit {
 
   getAllInvoiceForChart() {
     if (this.chart) {
-    this.chart.destroy();
-      
+      this.chart.destroy();
+
     }
     this.chartNames = [];
     this.chartValues = [];
     this.chartColors = [];
-  
-      if (this.SeacrhForm.value.from != "") {
-        let date = new Date(Date.UTC(
-          this.SeacrhForm.value.from.getFullYear(),
-          this.SeacrhForm.value.from.getMonth(),
-          this.SeacrhForm.value.from.getDate()
-        ));
-        this.SeacrhForm.controls.from.setValue(date);
+    if (this.SeacrhForm.value.UserId != "") {
 
-      }
-      if (this.SeacrhForm.value.to != "") {
-        let date = new Date(Date.UTC(
-          this.SeacrhForm.value.to.getFullYear(),
-          this.SeacrhForm.value.to.getMonth(),
-          this.SeacrhForm.value.to.getDate()
-        ));
-        this.SeacrhForm.controls.to.setValue(date);
+      this.getAllInvoiceForEachChart();
+    }
+    if (this.SeacrhForm.value.from != "") {
+      let date = new Date(Date.UTC(
+        this.SeacrhForm.value.from.getFullYear(),
+        this.SeacrhForm.value.from.getMonth(),
+        this.SeacrhForm.value.from.getDate()
+      ));
+      this.SeacrhForm.controls.from.setValue(date);
 
-      }
- 
-    
+    }
+    if (this.SeacrhForm.value.to != "") {
+      let date = new Date(Date.UTC(
+        this.SeacrhForm.value.to.getFullYear(),
+        this.SeacrhForm.value.to.getMonth(),
+        this.SeacrhForm.value.to.getDate()
+      ));
+      this.SeacrhForm.controls.to.setValue(date);
+
+    }
+
+
     this._PublicService.post("Invoice/ViewGetAllForChart", this.SeacrhForm.value).subscribe(res => {
       res = _.orderBy(res, "quantity").reverse();
       this.allInvoice = res;
@@ -213,6 +217,10 @@ export class SalesReportsComponent implements OnInit {
   }
   //Chart ForEach User
   getAllInvoiceForEachChart() {
+    this.chartNamesForUser = [];
+    this.chartValuesForUser = [];
+    this.chartColors = [];
+    this.chartForUser.destroy();
     this._PublicService.post("Invoice/ViewGetEachUserForChart", this.SeacrhForm.value).subscribe(res => {
       this.allInvoiceForEachUser = res;
       res.forEach(item => {
@@ -242,7 +250,7 @@ export class SalesReportsComponent implements OnInit {
         title: {
           display: true,
           fontSize: 10,
-          text: 'sales per drug'
+          text: 'sales per Total for each drug (Quantity * price)'
         },
         scales: {
           xAxes: [
