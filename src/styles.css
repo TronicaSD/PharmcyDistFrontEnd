@@ -122,6 +122,4 @@ color: #fff;
 }
  
 
-.row{
-  direction: rtl;
-}
+[dir=rtl] .nb-theme-default .row{ direction: rtl;}[dir=ltr] .nb-theme-default .row{ direction: ltr;}
