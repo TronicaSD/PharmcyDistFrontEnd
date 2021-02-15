@@ -172,14 +172,14 @@ export class InvoiceComponent implements OnInit {
         invoiceTypeText: {
           title: this.columnheaders[2],
           type: 'string',
-          filter: false,
+          filter: true,
 
         },
         invoiceDate: {
           title: this.columnheaders[3],
           type: "string",
           width: '12%',
-          filter: false,
+          filter: true,
           valuePrepareFunction: (invoiceDate) => {
             if (invoiceDate) {
               let date = new Date(invoiceDate);
@@ -192,7 +192,7 @@ export class InvoiceComponent implements OnInit {
         disCount: {
           title: this.columnheaders[4],
           type: 'string',
-          filter: false,
+          filter: true,
 
           valuePrepareFunction: (disCount) => {
             if (disCount) {
@@ -204,11 +204,11 @@ export class InvoiceComponent implements OnInit {
         },
         totalPrice: {
           title: this.columnheaders[5],
-          filter: false,
+          filter: true,
           type: 'string',
         },
         totalPriceAfterDis: {
-          filter: false,
+          filter: true,
           title: this.columnheaders[6],
           type: 'string',
         },

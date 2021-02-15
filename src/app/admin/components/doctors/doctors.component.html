@@ -47,8 +47,12 @@
             <label> {{'phoneNumber' | translate}} </label>
 
             <input class="form-control" formControlName="phoneNumber" numbersOnly type="text" nbInput fullWidth>
-            <span *ngIf="hasError('phoneNumber', 'required')" style="color: red">{{'Name' | translate}}
+            <span *ngIf="hasError('phoneNumber', 'required')" style="color: red">{{'phoneNumber' | translate}}
               {{'IsRequired' | translate}}</span>
+            <span *ngIf="hasError('phoneNumber', 'maxLength')" style="color: red">
+              {{'PhoneNumberShouldbe12' | translate}}</span>
+            <span *ngIf="hasError('phoneNumber', 'minLength')" style="color: red">
+              {{'PhoneNumberShouldbe12' | translate}}</span>
 
           </div>
 
@@ -63,6 +67,7 @@
               </nb-select>
               <span *ngIf="hasError('genderType', 'required')" style="color: red"> {{'genderType' | translate}}
                 {{'IsRequired' | translate}}</span>
+
 
             </div>
 
@@ -106,7 +111,7 @@
             <label> {{'phoneNumber' | translate}} </label>
 
             <input class="form-control" formControlName="phoneNumber" numbersOnly type="text" nbInput fullWidth>
-            <span *ngIf="hasEditError('phoneNumber', 'required')" style="color: red">{{'Name' | translate}}
+            <span *ngIf="hasEditError('phoneNumber', 'required')" style="color: red">{{'phoneNumber' | translate}}
               {{'IsRequired' | translate}}</span>
           </div>
 

@@ -120,7 +120,7 @@ export class SamplesComponent implements OnInit {
         date: {
           title: this.columnheaders[3],
           type: 'string',
-          filter: false,
+          filter: true,
 
           valuePrepareFunction: (date) => {
             if (date) {
@@ -134,7 +134,7 @@ export class SamplesComponent implements OnInit {
         qunantity: {
           title: this.columnheaders[4],
           type: 'string',
-          filter: false,
+          filter: true,
 
         },
 

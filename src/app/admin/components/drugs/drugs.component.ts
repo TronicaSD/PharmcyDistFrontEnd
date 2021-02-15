@@ -118,7 +118,7 @@ export class DrugsComponent implements OnInit {
         price: {
           title: this.columnheaders[2],
           type: 'string',
-          filter: false
+          filter: true
         },
       }
     };

@@ -110,12 +110,7 @@ export class countryComponent implements OnInit {
           title: this.columnheaders[1],
           type: 'string',
           filter: true
-        },
-        price: {
-          title: this.columnheaders[2],
-          type: 'string',
-          filter: false
-        },
+        }
       }
     };
   }

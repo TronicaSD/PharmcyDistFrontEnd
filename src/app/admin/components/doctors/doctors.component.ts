@@ -33,13 +33,13 @@ export class doctorsComponent implements OnInit {
   ) {
     this.AddForm = this._formbuilder.group({
       name: [null, Validators.required],
-      phoneNumber: [null, Validators.required],
+      phoneNumber: [null, [Validators.required, Validators.maxLength(12), Validators.minLength(12)]],
       genderType: [null, Validators.required],
     });
 
     this.EditForm = this._formbuilder.group({
       name: [null, Validators.required],
-      phoneNumber: [null, Validators.required],
+      phoneNumber: [null, [Validators.required, Validators.maxLength(12), Validators.minLength(12)]],
       genderType: [null, Validators.required],
       isDeleted: [null],
       id: [null],
@@ -145,7 +145,7 @@ export class doctorsComponent implements OnInit {
   };
 
   public hasEditError = (controlName: string, errorName: string) => {
-
+    debugger;
     return this.EditForm.controls[controlName].hasError(errorName);
   };
 

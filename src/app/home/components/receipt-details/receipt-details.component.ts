@@ -144,7 +144,7 @@ export class receiptDetailsComponent implements OnInit {
         date: {
           title: this.columnheaders[2],
           type: 'string',
-          filter: false,
+          filter: true,
 
           valuePrepareFunction: (type) => {
             if (type) {
@@ -156,7 +156,7 @@ export class receiptDetailsComponent implements OnInit {
         totalPrice: {
           title: this.columnheaders[3],
           type: 'string',
-          filter: false,
+          filter: true,
 
 
         }

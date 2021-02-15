@@ -41,6 +41,7 @@
     "Type":"Type",
     "Date":"Date",
     "Number":"Number",
+    "PhoneNumberShouldbe12":"Phone Number Should be 12",
     "phoneNumber":"Phone Number",
     "genderType":"Gender Type",
 
