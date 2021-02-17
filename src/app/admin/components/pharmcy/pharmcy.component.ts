@@ -109,7 +109,7 @@ export class PharmcyComponent implements OnInit {
         pharmcyName: {
           title: this.columnheaders[1],
           type: 'string',
-        filter: false
+        filter: true
 
         },
         governerateName: {

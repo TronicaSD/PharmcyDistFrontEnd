@@ -236,7 +236,7 @@ export class InvoiceComponent implements OnInit {
   }
   unpaidInovices:any=[];
   getUnpadidInvoices(){
-    
+    debugger;
     this._PublicService.getByID("Invoice/GetByPharmcy",this.selectedPharmcy).subscribe(res => {
       this.unpaidInovices = res;
  
