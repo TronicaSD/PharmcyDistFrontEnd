@@ -15,7 +15,7 @@ import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
   styleUrls: ['./invoice.component.css']
 })
 export class InvoiceComponent implements OnInit {
-  selectedPharmcy:any;
+  selectedPharmcy: any;
   selectedInvoiceTypeItem = '';
   selectedPharmcyItem = '';
   selectedItem = '';
@@ -85,10 +85,10 @@ export class InvoiceComponent implements OnInit {
       invoiceDetails: this._formbuilder.array([])
     });
     this.AddForm.valueChanges.subscribe(x => {
-     
+
       this.calculateDrugPrice();
     })
-   
+
     this.currentLang = translate.currentLang;
     translate.onLangChange.subscribe((event: LangChangeEvent) => {
       this.currentLang = event.lang;
@@ -112,11 +112,11 @@ export class InvoiceComponent implements OnInit {
     });
   }
   setColumnheaders(): void {
-   
-    
+
+
     this.columnheaders = ['', '', '']
     //Used TranslateService from @ngx-translate/core
-    this.translate.get('InvoiceNumber').subscribe(label => { this.columnheaders[0] = label});
+    this.translate.get('InvoiceNumber').subscribe(label => { this.columnheaders[0] = label });
     this.translate.get('PharmcyName').subscribe(label => this.columnheaders[1] = label);
     this.translate.get('InvoiceType').subscribe(label => this.columnheaders[2] = label);
     this.translate.get('InvoiceDate').subscribe(label => this.columnheaders[3] = label);
@@ -161,7 +161,7 @@ export class InvoiceComponent implements OnInit {
         invoiceNumber: {
           title: this.columnheaders[0],
           type: 'string',
-        filter: true,
+          filter: true,
 
         },
 
@@ -172,19 +172,19 @@ export class InvoiceComponent implements OnInit {
         invoiceTypeText: {
           title: this.columnheaders[2],
           type: 'string',
-        filter: false,
+          filter: true,
 
         },
         invoiceDate: {
           title: this.columnheaders[3],
-          type:"string",
+          type: "string",
           width: '12%',
-        filter: false,
+          filter: true,
           valuePrepareFunction: (invoiceDate) => {
             if (invoiceDate) {
-              let date=new Date(invoiceDate);
+              let date = new Date(invoiceDate);
 
-              return date.getDate()+'-'+date.getMonth()+1+'-'+date.getFullYear();
+              return date.getDate() + '-' + date.getMonth() + 1 + '-' + date.getFullYear();
             }
             return null;
           }
@@ -192,7 +192,7 @@ export class InvoiceComponent implements OnInit {
         disCount: {
           title: this.columnheaders[4],
           type: 'string',
-        filter: false,
+          filter: true,
 
           valuePrepareFunction: (disCount) => {
             if (disCount) {
@@ -204,11 +204,11 @@ export class InvoiceComponent implements OnInit {
         },
         totalPrice: {
           title: this.columnheaders[5],
-        filter: false,
+          filter: true,
           type: 'string',
         },
         totalPriceAfterDis: {
-        filter: false,
+          filter: true,
           title: this.columnheaders[6],
           type: 'string',
         },
@@ -239,35 +239,37 @@ export class InvoiceComponent implements OnInit {
     debugger;
     this._PublicService.getByID("Invoice/GetByPharmcy",this.selectedPharmcy).subscribe(res => {
       this.unpaidInovices = res;
- 
+      this.source.load(this.unpaidInovices);
+
     });
 
   }
+  Id: any;
 
-  confirmPay(dialog:TemplateRef<any>,data:IInvoice){
-this.dialogService.open(dialog).onClose.subscribe({
-next:(res)=>{
-  this.payInvoice(data);
-},error:()=>{
-  this._ToasterService.danger("Failed to request"); 
-}
-
-})
-  }
-  payInvoice(invoice:any){
-
-    this._PublicService.put("Invoice/ChangeStatus",invoice).subscribe(
-
-    {
-      next:()=>{
-        this._ToasterService.success("Invoice Paied successfully", "Success");
-        this. getUnpadidInvoices();
-        this. getAllInvoice();
-      },
-      error:()=>{
-        this._ToasterService.danger("Invoice failed to pay", "Failed");
+  confirmPay(dialog: TemplateRef<any>, data: IInvoice) {
+    this.dialogService.open(dialog).onClose.subscribe({
+      next: (res) => {
+        this.payInvoice(data);
+      }, error: () => {
+        this._ToasterService.danger("Failed to request");
       }
-    }
+
+    })
+  }
+  payInvoice(invoice: any) {
+
+    this._PublicService.put("Invoice/ChangeStatus", invoice).subscribe(
+
+      {
+        next: () => {
+          this._ToasterService.success("Invoice Paied successfully", "Success");
+          this.getUnpadidInvoices();
+          this.getAllInvoice();
+        },
+        error: () => {
+          this._ToasterService.danger("Invoice failed to pay", "Failed");
+        }
+      }
     );
 
   }
@@ -294,9 +296,9 @@ next:(res)=>{
     this.AddinvoiceDetails.controls.forEach(x => {
       let drugId = parseInt(x.get('drugId').value);
       var drug = this.StockDetails.find(a => a.drugId == drugId);
-     
+
       x.get('price').patchValue(drug.price);
-     
+
 
       let price = parseInt(x.get('price').value)
       let quantity = parseInt(x.get('qunantity').value);
@@ -338,16 +340,16 @@ next:(res)=>{
   }
 
   Add() {
-    let date=new Date(Date.UTC(
+    let date = new Date(Date.UTC(
       this.AddForm.value.InvoiceDate.getFullYear(),
       this.AddForm.value.InvoiceDate.getMonth(),
       this.AddForm.value.InvoiceDate.getDate()
     ));
     this.AddForm.controls.InvoiceDate.setValue(date);
-   
+
     this._PublicService.post('Invoice/AddData', this.AddForm.value).subscribe((Response) => {
       this.getAllInvoice();
-    this.ClearForm();
+      this.ClearForm();
 
       this._ToasterService.success("Invoice added successfully", "Success");
     }, (error) => {
@@ -380,9 +382,9 @@ next:(res)=>{
     this.EditInvoiceDetails.controls.forEach(x => {
       let drugId = parseInt(x.get('drugId').value);
       var drug = this.StockDetails.find(a => a.drugId == drugId);
-     
+
       x.get('price').patchValue(drug.price);
-     
+
       let price = parseInt(x.get('price').value)
       let quantity = parseInt(x.get('qunantity').value)
       this.price = price * quantity;
@@ -402,7 +404,7 @@ next:(res)=>{
     this.CalculateEditTotal();
 
   }
- 
+
 
   openEditModal(dialog: TemplateRef<any>, row: any) {
     this.EditForm.controls['Id'].setValue(row.id);
@@ -448,7 +450,7 @@ next:(res)=>{
     this.EditForm.reset();
 
   }
- 
+
   //Delete Modal
   DeleteInvoice(id: any) {
     this._PublicService.delete("Invoice/DeleteData", id).subscribe((Response) => {
@@ -474,8 +476,8 @@ next:(res)=>{
   }
 
   ClearForm() {
-this.Total=0;
-this.TotalDiscount=0;
+    this.Total = 0;
+    this.TotalDiscount = 0;
     this.AddForm.reset();
     this.EditForm.reset();
     const Editcontrol = <FormArray>this.EditForm.controls['invoiceDetails'];
@@ -497,19 +499,19 @@ this.TotalDiscount=0;
     this.EditForm.controls['DisCount'].setValue('15');
 
   }
-  viewModel:any={};
+  viewModel: any = {};
 
-  openViewModal(dialog:any,data:any){
+  openViewModal(dialog: any, data: any) {
 
     console.log(data);
     this.dialogService.open(dialog, {
       dialogClass: 'lg-modal'
     });
 
-this.viewModel=data;
+    this.viewModel = data;
   }
 
-  onCustomAction(Deletedialog: TemplateRef<any>, Editdialog: TemplateRef<any>,Viewdialog:TemplateRef<any>, event) {
+  onCustomAction(Deletedialog: TemplateRef<any>, Editdialog: TemplateRef<any>, Viewdialog: TemplateRef<any>, event) {
 
     switch (event.action) {
       case 'deleteAction':
@@ -518,11 +520,18 @@ this.viewModel=data;
       case 'editAction':
         this.openEditModal(Editdialog, event.data)
         break;
-        case 'viewAction':
-          this.openViewModal(Viewdialog, event.data)
-          break;
+      case 'viewAction':
+        this.openViewModal(Viewdialog, event.data)
+        break;
 
     }
+  }
+  ClearFilter() {
+    this.selectedPharmcy = "";
+    this.Id = "";
+
+    this.getAllInvoice();
+
   }
 
 }

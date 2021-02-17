@@ -115,21 +115,21 @@ export class PharmcyComponent implements OnInit {
         governerateName: {
           title: this.columnheaders[2],
           type: 'string',
-        filter: false
+          filter: true
 
 
         },
         cityName: {
           title: this.columnheaders[3],
           type: 'string',
-          filter: false
+          filter: true
 
         },
 
         streetName: {
           title: this.columnheaders[4],
           type: 'string',
-        filter: false
+          filter: false
 
 
         },

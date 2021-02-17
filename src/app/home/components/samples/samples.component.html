@@ -1,10 +1,8 @@
-<div class="container"  size="tiny" [nbSpinner]="loading"
-nbSpinnerStatus="primary"
-nbSpinnerSize="large"
-nbSpinnerMessage="">
+<div class="container" size="tiny" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large"
+  nbSpinnerMessage="">
 
 
-  <nb-card >
+  <nb-card>
     <nb-card-header>
 
       <div class="row">
@@ -39,8 +37,8 @@ nbSpinnerMessage="">
               <div class="form-group">
 
                 <label> {{'Date' | translate}}</label>
-                <input nbInput placeholder="Pick Date" [(ngModel)]="defaultDate" [nbDatepicker]="dateTimePicker" class="form-control"
-                  formControlName="date">
+                <input nbInput placeholder="Pick Date" [(ngModel)]="defaultDate" [nbDatepicker]="dateTimePicker"
+                  class="form-control" formControlName="date">
                 <nb-datepicker #dateTimePicker></nb-datepicker>
                 <span *ngIf="hasError('date', 'required')" style="color: red"> {{'Date' | translate}}
                   {{'IsRequired' | translate}}</span>
@@ -54,8 +52,11 @@ nbSpinnerMessage="">
                 <label>{{'DoctorName' | translate}}</label>
 
 
-                <input class="form-control" formControlName="doctorName" type="text" nbInput fullWidth>
-                <span *ngIf="hasError('doctorName', 'required')" style="color: red">{{'DoctorName' | translate}}
+                <nb-select placeholder="Select Showcase" formControlName="doctorId">
+
+                  <nb-option *ngFor="let d of Doctors" [value]="d.id">{{d.name}}</nb-option>
+                </nb-select> <span *ngIf="hasError('doctorId', 'required')"
+                  style="color: red">{{'DoctorName' | translate}}
                   {{'IsRequired' | translate}}</span>
 
 
@@ -71,11 +72,12 @@ nbSpinnerMessage="">
 
                 <label>{{'DrugName' | translate}} </label>
 
-                <nb-select placeholder="Select a Drug"  formControlName="drugId">
+                <nb-select placeholder="Select a Drug" formControlName="drugId">
                   <nb-option *ngFor="let d of StockDrugs" [value]="d.drugId">{{d.drugName}}</nb-option>
                 </nb-select>
-                <span *ngIf="hasError('drugId', 'required')" style="color: red;display: block;">{{'DrugName' | translate}}
-                
+                <span *ngIf="hasError('drugId', 'required')"
+                  style="color: red;display: block;">{{'DrugName' | translate}}
+
                   {{'IsRequired' | translate}}</span>
 
               </div>
@@ -140,10 +142,12 @@ nbSpinnerMessage="">
 
                 <label>{{'DoctorName' | translate}} {{'Name' | translate}}</label>
 
+                <nb-select placeholder="Select Showcase" formControlName="doctorId">
 
-                <input class="form-control" formControlName="doctorName" type="text" nbInput fullWidth>
-                <span *ngIf="hasEditError('doctorName', 'required')" style="color: red">{{'DoctorName' | translate}}
-                {{'IsRequired' | translate}}</span>
+                  <nb-option *ngFor="let d of Doctors" [value]="d.id">{{d.name}}</nb-option>
+                </nb-select>
+                <span *ngIf="hasEditError('doctorId', 'required')" style="color: red">{{'DoctorName' | translate}}
+                  {{'IsRequired' | translate}}</span>
 
 
 
@@ -155,9 +159,9 @@ nbSpinnerMessage="">
 
                 <label>{{'DrugName' | translate}} </label>
 
-                <nb-select  placeholder="Select Showcase" formControlName="drugId">
+                <nb-select placeholder="Select Showcase" formControlName="drugId" disabled>
 
-                  <nb-option *ngFor="let d of StockDetails" [value]="d.drugId">{{d.drugName}}</nb-option>
+                  <nb-option *ngFor="let d of StockDrugs" [value]="d.drugId">{{d.drugName}}</nb-option>
                 </nb-select>
                 <span *ngIf="hasEditError('drugId', 'required')" style="color: red;display: block;">Drug
                   {{'IsRequired' | translate}}</span>

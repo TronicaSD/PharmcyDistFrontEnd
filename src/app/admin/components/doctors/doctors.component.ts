@@ -7,12 +7,12 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { PublicService } from 'src/app/core/publicService.Service';
 
 @Component({
-  selector: 'app-drugs',
-  templateUrl: './drugs.component.html',
-  styleUrls: ['./drugs.component.css']
+  selector: 'app-doctors',
+  templateUrl: './doctors.component.html',
+  styleUrls: ['./doctors.component.css']
 })
-export class DrugsComponent implements OnInit {
-  Drugs: any;
+export class doctorsComponent implements OnInit {
+  Doctors: any;
   closeResult: string;
   AddForm: FormGroup;
   EditForm: FormGroup;
@@ -32,15 +32,16 @@ export class DrugsComponent implements OnInit {
     , private _changeDetectorRef: ChangeDetectorRef
   ) {
     this.AddForm = this._formbuilder.group({
-      drugName: [null, Validators.required],
-      price: [null, Validators.required],
-
-
+      name: [null, Validators.required],
+      phoneNumber: [null, [Validators.required, Validators.maxLength(12), Validators.minLength(12)]],
+      genderType: [null, Validators.required],
     });
 
     this.EditForm = this._formbuilder.group({
-      drugName: [null, Validators.required],
-      price: [null, Validators.required],
+      name: [null, Validators.required],
+      phoneNumber: [null, [Validators.required, Validators.maxLength(12), Validators.minLength(12)]],
+      genderType: [null, Validators.required],
+      isDeleted: [null],
       id: [null],
     });
     this.currentLang = translate.currentLang;
@@ -53,7 +54,7 @@ export class DrugsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllDrugs();
+    this.getAllDoctors();
     this.setColumnheaders();
     //LISTEN TO EVENTS
     this.translate.onLangChange.subscribe(item => {
@@ -69,8 +70,9 @@ export class DrugsComponent implements OnInit {
     //Used TranslateService from @ngx-translate/core
     this.translate.get(Action).subscribe(label => this.columnheaders[0] = label);
     this.translate.get(Name).subscribe(label => this.columnheaders[1] = label);
-    this.translate.get(Price).subscribe(label => {
-      this.columnheaders[2] = label;
+    this.translate.get("phoneNumber").subscribe(label => this.columnheaders[2] = label);
+    this.translate.get("genderType").subscribe(label => {
+      this.columnheaders[3] = label;
       this.loadTableSettings();
     });
 
@@ -110,24 +112,29 @@ export class DrugsComponent implements OnInit {
 
       columns: {
 
-        drugName: {
+        name: {
           title: this.columnheaders[1],
           type: 'string',
           filter: true
         },
-        price: {
+        phoneNumber: {
           title: this.columnheaders[2],
           type: 'string',
           filter: true
         },
+        genderType: {
+          title: this.columnheaders[3],
+          type: 'string',
+          filter: true
+        }
       }
     };
   }
-  getAllDrugs() {
+  getAllDoctors() {
 
-    this._PublicService.get("Drugs/ViewGetAll").subscribe(res => {
-      this.Drugs = res;
-      this.source.load(this.Drugs);
+    this._PublicService.get("Doctors/ViewGetAll").subscribe(res => {
+      this.Doctors = res;
+      this.source.load(this.Doctors);
 
 
     });
@@ -138,7 +145,7 @@ export class DrugsComponent implements OnInit {
   };
 
   public hasEditError = (controlName: string, errorName: string) => {
-
+    debugger;
     return this.EditForm.controls[controlName].hasError(errorName);
   };
 
@@ -151,10 +158,10 @@ export class DrugsComponent implements OnInit {
   }
   Add() {
 
-    this._PublicService.post('Drugs/AddData', this.AddForm.value).subscribe((Response) => {
-      this.getAllDrugs();
+    this._PublicService.post('Doctors/AddData', this.AddForm.value).subscribe((Response) => {
+      this.getAllDoctors();
 
-      this._ToasterService.success("Drug Added successfully", "Success");
+      this._ToasterService.success("Doctor Added successfully", "Success");
 
     }, (error) => {
       this._ToasterService.danger("Failed To add ", "Failed");
@@ -169,23 +176,26 @@ export class DrugsComponent implements OnInit {
 
   //Edit Modal
   openEditDialog(dialog: TemplateRef<any>, row: any) {
-
-    this.EditForm.controls['drugName'].setValue(row.drugName);
-    this.EditForm.controls['price'].setValue(row.price);
-
+    this.EditForm.controls['name'].setValue(row.name);
+    this.EditForm.controls['phoneNumber'].setValue(row.phoneNumber);
+    this.EditForm.controls['genderType'].setValue(row.genderType);
     this.EditForm.controls['id'].setValue(row.id);
+    debugger;
 
     this.dialogService.open(dialog, {
       dialogClass: "defaultdialogue"
 
     });
   }
-  updateDrug() {
-    this._PublicService.put('Drugs/UpdateData', this.EditForm.value).subscribe((Response) => {
-      this.Drugs = Response;
+  updateDoctor() {
+    debugger;
+    this.EditForm.controls['isDeleted'].setValue(false);
+
+    this._PublicService.put('Doctors/UpdateData', this.EditForm.value).subscribe((Response) => {
+      this.Doctors = Response;
       this.modalService.dismissAll();
-      this._ToasterService.success("Drug Updated successfully", "Success");
-      this.getAllDrugs();
+      this._ToasterService.success("Doctor Updated successfully", "Success");
+      this.getAllDoctors();
     }, (error) => {
       this._ToasterService.danger(" Failed To  Update ", "failed");
 
@@ -197,13 +207,13 @@ export class DrugsComponent implements OnInit {
 
 
   //Delete Modal
-  DeleteDrug(id: any) {
+  DeleteDoctor(id: any) {
 
-    this._PublicService.delete("Drugs/DeleteData", id).subscribe((Response) => {
+    this._PublicService.delete("Doctors/DeleteData", id).subscribe((Response) => {
       this.modalService.dismissAll();
-      this._ToasterService.success("Drug Deleted successfully", "Success");
+      this._ToasterService.success("Doctor Deleted successfully", "Success");
 
-      this.getAllDrugs();
+      this.getAllDoctors();
     }, (error) => {
       this._ToasterService.danger("Sorry but this item related To another table ", "Failed");
 
@@ -221,7 +231,7 @@ export class DrugsComponent implements OnInit {
 
       if (res) {
 
-        this.DeleteDrug(id);
+        this.DeleteDoctor(id);
       }
 
 

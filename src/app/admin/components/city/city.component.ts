@@ -7,12 +7,12 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { PublicService } from 'src/app/core/publicService.Service';
 
 @Component({
-  selector: 'app-drugs',
-  templateUrl: './drugs.component.html',
-  styleUrls: ['./drugs.component.css']
+  selector: 'app-city',
+  templateUrl: './city.component.html',
+  styleUrls: ['./city.component.css']
 })
-export class DrugsComponent implements OnInit {
-  Drugs: any;
+export class cityComponent implements OnInit {
+  city: any;
   closeResult: string;
   AddForm: FormGroup;
   EditForm: FormGroup;
@@ -22,6 +22,7 @@ export class DrugsComponent implements OnInit {
   Action: string;
   currentLang: string;
   columnheaders: string[];
+  allGovernorates: any[];
 
   constructor(private _PublicService: PublicService
     , private modalService: NgbModal
@@ -32,16 +33,16 @@ export class DrugsComponent implements OnInit {
     , private _changeDetectorRef: ChangeDetectorRef
   ) {
     this.AddForm = this._formbuilder.group({
-      drugName: [null, Validators.required],
-      price: [null, Validators.required],
+      city_Name: [null, Validators.required],
+      gov_Id: [null, Validators.required],
 
 
     });
 
     this.EditForm = this._formbuilder.group({
-      drugName: [null, Validators.required],
-      price: [null, Validators.required],
-      id: [null],
+      city_Name: [null, Validators.required],
+      gov_Id: [null, Validators.required],
+      city_Id: [null],
     });
     this.currentLang = translate.currentLang;
     translate.onLangChange.subscribe((event: LangChangeEvent) => {
@@ -49,11 +50,12 @@ export class DrugsComponent implements OnInit {
       // TODO This as a workaround.
       this._changeDetectorRef.detectChanges();
     });
+    this.getAllGovernorates();
 
   }
 
   ngOnInit(): void {
-    this.getAllDrugs();
+    this.getAllcity();
     this.setColumnheaders();
     //LISTEN TO EVENTS
     this.translate.onLangChange.subscribe(item => {
@@ -63,13 +65,11 @@ export class DrugsComponent implements OnInit {
   setColumnheaders(): void {
     let Action = 'Action';
     let Name = 'Name';
-    let Price = 'Price';
-
     this.columnheaders = ['', '', '']
     //Used TranslateService from @ngx-translate/core
     this.translate.get(Action).subscribe(label => this.columnheaders[0] = label);
     this.translate.get(Name).subscribe(label => this.columnheaders[1] = label);
-    this.translate.get(Price).subscribe(label => {
+    this.translate.get("Government").subscribe(label => {
       this.columnheaders[2] = label;
       this.loadTableSettings();
     });
@@ -110,12 +110,12 @@ export class DrugsComponent implements OnInit {
 
       columns: {
 
-        drugName: {
+        city_Name: {
           title: this.columnheaders[1],
           type: 'string',
           filter: true
         },
-        price: {
+        gover_Name_: {
           title: this.columnheaders[2],
           type: 'string',
           filter: true
@@ -123,11 +123,11 @@ export class DrugsComponent implements OnInit {
       }
     };
   }
-  getAllDrugs() {
+  getAllcity() {
 
-    this._PublicService.get("Drugs/ViewGetAll").subscribe(res => {
-      this.Drugs = res;
-      this.source.load(this.Drugs);
+    this._PublicService.get("GS_City/ViewGetAll").subscribe(res => {
+      this.city = res;
+      this.source.load(this.city);
 
 
     });
@@ -151,10 +151,10 @@ export class DrugsComponent implements OnInit {
   }
   Add() {
 
-    this._PublicService.post('Drugs/AddData', this.AddForm.value).subscribe((Response) => {
-      this.getAllDrugs();
+    this._PublicService.post('GS_City/AddData', this.AddForm.value).subscribe((Response) => {
+      this.getAllcity();
 
-      this._ToasterService.success("Drug Added successfully", "Success");
+      this._ToasterService.success("city Added successfully", "Success");
 
     }, (error) => {
       this._ToasterService.danger("Failed To add ", "Failed");
@@ -170,22 +170,22 @@ export class DrugsComponent implements OnInit {
   //Edit Modal
   openEditDialog(dialog: TemplateRef<any>, row: any) {
 
-    this.EditForm.controls['drugName'].setValue(row.drugName);
-    this.EditForm.controls['price'].setValue(row.price);
+    this.EditForm.controls['city_Name'].setValue(row.city_Name);
+    this.EditForm.controls['gov_Id'].setValue(row.gov_Id);
 
-    this.EditForm.controls['id'].setValue(row.id);
+    this.EditForm.controls['city_Id'].setValue(row.city_Id);
 
     this.dialogService.open(dialog, {
       dialogClass: "defaultdialogue"
 
     });
   }
-  updateDrug() {
-    this._PublicService.put('Drugs/UpdateData', this.EditForm.value).subscribe((Response) => {
-      this.Drugs = Response;
+  updatecity() {
+    this._PublicService.put('GS_City/UpdateData', this.EditForm.value).subscribe((Response) => {
+      this.city = Response;
       this.modalService.dismissAll();
-      this._ToasterService.success("Drug Updated successfully", "Success");
-      this.getAllDrugs();
+      this._ToasterService.success("city Updated successfully", "Success");
+      this.getAllcity();
     }, (error) => {
       this._ToasterService.danger(" Failed To  Update ", "failed");
 
@@ -197,13 +197,13 @@ export class DrugsComponent implements OnInit {
 
 
   //Delete Modal
-  DeleteDrug(id: any) {
+  Deletecity(id: any) {
 
-    this._PublicService.delete("Drugs/DeleteData", id).subscribe((Response) => {
+    this._PublicService.delete("GS_City/DeleteData", id).subscribe((Response) => {
       this.modalService.dismissAll();
-      this._ToasterService.success("Drug Deleted successfully", "Success");
+      this._ToasterService.success("city Deleted successfully", "Success");
 
-      this.getAllDrugs();
+      this.getAllcity();
     }, (error) => {
       this._ToasterService.danger("Sorry but this item related To another table ", "Failed");
 
@@ -221,7 +221,7 @@ export class DrugsComponent implements OnInit {
 
       if (res) {
 
-        this.DeleteDrug(id);
+        this.Deletecity(id);
       }
 
 
@@ -232,13 +232,20 @@ export class DrugsComponent implements OnInit {
 
     switch (event.action) {
       case 'deleteAction':
-        this.openDeletedialog(Deletedialog, event.data.id)
+        this.openDeletedialog(Deletedialog, event.data.city_Id)
         break;
       case 'editAction':
         this.openEditDialog(Editdialog, event.data)
         break;
 
     }
+  }
+
+  getAllGovernorates() {
+    this._PublicService.get("GS_Governorate/ViewGetAll").subscribe(res => {
+      this.allGovernorates = res;
+      debugger;
+    });
   }
 
 }

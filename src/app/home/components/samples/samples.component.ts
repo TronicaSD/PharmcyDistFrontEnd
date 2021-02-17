@@ -25,8 +25,9 @@ export class SamplesComponent implements OnInit {
   StockDrugs: any;
   Action: string;
   columnheaders: string[];
-  loading=true;
-  defaultDate:any;
+  loading = true;
+  defaultDate: any;
+  Doctors: any[];
   constructor(private _PublicService: PublicService
     , private dialogService: NbDialogService
     , private _formbuilder: FormBuilder,
@@ -34,7 +35,7 @@ export class SamplesComponent implements OnInit {
     , private translate: TranslateService
   ) {
 
-  
+
 
   }
 
@@ -42,8 +43,8 @@ export class SamplesComponent implements OnInit {
     this.AddForm = this._formbuilder.group({
       drugId: ['', Validators.required],
       qunantity: ['', Validators.required],
-      doctorName: ['', Validators.required],
-      date: [null, Validators.required],
+      doctorId: ['', Validators.required],
+      date: [new Date(), Validators.required],
 
 
 
@@ -52,14 +53,14 @@ export class SamplesComponent implements OnInit {
     this.EditForm = this._formbuilder.group({
       drugId: [0, Validators.required],
       qunantity: ['', Validators.required],
-      doctorName: ['', Validators.required],
+      doctorId: ['', Validators.required],
       date: ['', Validators.required],
       id: [''],
     });
-
+    this.getAllDoctors();
     this.setColumnheaders();
     this.getAllSample();
-   
+
     this.getAllStockDetails();
 
     //LISTEN TO EVENTS
@@ -106,20 +107,20 @@ export class SamplesComponent implements OnInit {
         doctorName: {
           title: this.columnheaders[1],
           type: 'string',
-        filter: true
+          filter: true
 
 
         },
         drugName: {
           title: this.columnheaders[2],
           type: 'string',
-        filter: true
+          filter: true
 
         },
         date: {
           title: this.columnheaders[3],
           type: 'string',
-        filter: false,
+          filter: true,
 
           valuePrepareFunction: (date) => {
             if (date) {
@@ -133,7 +134,7 @@ export class SamplesComponent implements OnInit {
         qunantity: {
           title: this.columnheaders[4],
           type: 'string',
-        filter: false,
+          filter: true,
 
         },
 
@@ -157,7 +158,7 @@ export class SamplesComponent implements OnInit {
     this._PublicService.get("Sample/ViewGetAll").subscribe(res => {
       this.Samples = res;
       this.source.load(this.Samples);
-this.loading=false;
+      this.loading = false;
     });
   }
   public hasError = (controlName: string, errorName: string) => {
@@ -195,7 +196,7 @@ this.loading=false;
 
     this.EditForm.controls['drugId'].setValue(row.drugId);
     this.EditForm.controls['qunantity'].setValue(row.qunantity);
-    this.EditForm.controls['doctorName'].setValue(row.doctorName);
+    this.EditForm.controls['doctorId'].setValue(row.doctorId);
     this.EditForm.controls['date'].setValue(new Date(row.date));
     this.EditForm.controls['id'].setValue(row.id);
 
@@ -248,7 +249,14 @@ this.loading=false;
     });
 
   }
+  getAllDoctors() {
 
+    this._PublicService.get("Doctors/ViewGetAll").subscribe(res => {
+      this.Doctors = res;
+
+
+    });
+  }
   onCustomAction(Deletedialog: TemplateRef<any>, Editdialog: TemplateRef<any>, event) {
 
     switch (event.action) {
