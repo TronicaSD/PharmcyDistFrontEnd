@@ -33,13 +33,13 @@ export class doctorsComponent implements OnInit {
   ) {
     this.AddForm = this._formbuilder.group({
       name: [null, Validators.required],
-      phoneNumber: [null, [Validators.required, Validators.maxLength(12), Validators.minLength(12)]],
+      phoneNumber: [null, [Validators.required, Validators.maxLength(11), Validators.minLength(11)]],
       genderType: [null, Validators.required],
     });
 
     this.EditForm = this._formbuilder.group({
       name: [null, Validators.required],
-      phoneNumber: [null, [Validators.required, Validators.maxLength(12), Validators.minLength(12)]],
+      phoneNumber: [null, [Validators.required, Validators.maxLength(11), Validators.minLength(11)]],
       genderType: [null, Validators.required],
       isDeleted: [null],
       id: [null],
@@ -120,12 +120,12 @@ export class doctorsComponent implements OnInit {
         phoneNumber: {
           title: this.columnheaders[2],
           type: 'string',
-          filter: true
+          filter: false
         },
         genderType: {
           title: this.columnheaders[3],
           type: 'string',
-          filter: true
+          filter: false
         }
       }
     };
@@ -145,7 +145,7 @@ export class doctorsComponent implements OnInit {
   };
 
   public hasEditError = (controlName: string, errorName: string) => {
-    debugger;
+    
     return this.EditForm.controls[controlName].hasError(errorName);
   };
 
@@ -188,7 +188,6 @@ export class doctorsComponent implements OnInit {
     });
   }
   updateDoctor() {
-    debugger;
     this.EditForm.controls['isDeleted'].setValue(false);
 
     this._PublicService.put('Doctors/UpdateData', this.EditForm.value).subscribe((Response) => {
