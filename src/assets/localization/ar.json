@@ -87,7 +87,15 @@
 "TotalInvoicePrice":"أجمالي سعر الفواتير",
 "VendorName":"أسم الموزع",
 "NumberOfVendor": "عدد الموزعين",
-"TotalPharmcies":"أجمالي عدد الصيدليات"
+"TotalPharmcies":"أجمالي عدد الصيدليات",
+"ExpenseType":"نوع النفقات",
+"Expenses":"النفقات",
+"Expense":"نفقة",
+"NameAr":"الأسم باللغة العربية",
+"Method":"طريقة الدفع",
+"Amount":"الكمية",
+"NameEn":"الأسم باللغة الأنجليزية"
+
 
 
 

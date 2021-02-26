@@ -44,7 +44,6 @@
     "PhoneNumberShouldbe12":"Phone Number Should be 12",
     "phoneNumber":"Phone Number",
     "genderType":"Gender Type",
-
     "Discount":"Discount",
     "Price":"Price",
     "Total":"Total",
@@ -91,8 +90,14 @@
 "TotalInvoicePrice":"Total Invoices Price",
 "VendorName":"Vendor Name",
 "NumberOfVendor": "Number Of Vendor",
-"TotalPharmcies":"Total Pharmcies"
-
+"TotalPharmcies":"Total Pharmcies",
+"ExpenseType":"Expense Type",
+"Expenses":"Expenses",
+"Expense":"Expense",
+"NameAr":"Name Ar",
+"Amount":"Name Ar",
+"Method":"Payment Method ",
+"NameEn":" Name En"
 
 
 

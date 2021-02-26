@@ -1,0 +1,183 @@
+<div class="container">
+
+  <nb-card>
+    <nb-card-header>
+
+      <div class="row">
+        <div class="col-md-11">
+          {{'Expense' | translate}}
+        </div>
+        <div class=" col-md-1">
+
+          <button nbButton status="primary" (click)="openAddDialog(Adddialog)"> <i class="fa fa-plus "></i></button>
+        </div>
+      </div>
+    </nb-card-header>
+
+    <nb-card-body>
+      <ng2-smart-table [settings]="settings" [source]="source"
+        (custom)="onCustomAction(Deletedialog,Editdialog,$event)">
+      </ng2-smart-table>
+    </nb-card-body>
+  </nb-card>
+
+</div>
+<ng-template #Adddialog class="model-full" let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header> {{'Add' | translate}} {{'Expense' | translate}}</nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="AddForm" (submit)="Add()">
+
+        <div class="row">
+          <div class=" col-md-6">
+            <label> {{'UserName' | translate}} </label>
+            <nb-select placeholder="Select  {{'UserName' | translate}}" formControlName="UserId">
+              <nb-option *ngFor="let g of Users" [value]="g.userId">{{g.userName}}
+              </nb-option>
+            </nb-select>
+            <span *ngIf="hasError('UserId', 'required')" style="color: red">{{'UserName' | translate}}
+              {{'IsRequired' | translate}}</span>
+          </div>
+
+          <div class=" col-md-6">
+            <label> {{'Amount' | translate}} </label>
+
+            <input class="form-control" numbersOnly formControlName="Amount" type="text" nbInput fullWidth>
+            <span *ngIf="hasError('Amount', 'required')" style="color: red">{{'Amount' | translate}}
+              {{'IsRequired' | translate}}</span>
+          </div>
+
+          <div class=" col-md-6">
+            <label> {{'Date' | translate}} </label>
+            <input nbInput placeholder=" {{'Date' | translate}}" [nbDatepicker]="dateTimePicker" class="form-control"
+              formControlName="Date">
+            <nb-datepicker #dateTimePicker></nb-datepicker>
+            <span *ngIf="hasError('Date', 'required')" style="color: red">{{'Date' | translate}}
+              {{'IsRequired' | translate}}</span>
+          </div>
+
+          <div class=" col-md-6">
+            <label> {{'Method' | translate}} </label>
+            <nb-select placeholder="Select  {{'Method' | translate}}" formControlName="Method">
+              <nb-option *ngFor="let g of Method" [value]="g.id">{{g.text}}
+              </nb-option>
+            </nb-select>
+            <span *ngIf="hasError('Method', 'required')" style="color: red">{{'Method' | translate}}
+              {{'IsRequired' | translate}}</span>
+          </div>
+
+          <div class=" col-md-6">
+            <label> {{'ExpenseType' | translate}} </label>
+            <nb-select placeholder="Select  {{'ExpenseTypes' | translate}}" formControlName="ExpenseTypesId">
+              <nb-option *ngFor="let g of ExpenseTypes" [value]="g.id">{{g.nameAr}}
+              </nb-option>
+            </nb-select>
+            <span *ngIf="hasError('ExpenseTypesId', 'required')" style="color: red">{{'ExpenseType' | translate}}
+              {{'IsRequired' | translate}}</span>
+          </div>
+
+          <div class=" col-md-6">
+            <label> {{'Descripton' | translate}} </label>
+            <input class="form-control" formControlName="Description" type="text" nbInput fullWidth>
+            <span *ngIf="hasError('Description', 'required')" style="color: red">{{'Descripton' | translate}}
+              {{'IsRequired' | translate}}</span>
+          </div>
+        </div>
+      </form>
+    </nb-card-body>
+    <nb-card-footer>
+      <button type="button" class="cancel" [disabled]="AddForm.invalid" nbButton status="success"
+        (click)="Add();ref.close()">{{'Save' | translate}} </button>
+      <button nbButton (click)="ref.close()" status="danger">{{'Cancel' | translate}} </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+<ng-template #Editdialog class="model-full" let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header> {{'Edit' | translate}} {{'Expense' | translate}}</nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="EditForm" (submit)="updateExpense()">
+        <div class="row">
+          <div class=" col-md-6">
+            <label> {{'UserName' | translate}} </label>
+            <nb-select placeholder="Select  {{'UserName' | translate}}" formControlName="UserId">
+              <nb-option *ngFor="let g of Users" [value]="g.userId">{{g.userName}}
+              </nb-option>
+            </nb-select>
+            <span *ngIf="hasEditError('UserId', 'required')" style="color: red">{{'UserName' | translate}}
+              {{'IsRequired' | translate}}</span>
+          </div>
+
+          <div class=" col-md-6">
+            <label> {{'Amount' | translate}} </label>
+
+            <input class="form-control" numbersOnly formControlName="Amount" type="text" nbInput fullWidth>
+            <span *ngIf="hasEditError('Amount', 'required')" style="color: red">{{'Amount' | translate}}
+              {{'IsRequired' | translate}}</span>
+          </div>
+
+          <div class=" col-md-6">
+            <label> {{'Date' | translate}} </label>
+            <input nbInput placeholder=" {{'Date' | translate}}" [nbDatepicker]="dateTimePicker" class="form-control"
+              formControlName="Date">
+            <nb-datepicker #dateTimePicker></nb-datepicker>
+            <span *ngIf="hasEditError('Date', 'required')" style="color: red">{{'Date' | translate}}
+              {{'IsRequired' | translate}}</span>
+          </div>
+
+          <div class=" col-md-6">
+            <label> {{'Method' | translate}} </label>
+            <nb-select placeholder="Select  {{'Method' | translate}}" formControlName="Method">
+              <nb-option *ngFor="let g of Method" [value]="g.id">{{g.text}}
+              </nb-option>
+            </nb-select>
+            <span *ngIf="hasEditError('Method', 'required')" style="color: red">{{'Method' | translate}}
+              {{'IsRequired' | translate}}</span>
+          </div>
+
+          <div class=" col-md-6">
+            <label> {{'ExpenseType' | translate}} </label>
+            <nb-select placeholder="Select  {{'ExpenseTypes' | translate}}" formControlName="ExpenseTypesId">
+              <nb-option *ngFor="let g of ExpenseTypes" [value]="g.id">{{g.nameAr}}
+              </nb-option>
+            </nb-select>
+            <span *ngIf="hasEditError('ExpenseTypesId', 'required')" style="color: red">{{'ExpenseType' | translate}}
+              {{'IsRequired' | translate}}</span>
+          </div>
+
+          <div class=" col-md-6">
+            <label> {{'Descripton' | translate}} </label>
+            <input class="form-control" formControlName="Description" type="text" nbInput fullWidth>
+            <span *ngIf="hasEditError('Description', 'required')" style="color: red">{{'Descripton' | translate}}
+              {{'IsRequired' | translate}}</span>
+          </div>
+        </div>
+      </form>
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton type="button" nbButton status="success" [disabled]="EditForm.invalid" data-dismiss="modal"
+        (click)="updateExpense();ref.close()">{{'Save' | translate}}</button>
+      <button nbButton status="danger" (click)="ref.close()">{{'Cancel' | translate}} </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+
+
+<ng-template #Deletedialog class="model-full" let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header> {{'Delete' | translate}} {{'Expense' | translate}} </nb-card-header>
+    <nb-card-body>
+      <div class="row col-md-8  col-offset-4">
+
+        <p class="text-danger"> {{'AreYouSureYouWantToDeleteThisItem' | translate}} ?</p>
+      </div>
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton type="button" nbButton status="success"
+        (click)="ref.close(true);ref.close()">{{'Save' | translate}}</button>
+      <button nbButton status="danger" (click)="ref.close()">{{'Cancel' | translate}} </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

@@ -20,11 +20,13 @@ import { ChartsModule } from 'ng2-charts';
 import { countryComponent } from './components/country/country.component';
 import { cityComponent } from './components/city/city.component';
 import { doctorsComponent } from './components/doctors/doctors.component';
+import { ExpenseTypeComponent } from './components/expense-type/expense-type.component';
+import { ExpenseComponent } from './components/expense/expense.component';
 @NgModule({
   declarations: [AdminComponent, DrugsComponent, PharmcyComponent,
     receiptDetailsComponent,
     StockDetailsComponent, countryComponent,
-    cityComponent, doctorsComponent
+    cityComponent, doctorsComponent, ExpenseTypeComponent, ExpenseComponent
   ],
   imports: [
     CommonModule,

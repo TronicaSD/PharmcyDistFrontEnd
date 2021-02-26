@@ -1,6 +1,12 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\home",
+    "\\src\\app\\home\\components",
+    "\\src\\app\\home\\components\\invoice"
   ],
+  "SelectedNode": "\\src\\app\\home\\components\\invoice\\invoice.component.html",
   "PreviewInSolutionExplorer": false
 }

@@ -8,6 +8,8 @@ import { cityComponent } from './components/city/city.component';
 import { countryComponent } from './components/country/country.component';
 import { doctorsComponent } from './components/doctors/doctors.component';
 import { DrugsComponent } from './components/drugs/drugs.component';
+import { ExpenseTypeComponent } from './components/expense-type/expense-type.component';
+import { ExpenseComponent } from './components/expense/expense.component';
 import { PharmcyComponent } from './components/pharmcy/pharmcy.component';
 
 const routes: Routes = [
@@ -20,7 +22,8 @@ const routes: Routes = [
       { path: 'countries', component: countryComponent, canActivate: [AuthGuard], data: { roles: [Role.admin, Role.gm] } },
       { path: 'cities', component: cityComponent, canActivate: [AuthGuard], data: { roles: [Role.admin, Role.gm] } },
       { path: 'doctors', component: doctorsComponent, canActivate: [AuthGuard], data: { roles: [Role.admin, Role.gm] } },
-
+      { path: 'ExpenseType', component: ExpenseTypeComponent, canActivate: [AuthGuard], data: { roles: [Role.admin, Role.gm] } },
+      { path: 'Expense', component: ExpenseComponent, canActivate: [AuthGuard], data: { roles: [Role.admin, Role.gm] } },
 
     ]
 
