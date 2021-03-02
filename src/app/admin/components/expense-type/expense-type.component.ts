@@ -30,15 +30,16 @@ export class ExpenseTypeComponent implements OnInit {
     , private translate: TranslateService
     , private _changeDetectorRef: ChangeDetectorRef) {
     this.AddForm = this._formbuilder.group({
-      NameAr: [null, Validators.required],
-      NameEn: [null, Validators.required],
+      expensesName: ['', Validators.required],
+      description: [''],
+
 
 
     });
 
     this.EditForm = this._formbuilder.group({
-      NameAr: [null, Validators.required],
-      NameEn: [null, Validators.required],
+      expensesName: ['', Validators.required],
+      description: [''],
       id: [null],
     });
     this.currentLang = translate.currentLang;
@@ -62,8 +63,8 @@ export class ExpenseTypeComponent implements OnInit {
     this.columnheaders = ['', '', '']
     //Used TranslateService from @ngx-translate/core
     this.translate.get("Action").subscribe(label => this.columnheaders[0] = label);
-    this.translate.get("NameAr").subscribe(label => this.columnheaders[1] = label);
-    this.translate.get("NameEn").subscribe(label => {
+    this.translate.get("Description").subscribe(label => this.columnheaders[1] = label);
+    this.translate.get("Name").subscribe(label => {
       this.columnheaders[2] = label;
       this.loadTableSettings();
     });
@@ -103,24 +104,24 @@ export class ExpenseTypeComponent implements OnInit {
       },
 
       columns: {
-
-        nameAr: {
-          title: this.columnheaders[1],
-          type: 'string',
-          filter: true
-        },
-        nameEn: {
+        expensesName: {
           title: this.columnheaders[2],
           type: 'string',
           filter: true
         },
+        description: {
+          title: this.columnheaders[1],
+          type: 'string',
+          filter: false
+        },
+    
       }
     };
   }
   getAllExpenseTypes() {
-
     this._PublicService.get("ExpenseTypes/ViewGetAll").subscribe(res => {
       this.ExpenseTypes = res;
+      console.log(res);
       this.source.load(this.ExpenseTypes);
 
 
@@ -163,11 +164,10 @@ export class ExpenseTypeComponent implements OnInit {
 
   //Edit Modal
   openEditDialog(dialog: TemplateRef<any>, row: any) {
-
-    this.EditForm.controls['NameAr'].setValue(row.nameAr);
-    this.EditForm.controls['NameEn'].setValue(row.nameEn);
-
     this.EditForm.controls['id'].setValue(row.id);
+    this.EditForm.controls['expensesName'].setValue(row.expensesName);
+    this.EditForm.controls['description'].setValue(row.description);
+
 
     this.dialogService.open(dialog, {
       dialogClass: "defaultdialogue"

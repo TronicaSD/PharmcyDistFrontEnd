@@ -4,8 +4,12 @@
     <nb-card-header>
 
       <div class="row">
-        <div class="col-md-11">
-          {{'Expense' | translate}}
+        <div class="col-md-2">
+          {{'Expenses' | translate}}
+        </div>
+        <div class="offset-8 col-md-1">
+
+          <button nbButton status="default" (click)="exportoExcel()"> Export Excel</button>
         </div>
         <div class=" col-md-1">
 
@@ -15,7 +19,7 @@
     </nb-card-header>
 
     <nb-card-body>
-      <ng2-smart-table [settings]="settings" [source]="source"
+      <ng2-smart-table id="expenses-table" [settings]="settings" [source]="source"
         (custom)="onCustomAction(Deletedialog,Editdialog,$event)">
       </ng2-smart-table>
     </nb-card-body>
@@ -31,56 +35,47 @@
         <div class="row">
           <div class=" col-md-6">
             <label> {{'UserName' | translate}} </label>
-            <nb-select placeholder="Select  {{'UserName' | translate}}" formControlName="UserId">
+            <nb-select placeholder=" {{'PleaseChooseOne' | translate}} " formControlName="userId">
               <nb-option *ngFor="let g of Users" [value]="g.userId">{{g.userName}}
               </nb-option>
             </nb-select>
-            <span *ngIf="hasError('UserId', 'required')" style="color: red">{{'UserName' | translate}}
+            <span *ngIf="hasError('userId', 'required')" style="color: red">{{'UserName' | translate}}
               {{'IsRequired' | translate}}</span>
           </div>
 
           <div class=" col-md-6">
             <label> {{'Amount' | translate}} </label>
 
-            <input class="form-control" numbersOnly formControlName="Amount" type="text" nbInput fullWidth>
-            <span *ngIf="hasError('Amount', 'required')" style="color: red">{{'Amount' | translate}}
+            <input class="form-control" numbersOnly formControlName="amount" type="text" nbInput fullWidth>
+            <span *ngIf="hasError('amount', 'required')" style="color: red">{{'Amount' | translate}}
               {{'IsRequired' | translate}}</span>
           </div>
 
           <div class=" col-md-6">
             <label> {{'Date' | translate}} </label>
             <input nbInput placeholder=" {{'Date' | translate}}" [nbDatepicker]="dateTimePicker" class="form-control"
-              formControlName="Date">
+              formControlName="date">
             <nb-datepicker #dateTimePicker></nb-datepicker>
-            <span *ngIf="hasError('Date', 'required')" style="color: red">{{'Date' | translate}}
+            <span *ngIf="hasError('date', 'required')" style="color: red">{{'Date' | translate}}
               {{'IsRequired' | translate}}</span>
           </div>
 
-          <div class=" col-md-6">
-            <label> {{'Method' | translate}} </label>
-            <nb-select placeholder="Select  {{'Method' | translate}}" formControlName="Method">
-              <nb-option *ngFor="let g of Method" [value]="g.id">{{g.text}}
-              </nb-option>
-            </nb-select>
-            <span *ngIf="hasError('Method', 'required')" style="color: red">{{'Method' | translate}}
-              {{'IsRequired' | translate}}</span>
-          </div>
+    
 
           <div class=" col-md-6">
             <label> {{'ExpenseType' | translate}} </label>
-            <nb-select placeholder="Select  {{'ExpenseTypes' | translate}}" formControlName="ExpenseTypesId">
-              <nb-option *ngFor="let g of ExpenseTypes" [value]="g.id">{{g.nameAr}}
+            <nb-select placeholder="{{'PleaseChooseOne' | translate}} " formControlName="expenseTypesId">
+              <nb-option *ngFor="let item of ExpenseTypes" [value]="item.id">{{item.expensesName}}
               </nb-option>
             </nb-select>
-            <span *ngIf="hasError('ExpenseTypesId', 'required')" style="color: red">{{'ExpenseType' | translate}}
+            <span *ngIf="hasError('expenseTypesId', 'required')" style="color: red">{{'ExpenseType' | translate}}
               {{'IsRequired' | translate}}</span>
           </div>
 
           <div class=" col-md-6">
-            <label> {{'Descripton' | translate}} </label>
-            <input class="form-control" formControlName="Description" type="text" nbInput fullWidth>
-            <span *ngIf="hasError('Description', 'required')" style="color: red">{{'Descripton' | translate}}
-              {{'IsRequired' | translate}}</span>
+            <label> {{'Description' | translate}} </label>
+            <input class="form-control" formControlName="description" type="text" nbInput fullWidth>
+ 
           </div>
         </div>
       </form>
@@ -101,56 +96,47 @@
         <div class="row">
           <div class=" col-md-6">
             <label> {{'UserName' | translate}} </label>
-            <nb-select placeholder="Select  {{'UserName' | translate}}" formControlName="UserId">
+            <nb-select placeholder="{{'PleaseChooseOne' | translate}}" formControlName="userId">
               <nb-option *ngFor="let g of Users" [value]="g.userId">{{g.userName}}
               </nb-option>
             </nb-select>
-            <span *ngIf="hasEditError('UserId', 'required')" style="color: red">{{'UserName' | translate}}
+            <span *ngIf="hasEditError('userId', 'required')" style="color: red">{{'UserName' | translate}}
               {{'IsRequired' | translate}}</span>
           </div>
 
           <div class=" col-md-6">
             <label> {{'Amount' | translate}} </label>
 
-            <input class="form-control" numbersOnly formControlName="Amount" type="text" nbInput fullWidth>
-            <span *ngIf="hasEditError('Amount', 'required')" style="color: red">{{'Amount' | translate}}
+            <input class="form-control" numbersOnly formControlName="amount" type="text" nbInput fullWidth>
+            <span *ngIf="hasEditError('amount', 'required')" style="color: red">{{'Amount' | translate}}
               {{'IsRequired' | translate}}</span>
           </div>
 
           <div class=" col-md-6">
             <label> {{'Date' | translate}} </label>
             <input nbInput placeholder=" {{'Date' | translate}}" [nbDatepicker]="dateTimePicker" class="form-control"
-              formControlName="Date">
+              formControlName="date">
             <nb-datepicker #dateTimePicker></nb-datepicker>
-            <span *ngIf="hasEditError('Date', 'required')" style="color: red">{{'Date' | translate}}
+            <span *ngIf="hasEditError('date', 'required')" style="color: red">{{'Date' | translate}}
               {{'IsRequired' | translate}}</span>
           </div>
 
-          <div class=" col-md-6">
-            <label> {{'Method' | translate}} </label>
-            <nb-select placeholder="Select  {{'Method' | translate}}" formControlName="Method">
-              <nb-option *ngFor="let g of Method" [value]="g.id">{{g.text}}
-              </nb-option>
-            </nb-select>
-            <span *ngIf="hasEditError('Method', 'required')" style="color: red">{{'Method' | translate}}
-              {{'IsRequired' | translate}}</span>
-          </div>
+
 
           <div class=" col-md-6">
             <label> {{'ExpenseType' | translate}} </label>
-            <nb-select placeholder="Select  {{'ExpenseTypes' | translate}}" formControlName="ExpenseTypesId">
-              <nb-option *ngFor="let g of ExpenseTypes" [value]="g.id">{{g.nameAr}}
+            <nb-select placeholder="{{'PleaseChooseOne' | translate}}" formControlName="expenseTypesId">
+              <nb-option *ngFor="let g of ExpenseTypes" [value]="g.id">{{g.expensesName}}
               </nb-option>
             </nb-select>
-            <span *ngIf="hasEditError('ExpenseTypesId', 'required')" style="color: red">{{'ExpenseType' | translate}}
+            <span *ngIf="hasEditError('expenseTypesId', 'required')" style="color: red">{{'ExpenseType' | translate}}
               {{'IsRequired' | translate}}</span>
           </div>
 
           <div class=" col-md-6">
-            <label> {{'Descripton' | translate}} </label>
-            <input class="form-control" formControlName="Description" type="text" nbInput fullWidth>
-            <span *ngIf="hasEditError('Description', 'required')" style="color: red">{{'Descripton' | translate}}
-              {{'IsRequired' | translate}}</span>
+            <label> {{'Description' | translate}} </label>
+            <input class="form-control" formControlName="description" type="text" nbInput fullWidth>
+     
           </div>
         </div>
       </form>

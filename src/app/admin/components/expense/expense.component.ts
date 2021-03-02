@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { PublicService } from 'src/app/core/publicService.Service';
+import * as XLSX from 'xlsx';
 @Component({
   selector: 'app-expense',
   templateUrl: './expense.component.html',
@@ -23,7 +24,7 @@ export class ExpenseComponent implements OnInit {
   columnheaders: string[];
   ExpenseTypes: any[];
   Users: any[];
-  Method: { id: number; text: any; }[];
+
   cashPayment: any;
   BankTransfer: any;
   onlinePayment: any;
@@ -35,21 +36,20 @@ export class ExpenseComponent implements OnInit {
     , private translate: TranslateService
     , private _changeDetectorRef: ChangeDetectorRef) {
     this.AddForm = this._formbuilder.group({
-      Description: [null, Validators.required],
-      UserId: [null, Validators.required],
-      ExpenseTypesId: [null, Validators.required],
-      Method: [null, Validators.required],
-      Amount: [null, Validators.required],
-      Date: [null, Validators.required],
+      userId: [null, Validators.required],
+      expenseTypesId: [null, Validators.required],
+      amount: [null, Validators.required],
+      date: [null, Validators.required],
+      description: [null],
+
     });
 
     this.EditForm = this._formbuilder.group({
-      Description: [null, Validators.required],
-      UserId: [null, Validators.required],
-      ExpenseTypesId: [null, Validators.required],
-      Method: [null, Validators.required],
-      Amount: [null, Validators.required],
-      Date: [null, Validators.required],
+      description: [null],
+      userId: [null, Validators.required],
+      expenseTypesId: [null, Validators.required],
+      amount: [null, Validators.required],
+      date: [null, Validators.required],
       id: [null],
     });
     this.currentLang = translate.currentLang;
@@ -65,11 +65,7 @@ export class ExpenseComponent implements OnInit {
     this.translate.get("cashPayment").subscribe(label => this.cashPayment = label);
     this.translate.get("BankTransfer").subscribe(label => this.BankTransfer = label);
     this.translate.get("onlinePayment").subscribe(label => this.onlinePayment = label);
-    this.Method = [
-      { id: 1, text: this.cashPayment },
-      { id: 2, text: this.BankTransfer },
-      { id: 3, text: this.onlinePayment }
-    ]
+
     this.getAllExpenses();
     this.setColumnheaders();
     this.getAllExpenseTypes();
@@ -86,12 +82,10 @@ export class ExpenseComponent implements OnInit {
     this.translate.get("UserName").subscribe(label => this.columnheaders[1] = label);
     this.translate.get("ExpenseType").subscribe(label => this.columnheaders[2] = label);
     this.translate.get("Amount").subscribe(label => this.columnheaders[3] = label);
-    this.translate.get("Descripton").subscribe(label => this.columnheaders[4] = label);
+    this.translate.get("Description").subscribe(label => this.columnheaders[4] = label);
     this.translate.get("Date").subscribe(label => this.columnheaders[5] = label);
-    this.translate.get("Method").subscribe(label => {
-      this.columnheaders[6] = label;
-      this.loadTableSettings();
-    });
+
+    this.loadTableSettings();
 
   }
   loadTableSettings() {
@@ -134,7 +128,7 @@ export class ExpenseComponent implements OnInit {
           type: 'string',
           filter: true
         },
-        expenseTypesNameAr: {
+        expensesName: {
           title: this.columnheaders[2],
           type: 'string',
           filter: true
@@ -142,18 +136,14 @@ export class ExpenseComponent implements OnInit {
         amount: {
           title: this.columnheaders[3],
           type: 'string',
-          filter: true
+          filter: false
         },
-        description: {
-          title: this.columnheaders[4],
-          type: 'string',
-          filter: true
-        },
+      
         date: {
           title: this.columnheaders[5],
           type: "string",
           width: '12%',
-          filter: true,
+          filter: false,
           valuePrepareFunction: (dates) => {
             if (dates) {
               let date = new Date(dates);
@@ -163,25 +153,12 @@ export class ExpenseComponent implements OnInit {
             return null;
           }
         },
-        method: {
-          title: this.columnheaders[6],
+        description: {
+          title: this.columnheaders[4],
           type: 'string',
-          filter: true,
-
-          valuePrepareFunction: (meth) => {
-            if (meth == 1) {
-
-              return this.cashPayment;
-            } else if (meth == 2) {
-              return this.BankTransfer;
-
-            } else if (meth == 3) {
-              return this.onlinePayment;
-
-            }
-            return null;
-          }
-        }
+          filter: false,
+        },
+       
       }
     };
   }
@@ -208,7 +185,7 @@ export class ExpenseComponent implements OnInit {
 
     this._PublicService.get("ExpenseTypes/ViewGetAll").subscribe(res => {
       this.ExpenseTypes = res;
-      debugger;
+      
 
     });
   }
@@ -217,7 +194,7 @@ export class ExpenseComponent implements OnInit {
 
     this._PublicService.get("User/GetAllAgents").subscribe(res => {
       this.Users = res;
-      debugger;
+      
     });
   }
 
@@ -229,13 +206,13 @@ export class ExpenseComponent implements OnInit {
   }
   Add() {
     let date = new Date(Date.UTC(
-      this.AddForm.value.Date.getFullYear(),
-      this.AddForm.value.Date.getMonth(),
-      this.AddForm.value.Date.getDate()
+      this.AddForm.value.date.getFullYear(),
+      this.AddForm.value.date.getMonth(),
+      this.AddForm.value.date.getDate()
     ));
-    this.AddForm.controls.Date.setValue(date);
+    this.AddForm.controls.date.setValue(date);
 
-    debugger;
+    
     this._PublicService.post('Expense/AddData', this.AddForm.value).subscribe((Response) => {
       this.getAllExpenses();
 
@@ -254,12 +231,12 @@ export class ExpenseComponent implements OnInit {
 
   //Edit Modal
   openEditDialog(dialog: TemplateRef<any>, row: any) {
-    this.EditForm.controls['UserId'].setValue(row.userId);
-    this.EditForm.controls['Description'].setValue(row.description);
-    this.EditForm.controls['ExpenseTypesId'].setValue(row.expenseTypesId);
-    this.EditForm.controls['Method'].setValue(row.method);
-    this.EditForm.controls['Amount'].setValue(row.amount);
-    this.EditForm.controls['Date'].setValue(row.date);
+    this.EditForm.controls['userId'].setValue(row.userId);
+    this.EditForm.controls['description'].setValue(row.description);
+    this.EditForm.controls['expenseTypesId'].setValue(row.expenseTypesId);
+   
+    this.EditForm.controls['amount'].setValue(row.amount);
+    this.EditForm.controls['date'].setValue(row.date);
 
     this.EditForm.controls['id'].setValue(row.id);
 
@@ -269,12 +246,13 @@ export class ExpenseComponent implements OnInit {
     });
   }
   updateExpense() {
-    let date = new Date(Date.UTC(
-      this.EditForm.value.Date.getFullYear(),
-      this.EditForm.value.Date.getMonth(),
-      this.EditForm.value.Date.getDate()
+    let date =new Date(this.EditForm.value.date);
+    let newdate= new Date(Date.UTC(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate()
     ));
-    this.EditForm.controls.Date.setValue(date);
+    this.EditForm.controls.date.setValue(newdate);
 
     this._PublicService.put('Expense/UpdateData', this.EditForm.value).subscribe((Response) => {
       this.Expenses = Response;
@@ -334,6 +312,21 @@ export class ExpenseComponent implements OnInit {
         break;
 
     }
+  }
+
+  exportoExcel(): void {
+    /* pass here the table id */
+    let element = document.getElementById('expenses-table');
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+    ws['!cols'][5] = { hidden: true };
+
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    /* save to file */
+    XLSX.writeFile(wb, "expenses.xlsx");
+
   }
 
 }

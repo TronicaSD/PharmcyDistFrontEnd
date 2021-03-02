@@ -5,7 +5,7 @@
 
       <div class="row">
         <div class="col-md-11">
-          {{'ExpenseType' | translate}}
+          {{'ExpensesType' | translate}}
         </div>
         <div class=" col-md-1">
 
@@ -29,29 +29,30 @@
       <form [formGroup]="AddForm" (submit)="Add()">
 
         <div class="row">
+   
           <div class=" col-md-6">
 
 
 
-            <label> {{'NameAr' | translate}} </label>
+            <label> {{'Name' | translate}} </label>
 
-            <input class="form-control" formControlName="NameAr" type="text" nbInput fullWidth>
-            <span *ngIf="hasError('NameAr', 'required')" style="color: red">{{'NameAr' | translate}}
+            <input class="form-control" formControlName="expensesName" type="text" nbInput fullWidth>
+            <span *ngIf="hasError('expensesName', 'required')" style="color: red">{{'Name' | translate}}
               {{'IsRequired' | translate}}</span>
+
+
+
 
           </div>
           <div class=" col-md-6">
 
 
 
-            <label> {{'NameEn' | translate}} </label>
+            <label> {{'Description' | translate}} </label>
 
-            <input class="form-control" formControlName="NameEn" type="text" nbInput fullWidth>
-            <span *ngIf="hasError('NameEn', 'required')" style="color: red">{{'NameEn' | translate}}
+            <input class="form-control" formControlName="description" type="text" nbInput fullWidth>
+            <span *ngIf="hasError('description', 'required')" style="color: red">{{'Description' | translate}}
               {{'IsRequired' | translate}}</span>
-
-
-
 
           </div>
 
@@ -73,29 +74,29 @@
       <form [formGroup]="EditForm" (submit)="updateExpenseType()">
 
         <div class="row">
+       
           <div class=" col-md-6">
 
 
 
-            <label> {{'NameAr' | translate}} </label>
+            <label> {{'Name' | translate}} </label>
 
-            <input class="form-control" formControlName="NameAr" type="text" nbInput fullWidth>
-            <span *ngIf="hasError('NameAr', 'required')" style="color: red">{{'NameAr' | translate}}
+            <input class="form-control" formControlName="expensesName" type="text" nbInput fullWidth>
+            <span *ngIf="hasError('expensesName', 'required')" style="color: red">{{'Name' | translate}}
               {{'IsRequired' | translate}}</span>
+
+
+
 
           </div>
           <div class=" col-md-6">
 
 
 
-            <label> {{'NameEn' | translate}} </label>
+            <label> {{'Description' | translate}} </label>
 
-            <input class="form-control" formControlName="NameEn" type="text" nbInput fullWidth>
-            <span *ngIf="hasError('NameEn', 'required')" style="color: red">{{'NameEn' | translate}}
-              {{'IsRequired' | translate}}</span>
-
-
-
+            <input class="form-control" formControlName="description" type="text" nbInput fullWidth>
+ 
 
           </div>
 

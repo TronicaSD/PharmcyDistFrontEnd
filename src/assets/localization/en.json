@@ -1,6 +1,6 @@
 {
     "Name": "Name",
-    "Descripton": "Descripton",
+    "Description": "Description",
     "Email": "Email address",
     "PhoneNo": "Phone No",
     "Password": "Password",
@@ -91,8 +91,8 @@
 "VendorName":"Vendor Name",
 "NumberOfVendor": "Number Of Vendor",
 "TotalPharmcies":"Total Pharmcies",
+"ExpensesType":"ExpenseType Type",
 "ExpenseType":"Expense Type",
-"Expenses":"Expenses",
 "Expense":"Expense",
 "NameAr":"Name Ar",
 "Amount":"Name Ar",
