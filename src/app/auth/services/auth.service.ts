@@ -62,7 +62,6 @@ export class AuthService implements CanActivate {
   }
 
   navigateToModule(role: string) {
-    debugger;
 
     switch (role) {
       case 'admin':
