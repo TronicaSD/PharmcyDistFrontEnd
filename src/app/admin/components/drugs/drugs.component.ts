@@ -48,6 +48,7 @@ export class DrugsComponent implements OnInit {
       this.currentLang = event.lang;
       // TODO This as a workaround.
       this._changeDetectorRef.detectChanges();
+      this.loadTableSettings();
     });
 
   }
@@ -88,7 +89,7 @@ export class DrugsComponent implements OnInit {
       actions: {
 
 
-        position: "right",
+        position:  this.currentLang ==='ar' ?" left":"right",
         columnTitle: this.columnheaders[0],
         custom: [
 
@@ -118,7 +119,7 @@ export class DrugsComponent implements OnInit {
         price: {
           title: this.columnheaders[2],
           type: 'string',
-          filter: true
+          filter: false
         },
       }
     };

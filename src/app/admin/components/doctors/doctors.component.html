@@ -48,13 +48,11 @@
           <div class=" col-md-6">
             <label> {{'phoneNumber' | translate}} </label>
 
-            <input class="form-control" formControlName="phoneNumber" numbersOnly maxlength="12"  type="text" nbInput fullWidth>
-            <span *ngIf="hasError('phoneNumber', 'required')" style="color: red">{{'phoneNumber' | translate}}
-              {{'IsRequired' | translate}}</span>
-            <span *ngIf="!hasError('phoneNumber', 'maxLength')" style="color: red">
-              {{'PhoneNumberShouldbe12' | translate}}</span>
+            <input class="form-control" formControlName="phoneNumber" numbersOnly maxlength="11"  type="text" nbInput fullWidth>
+
             <span *ngIf="!hasError('phoneNumber', 'minLength')" style="color: red">
-              {{'PhoneNumberShouldbe12' | translate}}</span>
+              {{'PhoneNumberShouldbe12' | translate}} </span>
+  
 
           </div>
 
@@ -115,9 +113,11 @@
 
             <label> {{'phoneNumber' | translate}} </label>
 
-            <input class="form-control" formControlName="phoneNumber" maxlength="12" numbersOnly type="text" nbInput fullWidth>
-            <span *ngIf="hasEditError('phoneNumber', 'required')" style="color: red">{{'phoneNumber' | translate}}
-              {{'IsRequired' | translate}}</span>
+            <input class="form-control" formControlName="phoneNumber" maxlength="11" numbersOnly type="text" nbInput fullWidth>
+   
+
+              <span *ngIf="!hasEditError('phoneNumber', 'minLength') " style="color: red">
+                {{'PhoneNumberShouldbe12' | translate}}</span>
           </div>
 
           <div class="col-md-6">

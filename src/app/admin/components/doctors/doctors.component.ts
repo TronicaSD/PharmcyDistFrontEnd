@@ -32,9 +32,9 @@ export class doctorsComponent implements OnInit {
     , private _changeDetectorRef: ChangeDetectorRef
   ) {
     this.AddForm = this._formbuilder.group({
-      name: ['', Validators.required],
-      phoneNumber: ['', [Validators.required, Validators.maxLength(11), Validators.minLength(11)]],
-      genderType: ['', Validators.required],
+      name: [null, Validators.required],
+      phoneNumber: [null, [Validators.required, Validators.maxLength(11), Validators.minLength(11)]],
+      genderType: [null, Validators.required],
     });
 
     this.EditForm = this._formbuilder.group({
@@ -140,18 +140,19 @@ export class doctorsComponent implements OnInit {
     });
   }
   public hasError = (controlName: string, errorName: string) => {
-    if (controlName==='phoneNumber'){
-let s =this.AddForm.controls[controlName].hasError(errorName);
-debugger;
 
-
+    if (controlName==='phoneNumber') {
+      return this.AddForm.controls[controlName].valid;
     }
-
     return this.AddForm.controls[controlName].hasError(errorName);
+
   };
 
   public hasEditError = (controlName: string, errorName: string) => {
     
+    if (controlName==='phoneNumber') {
+      return this.EditForm.controls[controlName].valid;
+    }
     return this.EditForm.controls[controlName].hasError(errorName);
   };
 
