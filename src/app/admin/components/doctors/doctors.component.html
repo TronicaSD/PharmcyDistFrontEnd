@@ -29,7 +29,7 @@
       <form [formGroup]="AddForm" (submit)="Add()">
 
         <div class="row">
-          <div class=" col-md-6">
+          <div class=" col-md-12">
 
 
 
@@ -43,15 +43,17 @@
 
 
           </div>
+        </div>
+        <div class="row">
           <div class=" col-md-6">
             <label> {{'phoneNumber' | translate}} </label>
 
-            <input class="form-control" formControlName="phoneNumber" numbersOnly type="text" nbInput fullWidth>
+            <input class="form-control" formControlName="phoneNumber" numbersOnly maxlength="12"  type="text" nbInput fullWidth>
             <span *ngIf="hasError('phoneNumber', 'required')" style="color: red">{{'phoneNumber' | translate}}
               {{'IsRequired' | translate}}</span>
-            <span *ngIf="hasError('phoneNumber', 'maxLength')" style="color: red">
+            <span *ngIf="!hasError('phoneNumber', 'maxLength')" style="color: red">
               {{'PhoneNumberShouldbe12' | translate}}</span>
-            <span *ngIf="hasError('phoneNumber', 'minLength')" style="color: red">
+            <span *ngIf="!hasError('phoneNumber', 'minLength')" style="color: red">
               {{'PhoneNumberShouldbe12' | translate}}</span>
 
           </div>
@@ -91,7 +93,7 @@
       <form [formGroup]="EditForm" (submit)="updateDoctor()">
 
         <div class="row">
-          <div class=" col-md-6">
+          <div class=" col-md-12">
 
             <div class="form-group">
 
@@ -106,11 +108,14 @@
 
             </div>
           </div>
+        </div>
+        <div class="row">
+
           <div class=" col-md-6">
 
             <label> {{'phoneNumber' | translate}} </label>
 
-            <input class="form-control" formControlName="phoneNumber" numbersOnly type="text" nbInput fullWidth>
+            <input class="form-control" formControlName="phoneNumber" maxlength="12" numbersOnly type="text" nbInput fullWidth>
             <span *ngIf="hasEditError('phoneNumber', 'required')" style="color: red">{{'phoneNumber' | translate}}
               {{'IsRequired' | translate}}</span>
           </div>

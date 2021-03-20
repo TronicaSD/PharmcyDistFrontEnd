@@ -79,7 +79,7 @@ export class MenuChildrenComponent implements OnInit {
         link: '/home',
         icon: 'settings-2-outline',
         hidden: (this.findRole([Role.admin])),
-        expanded: false,
+        expanded: true,
         children: [
           {
             title: this.columnheaders[1],

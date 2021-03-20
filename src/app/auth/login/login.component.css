@@ -6,7 +6,8 @@
   
 }
 .main {
-    height: 100vh; overflow: hidden; background-color: #121219;
+    height: 100vh; overflow: hidden; 
+    background-color:#fff;
 }
 .imglogo{
     display: block;
@@ -15,9 +16,9 @@
 }
 
 .imgcard{
-    border: solid 1px#fff;
+    border: solid 1px#000;
     border-radius: 2%;
-    box-shadow: 1px 1px 4px 3px #fff;
+    box-shadow: 1px 1px 4px 3px #000;
     width: 70%;
     height: 40vh;
     display: flex;
@@ -29,7 +30,7 @@
 
 
 }
-label,h4,h5{color: #fff;}
+label,h4,h5{color: #000;}
 
 
 
