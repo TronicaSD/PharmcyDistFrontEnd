@@ -84,7 +84,7 @@ export class DrugsComponent implements OnInit {
 
       },
 
-       hideSubHeader: true,
+       hideSubHeader: false,
       actions: {
 
 

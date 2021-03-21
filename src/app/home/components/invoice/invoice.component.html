@@ -144,9 +144,9 @@
               <div class="form-group">
 
 
-                <label> {{'Discount' | translate}}</label>
+                <label> {{'Discount' | translate}}   %</label>
 
-                %<input (keyup)="CalculateTotal()" class="form-control" numbersOnly
+              <input (keyup)="CalculateTotal()" class="form-control" numbersOnly
                   placeholder="{{'Discount' | translate}} %" formControlName="DisCount" type="text" nbInput fullWidth>
                 <span *ngIf="hasError('DisCount', 'min')" style="color: red"> {{'minimumnumberis' | translate}}
                   12</span>
@@ -184,9 +184,9 @@
                 </td>
                 <td>
 
-                  <nb-select placeholder=" {{'DrugName ' | translate}} " formControlName="drugId" required>
+                  <nb-select (ngModelChange)="calculateDrugPrice()" placeholder=" {{'DrugName ' | translate}} " formControlName="drugId" required>
                     <nb-option *ngFor="let d of StockDetails" [value]="d.drugId"
-                      (selectionChange)="calculateDrugPrice()">
+                      >
                       {{d.drugName}}</nb-option>
                   </nb-select>
 

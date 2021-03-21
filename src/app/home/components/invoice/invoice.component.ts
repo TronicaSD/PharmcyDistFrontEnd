@@ -36,7 +36,7 @@ export class InvoiceComponent implements OnInit {
   Total: number;
   SubTotal: number;
   qunantity: any;
-  price: any;
+  price: number;
   newDate: string;
 
   public source: LocalDataSource = new LocalDataSource();
@@ -236,7 +236,6 @@ export class InvoiceComponent implements OnInit {
   }
   unpaidInovices:any=[];
   getUnpadidInvoices(){
-    debugger;
     this._PublicService.getByID("Invoice/GetByPharmcy",this.selectedPharmcy).subscribe(res => {
       this.unpaidInovices = res;
       this.source.load(this.unpaidInovices);
@@ -317,7 +316,7 @@ export class InvoiceComponent implements OnInit {
       drugName: "",
       invoiceId: 0,
       price: null,
-      qunantity: null,
+      qunantity: 1,
       total: null,
       id: 0
     });
