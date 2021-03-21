@@ -62,20 +62,19 @@ export class DrugsComponent implements OnInit {
     });
   }
   setColumnheaders(): void {
-    let Action = 'Action';
-    let Name = 'Name';
-    let Price = 'Price';
+
 
     this.columnheaders = ['', '', '']
     //Used TranslateService from @ngx-translate/core
-    this.translate.get(Action).subscribe(label => this.columnheaders[0] = label);
-    this.translate.get(Name).subscribe(label => this.columnheaders[1] = label);
-    this.translate.get(Price).subscribe(label => {
+    this.translate.get('Actions').subscribe(label => this.columnheaders[0] = label);
+    this.translate.get('Name').subscribe(label => this.columnheaders[1] = label);
+    this.translate.get('Price').subscribe(label => {
       this.columnheaders[2] = label;
       this.loadTableSettings();
     });
 
   }
+ 
   loadTableSettings() {
     this.settings = {
       pager: {
@@ -85,11 +84,11 @@ export class DrugsComponent implements OnInit {
 
       },
 
-      // hideSubHeader: true,
+       hideSubHeader: true,
       actions: {
 
 
-        position:  this.currentLang ==='ar' ?" left":"right",
+        position: 'right',
         columnTitle: this.columnheaders[0],
         custom: [
 

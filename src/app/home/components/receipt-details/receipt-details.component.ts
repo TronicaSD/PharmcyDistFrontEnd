@@ -91,7 +91,7 @@ export class receiptDetailsComponent implements OnInit {
 
     this.columnheaders = []
     //Used TranslateService from @ngx-translate/core
-    this.translate.get("Action").subscribe(label => this.columnheaders[0] = label);
+    this.translate.get("Actions").subscribe(label => this.columnheaders[0] = label);
     this.translate.get('SerialNum').subscribe(label => this.columnheaders[1] = label);
     this.translate.get('Date').subscribe(label => this.columnheaders[2] = label);
     this.translate.get('TotalPrice').subscribe(label => {
@@ -102,14 +102,12 @@ export class receiptDetailsComponent implements OnInit {
   }
   settings: any;
   loadTableSettings() {
-    let actionsColumn = "";
-    this.translate.get('Action').subscribe(val => { actionsColumn = val; })
 
     this.settings = {
       // hideSubHeader: true,
       actions: {
-        position: "right",
-        columnTitle: actionsColumn,
+        
+            columnTitle: this.columnheaders[0],
         custom: [
           {
             name: 'view',

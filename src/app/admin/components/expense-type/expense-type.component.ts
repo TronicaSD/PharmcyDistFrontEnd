@@ -62,7 +62,7 @@ export class ExpenseTypeComponent implements OnInit {
   setColumnheaders(): void {
     this.columnheaders = ['', '', '']
     //Used TranslateService from @ngx-translate/core
-    this.translate.get("Action").subscribe(label => this.columnheaders[0] = label);
+    this.translate.get("Actions").subscribe(label => this.columnheaders[0] = label);
     this.translate.get("Description").subscribe(label => this.columnheaders[1] = label);
     this.translate.get("Name").subscribe(label => {
       this.columnheaders[2] = label;

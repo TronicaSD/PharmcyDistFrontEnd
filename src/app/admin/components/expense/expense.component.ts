@@ -78,7 +78,7 @@ export class ExpenseComponent implements OnInit {
   setColumnheaders(): void {
     this.columnheaders = ['', '', '']
     //Used TranslateService from @ngx-translate/core
-    this.translate.get("Action").subscribe(label => this.columnheaders[0] = label);
+    this.translate.get("Actions").subscribe(label => this.columnheaders[0] = label);
     this.translate.get("UserName").subscribe(label => this.columnheaders[1] = label);
     this.translate.get("ExpenseType").subscribe(label => this.columnheaders[2] = label);
     this.translate.get("Amount").subscribe(label => this.columnheaders[3] = label);

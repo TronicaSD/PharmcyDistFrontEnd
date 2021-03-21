@@ -68,8 +68,8 @@ export class doctorsComponent implements OnInit {
 
     this.columnheaders = ['', '', '']
     //Used TranslateService from @ngx-translate/core
-    this.translate.get(Action).subscribe(label => this.columnheaders[0] = label);
-    this.translate.get(Name).subscribe(label => this.columnheaders[1] = label);
+    this.translate.get("Actions").subscribe(label => this.columnheaders[0] = label);
+    this.translate.get("Name").subscribe(label => this.columnheaders[1] = label);
     this.translate.get("phoneNumber").subscribe(label => this.columnheaders[2] = label);
     this.translate.get("genderType").subscribe(label => {
       this.columnheaders[3] = label;

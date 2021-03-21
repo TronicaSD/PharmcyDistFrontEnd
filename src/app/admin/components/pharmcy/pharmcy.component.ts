@@ -73,7 +73,7 @@ export class PharmcyComponent implements OnInit {
 
     this.columnheaders = ['', '', '']
     //Used TranslateService from @ngx-translate/core
-    this.translate.get(Action).subscribe(label => this.columnheaders[0] = label);
+    this.translate.get("Actions").subscribe(label => this.columnheaders[0] = label);
     this.translate.get(PharmcyName).subscribe(label => this.columnheaders[1] = label);
     this.translate.get("Government").subscribe(label => this.columnheaders[2] = label);
     this.translate.get("City").subscribe(label => this.columnheaders[3] = label);

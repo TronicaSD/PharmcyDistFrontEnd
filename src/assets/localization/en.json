@@ -24,7 +24,6 @@
     "City":"City", 
     "Governments":"Governments",
     "Cities":"Cities",
-    "Action":"Actions",
     "Stock":"Stock",
     "Stocks":"Stocks",
     "Quantity":"Quantity",
@@ -98,7 +97,8 @@
 "NameAr":"Name Ar",
 "Amount":"Amount",
 "Method":"Payment Method ",
-"NameEn":" Name En"
+"NameEn":" Name En",
+"Actions":"Actions"
 
 
 

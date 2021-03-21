@@ -28,18 +28,21 @@ export class SamplesComponent implements OnInit {
   loading = true;
   defaultDate: any;
   Doctors: any[];
+  currentLang: string;
+
   constructor(private _PublicService: PublicService
     , private dialogService: NbDialogService
     , private _formbuilder: FormBuilder,
     private _ToasterService: NbToastrService
     , private translate: TranslateService
   ) {
-
+    this.currentLang = translate.currentLang;
 
 
   }
 
   ngOnInit(): void {
+
     this.AddForm = this._formbuilder.group({
       drugId: ['', Validators.required],
       qunantity: ['', Validators.required],
@@ -86,7 +89,7 @@ export class SamplesComponent implements OnInit {
     this.settings = {
       // hideSubHeader: true,
       actions: {
-        position: "right",
+        position:  this.currentLang ==='ar' ?" left":"right",
         columnTitle: this.columnheaders[0],
         custom: [
           {
