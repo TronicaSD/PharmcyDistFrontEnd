@@ -130,9 +130,9 @@ export class InvoiceComponent implements OnInit {
   settings: any;
   loadTableSettings() {
     let actionsColumn = "";
-    this.translate.get('Action').subscribe(val => { actionsColumn = val; })
+    this.translate.get('Actions').subscribe(val => { actionsColumn = val; })
     this.settings = {
-      // hideSubHeader: true,
+       hideSubHeader: true,
       actions: {
         position: "right",
         columnTitle: actionsColumn,
@@ -168,6 +168,8 @@ export class InvoiceComponent implements OnInit {
         pharmcyName: {
           title: this.columnheaders[1],
           type: 'string',
+          filter: false,
+
         },
         invoiceTypeText: {
           title: this.columnheaders[2],

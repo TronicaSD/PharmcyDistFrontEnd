@@ -104,9 +104,9 @@ export class receiptDetailsComponent implements OnInit {
   loadTableSettings() {
 
     this.settings = {
-      // hideSubHeader: true,
+      hideSubHeader: true,
       actions: {
-        
+        position: "right",
             columnTitle: this.columnheaders[0],
         custom: [
           {
@@ -127,12 +127,9 @@ export class receiptDetailsComponent implements OnInit {
         edit: false,
         delete: false,
       },
-
       columns: {
-
         index: {
           title: this.columnheaders[1],
-          filter: false,
           valuePrepareFunction: (value, row, cell) => {
             return cell.row.index + 1;
           }
@@ -142,7 +139,7 @@ export class receiptDetailsComponent implements OnInit {
         date: {
           title: this.columnheaders[2],
           type: 'string',
-          filter: true,
+
 
           valuePrepareFunction: (type) => {
             if (type) {
@@ -154,7 +151,6 @@ export class receiptDetailsComponent implements OnInit {
         totalPrice: {
           title: this.columnheaders[3],
           type: 'string',
-          filter: true,
 
 
         }

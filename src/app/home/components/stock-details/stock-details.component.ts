@@ -57,7 +57,7 @@ export class StockDetailsComponent implements OnInit {
   }
   loadTableSettings() {
     this.settings = {
-      // hideSubHeader: true,
+     hideSubHeader: true,
       actions: {
         position: "right",
         columnTitle: this.columnheaders[0],
@@ -77,7 +77,6 @@ export class StockDetailsComponent implements OnInit {
         quantity: {
           title: this.columnheaders[1],
           type: 'string',
-          filter: false
 
         },
 
