@@ -144,9 +144,9 @@
               <div class="form-group">
 
 
-                <label> {{'Discount' | translate}}   %</label>
+                <label> {{'Discount' | translate}} %</label>
 
-              <input (keyup)="CalculateTotal()" class="form-control" numbersOnly
+                <input (keyup)="CalculateTotal()" class="form-control" numbersOnly
                   placeholder="{{'Discount' | translate}} %" formControlName="DisCount" type="text" nbInput fullWidth>
                 <span *ngIf="hasError('DisCount', 'min')" style="color: red"> {{'minimumnumberis' | translate}}
                   12</span>
@@ -184,9 +184,9 @@
                 </td>
                 <td>
 
-                  <nb-select (ngModelChange)="calculateDrugPrice()" placeholder=" {{'DrugName ' | translate}} " formControlName="drugId" required>
-                    <nb-option *ngFor="let d of StockDetails" [value]="d.drugId"
-                      >
+                  <nb-select (ngModelChange)="calculateDrugPrice();CalculateTotal()"
+                    placeholder=" {{'DrugName ' | translate}} " formControlName="drugId" required>
+                    <nb-option *ngFor="let d of StockDetails" [value]="d.drugId">
                       {{d.drugName}}</nb-option>
                   </nb-select>
 
@@ -194,9 +194,11 @@
                 <td>
 
                   <input class="form-control" required numbersOnly formControlName="qunantity" type="text" nbInput
-                    fullWidth (keyup)="CalculateTotal()" (input)="calculateDrugPrice()">
+                    minlength="1" min="1" fullWidth (keyup)="CalculateTotal()" (input)="calculateDrugPrice()">
 
-
+                  <span *ngIf="hasErrorForFormArray('qunantity', 'min',i)" style="color: red">
+                    {{'minimumnumberis' | translate}}
+                    1</span>
                 </td>
                 <td>
 
@@ -342,16 +344,18 @@
                 </td>
                 <td>
                   <nb-select placeholder="{{'PleaseChooseOne ' | translate}} " formControlName="drugId" required
-                    (input)="calculateEditDrugPrice(in)">
+                    (ngModelChange)="calculateEditDrugPrice(in);CalculateEditTotal()">
                     <nb-option *ngFor="let d of StockDetails" [value]="d.drugId">{{d.drugName}}</nb-option>
                   </nb-select>
 
                 </td>
                 <td>
 
-                  <input class="form-control" required numbersOnly formControlName="qunantity" type="text" nbInput
-                    fullWidth (keyup)="CalculateEditTotal()" (input)="calculateEditDrugPrice(in)">
-
+                  <input class="form-control" required numbersOnly formControlName="qunantity" minlength="1" min="1"
+                    type="text" nbInput fullWidth (keyup)="CalculateEditTotal()" (input)="calculateEditDrugPrice(in)">
+                  <span *ngIf="hasEditErrorForFormArray('qunantity', 'min',in)" style="color: red">
+                    {{'minimumnumberis' | translate}}
+                    1</span>
                 </td>
                 <td>
 

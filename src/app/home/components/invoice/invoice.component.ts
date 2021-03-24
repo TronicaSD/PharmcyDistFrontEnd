@@ -132,7 +132,7 @@ export class InvoiceComponent implements OnInit {
     let actionsColumn = "";
     this.translate.get('Actions').subscribe(val => { actionsColumn = val; })
     this.settings = {
-       hideSubHeader: true,
+      hideSubHeader: true,
       actions: {
         position: "right",
         columnTitle: actionsColumn,
@@ -222,7 +222,10 @@ export class InvoiceComponent implements OnInit {
   }
   getAllPharmcies() {
     this._PublicService.get("Pharmcy/ViewGetAll").subscribe(res => {
+
+
       this.Pharmcies = res;
+
     });
   }
 
@@ -238,9 +241,9 @@ export class InvoiceComponent implements OnInit {
 
     });
   }
-  unpaidInovices:any=[];
-  getUnpadidInvoices(){
-    this._PublicService.getByID("Invoice/GetByPharmcy",this.selectedPharmcy).subscribe(res => {
+  unpaidInovices: any = [];
+  getUnpadidInvoices() {
+    this._PublicService.getByID("Invoice/GetByPharmcy", this.selectedPharmcy).subscribe(res => {
       this.unpaidInovices = res;
       this.source.load(this.unpaidInovices);
 
@@ -282,10 +285,25 @@ export class InvoiceComponent implements OnInit {
   public hasEditError = (controlName: string, errorName: string) => {
     return this.EditForm.controls[controlName].hasError(errorName);
   };
+  public hasErrorForFormArray = (controlName: string, errorName: string, index: any) => {
+    let modal = this.AddForm.get("invoiceDetails") as FormArray;
+    let cont = modal.controls[index] as FormGroup
+    return cont.controls[controlName].hasError(errorName);
+  };
+  public hasEditErrorForFormArray = (controlName: string, errorName: string, index: any) => {
+    let modal = this.EditForm.get("invoiceDetails") as FormArray;
+    let cont = modal.controls[index] as FormGroup;
 
-
+    return cont.controls[controlName].hasError(errorName);
+  };
   CalculateTotal() {
     this.Total = this.AddinvoiceDetails.value.reduce((sum, item) => sum += (item.qunantity || 0) * (item.price || 0), 0)
+
+    if (Number.isNaN(this.Total)) {
+      this.Total = 0;
+      this.AddForm.controls['TotalPrice'].setValue(null);
+
+    }
     this.AddForm.controls['TotalPrice'].setValue(this.Total);
     if ((parseInt(this.AddForm.get('DisCount').value)) >= 12 && (parseInt(this.AddForm.get('DisCount').value)) <= 30) {
       this.TotalDiscount = (parseInt(this.AddForm.get('TotalPrice').value) - ((parseInt(this.AddForm.get('TotalPrice').value)) * (parseInt(this.AddForm.get('DisCount').value))) / 100);
@@ -299,17 +317,16 @@ export class InvoiceComponent implements OnInit {
     this.AddinvoiceDetails.controls.forEach(x => {
       let drugId = parseInt(x.get('drugId').value);
       var drug = this.StockDetails.find(a => a.drugId == drugId);
-
       x.get('price').patchValue(drug.price);
-
-
       let price = parseInt(x.get('price').value)
       let quantity = parseInt(x.get('qunantity').value);
-
-      if ((price !== NaN) && (quantity !== NaN)) {
-
+      if (Number.isNaN(price)) {
+        x.get('total').patchValue(0);
+      } else if (Number.isNaN(quantity)) {
+        x.get('total').patchValue(0);
+      } else {
         this.price = price * quantity;
-        x.get('total').patchValue(this.price)
+        x.get('total').patchValue(this.price);
       }
     });
   }
@@ -320,7 +337,7 @@ export class InvoiceComponent implements OnInit {
       drugName: "",
       invoiceId: 0,
       price: null,
-      qunantity: 1,
+      qunantity: [1, Validators.min(1)],
       total: null,
       id: 0
     });
@@ -357,6 +374,8 @@ export class InvoiceComponent implements OnInit {
       this._ToasterService.success("Invoice added successfully", "Success");
     }, (error) => {
       this._ToasterService.danger("The quantity is less than that in stock", "Failed");
+      this.ClearForm();
+
     });
   }
 
@@ -370,7 +389,14 @@ export class InvoiceComponent implements OnInit {
 
   CalculateEditTotal() {
     this.TotalEdit = this.EditInvoiceDetails.value.reduce((sum, item) => sum += (item.qunantity || 0) * (item.price || 0), 0)
+    if (Number.isNaN(this.TotalEdit)) {
+      this.TotalEdit = 0;
+      this.EditForm.controls['TotalPrice'].setValue(null);
+
+    }
+
     this.EditForm.controls['TotalPrice'].setValue(this.TotalEdit);
+
 
     if ((parseInt(this.EditForm.get('DisCount').value)) >= 12 && (parseInt(this.EditForm.get('DisCount').value)) <= 30) {
       this.TotalDiscountEdit
@@ -380,18 +406,26 @@ export class InvoiceComponent implements OnInit {
     }
 
 
+
   }
   calculateEditDrugPrice() {
+    debugger;
+
     this.EditInvoiceDetails.controls.forEach(x => {
       let drugId = parseInt(x.get('drugId').value);
       var drug = this.StockDetails.find(a => a.drugId == drugId);
-
+      debugger;
       x.get('price').patchValue(drug.price);
-
       let price = parseInt(x.get('price').value)
       let quantity = parseInt(x.get('qunantity').value)
-      this.price = price * quantity;
-      x.get('total').patchValue(this.price)
+      if (Number.isNaN(price)) {
+        x.get('total').patchValue(0);
+      } else if (Number.isNaN(quantity)) {
+        x.get('total').patchValue(0);
+      } else {
+        this.price = price * quantity;
+        x.get('total').patchValue(this.price);
+      }
     });
   }
   EditInvoiceDetails: FormArray;
