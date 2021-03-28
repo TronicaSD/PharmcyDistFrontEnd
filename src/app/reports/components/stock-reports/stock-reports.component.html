@@ -97,3 +97,23 @@
 <div class="row">
   <canvas id="Allchart" style="height:470px !important"></canvas>
 </div>
+
+<nb-card>
+  <nb-card-header>
+
+    <div class="row">
+      <div class="col-md-2">
+        {{'Drugs' | translate}}
+      </div>
+      <div class="col-md-10" id="ExcelBtn">
+
+        <button nbButton status="default" (click)="exportoExcel()"> Export Excel</button>
+      </div>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <ng2-smart-table id="excel-table" [settings]="settings" [source]="source">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>

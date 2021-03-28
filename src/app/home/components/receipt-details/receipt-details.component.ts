@@ -107,7 +107,7 @@ export class receiptDetailsComponent implements OnInit {
       hideSubHeader: true,
       actions: {
         position: "right",
-            columnTitle: this.columnheaders[0],
+        columnTitle: this.columnheaders[0],
         custom: [
           {
             name: 'view',
@@ -143,7 +143,9 @@ export class receiptDetailsComponent implements OnInit {
 
           valuePrepareFunction: (type) => {
             if (type) {
-              return moment(type).format('M/d/yyyy');
+              return new DatePipe('en-US').transform(type, 'mediumDate')
+
+              //    return moment(type).format('M/dd/yyyy');
             }
             return null;
           }

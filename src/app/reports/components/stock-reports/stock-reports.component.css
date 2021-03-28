@@ -24,7 +24,7 @@
 
 .p-totalItems {
   text-align: center;
-  color:#008eff;
+  color: #008eff;
   margin: 1%;
 }
 
@@ -36,4 +36,9 @@
 
 span {
   margin: 4%;
+}
+
+
+#ExcelBtn {
+  text-align: end;
 }

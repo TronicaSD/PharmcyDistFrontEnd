@@ -98,6 +98,8 @@
 "Amount":"Amount",
 "Method":"Payment Method ",
 "NameEn":" Name En",
+"SalesPerVendor":"Sales Per Vendor",
+"SalesForEachVendor":"Sales For Each Vendor",
 "Actions":"Actions"
 
 

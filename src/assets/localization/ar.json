@@ -79,11 +79,11 @@
   "UserName": "أسم الموزع",
   "TotalCount": "أجمالي عدد العناصر ",
   "TotalDrugsInStock": "أجمالي عدد الأدوية  ",
-  "TotalPriceInStock": "أجمالي القيمه  ",
+  "TotalPriceInStock": "أجمالي المخزون  ",
   "TotalVendors": "أجمالي عدد الموزعين",
   "ClearFilter": "تفريغ الفلاتر ",
   "TotalInvoices": "عدد الفواتير",
-  "TotalInvoicePriceAfterDiscount": " أجمالي سعر الفواتير بعد الخصم",
+  "TotalInvoicePriceAfterDiscount": " أجمالي البيع",
   "TotalInvoicePrice": "أجمالي سعر الفواتير",
   "VendorName": "أسم الموزع",
   "NumberOfVendor": "عدد الموزعين",
@@ -94,5 +94,7 @@
   "NameAr": "الأسم باللغة العربية",
   "Method": "طريقة الدفع",
   "Amount": "المبلغ",
+"SalesForEachVendor":"المبيعات لكل موزع",
+"SalesPerVendor":"المبيعات لكل موزع",
   "NameEn": "الأسم باللغة الأنجليزية"
 }

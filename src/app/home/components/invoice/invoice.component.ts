@@ -7,6 +7,7 @@ import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { PublicService } from 'src/app/core/publicService.Service';
 import { LocalDataSource } from 'ng2-smart-table';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -186,9 +187,8 @@ export class InvoiceComponent implements OnInit {
 
           valuePrepareFunction: (invoiceDate) => {
             if (invoiceDate) {
-              let date = new Date(invoiceDate);
+              return new DatePipe('en-US').transform(invoiceDate, 'mediumDate')
 
-              return date.getDate() + '-' + date.getMonth() + 1 + '-' + date.getFullYear();
             }
             return null;
           }

@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogService, NbToastrService } from '@nebular/theme';
@@ -89,7 +90,7 @@ export class SamplesComponent implements OnInit {
     this.settings = {
       // hideSubHeader: true,
       actions: {
-        position:  this.currentLang ==='ar' ?" left":"right",
+        position: this.currentLang === 'ar' ? " left" : "right",
         columnTitle: this.columnheaders[0],
         custom: [
           {
@@ -127,9 +128,7 @@ export class SamplesComponent implements OnInit {
 
           valuePrepareFunction: (date) => {
             if (date) {
-              let dates = new Date(date);
-
-              return dates.getDate() + '-' + dates.getMonth() + 1 + '-' + dates.getFullYear();
+              return new DatePipe('en-US').transform(date, 'mediumDate')
             }
             return null;
           }
