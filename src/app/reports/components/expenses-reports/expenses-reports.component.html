@@ -1,0 +1,127 @@
+<div class="row">
+
+
+  <div class="col-md-3">
+
+    <nb-card class="card-box">
+      <div class="row">
+
+
+        <div class="col-md-6">
+          <p class="p-amountAfterDis">{{'amountExpensePriceAfterDiscount' | translate}}</p>
+        </div>
+        <div class="col-md-6">
+          <i class="fa fa-money p-amountAfterDis"></i>
+        </div>
+      </div>
+
+      <span>{{amountPrice}}</span>
+    </nb-card>
+  </div>
+
+  <div class="col-md-3">
+
+    <nb-card class="card-box">
+      <div class="row">
+
+
+        <div class="col-md-6">
+          <p class="p-amountItems">{{'NumberOfVendor' | translate}}</p>
+        </div>
+        <div class="col-md-6">
+          <i class="fa fa-file p-amountItems"></i>
+        </div>
+      </div>
+
+      <span>{{userList.length}}</span>
+    </nb-card>
+  </div>
+  <!-- <div class="col-md-3">
+
+    <nb-card class="card-box">
+      <div class="row">
+
+
+        <div class="col-md-6">
+          <p class="p-Drug">{{'amountPharmcies' | translate}}</p>
+        </div>
+        <div class="col-md-6">
+          <i class="fa fa-medkit  p-Drug"></i>
+        </div>
+      </div>
+
+      <span>{{amountPharmcies}}</span>
+    </nb-card>
+  </div> -->
+
+</div>
+<br>
+<br>
+<form [formGroup]="SeacrhForm">
+
+  <div class="row mb-4">
+    <div class=" col-md-3">
+
+      <label> {{'from' | translate}}</label>
+      <input nbInput placeholder="Pick Date" [nbDatepicker]="dateTimefromPicker" class="form-control"
+        formControlName="from">
+      <nb-datepicker #dateTimefromPicker></nb-datepicker>
+    </div>
+    <div class=" col-md-3">
+
+      <label> {{'to' | translate}}</label>
+      <input nbInput placeholder="Pick Date" [nbDatepicker]="dateTimetoPicker" class="form-control"
+        formControlName="to">
+      <nb-datepicker #dateTimetoPicker></nb-datepicker>
+    </div>
+    <div class=" col-md-3">
+
+      <label> {{'VendorName' | translate}}</label>
+      <nb-select formControlName="UserId">
+        <nb-option *ngFor="let it of userList" [value]="it.userId">{{it.userName}}</nb-option>
+      </nb-select>
+    </div>
+    <div class="col-md-3">
+      <button style="margin-top: 2vw;" type="button" class="cancel" size="small" outline nbButton status="info"
+        (click)="  getAllExpenseForChart();getAllExpenseForChartForExpenseType()">{{'Search' | translate}} </button>
+      <button style="margin-top: 2vw;margin-right: 2%;margin-left: 2%;" type="button" class="cancel" size="small"
+        outline nbButton status="danger" (click)="  ClearFilter()">{{'ClearFilter' | translate}} </button>
+    </div>
+  </div>
+
+</form>
+
+
+
+
+<div class="row">
+  <div class="col-md-6">
+    <canvas id="userchart" style="height:470px !important"></canvas>
+
+  </div>
+  <div class="col-md-6">
+    <canvas id="Expensetypechart" style="height:470px !important"></canvas>
+
+  </div>
+</div>
+
+
+<nb-card>
+  <nb-card-header>
+
+    <div class="row">
+      <div class="col-md-2">
+        {{'SalesForEachVendor' | translate}}
+      </div>
+      <div class="col-md-10" id="ExcelBtn">
+
+        <!-- <button nbButton status="default" (click)="exportoExcel()"> Export Excel</button> -->
+      </div>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <ng2-smart-table id="excel-table" [settings]="settings" [source]="source">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>

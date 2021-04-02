@@ -1,0 +1,33 @@
+.card-box {
+  height: 115px;
+  text-align: center;
+  padding-top: 4%;
+  font-size: 27px;
+  font-weight: bold;
+  color: #3e3e5d;
+  box-shadow: 3px 3px 12px 6px #3e3e5d;
+}
+
+
+
+.p-totalAfterDis {
+  text-align: center;
+  color: rgb(179, 53, 53);
+  margin: 1%;
+}
+
+.p-totalItems {
+  text-align: center;
+  color: #1372bd;
+  margin: 1%;
+}
+
+.p-Drug {
+  text-align: center;
+  color: rgb(92, 92, 202);
+  margin: 1%;
+}
+
+span {
+  margin: 4%;
+}

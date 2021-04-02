@@ -15,9 +15,14 @@ import { NbLayoutDirectionService, NbTabsetModule } from '@nebular/theme';
 import { StockReportsComponent } from './components/stock-reports/stock-reports.component';
 import { SalesReportsComponent } from './components/sales-reports/sales-reports.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { expensesReportsComponent } from './components/expenses-reports/expenses-reports.component';
 
 @NgModule({
-  declarations: [ReportsComponent, StockReportsComponent, SalesReportsComponent, DashboardComponent],
+  declarations: [ReportsComponent,
+    StockReportsComponent,
+    SalesReportsComponent,
+    expensesReportsComponent,
+    DashboardComponent],
   imports: [
     CommonModule,
     ReportsRoutingModule,
