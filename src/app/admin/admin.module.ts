@@ -17,15 +17,15 @@ import { receiptDetailsComponent } from '../home/components/receipt-details/rece
 import { StockDetailsComponent } from '../home/components/stock-details/stock-details.component';
 import { NbLayoutDirectionService } from '@nebular/theme';
 import { ChartsModule } from 'ng2-charts';
-import { countryComponent } from './components/country/country.component';
 import { cityComponent } from './components/city/city.component';
 import { doctorsComponent } from './components/doctors/doctors.component';
 import { ExpenseTypeComponent } from './components/expense-type/expense-type.component';
 import { ExpenseComponent } from './components/expense/expense.component';
+import { GovernorateComponent } from './components/Governorate/Governorate.component';
 @NgModule({
   declarations: [AdminComponent, DrugsComponent, PharmcyComponent,
-    receiptDetailsComponent,
-    StockDetailsComponent, countryComponent,
+    receiptDetailsComponent,GovernorateComponent,
+    StockDetailsComponent, 
     cityComponent, doctorsComponent, ExpenseTypeComponent, ExpenseComponent
   ],
   imports: [

@@ -12,7 +12,7 @@ import { Role } from 'src/app/shared/enums/roles';
   templateUrl: './menu-children.component.html',
 })
 export class MenuChildrenComponent implements OnInit {
-  UserRoles: any = '';
+  UserRoles: string = '';
   currentLang: string;
   columnheaders: string[] = [];
 
@@ -59,10 +59,11 @@ export class MenuChildrenComponent implements OnInit {
       this.GetMenueItem();
     });
   }
-  findRole(allowedRoles: any[]) {
+  findRole(allowedRoles: string[]) {
+   
     this.UserRoles = this._AuthService.getUserRole();
 
-    if (allowedRoles.includes(this.UserRoles)) {
+    if (allowedRoles.find(role=>role===this.UserRoles.toLowerCase())) {
 
       return false;
     } else {

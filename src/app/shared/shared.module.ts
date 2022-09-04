@@ -8,12 +8,12 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { TranslateModule } from "@ngx-translate/core";
 import { Ng2SmartTableModule } from "ng2-smart-table";
 import { MenuChildrenComponent } from "./components/menu-children/menu-children.component";
-import { NumbersOnlyDirective } from "./directives/number-only.directive";
+
 
 @NgModule({
     declarations: [
       MenuChildrenComponent,
-      NumbersOnlyDirective,
+    
     ],
     imports: [
       FormsModule,
@@ -55,7 +55,7 @@ import { NumbersOnlyDirective } from "./directives/number-only.directive";
      NbIconModule,
      NbToastrModule,
      NbDialogModule,
-     NumbersOnlyDirective,
+   
      MenuChildrenComponent,
      Ng2SmartTableModule,
      TranslateModule,

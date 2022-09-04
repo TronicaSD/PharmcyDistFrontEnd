@@ -119,7 +119,7 @@ export class ExpenseTypeComponent implements OnInit {
     };
   }
   getAllExpenseTypes() {
-    this._PublicService.get("ExpenseTypes/ViewGetAll").subscribe(res => {
+    this._PublicService.get("ExpenseTypes").subscribe(res => {
       this.ExpenseTypes = res;
       console.log(res);
       this.source.load(this.ExpenseTypes);
@@ -146,7 +146,7 @@ export class ExpenseTypeComponent implements OnInit {
   }
   Add() {
 
-    this._PublicService.post('ExpenseTypes/AddData', this.AddForm.value).subscribe((Response) => {
+    this._PublicService.post('ExpenseTypes', this.AddForm.value).subscribe((Response) => {
       this.getAllExpenseTypes();
 
       this._ToasterService.success("ExpenseType Added successfully", "Success");
@@ -175,7 +175,7 @@ export class ExpenseTypeComponent implements OnInit {
     });
   }
   updateExpenseType() {
-    this._PublicService.put('ExpenseTypes/UpdateData', this.EditForm.value).subscribe((Response) => {
+    this._PublicService.put('ExpenseTypes', this.EditForm.value).subscribe((Response) => {
       this.ExpenseTypes = Response;
       this.modalService.dismissAll();
       this._ToasterService.success("ExpenseType Updated successfully", "Success");
@@ -193,7 +193,7 @@ export class ExpenseTypeComponent implements OnInit {
   //Delete Modal
   DeleteExpenseType(id: any) {
 
-    this._PublicService.delete("ExpenseTypes/DeleteData", id).subscribe((Response) => {
+    this._PublicService.delete("ExpenseTypes", id).subscribe((Response) => {
       this.modalService.dismissAll();
       this._ToasterService.success("ExpenseType Deleted successfully", "Success");
 

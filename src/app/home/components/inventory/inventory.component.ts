@@ -127,7 +127,7 @@ export class InventoryComponent implements OnInit {
       this.SeacrhForm.value.to = this.datePipe.transform( this.SeacrhForm.value.to, 'MM/dd/yyyy');
 
 
-    this._PublicService.post("StockDetails/ViewInventorey", this.SeacrhForm.value).subscribe(res => {
+    this._PublicService.post("StockDetails", this.SeacrhForm.value).subscribe(res => {
       this.allStockDetails = res;
       this.source.load(this.allStockDetails);
 

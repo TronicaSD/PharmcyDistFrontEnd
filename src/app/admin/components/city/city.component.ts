@@ -125,7 +125,7 @@ export class cityComponent implements OnInit {
   }
   getAllcity() {
 
-    this._PublicService.get("GS_City/ViewGetAll").subscribe(res => {
+    this._PublicService.get("Cities").subscribe(res => {
       this.city = res;
       this.source.load(this.city);
 
@@ -151,7 +151,7 @@ export class cityComponent implements OnInit {
   }
   Add() {
 
-    this._PublicService.post('GS_City/AddData', this.AddForm.value).subscribe((Response) => {
+    this._PublicService.post('Cities', this.AddForm.value).subscribe((Response) => {
       this.getAllcity();
 
       this._ToasterService.success("city Added successfully", "Success");
@@ -181,7 +181,7 @@ export class cityComponent implements OnInit {
     });
   }
   updatecity() {
-    this._PublicService.put('GS_City/UpdateData', this.EditForm.value).subscribe((Response) => {
+    this._PublicService.put('Cities', this.EditForm.value).subscribe((Response) => {
       this.city = Response;
       this.modalService.dismissAll();
       this._ToasterService.success("city Updated successfully", "Success");
@@ -199,7 +199,7 @@ export class cityComponent implements OnInit {
   //Delete Modal
   Deletecity(id: any) {
 
-    this._PublicService.delete("GS_City/DeleteData", id).subscribe((Response) => {
+    this._PublicService.delete("Cities", id).subscribe((Response) => {
       this.modalService.dismissAll();
       this._ToasterService.success("city Deleted successfully", "Success");
 
@@ -242,9 +242,9 @@ export class cityComponent implements OnInit {
   }
 
   getAllGovernorates() {
-    this._PublicService.get("GS_Governorate/ViewGetAll").subscribe(res => {
+    this._PublicService.get("Governorates").subscribe(res => {
       this.allGovernorates = res;
-      debugger;
+     
     });
   }
 

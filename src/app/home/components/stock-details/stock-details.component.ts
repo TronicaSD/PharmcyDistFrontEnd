@@ -86,7 +86,7 @@ export class StockDetailsComponent implements OnInit {
 
 
   getAllStockDetails() {
-    this._PublicService.get("StockDetails/ViewGetAll").subscribe(res => {
+    this._PublicService.get("StockDetails").subscribe(res => {
       res = _.orderBy(res, "quantity").reverse();
       this.allStockDetails = res;
       debugger;

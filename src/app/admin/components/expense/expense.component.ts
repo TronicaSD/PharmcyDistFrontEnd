@@ -164,7 +164,7 @@ export class ExpenseComponent implements OnInit {
   }
   getAllExpenses() {
 
-    this._PublicService.get("Expense/ViewGetAll").subscribe(res => {
+    this._PublicService.get("Expenses").subscribe(res => {
       this.Expenses = res;
       this.source.load(this.Expenses);
 
@@ -183,7 +183,7 @@ export class ExpenseComponent implements OnInit {
   ///////////////////////////////////////
   getAllExpenseTypes() {
 
-    this._PublicService.get("ExpenseTypes/ViewGetAll").subscribe(res => {
+    this._PublicService.get("ExpenseTypes").subscribe(res => {
       this.ExpenseTypes = res;
       
 
@@ -192,7 +192,7 @@ export class ExpenseComponent implements OnInit {
 
   getAllUser() {
 
-    this._PublicService.get("User/GetAllAgents").subscribe(res => {
+    this._PublicService.get("Users").subscribe(res => {
       this.Users = res;
       
     });
@@ -213,7 +213,7 @@ export class ExpenseComponent implements OnInit {
     this.AddForm.controls.date.setValue(date);
 
     
-    this._PublicService.post('Expense/AddData', this.AddForm.value).subscribe((Response) => {
+    this._PublicService.post('Expenses', this.AddForm.value).subscribe((Response) => {
       this.getAllExpenses();
 
       this._ToasterService.success("Expense Added successfully", "Success");
@@ -254,7 +254,7 @@ export class ExpenseComponent implements OnInit {
     ));
     this.EditForm.controls.date.setValue(newdate);
 
-    this._PublicService.put('Expense/UpdateData', this.EditForm.value).subscribe((Response) => {
+    this._PublicService.put('Expenses', this.EditForm.value).subscribe((Response) => {
       this.Expenses = Response;
       this.modalService.dismissAll();
       this._ToasterService.success("Expense Updated successfully", "Success");
@@ -272,7 +272,7 @@ export class ExpenseComponent implements OnInit {
   //Delete Modal
   DeleteExpense(id: any) {
 
-    this._PublicService.delete("Expense/DeleteData", id).subscribe((Response) => {
+    this._PublicService.delete("Expenses", id).subscribe((Response) => {
       this.modalService.dismissAll();
       this._ToasterService.success("Expense Deleted successfully", "Success");
 

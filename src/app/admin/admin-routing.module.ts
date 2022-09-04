@@ -5,7 +5,7 @@ import { Role } from '../shared/enums/roles';
 
 import { AdminComponent } from './admin.component';
 import { cityComponent } from './components/city/city.component';
-import { countryComponent } from './components/country/country.component';
+import { GovernorateComponent } from './components/Governorate/Governorate.component';
 import { doctorsComponent } from './components/doctors/doctors.component';
 import { DrugsComponent } from './components/drugs/drugs.component';
 import { ExpenseTypeComponent } from './components/expense-type/expense-type.component';
@@ -19,7 +19,7 @@ const routes: Routes = [
     children: [
       { path: 'drugs', component: DrugsComponent, canActivate: [AuthGuard], data: { roles: [Role.admin, Role.gm] } },
       { path: 'pharmcies', component: PharmcyComponent, canActivate: [AuthGuard], data: { roles: [Role.admin, Role.gm] } },
-      { path: 'countries', component: countryComponent, canActivate: [AuthGuard], data: { roles: [Role.admin, Role.gm] } },
+      { path: 'countries', component: GovernorateComponent, canActivate: [AuthGuard], data: { roles: [Role.admin, Role.gm] } },
       { path: 'cities', component: cityComponent, canActivate: [AuthGuard], data: { roles: [Role.admin, Role.gm] } },
       { path: 'doctors', component: doctorsComponent, canActivate: [AuthGuard], data: { roles: [Role.admin, Role.gm] } },
       { path: 'ExpenseType', component: ExpenseTypeComponent, canActivate: [AuthGuard], data: { roles: [Role.admin, Role.gm] } },

@@ -221,21 +221,19 @@ export class InvoiceComponent implements OnInit {
     };
   }
   getAllPharmcies() {
-    this._PublicService.get("Pharmcy/ViewGetAll").subscribe(res => {
-
-
+    this._PublicService.get("Pharmcies").subscribe(res => {
       this.Pharmcies = res;
 
     });
   }
 
   getAllStockDetails() {
-    this._PublicService.get("StockDetails/ViewGetAll").subscribe(res => {
+    this._PublicService.get("StockDetails").subscribe(res => {
       this.StockDetails = res;
     });
   }
   getAllInvoice() {
-    this._PublicService.get("Invoice/ViewGetAll").subscribe(res => {
+    this._PublicService.get("Invoices").subscribe(res => {
       this.Invoices = res;
       this.source.load(this.Invoices);
 
@@ -243,7 +241,7 @@ export class InvoiceComponent implements OnInit {
   }
   unpaidInovices: any = [];
   getUnpadidInvoices() {
-    this._PublicService.getByID("Invoice/GetByPharmcy", this.selectedPharmcy).subscribe(res => {
+    this._PublicService.getByID("Invoices/GetByPharmcyId", this.selectedPharmcy).subscribe(res => {
       this.unpaidInovices = res;
       this.source.load(this.unpaidInovices);
 
@@ -264,7 +262,7 @@ export class InvoiceComponent implements OnInit {
   }
   payInvoice(invoice: any) {
 
-    this._PublicService.put("Invoice/ChangeStatus", invoice).subscribe(
+    this._PublicService.put("Invoices/ChangeStatus", invoice).subscribe(
 
       {
         next: () => {
@@ -367,7 +365,7 @@ export class InvoiceComponent implements OnInit {
     ));
     this.AddForm.controls.InvoiceDate.setValue(date);
 
-    this._PublicService.post('Invoice/AddData', this.AddForm.value).subscribe((Response) => {
+    this._PublicService.post('Invoices', this.AddForm.value).subscribe((Response) => {
       this.getAllInvoice();
       this.ClearForm();
 
@@ -409,12 +407,9 @@ export class InvoiceComponent implements OnInit {
 
   }
   calculateEditDrugPrice() {
-    debugger;
-
     this.EditInvoiceDetails.controls.forEach(x => {
       let drugId = parseInt(x.get('drugId').value);
       var drug = this.StockDetails.find(a => a.drugId == drugId);
-      debugger;
       x.get('price').patchValue(drug.price);
       let price = parseInt(x.get('price').value)
       let quantity = parseInt(x.get('qunantity').value)
@@ -475,7 +470,7 @@ export class InvoiceComponent implements OnInit {
     });
   }
   updateInvoice() {
-    this._PublicService.put('Invoice/UpdateData', this.EditForm.value).subscribe((Response) => {
+    this._PublicService.put('Invoices', this.EditForm.value).subscribe((Response) => {
       this._ToasterService.success("Invoice Updated successfully", "Success");
       this.getAllInvoice();
 
@@ -490,7 +485,7 @@ export class InvoiceComponent implements OnInit {
 
   //Delete Modal
   DeleteInvoice(id: any) {
-    this._PublicService.delete("Invoice/DeleteData", id).subscribe((Response) => {
+    this._PublicService.delete("Invoices", id).subscribe((Response) => {
       this.getAllInvoice();
       this._ToasterService.success("Invoice Deleted successfully", "Success");
     }, (error) => {

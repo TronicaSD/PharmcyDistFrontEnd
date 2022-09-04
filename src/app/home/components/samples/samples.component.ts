@@ -150,14 +150,14 @@ export class SamplesComponent implements OnInit {
   }
 
   getAllStockDetails() {
-    this._PublicService.get("StockDetails/ViewGetAll").subscribe(res => {
+    this._PublicService.get("StockDetails").subscribe(res => {
       this.StockDrugs = res;
 
     });
   }
 
   getAllSample() {
-    this._PublicService.get("Sample/ViewGetAll").subscribe(res => {
+    this._PublicService.get("Samples").subscribe(res => {
       this.Samples = res;
       this.source.load(this.Samples);
       this.loading = false;
@@ -213,7 +213,7 @@ export class SamplesComponent implements OnInit {
       this.EditForm.value.date.getDate()
     ));
     this.EditForm.controls.date.setValue(date);
-    this._PublicService.put('Sample/UpdateData', this.EditForm.value).subscribe((Response) => {
+    this._PublicService.put('Samples', this.EditForm.value).subscribe((Response) => {
       this.Samples = Response;
       this._ToasterService.success("Sample updated Successfully");
       this.getAllSample();
@@ -243,7 +243,7 @@ export class SamplesComponent implements OnInit {
     });
   }
   DeleteSample(id: number) {
-    this._PublicService.delete("Sample/DeleteData", id).subscribe((Response) => {
+    this._PublicService.delete("Samples", id).subscribe((Response) => {
       this._ToasterService.success("sample Delted successfully");
       this.getAllSample();
     }, (error) => {
@@ -253,7 +253,7 @@ export class SamplesComponent implements OnInit {
   }
   getAllDoctors() {
 
-    this._PublicService.get("Doctors/ViewGetAll").subscribe(res => {
+    this._PublicService.get("Doctors").subscribe(res => {
       this.Doctors = res;
 
 

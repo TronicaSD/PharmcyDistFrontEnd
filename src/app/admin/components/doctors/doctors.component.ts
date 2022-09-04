@@ -132,7 +132,7 @@ export class doctorsComponent implements OnInit {
   }
   getAllDoctors() {
 
-    this._PublicService.get("Doctors/ViewGetAll").subscribe(res => {
+    this._PublicService.get("Doctors").subscribe(res => {
       this.Doctors = res;
       this.source.load(this.Doctors);
 
@@ -165,7 +165,7 @@ export class doctorsComponent implements OnInit {
   }
   Add() {
 
-    this._PublicService.post('Doctors/AddData', this.AddForm.value).subscribe((Response) => {
+    this._PublicService.post('Doctors', this.AddForm.value).subscribe((Response) => {
       this.getAllDoctors();
 
       this._ToasterService.success("Doctor Added successfully", "Success");
@@ -187,7 +187,6 @@ export class doctorsComponent implements OnInit {
     this.EditForm.controls['phoneNumber'].setValue(row.phoneNumber);
     this.EditForm.controls['genderType'].setValue(row.genderType);
     this.EditForm.controls['id'].setValue(row.id);
-    debugger;
 
     this.dialogService.open(dialog, {
       dialogClass: "defaultdialogue"
@@ -197,7 +196,7 @@ export class doctorsComponent implements OnInit {
   updateDoctor() {
     this.EditForm.controls['isDeleted'].setValue(false);
 
-    this._PublicService.put('Doctors/UpdateData', this.EditForm.value).subscribe((Response) => {
+    this._PublicService.put('Doctors', this.EditForm.value).subscribe((Response) => {
       this.Doctors = Response;
       this.modalService.dismissAll();
       this._ToasterService.success("Doctor Updated successfully", "Success");
@@ -215,7 +214,7 @@ export class doctorsComponent implements OnInit {
   //Delete Modal
   DeleteDoctor(id: any) {
 
-    this._PublicService.delete("Doctors/DeleteData", id).subscribe((Response) => {
+    this._PublicService.delete("Doctors", id).subscribe((Response) => {
       this.modalService.dismissAll();
       this._ToasterService.success("Doctor Deleted successfully", "Success");
 

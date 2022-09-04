@@ -7,12 +7,12 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { PublicService } from 'src/app/core/publicService.Service';
 
 @Component({
-  selector: 'app-country',
-  templateUrl: './country.component.html',
-  styleUrls: ['./country.component.css']
+  selector: 'app-Governorate',
+  templateUrl: './Governorate.component.html',
+  styleUrls: ['./Governorate.component.css']
 })
-export class countryComponent implements OnInit {
-  country: any;
+export class GovernorateComponent implements OnInit {
+  Governorate: any;
   closeResult: string;
   AddForm: FormGroup;
   EditForm: FormGroup;
@@ -51,7 +51,7 @@ export class countryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllcountry();
+    this.getAllGovernorate();
     this.setColumnheaders();
     //LISTEN TO EVENTS
     this.translate.onLangChange.subscribe(item => {
@@ -114,12 +114,12 @@ export class countryComponent implements OnInit {
       }
     };
   }
-  getAllcountry() {
+  getAllGovernorate() {
 
-    this._PublicService.get("GS_Governorate/ViewGetAll").subscribe(res => {
-      this.country = res;
+    this._PublicService.get("Governorates").subscribe(res => {
+      this.Governorate = res;
 
-      this.source.load(this.country);
+      this.source.load(this.Governorate);
 
 
     });
@@ -143,10 +143,10 @@ export class countryComponent implements OnInit {
   }
   Add() {
 
-    this._PublicService.post('GS_Governorate/AddData', this.AddForm.value).subscribe((Response) => {
-      this.getAllcountry();
+    this._PublicService.post('Governorates', this.AddForm.value).subscribe((Response) => {
+      this.getAllGovernorate();
 
-      this._ToasterService.success("Country Added successfully", "Success");
+      this._ToasterService.success("Governorate Added successfully", "Success");
 
     }, (error) => {
       this._ToasterService.danger("Failed To add ", "Failed");
@@ -170,13 +170,12 @@ export class countryComponent implements OnInit {
 
     });
   }
-  updateCountry() {
-    debugger;
-    this._PublicService.put('GS_Governorate/UpdateData', this.EditForm.value).subscribe((Response) => {
-      this.country = Response;
+  updateGovernorate() {
+    this._PublicService.put('Governorates', this.EditForm.value).subscribe((Response) => {
+      this.Governorate = Response;
       this.modalService.dismissAll();
-      this._ToasterService.success("Country Updated successfully", "Success");
-      this.getAllcountry();
+      this._ToasterService.success("Governorate Updated successfully", "Success");
+      this.getAllGovernorate();
     }, (error) => {
       this._ToasterService.danger(" Failed To  Update ", "failed");
 
@@ -188,13 +187,13 @@ export class countryComponent implements OnInit {
 
 
   //Delete Modal
-  DeleteCountry(id: any) {
+  DeleteGovernorate(id: any) {
 
-    this._PublicService.delete("GS_Governorate/DeleteData", id).subscribe((Response) => {
+    this._PublicService.delete("Governorates", id).subscribe((Response) => {
       this.modalService.dismissAll();
-      this._ToasterService.success("Country Deleted successfully", "Success");
+      this._ToasterService.success("Governorate Deleted successfully", "Success");
 
-      this.getAllcountry();
+      this.getAllGovernorate();
     }, (error) => {
       this._ToasterService.danger("Sorry but this item related To another table ", "Failed");
 
@@ -212,7 +211,7 @@ export class countryComponent implements OnInit {
 
       if (res) {
 
-        this.DeleteCountry(id);
+        this.DeleteGovernorate(id);
       }
 
 

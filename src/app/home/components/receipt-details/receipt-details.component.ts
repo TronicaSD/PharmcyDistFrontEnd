@@ -178,15 +178,15 @@ export class receiptDetailsComponent implements OnInit {
   }
 
   getAllreceipt() {
-    this._PublicService.get("receipt/ViewGetAll").subscribe(res => {
+    this._PublicService.get("Receipts").subscribe(res => {
       this.receipt = res;
-      debugger;
+      
       this.source.load(this.receipt);
     });
   }
   getAllDrugs() {
 
-    this._PublicService.get("Drugs/ViewGetAll").subscribe(res => {
+    this._PublicService.get("Drugs").subscribe(res => {
       this.Drugs = res;
 
     });
@@ -201,10 +201,7 @@ export class receiptDetailsComponent implements OnInit {
 
   /////////////add////////////////////
   CalculateTotal() {
-    debugger;
     this.Total = this.AddreceiptDetails.value.reduce((accumulator, current) => parseInt(accumulator) + parseInt(current.quantity), 0);
-    debugger;
-
     this.AddForm.controls['TotalPrice'].setValue(this.Total);
   }
 
@@ -234,13 +231,13 @@ export class receiptDetailsComponent implements OnInit {
   }
 
   Add() {
-    debugger;
+    
     let date = this.datePipe.transform(this.AddForm.value.Date, 'MM/dd/yyyy');
     let modal = this.AddForm.value;
     debugger
     modal.Date = date;
 
-    this._PublicService.post('receipt/AddData', modal).subscribe((Response) => {
+    this._PublicService.post('Receipts', modal).subscribe((Response) => {
       this.getAllreceipt();
       this._ToasterService.success("Drugs added To receipts successfully", "Success");
     }, (error) => {
@@ -297,7 +294,7 @@ export class receiptDetailsComponent implements OnInit {
   }
   updatereceipt() {
 
-    this._PublicService.put('receipt/UpdateData', this.EditForm.value).subscribe((Response) => {
+    this._PublicService.put('Receipts', this.EditForm.value).subscribe((Response) => {
       this._ToasterService.success("receipt Updated successfully", "Success");
       this.getAllreceipt();
 
@@ -312,7 +309,7 @@ export class receiptDetailsComponent implements OnInit {
 
   viewObj: any;
   openViewDialog(dialog: TemplateRef<any>, row: any) {
-    debugger;
+    
     this.viewObj = row;
     this.dialogService.open(dialog, {
       dialogClass: 'lg-modal'
@@ -322,7 +319,7 @@ export class receiptDetailsComponent implements OnInit {
 
   //Delete Modal
   Deletereceipt(id: any) {
-    this._PublicService.delete("receipt/DeleteData", id).subscribe((Response) => {
+    this._PublicService.delete("Receipts", id).subscribe((Response) => {
       this.getAllreceipt();
       this._ToasterService.success("receipt Deleted successfully", "Success");
     }, (error) => {

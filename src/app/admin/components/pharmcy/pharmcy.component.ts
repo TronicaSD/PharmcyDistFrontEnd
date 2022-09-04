@@ -138,7 +138,7 @@ export class PharmcyComponent implements OnInit {
     };
   }
   getAllGovernorates() {
-    this._PublicService.get("GS_Governorate/ViewGetAll").subscribe(res => {
+    this._PublicService.get("Governorates").subscribe(res => {
       this.allGovernorates = res;
 
       this.changeCities(1);
@@ -147,14 +147,14 @@ export class PharmcyComponent implements OnInit {
 
   changeCities(id: number) {
 
-    this._PublicService.getByID("GS_City/ViewGetAllByGovern", id).subscribe(res => {
+    this._PublicService.getByID("Cities/GetByGovernorateId", id).subscribe(res => {
       this.allCities = res;
     });
   }
 
 
   getAllPharmcies() {
-    this._PublicService.get("Pharmcy/ViewGetAll",).subscribe(res => {
+    this._PublicService.get("PharmciesViewGetAll",).subscribe(res => {
       this.Pharmcies = res;
       this.source.load(this.Pharmcies);
 
@@ -172,7 +172,7 @@ export class PharmcyComponent implements OnInit {
   //add
   Add() {
 
-    this._PublicService.post('Pharmcy/AddData', this.AddForm.value).subscribe((Response) => {
+    this._PublicService.post('Pharmcies', this.AddForm.value).subscribe((Response) => {
       this.getAllPharmcies();
       this._ToasterService.success(" Pharmcy added successfully");
     }, (error) => {
@@ -207,7 +207,7 @@ export class PharmcyComponent implements OnInit {
   updatePharmcy() {
 
 
-    this._PublicService.put('Pharmcy/UpdateData', this.EditForm.value).subscribe((Response) => {
+    this._PublicService.put('Pharmcies', this.EditForm.value).subscribe((Response) => {
       this.Pharmcies = Response;
       this._ToasterService.success(" Pharmcy Updated Successfully");
 
@@ -224,7 +224,7 @@ export class PharmcyComponent implements OnInit {
   //Delete Modal
   DeletePharmcy(id: any) {
 
-    this._PublicService.delete("Pharmcy/DeleteData", id).subscribe((Response) => {
+    this._PublicService.delete("Pharmcies", id).subscribe((Response) => {
       this._ToasterService.success(" Pharmcy Delted Successfully");
 
       this.getAllPharmcies();
