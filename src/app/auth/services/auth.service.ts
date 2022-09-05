@@ -30,7 +30,7 @@ export class AuthService implements CanActivate {
 
   login(user: LoginModel) {
     this.http.post(environment.baseUrl +
-      "Account/Login",
+      "Account",
       user
     ).subscribe(
       {
@@ -62,7 +62,6 @@ export class AuthService implements CanActivate {
   }
 
   navigateToModule(role: string) {
-
     switch (role.toLowerCase()) {
 
       case 'admin':
