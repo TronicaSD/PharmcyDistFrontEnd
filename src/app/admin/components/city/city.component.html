@@ -49,7 +49,7 @@
 
               <label> {{'Government' | translate}} </label>
               <nb-select placeholder="Select  {{'Government' | translate}}" formControlName="gov_Id"
-                (selectedChange)="changeCities($event)">
+                >
                 <nb-option *ngFor="let g of allGovernorates" [value]="g.governorate_Id">{{g.governorate_Name}}
                 </nb-option>
               </nb-select>

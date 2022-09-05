@@ -58,7 +58,7 @@
   <nb-card>
     <nb-card-header> {{'Edit' | translate}} {{'Government' | translate}}</nb-card-header>
     <nb-card-body>
-      <form [formGroup]="EditForm" (submit)="updateCountry()">
+      <form [formGroup]="EditForm" (submit)="updateGovernorate()">
 
         <div class="row">
           <div class=" col-md-12">
@@ -82,7 +82,7 @@
     </nb-card-body>
     <nb-card-footer>
       <button nbButton type="button" nbButton status="success" [disabled]="EditForm.invalid" data-dismiss="modal"
-        (click)="updateCountry();ref.close()">{{'Save' | translate}}</button>
+        (click)="updateGovernorate();ref.close()">{{'Save' | translate}}</button>
       <button nbButton status="danger" (click)="ref.close()">{{'Cancel' | translate}} </button>
     </nb-card-footer>
   </nb-card>

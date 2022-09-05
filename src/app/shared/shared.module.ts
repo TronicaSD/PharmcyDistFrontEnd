@@ -55,7 +55,6 @@ import { MenuChildrenComponent } from "./components/menu-children/menu-children.
      NbIconModule,
      NbToastrModule,
      NbDialogModule,
-   
      MenuChildrenComponent,
      Ng2SmartTableModule,
      TranslateModule,

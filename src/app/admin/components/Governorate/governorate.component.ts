@@ -125,7 +125,6 @@ export class GovernorateComponent implements OnInit {
     });
   }
   public hasError = (controlName: string, errorName: string) => {
-
     return this.AddForm.controls[controlName].hasError(errorName);
   };
 
@@ -161,7 +160,7 @@ export class GovernorateComponent implements OnInit {
 
   //Edit Modal
   openEditDialog(dialog: TemplateRef<any>, row: any) {
-
+debugger;
     this.EditForm.controls['governorate_Name'].setValue(row.governorate_Name);
     this.EditForm.controls['governorate_Id'].setValue(row.governorate_Id);
 
@@ -171,6 +170,7 @@ export class GovernorateComponent implements OnInit {
     });
   }
   updateGovernorate() {
+    debugger;
     this._PublicService.put('Governorates', this.EditForm.value).subscribe((Response) => {
       this.Governorate = Response;
       this.modalService.dismissAll();

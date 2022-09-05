@@ -71,7 +71,7 @@ export class PublicService {
   }
 
   delete(url: string, id: any): Observable<any> {
-    return this.http.delete<any>(environment.baseUrl + url + "?id=" + id,
+    return this.http.delete<any>(environment.baseUrl+url+"/"+ id,
       { headers: new HttpHeaders({ Authorization: "Bearer " + this.getToken() }) });
   }
 

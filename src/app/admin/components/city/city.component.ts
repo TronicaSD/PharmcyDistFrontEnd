@@ -86,12 +86,9 @@ export class cityComponent implements OnInit {
 
       // hideSubHeader: true,
       actions: {
-
-
         position: "right",
         columnTitle: this.columnheaders[0],
         custom: [
-
           {
             name: 'editAction',
             title: '<i class="fa fa-edit text-warning"></i>'
@@ -105,15 +102,13 @@ export class cityComponent implements OnInit {
         edit: false,
         delete: false,
         filter: false
-
       },
-
       columns: {
-
         city_Name: {
           title: this.columnheaders[1],
           type: 'string',
-          filter: true
+          filter: true,
+          
         },
         gover_Name_: {
           title: this.columnheaders[2],
@@ -141,8 +136,6 @@ export class cityComponent implements OnInit {
 
     return this.EditForm.controls[controlName].hasError(errorName);
   };
-
-
   ////////////////add/////////////
   openAddDialog(dialog: TemplateRef<any>) {
     this.dialogService.open(dialog, {
@@ -150,7 +143,6 @@ export class cityComponent implements OnInit {
     });
   }
   Add() {
-
     this._PublicService.post('Cities', this.AddForm.value).subscribe((Response) => {
       this.getAllcity();
 
@@ -162,19 +154,12 @@ export class cityComponent implements OnInit {
     });
     this.AddForm.reset();
   }
-
-
-
   /////////////Edit///////////
-
   //Edit Modal
   openEditDialog(dialog: TemplateRef<any>, row: any) {
-
     this.EditForm.controls['city_Name'].setValue(row.city_Name);
     this.EditForm.controls['gov_Id'].setValue(row.gov_Id);
-
     this.EditForm.controls['city_Id'].setValue(row.city_Id);
-
     this.dialogService.open(dialog, {
       dialogClass: "defaultdialogue"
 
@@ -193,9 +178,6 @@ export class cityComponent implements OnInit {
     this.EditForm.reset();
 
   }
-
-
-
   //Delete Modal
   Deletecity(id: any) {
 
@@ -210,8 +192,6 @@ export class cityComponent implements OnInit {
     });
 
   }
-
-
 
   openDeletedialog(dialog: TemplateRef<any>, id: any) {
 

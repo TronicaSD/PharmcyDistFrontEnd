@@ -113,7 +113,7 @@ export class DrugsComponent implements OnInit {
         drugName: {
           title: this.columnheaders[1],
           type: 'string',
-          filter: true
+          filter: true,
         },
         price: {
           title: this.columnheaders[2],
@@ -198,14 +198,13 @@ export class DrugsComponent implements OnInit {
 
   //Delete Modal
   DeleteDrug(id: any) {
-
+debugger;
     this._PublicService.delete("Drugs", id).subscribe((Response) => {
       this.modalService.dismissAll();
       this._ToasterService.success("Drug Deleted successfully", "Success");
-
       this.getAllDrugs();
     }, (error) => {
-      this._ToasterService.danger("Sorry but this item related To another table ", "Failed");
+      this._ToasterService.danger("Error occured ", "Failed");
 
     });
 
