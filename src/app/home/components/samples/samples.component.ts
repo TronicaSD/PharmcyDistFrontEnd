@@ -111,20 +111,20 @@ export class SamplesComponent implements OnInit {
         doctorName: {
           title: this.columnheaders[1],
           type: 'string',
-          filter: true
+          filter: false
 
 
         },
         drugName: {
           title: this.columnheaders[2],
           type: 'string',
-          filter: true
+          filter: false
 
         },
         date: {
           title: this.columnheaders[3],
           type: 'string',
-          filter: true,
+          filter: false,
 
           valuePrepareFunction: (date) => {
             if (date) {
@@ -136,7 +136,7 @@ export class SamplesComponent implements OnInit {
         qunantity: {
           title: this.columnheaders[4],
           type: 'string',
-          filter: true,
+          filter: false,
 
         },
 
@@ -182,7 +182,7 @@ export class SamplesComponent implements OnInit {
     ));
     this.AddForm.controls.date.setValue(date);
 
-    this._PublicService.post('Sample/AddData', this.AddForm.value).subscribe((Response) => {
+    this._PublicService.post('Samples', this.AddForm.value).subscribe((Response) => {
       this.getAllSample();
       this._ToasterService.success("Sample added successfully");
     }, (error) => {

@@ -109,20 +109,20 @@ export class PharmcyComponent implements OnInit {
         pharmcyName: {
           title: this.columnheaders[1],
           type: 'string',
-        filter: true
+        filter: false
 
         },
         governerateName: {
           title: this.columnheaders[2],
           type: 'string',
-          filter: true
+          filter: false
 
 
         },
         cityName: {
           title: this.columnheaders[3],
           type: 'string',
-          filter: true
+          filter: false
 
         },
 
@@ -139,13 +139,13 @@ export class PharmcyComponent implements OnInit {
   }
   getAllGovernorates() {
     this._PublicService.get("Governorates").subscribe(res => {
+      
       this.allGovernorates = res;
-
-      this.changeCities(1);
+     
     });
   }
 
-  changeCities(id: number) {
+  onGovernorateChange(id: number) {
 
     this._PublicService.getByID("Cities/GetByGovernorateId", id).subscribe(res => {
       this.allCities = res;
@@ -154,7 +154,7 @@ export class PharmcyComponent implements OnInit {
 
 
   getAllPharmcies() {
-    this._PublicService.get("PharmciesViewGetAll",).subscribe(res => {
+    this._PublicService.get("Pharmcies",).subscribe(res => {
       this.Pharmcies = res;
       this.source.load(this.Pharmcies);
 
@@ -206,7 +206,6 @@ export class PharmcyComponent implements OnInit {
   //Edit Modal
   updatePharmcy() {
 
-
     this._PublicService.put('Pharmcies', this.EditForm.value).subscribe((Response) => {
       this.Pharmcies = Response;
       this._ToasterService.success(" Pharmcy Updated Successfully");
@@ -223,7 +222,6 @@ export class PharmcyComponent implements OnInit {
 
   //Delete Modal
   DeletePharmcy(id: any) {
-
     this._PublicService.delete("Pharmcies", id).subscribe((Response) => {
       this._ToasterService.success(" Pharmcy Delted Successfully");
 

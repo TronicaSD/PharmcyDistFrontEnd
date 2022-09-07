@@ -12,7 +12,6 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
   }
   ChangeTabValue(value) {
-    debugger;
     this.tabValue = value;
   }
 }

@@ -126,12 +126,12 @@ export class ExpenseComponent implements OnInit {
         userName: {
           title: this.columnheaders[1],
           type: 'string',
-          filter: true
+          filter: false
         },
         expensesName: {
           title: this.columnheaders[2],
           type: 'string',
-          filter: true
+          filter: false
         },
         amount: {
           title: this.columnheaders[3],

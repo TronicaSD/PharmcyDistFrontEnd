@@ -40,19 +40,13 @@ export class SalesReportsComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
   columnheaders: string[];
   settings: any;
-  Drugs: any;
+  Invoices: any;
   constructor(private _PublicService: PublicService
     , private translate: TranslateService
     , private _changeDetectorRef: ChangeDetectorRef
     , private _formbuilder: FormBuilder
     , public datepipe: DatePipe) {
-    this.currentLang = this.translate.currentLang;
-    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-      this.currentLang = event.lang;
-      // TODO This as a workaround.
-      this._changeDetectorRef.detectChanges();
-      this.loadTableSettings();
-    });
+  
 
   }
 
@@ -71,17 +65,25 @@ export class SalesReportsComponent implements OnInit {
     this.getAllInvoiceForChart();
 
     this.GetAllUser();
-    this.getAllDrugsTable()
+    this.getInvoicesTable()
     this.setColumnheaders();
     //LISTEN TO EVENTS
-    this.translate.onLangChange.subscribe(item => {
+    this.currentLang = this.translate.currentLang;
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
       this.setColumnheaders();
+      this.currentLang = event.lang;
+      // TODO This as a workaround.
+      this._changeDetectorRef.detectChanges();
+      this.loadTableSettings();
+      this.translate.get("SalesPerVendor").subscribe(res => this.chartHeader = res);
+      if (this.chart) {
+        this.chart.destroy();
+        this.generateBarChart()
+      }
     });
   }
 
   setColumnheaders(): void {
-
-
     this.columnheaders = ['', '', '']
     //Used TranslateService from @ngx-translate/core
     this.translate.get('Actions').subscribe(label => this.columnheaders[0] = label);
@@ -119,7 +121,7 @@ export class SalesReportsComponent implements OnInit {
         drugName: {
           title: this.columnheaders[1],
           type: 'string',
-          filter: true
+          filter: false
         },
         price: {
           title: this.columnheaders[5],
@@ -142,7 +144,6 @@ export class SalesReportsComponent implements OnInit {
   getAllInvoiceForChart() {
     if (this.chart) {
       this.chart.destroy();
-
     }
     this.chartNames = [];
     this.chartValues = [];
@@ -171,7 +172,7 @@ export class SalesReportsComponent implements OnInit {
     }
 
 
-    this._PublicService.post("Invoice/ViewGetAllForChart", this.SeacrhForm.value).subscribe(res => {
+    this._PublicService.post("Invoices/ViewGetAllForChart", this.SeacrhForm.value).subscribe(res => {
       res = _.orderBy(res, "quantity").reverse();
       this.allInvoice = res;
       this.TotalPriceList = [];
@@ -196,9 +197,15 @@ export class SalesReportsComponent implements OnInit {
       this.TotalPrice = _.sum(this.TotalPriceList);
       this.TotalPriceAfterDiscount = _.sum(this.TotalPriceAfterDiscountList);
 
-      this.generateBarChart();
-      this.getAllDrugsTable();
+    
 
+    },(error:any)=>{
+
+
+    },
+    ()=>{
+    
+      this.getInvoicesTable();
     });
   }
   generateColors() {
@@ -208,7 +215,7 @@ export class SalesReportsComponent implements OnInit {
     return ('rgb(' + r + ',' + g + ',' + b + ')') as never;
   }
   generateBarChart() {
-    debugger;
+   
     this.chart = new Chart("vendorchart", {
       type: 'bar',
       options: {
@@ -282,7 +289,7 @@ export class SalesReportsComponent implements OnInit {
 
   //GetAllUser
   GetAllUser() {
-    this._PublicService.get("User/GetAllAgents").subscribe((Response) => {
+    this._PublicService.get("Users/GetAllAgents").subscribe((Response) => {
       this.userList = Response;
     }, (error) => {
     });
@@ -297,7 +304,7 @@ export class SalesReportsComponent implements OnInit {
     this.chartValues = [];
     this.chartColors = [];
     this.getAllInvoiceForChart();
-    this.getAllDrugsTable();
+    this.getInvoicesTable();
   }
   //Chart ForEach User
   getAllInvoiceForEachChart() {
@@ -305,7 +312,7 @@ export class SalesReportsComponent implements OnInit {
     this.chartValuesForUser = [];
     this.chartColors = [];
     this.chartForUser.destroy();
-    this._PublicService.post("Invoice/ViewGetEachUserForChart", this.SeacrhForm.value).subscribe(res => {
+    this._PublicService.post("Invoices/ViewGetEachUserForChart", this.SeacrhForm.value).subscribe(res => {
       this.allInvoiceForEachUser = res;
       res.forEach(item => {
         this.chartNamesForUser.push(item.drugName);
@@ -387,14 +394,18 @@ export class SalesReportsComponent implements OnInit {
 
     });
   }
-  getAllDrugsTable() {
-    debugger;
+  getInvoicesTable() {
+   
     let userId = this.SeacrhForm.value.UserId
-    this._PublicService.post("Invoice/ViewDrugInSalesPerUser", this.SeacrhForm.value).subscribe(res => {
-      this.Drugs = res;
-      debugger;
-      this.source.load(this.Drugs);
+    this._PublicService.post("Invoices/ViewDrugInSalesPerUser", this.SeacrhForm.value).subscribe(res => {
+      this.Invoices = res;
+     
+      this.source.load(this.Invoices);
 
+    },
+    (error)=>{console.log(error);},
+    ()=>{
+      this.generateBarChart();
     });
   }
   exportoExcel(): void {

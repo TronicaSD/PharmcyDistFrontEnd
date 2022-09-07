@@ -12,7 +12,7 @@ import { PublicService } from 'src/app/core/publicService.Service';
   styleUrls: ['./city.component.css']
 })
 export class cityComponent implements OnInit {
-  city: any;
+  citiesList: any[]=[];
   closeResult: string;
   AddForm: FormGroup;
   EditForm: FormGroup;
@@ -55,7 +55,7 @@ export class cityComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllcity();
+    this.getAllCities();
     this.setColumnheaders();
     //LISTEN TO EVENTS
     this.translate.onLangChange.subscribe(item => {
@@ -107,22 +107,23 @@ export class cityComponent implements OnInit {
         city_Name: {
           title: this.columnheaders[1],
           type: 'string',
-          filter: true,
+          filter: false
           
         },
-        gover_Name_: {
+        governorate_Name: {
           title: this.columnheaders[2],
           type: 'string',
-          filter: true
+          filter: false
         },
       }
     };
   }
-  getAllcity() {
+  getAllCities() {
 
     this._PublicService.get("Cities").subscribe(res => {
-      this.city = res;
-      this.source.load(this.city);
+    
+      this.citiesList = res;
+      this.source.load(this.citiesList);
 
 
     });
@@ -144,7 +145,7 @@ export class cityComponent implements OnInit {
   }
   Add() {
     this._PublicService.post('Cities', this.AddForm.value).subscribe((Response) => {
-      this.getAllcity();
+      this.getAllCities();
 
       this._ToasterService.success("city Added successfully", "Success");
 
@@ -167,10 +168,10 @@ export class cityComponent implements OnInit {
   }
   updatecity() {
     this._PublicService.put('Cities', this.EditForm.value).subscribe((Response) => {
-      this.city = Response;
+      this.citiesList = Response;
       this.modalService.dismissAll();
       this._ToasterService.success("city Updated successfully", "Success");
-      this.getAllcity();
+      this.getAllCities();
     }, (error) => {
       this._ToasterService.danger(" Failed To  Update ", "failed");
 
@@ -185,7 +186,7 @@ export class cityComponent implements OnInit {
       this.modalService.dismissAll();
       this._ToasterService.success("city Deleted successfully", "Success");
 
-      this.getAllcity();
+      this.getAllCities();
     }, (error) => {
       this._ToasterService.danger("Sorry but this item related To another table ", "Failed");
 

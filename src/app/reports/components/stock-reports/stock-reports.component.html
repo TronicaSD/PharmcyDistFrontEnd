@@ -1,3 +1,5 @@
+
+
 <div class="row">
 
   <div class="col-md-4">
@@ -6,10 +8,10 @@
       <div class="row">
 
 
-        <div class="col-md-6">
+        <div class="col-md-9">
           <p class="p-total">{{'TotalVendors' | translate}}</p>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
           <i class="fa fa-user p-total"></i>
         </div>
       </div>
@@ -24,10 +26,10 @@
       <div class="row">
 
 
-        <div class="col-md-6">
+        <div class="col-md-9">
           <p class="p-totalItems">{{'TotalPriceInStock' | translate}}</p>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
           <i class="fa fa-money p-totalItems"></i>
         </div>
       </div>
@@ -39,13 +41,11 @@
 
     <nb-card class="card-box">
       <div class="row">
-
-
-        <div class="col-md-6">
+        <div class="col-md-9">
           <p class="p-Drug">{{'TotalDrugsInStock' | translate}}</p>
         </div>
-        <div class="col-md-6">
-          <i class="fa fa-circle p-Drug"></i>
+        <div class="col-md-3">
+          <i class="fa fa-list p-Drug"></i>
         </div>
       </div>
 
@@ -94,7 +94,7 @@
 
 
 
-<div class="row">
+<div class="row" [nbSpinner]="loader" nbSpinnerSize="giant" nbSpinnerStatus="primary">
   <canvas id="Allchart" style="height:470px !important"></canvas>
 </div>
 

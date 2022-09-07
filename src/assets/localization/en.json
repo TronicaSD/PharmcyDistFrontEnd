@@ -1,5 +1,6 @@
 {
     "Name": "Name",
+    "View": "View",
     "Description": "Description",
     "Email": "Email address",
     "PhoneNo": "Phone No",
@@ -100,7 +101,8 @@
 "NameEn":" Name En",
 "SalesPerVendor":"Sales Per Vendor",
 "SalesForEachVendor":"Sales For Each Vendor",
-"Actions":"Actions"
+"Actions":"Actions",
+"AmountExpensePriceAfterDiscount":"Amount Expense Price After Discount"
 
 
 

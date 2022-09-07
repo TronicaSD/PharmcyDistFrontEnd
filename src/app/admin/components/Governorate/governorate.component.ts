@@ -109,7 +109,7 @@ export class GovernorateComponent implements OnInit {
         governorate_Name: {
           title: this.columnheaders[1],
           type: 'string',
-          filter: true
+          filter: false
         }
       }
     };

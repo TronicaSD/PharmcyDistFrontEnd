@@ -115,14 +115,14 @@ export class doctorsComponent implements OnInit {
         name: {
           title: this.columnheaders[1],
           type: 'string',
-          filter: true
+          filter: false
         },
         phoneNumber: {
           title: this.columnheaders[2],
           type: 'string',
           filter: false
         },
-        genderType: {
+        genderName: {
           title: this.columnheaders[3],
           type: 'string',
           filter: false

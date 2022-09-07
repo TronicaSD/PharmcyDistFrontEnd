@@ -58,7 +58,7 @@ export class receiptDetailsComponent implements OnInit {
 
     this.AddForm = this._formbuilder.group({
       Date: [new Date(), Validators.required],
-      TotalPrice: [null],
+      TotalPrice: [0],
       receiptDetails: this._formbuilder.array([])
 
     });
@@ -66,7 +66,7 @@ export class receiptDetailsComponent implements OnInit {
     this.EditForm = this._formbuilder.group({
       Id: [''],
       Date: ['', Validators.required],
-      TotalPrice: [null],
+      TotalPrice: [0],
       receiptDetails: this._formbuilder.array([])
     });
 
@@ -129,6 +129,13 @@ export class receiptDetailsComponent implements OnInit {
       },
       columns: {
         index: {
+          title: this.columnheaders[1],
+          valuePrepareFunction: (value, row, cell) => {
+            return cell.row.index + 1;
+          }
+
+        },
+        TransactionTypeText: {
           title: this.columnheaders[1],
           valuePrepareFunction: (value, row, cell) => {
             return cell.row.index + 1;
@@ -207,10 +214,10 @@ export class receiptDetailsComponent implements OnInit {
 
   newreceiptDetails(): FormGroup {
     var newreceiptDetails = this._formbuilder.group({
-      drugId: null,
+      drugId: 0,
       drugName: "",
       receiptId: 0,
-      quantity: null,
+      quantity: 0,
       id: 0
     });
     return newreceiptDetails;
@@ -231,10 +238,8 @@ export class receiptDetailsComponent implements OnInit {
   }
 
   Add() {
-    
     let date = this.datePipe.transform(this.AddForm.value.Date, 'MM/dd/yyyy');
     let modal = this.AddForm.value;
-    debugger
     modal.Date = date;
 
     this._PublicService.post('Receipts', modal).subscribe((Response) => {

@@ -1,5 +1,6 @@
 {
   "Name": "الاسم",
+  "View": "عرض",
   "Description": "الوصف",
   "Email": "الأيميل",
   "PhoneNo": "رقم الهاتف",
@@ -96,5 +97,6 @@
   "Amount": "المبلغ",
 "SalesForEachVendor":"المبيعات لكل موزع",
 "SalesPerVendor":"المبيعات لكل موزع",
-  "NameEn": "الأسم باللغة الأنجليزية"
+  "NameEn": "الأسم باللغة الأنجليزية",
+  "AmountExpensePriceAfterDiscount":"مبلغ المصاريف بعدالخصم"
 }

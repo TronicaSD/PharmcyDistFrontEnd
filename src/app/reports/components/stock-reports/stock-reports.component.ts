@@ -37,17 +37,11 @@ export class StockReportsComponent implements OnInit {
   columnheaders: string[];
   settings: any;
   Drugs: any[];
+  loader=true;
   constructor(private _PublicService: PublicService
     , private translate: TranslateService
     , private _changeDetectorRef: ChangeDetectorRef
     , private _formbuilder: FormBuilder) {
-    this.currentLang = this.translate.currentLang;
-    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-      this.currentLang = event.lang;
-      // TODO This as a workaround.
-      this._changeDetectorRef.detectChanges();
-      this.loadTableSettings();
-    });
 
   }
 
@@ -66,9 +60,26 @@ export class StockReportsComponent implements OnInit {
     this.getAllDrugsTable()
     this.setColumnheaders();
     //LISTEN TO EVENTS
-    this.translate.onLangChange.subscribe(item => {
+  
+
+    this.currentLang = this.translate.currentLang;
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+     
       this.setColumnheaders();
+      this.currentLang = event.lang;
+      // TODO This as a workaround.
+      this._changeDetectorRef.detectChanges();
+      this.loadTableSettings();
+      this.translate.get("StockDetails").subscribe(res => this.chartHeader = res);
+        if (this.chart) {
+          this.chart.destroy();
+          this.generateBarChart()
+        }
+
+   
+      
     });
+
 
   }
 
@@ -87,6 +98,7 @@ export class StockReportsComponent implements OnInit {
   }
 
   loadTableSettings() {
+
     this.settings = {
       pager: {
         display: true,
@@ -123,7 +135,6 @@ export class StockReportsComponent implements OnInit {
   getAllStockDetailsForChart() {
     if (this.chart) {
       this.chart.destroy();
-
     }
 
 
@@ -155,26 +166,36 @@ export class StockReportsComponent implements OnInit {
 
 
 
-    this._PublicService.post("StockDetails/ViewGetAllForChart", this.SeacrhForm.value).subscribe(res => {
-      res = _.orderBy(res, "quantity").reverse();
-      this.allStockDetails = res;
-      this.TotalCount = res.length;
-      this.TotalPriceInStock = 0;
-      let stockQty = [];
-      res.forEach(item => {
-        this.TotalPriceInStock += item.quantity * item.price;
-        this.chartNames.push(item.drugName);
-        this.chartValues.push(item.quantity);
-        this.chartColors.push(this.generateColors());
-        stockQty.push(item.quantity);
-      });
-      debugger;
-      this.TotalDrugs = _.sum(stockQty);
+    this._PublicService.post("StockDetails/ViewGetAllForChart", this.SeacrhForm.value).subscribe(
+      (res)=>{
 
-
-      this.generateBarChart();
-      this.getAllDrugsTable()
-    });
+        {
+          res = _.orderBy(res, "quantity").reverse();
+          this.allStockDetails = res;
+          this.TotalCount = res.length;
+          this.TotalPriceInStock = 0;
+          let stockQty = [];
+          res.forEach(item => {
+            this.TotalPriceInStock += item.quantity * item.price;
+            this.chartNames.push(item.drugName);
+            this.chartValues.push(item.quantity);
+            this.chartColors.push(this.generateColors());
+            stockQty.push(item.quantity);
+          });
+         
+          this.TotalDrugs = _.sum(stockQty);
+    
+          
+        }
+      } ,(error)=>{console.log(error);},
+  
+      ()=>{
+      
+        this.getAllDrugsTable();
+      }
+      
+      
+      );
   }
   generateColors() {
     var r = Math.floor(Math.random() * 255);
@@ -263,12 +284,13 @@ export class StockReportsComponent implements OnInit {
 
 
     });
+    this.loader=false;
   }
 
 
   //GetAllUser
   GetAllUser() {
-    this._PublicService.get("User/GetAllAgents").subscribe((Response) => {
+    this._PublicService.get("Users/GetAllAgents").subscribe((Response) => {
       this.UserList = Response;
       this.TotalUsers = Response.length;
 
@@ -276,22 +298,19 @@ export class StockReportsComponent implements OnInit {
     });
 
   }
-  // getAllDrugs() {
 
-  //   this._PublicService.get("StockDetails/ViewGetAllByDrug").subscribe(res => {
-  //     this.TotalDrugs = res.length;
-
-  //   });
-  // }
 
   getAllDrugsTable() {
-    debugger;
+   
     let userId = this.SeacrhForm.value.UserId
     this._PublicService.getByID("StockDetails/ViewGetAllByUser", userId).subscribe(res => {
       this.Drugs = res;
-      debugger;
+     
       this.source.load(this.Drugs);
 
+    },error=>{},
+    ()=>{
+      this.generateBarChart();
     });
   }
   ClearFilter() {

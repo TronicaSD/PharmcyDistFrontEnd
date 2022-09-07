@@ -107,7 +107,7 @@ export class ExpenseTypeComponent implements OnInit {
         expensesName: {
           title: this.columnheaders[2],
           type: 'string',
-          filter: true
+          filter: false
         },
         description: {
           title: this.columnheaders[1],

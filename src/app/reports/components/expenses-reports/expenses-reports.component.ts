@@ -48,13 +48,7 @@ export class expensesReportsComponent implements OnInit {
     , private _changeDetectorRef: ChangeDetectorRef
     , private _formbuilder: FormBuilder
     , public datepipe: DatePipe) {
-    this.currentLang = this.translate.currentLang;
-    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-      this.currentLang = event.lang;
-      // TODO This as a workaround.
-      this._changeDetectorRef.detectChanges();
-      this.loadTableSettings();
-    });
+
 
   }
 
@@ -77,8 +71,14 @@ export class expensesReportsComponent implements OnInit {
     this.getAllForTable()
     this.setColumnheaders();
     //LISTEN TO EVENTS
-    this.translate.onLangChange.subscribe(item => {
-      this.setColumnheaders();
+    this.currentLang = this.translate.currentLang;
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.currentLang = event.lang;
+      // TODO This as a workaround.
+      this._changeDetectorRef.detectChanges();
+      this.loadTableSettings();
+      this.translate.get("Users").subscribe(res => this.chartHeader = res);
+      this.translate.get("Expenses").subscribe(res => this.chartHeaderForExpenseType = res);
     });
   }
 
@@ -166,7 +166,7 @@ export class expensesReportsComponent implements OnInit {
     }
 
 
-    this._PublicService.post("Expense/ViewGetChartForExpenseType", this.SeacrhForm.value).subscribe(res => {
+    this._PublicService.post("Expenses/ViewGetChartForExpenseType", this.SeacrhForm.value).subscribe(res => {
       this.allExpenseType = res;
 
       res.forEach(item => {
@@ -209,7 +209,7 @@ export class expensesReportsComponent implements OnInit {
     }
 
 
-    this._PublicService.post("Expense/ViewGetChartForUser", this.SeacrhForm.value).subscribe(res => {
+    this._PublicService.post("Expenses/ViewGetChartForUser", this.SeacrhForm.value).subscribe(res => {
       this.allExpense = res;
       this.amountPriceList = [];
 
@@ -241,7 +241,7 @@ export class expensesReportsComponent implements OnInit {
     return ('rgb(' + r + ',' + g + ',' + b + ')') as never;
   }
   generateBarChart() {
-    debugger;
+    
     this.chart = new Chart("userchart", {
       type: 'bar',
       options: {
@@ -314,7 +314,7 @@ export class expensesReportsComponent implements OnInit {
 
 
   generateBarChartForExpenseType() {
-    debugger;
+    
     this.chart = new Chart("Expensetypechart", {
       type: 'bar',
       options: {
@@ -387,7 +387,7 @@ export class expensesReportsComponent implements OnInit {
 
   //GetAllUser
   GetAllUser() {
-    this._PublicService.get("User/GetAllAgents").subscribe((Response) => {
+    this._PublicService.get("Users/GetAllAgents").subscribe((Response) => {
       this.userList = Response;
     }, (error) => {
     });
@@ -409,11 +409,11 @@ export class expensesReportsComponent implements OnInit {
 
 
   getAllForTable() {
-    debugger;
+    
     let userId = this.SeacrhForm.value.UserId
-    this._PublicService.post("Expense/ViewGetChartForUserAndExpenseType", this.SeacrhForm.value).subscribe(res => {
+    this._PublicService.post("Expenses/ViewGetChartForUserAndExpenseType", this.SeacrhForm.value).subscribe(res => {
       this.Drugs = res;
-      debugger;
+      
       this.source.load(this.Drugs);
 
     });
